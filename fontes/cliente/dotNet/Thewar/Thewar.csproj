@@ -71,6 +71,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="br\com\thewar\view\RoomItensControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="br\com\thewar\view\RoomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +103,9 @@
     <Compile Include="br\com\thewar\protocol\LoginRequest.cs" />
     <Compile Include="br\com\thewar\InterfaceComuncacao.cs" />
     <Compile Include="br\com\thewar\protocol\LoginResponse.cs" />
+    <Compile Include="br\com\thewar\view\RoomItensControl.xaml.cs">
+      <DependentUpon>RoomItensControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="br\com\thewar\view\RoomView.xaml.cs">
       <DependentUpon>RoomView.xaml</DependentUpon>
     </Compile>

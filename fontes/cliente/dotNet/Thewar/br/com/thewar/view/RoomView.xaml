@@ -9,5 +9,6 @@
     <Grid>
         <local:ListUsersControl Margin="631,80,12,12"></local:ListUsersControl>
         <local:ChatControl Margin="326,80,125,12"></local:ChatControl>
+        <local:RoomItensControl Margin="12,80,336,167"></local:RoomItensControl>
     </Grid>
 </UserControl>
