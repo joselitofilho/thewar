@@ -6,6 +6,11 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import br.com.thewar.server.model.Login;
+
 public class Receiver implements Runnable{
 	
 	/**
@@ -25,6 +30,8 @@ public class Receiver implements Runnable{
 	
 	public Receiver(Socket socket) {
 	
+		logger = Logger.getLogger(Receiver.class.getName());
+		
 		execute = true;
 		
 		this.socket = socket;
@@ -74,12 +81,42 @@ public class Receiver implements Runnable{
 		
 	}
 
-	private void processData(String data) {
+	private void processData(String json) {
 		
-		
+		try {
+			
+			logger.log(Level.INFO, "DATA: " + json );
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			
+			String type = mapper.readTree(json).path("type").asText();
+			
+			if(type.equals("login")){
+				
+				Login l = mapper.readValue(mapper.readTree(json).path("data"), Login.class);
+				
+				System.out.println(l.getNick());
+				
+			}
+			
+		} catch (JsonProcessingException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			logger.log(Level.SEVERE, "ERROR: " + e.getMessage());
+			
+			
+		} catch (IOException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			logger.log(Level.SEVERE, "ERROR: " + e.getMessage());
+			
+		}	
 		
 	}
-	
-	
 
 }
