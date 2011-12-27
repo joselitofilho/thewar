@@ -63,6 +63,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="br\com\thewar\view\GameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="br\com\thewar\view\ListUsersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -88,26 +92,34 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="br\com\thewar\lang\Session.cs" />
-    <Compile Include="br\com\thewar\view\ChatControl.xaml.cs">
-      <DependentUpon>ChatControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="br\com\thewar\view\ListUsersControl.xaml.cs">
-      <DependentUpon>ListUsersControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="br\com\thewar\view\LoginTela.xaml.cs">
-      <DependentUpon>LoginTela.xaml</DependentUpon>
-    </Compile>
     <Compile Include="br\com\thewar\model\GenericObject.cs" />
     <Compile Include="br\com\thewar\model\Login.cs" />
     <Compile Include="br\com\thewar\model\User.cs" />
     <Compile Include="br\com\thewar\protocol\LoginRequest.cs" />
     <Compile Include="br\com\thewar\InterfaceComuncacao.cs" />
     <Compile Include="br\com\thewar\protocol\LoginResponse.cs" />
+    <Compile Include="br\com\thewar\view\ChatControl.xaml.cs">
+      <DependentUpon>ChatControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="br\com\thewar\view\GameView.xaml.cs">
+      <DependentUpon>GameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="br\com\thewar\view\ListUsersControl.xaml.cs">
+      <DependentUpon>ListUsersControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="br\com\thewar\view\LoginTela.xaml.cs">
+      <DependentUpon>LoginTela.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="br\com\thewar\view\RoomItensControl.xaml.cs">
       <DependentUpon>RoomItensControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="br\com\thewar\view\RoomView.xaml.cs">
       <DependentUpon>RoomView.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -142,6 +154,7 @@
     <Folder Include="br\com\thewar\util\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\mapa_wars.jpg" />
     <Content Include="libs\json\Newtonsoft.Json.dll" />
     <Content Include="libs\json\Newtonsoft.Json.pdb" />
     <Resource Include="libs\json\Newtonsoft.Json.xml" />

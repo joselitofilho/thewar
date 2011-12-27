@@ -58,25 +58,20 @@ namespace Thewar
                 LoginResponse l = (LoginResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(LoginResponse));
                 if (l.Status == 0)
                 {
-                    // Removendo tela de login.
                     thiss.GridMain.Dispatcher.Invoke(
                         System.Windows.Threading.DispatcherPriority.Normal,
                         new Action(
                           delegate()
                           {
+                              // Removendo tela de login.
                               thiss.GridMain.Children.Remove(thiss.LoginView);
-                          }
-                      ));
 
-                    // Adicionando tela de salas de espera.
-                    thiss.GridMain.Dispatcher.Invoke(
-                        System.Windows.Threading.DispatcherPriority.Normal,
-                        new Action(
-                          delegate()
-                          {
-                              RoomView roomView = new RoomView();
-                              roomView.Name = "RoomView";
-                              thiss.GridMain.Children.Add(roomView);
+                              // Adicionando tela de salas de espera.
+                              //RoomView roomView = new RoomView();
+                              //roomView.Name = "RoomView";
+                              GameView gameView = new GameView();
+
+                              thiss.GridMain.Children.Add(gameView);
                           }
                       ));
                 }
