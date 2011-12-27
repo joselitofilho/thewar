@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using br.com.thewar.protocolo;
 using br.com.thewar.protocol;
+using br.com.thewar.lang;
+using br.com.thewar.model;
 
 namespace Thewar.br.com.thewar
 {
@@ -54,6 +56,16 @@ namespace Thewar.br.com.thewar
                 {
                     Nick = tbEmail.Text,
                     Pass = tbSenha.Text
+                };
+
+                // Adicionando usuário na sessão.
+                Session.getSession().User = new User()
+                {
+                    Login = new Login()
+                    {
+                        Nick = tbEmail.Text,
+                        Pass = tbSenha.Text
+                    }
                 };
 
                 // Envia a requisição.

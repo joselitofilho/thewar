@@ -71,10 +71,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="br\com\thewar\lang\Session.cs" />
     <Compile Include="br\com\thewar\LoginTela.xaml.cs">
       <DependentUpon>LoginTela.xaml</DependentUpon>
     </Compile>
     <Compile Include="br\com\thewar\model\GenericObject.cs" />
+    <Compile Include="br\com\thewar\model\Login.cs" />
+    <Compile Include="br\com\thewar\model\User.cs" />
     <Compile Include="br\com\thewar\protocol\LoginRequest.cs" />
     <Compile Include="br\com\thewar\InterfaceComuncacao.cs" />
     <Compile Include="br\com\thewar\protocol\LoginResponse.cs" />
@@ -107,7 +110,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="br\com\thewar\util\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="libs\json\Newtonsoft.Json.dll" />
     <Content Include="libs\json\Newtonsoft.Json.pdb" />

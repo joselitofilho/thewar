@@ -16,6 +16,8 @@ using Newtonsoft.Json;
 using br.com.thewar.protocolo;
 using Newtonsoft.Json.Linq;
 using br.com.thewar.protocol;
+using br.com.thewar.lang;
+using br.com.thewar.model;
 
 namespace Thewar
 {
@@ -27,6 +29,9 @@ namespace Thewar
         public MainWindow()
         {
             InitializeComponent();
+            //
+            Session = Session.getSession();
+            //
             thiss = this;
         }
         /// <summary>
@@ -52,23 +57,43 @@ namespace Thewar
                 LoginResponse l = (LoginResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(LoginResponse));
                 if (l.Status == 0)
                 {
-                    MessageBox.Show("Login com sucesso...");
+                    // Removendo tela de login.
+                    thiss.GridMain.Dispatcher.Invoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(
+                          delegate()
+                          {
+                              thiss.GridMain.Children.Remove(thiss.LoginView);
+                          }
+                      ));
 
-                    // TODO: Redirecionar página.
-                    //thiss.Child
+                    // Adicionando tela de salas de espera.
+                    // thiss.Child
                 }
                 else
                 {
+                    // Remove o usuário da sessão.
+                    Session.User = null;
+                    // Processa a resposta para a tela de login.
                     thiss.LoginView.processResponse(l);
                 }
             }
         }
 
+        #region Atributos
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Session Session;
         /// <summary>
         /// Interface de comunicação com o servidor. Ela será utilizada em toda a aplicação.
         /// </summary>
         public static CommunicationInterface communication = new CommunicationInterface("127.0.0.1", 1234);
-        public static MainWindow thiss;
         //public static InterfaceComunicacao comunicacao = new InterfaceComunicacao("192.168.1.9", 1234);
+        /// <summary>
+        /// Referência estática para a janela principal.
+        /// </summary>
+        public static MainWindow thiss;
+        #endregion
     }
 }
