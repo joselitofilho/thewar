@@ -46,7 +46,7 @@ namespace br.com.thewar.lang
         #endregion
 
         #region Propriedades
-        public User User { get; set; };
+        public User User { get; set; }
         #endregion
     }
 }
