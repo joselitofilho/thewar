@@ -4,6 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,12 +70,23 @@ public class Gerenciador extends Thread {
 			if (type.equals("login")) {
 				Login l = mapper.readValue(mapper.readTree(xml).path("data"), Login.class);
 				//Servidor.ProcessarLogin(socket, xml);
-				System.out.println(l.getNick());
+				//System.out.println(l.getNick());
 			}
+			
+			Map<String, Object> userInMap = new HashMap<String, Object>();
+			userInMap.put("type", "loginresponse");
+			
+			Map<String, Object> mapData = new HashMap<String, Object>();
+			mapData.put("status", 0);
+			userInMap.put("data", mapData);
+			
+			//Servidor.send(socket, "{\"type\":\"login\",\"data\":{\"status\":\"1\"}}");
+			Servidor.send(socket, mapper.writeValueAsString(userInMap));
 
 			//logger.log(Level.INFO, "Jason: " + );
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, null, e);
+		} catch (Exception e) {
 			logger.log(Level.SEVERE, null, e);
 		}
 	}
