@@ -66,12 +66,12 @@ public class Servidor implements Runnable {
 		while(rodar)
 		{
 			try {
-	            logger.log(Level.INFO, "Esperando alguém conectar-se...");
-	            //Esperando conexão de algum cliente
+	            logger.log(Level.INFO, "Esperando alguï¿½m conectar-se...");
+	            //Esperando conexï¿½o de algum cliente
 	            socket = serverSocket.accept();
-	            logger.log(Level.INFO, "Alguém conectou. Seu Socket:" + socket);
+	            logger.log(Level.INFO, "Alguï¿½m conectou. Seu Socket:" + socket);
 	
-	            // Agora passa a bola para alguém tratar o recebimento...
+	            // Agora passa a bola para alguï¿½m tratar o recebimento...
 	            new Gerenciador(socket).start();
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
@@ -92,20 +92,20 @@ public class Servidor implements Runnable {
 			CodigoResposta status = Login.CodigoResposta.DESCONHECIDO;
 			String nick = loginXstream.getNick();
 
-			// TODO: Fazer verificações no banco.
+			// TODO: Fazer verificaï¿½ï¿½es no banco.
 			if (!listaUsuariosLogados.containsKey(nick)) {
 				// Sucesso
 				listaUsuariosLogados.put(nick, socket);
 				status = Login.CodigoResposta.SUCESSO;
 			} else {
-				// Usuário logado!!!
+				// Usuï¿½rio logado!!!
 				status = Login.CodigoResposta.USUARIO_JA_ESTA_LOGADO;
 			}
 
 			xml += status.Codigo() + "</status></login>";
 			send(socket, xml);
 
-			// Atualizando a lista de usuários...
+			// Atualizando a lista de usuÃ¡rios...
 			// if (status == Login.CodigoResposta.SUCESSO) {
 			// updateUsersList(nick, socket);
 			//
@@ -119,7 +119,7 @@ public class Servidor implements Runnable {
 	}
 	
 	/**
-	 * Converte um xml em uma instância de classe correspondente através da
+	 * Converte um xml em uma instÃ¢ncia de classe correspondente atravÃ©s da
 	 * biblioteca xstream.
 	 * 
 	 * @param xml

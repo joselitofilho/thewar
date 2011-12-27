@@ -11,9 +11,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+
+import br.com.thewar.model.GenericModel;
+import br.com.thewar.servidor.protocol.Login;
 
 /**
  * 
@@ -56,25 +60,17 @@ public class Gerenciador extends Thread {
 
 	private void processar(String xml) {
 		try {
-			DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder;
-			builder = fact.newDocumentBuilder();
-			Document doc = builder.parse(new ByteArrayInputStream(xml
-					.getBytes()));
-			Node node = doc.getDocumentElement();
-			String root = node.getNodeName();
-
-			logger.log(Level.INFO, "Processando: " + xml);
-
-			if (root.equals(Servidor.LOGIN)) {
-				Servidor.ProcessarLogin(socket, xml);
+			logger.log(Level.INFO, "XML: " + xml );
+			ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
+			String type = mapper.readTree(xml).path("type").asText();
+			
+			if (type.equals("login")) {
+				Login l = mapper.readValue(mapper.readTree(xml).path("data"), Login.class);
+				//Servidor.ProcessarLogin(socket, xml);
+				System.out.println(l.getNick());
 			}
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			logger.log(Level.SEVERE, null, e);
-		} catch (SAXException e) {
-			e.printStackTrace();
-			logger.log(Level.SEVERE, null, e);
+
+			//logger.log(Level.INFO, "Jason: " + );
 		} catch (IOException e) {
 			e.printStackTrace();
 			logger.log(Level.SEVERE, null, e);
