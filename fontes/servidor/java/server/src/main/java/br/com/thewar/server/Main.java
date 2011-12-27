@@ -19,6 +19,10 @@ public class Main {
 		
 		try{
 			
+			//Iniciando o Banco de dados
+			org.hsqldb.Server hsqldb = new org.hsqldb.Server();
+			hsqldb.start();
+			
 			// Start the server
 			Server server = new Server(1234);
 			server.run();

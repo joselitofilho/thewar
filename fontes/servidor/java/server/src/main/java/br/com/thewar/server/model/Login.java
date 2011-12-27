@@ -1,5 +1,6 @@
 package br.com.thewar.server.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,16 +9,23 @@ import java.util.Date;
  * @author Bruno Lopes Alcantara Batista
  * 
  */
-public class Login {
+public class Login implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
+	// The nick of user
 	private String nick;
 
+	// The password of the user
 	private String pass;
 
+	// When the login was created
 	private Date createdAt;
 
+	// The last time when the login was updated
 	private Date updatedAt;
 
+	// The last time that user logged in the game
 	private Date lastLogin;
 
 	/**
@@ -27,6 +35,10 @@ public class Login {
 
 	}
 
+	/*
+	 * Begin of the getters and setters of the attributes
+	 */
+	
 	public String getNick() {
 
 		return nick;
@@ -86,5 +98,9 @@ public class Login {
 		this.lastLogin = lastLogin;
 
 	}
+	
+	/*
+	 * End of the getters and setters of the attributes
+	 */
 
 }
