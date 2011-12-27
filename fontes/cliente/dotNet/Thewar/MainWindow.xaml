@@ -1,0 +1,9 @@
+﻿<Window x:Class="Thewar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:thewar="clr-namespace:Thewar.br.com.thewar"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <thewar:LoginTela x:Name="LoginView" Width="252" Margin="65,48,81,118" Height="205"></thewar:LoginTela>
+    </Grid>
+</Window>
