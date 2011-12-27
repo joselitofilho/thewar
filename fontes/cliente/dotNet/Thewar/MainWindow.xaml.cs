@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using br.com.thewar.protocol;
 using br.com.thewar.lang;
 using br.com.thewar.model;
+using Thewar.br.com.thewar.view;
 
 namespace Thewar
 {
@@ -68,7 +69,16 @@ namespace Thewar
                       ));
 
                     // Adicionando tela de salas de espera.
-                    // thiss.Child
+                    thiss.GridMain.Dispatcher.Invoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(
+                          delegate()
+                          {
+                              RoomView roomView = new RoomView();
+                              roomView.Name = "RoomView";
+                              thiss.GridMain.Children.Add(roomView);
+                          }
+                      ));
                 }
                 else
                 {

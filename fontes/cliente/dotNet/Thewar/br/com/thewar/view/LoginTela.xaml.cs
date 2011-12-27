@@ -13,14 +13,6 @@ namespace Thewar.br.com.thewar
     /// </summary>
     public partial class LoginTela : UserControl
     {
-        #region Delegates
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="loginRequest"></param>
-        public delegate void processResponseDelegate(LoginResponse loginRequest);
-        #endregion
-
         public LoginTela()
         {
             InitializeComponent();

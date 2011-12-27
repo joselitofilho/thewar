@@ -59,7 +59,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="br\com\thewar\LoginTela.xaml">
+    <Page Include="br\com\thewar\view\ChatControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="br\com\thewar\view\ListUsersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="br\com\thewar\view\LoginTela.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="br\com\thewar\view\RoomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -72,7 +84,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="br\com\thewar\lang\Session.cs" />
-    <Compile Include="br\com\thewar\LoginTela.xaml.cs">
+    <Compile Include="br\com\thewar\view\ChatControl.xaml.cs">
+      <DependentUpon>ChatControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="br\com\thewar\view\ListUsersControl.xaml.cs">
+      <DependentUpon>ListUsersControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="br\com\thewar\view\LoginTela.xaml.cs">
       <DependentUpon>LoginTela.xaml</DependentUpon>
     </Compile>
     <Compile Include="br\com\thewar\model\GenericObject.cs" />
@@ -81,6 +99,9 @@
     <Compile Include="br\com\thewar\protocol\LoginRequest.cs" />
     <Compile Include="br\com\thewar\InterfaceComuncacao.cs" />
     <Compile Include="br\com\thewar\protocol\LoginResponse.cs" />
+    <Compile Include="br\com\thewar\view\RoomView.xaml.cs">
+      <DependentUpon>RoomView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
