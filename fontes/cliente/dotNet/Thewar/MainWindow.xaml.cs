@@ -86,6 +86,9 @@ namespace Thewar
             }
             else if (tipo.Equals("userloggedresponse"))
             {
+                UserLoggedResponse userLogged = (UserLoggedResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(UserLoggedResponse));
+
+                if (userLogged.Nick != Session.User.Login.Nick)
                 thiss.GridMain.Dispatcher.Invoke(
                         System.Windows.Threading.DispatcherPriority.Normal,
                         new Action(
@@ -95,7 +98,6 @@ namespace Thewar
                                 RoomView roomView = UIUtils.FindChild<RoomView>(thiss.GridMain, "RoomView");
                                 if (roomView != null)
                                 {
-                                    UserLoggedResponse userLogged = (UserLoggedResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(UserLoggedResponse));
                                     Session.addUsersList(userLogged.Nick);
 
                                     // Adicionando nick na lista de usuários.
