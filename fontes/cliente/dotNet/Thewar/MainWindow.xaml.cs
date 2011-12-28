@@ -21,6 +21,7 @@ using br.com.thewar.model;
 using Thewar.br.com.thewar.view;
 using br.com.thewar.protocol.response;
 using br.com.thewar.util;
+using br.com.thewar.communication;
 
 namespace Thewar
 {

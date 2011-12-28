@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using br.com.thewar.protocolo;
 using Newtonsoft.Json.Linq;
 
-namespace br.com.thewar
+namespace br.com.thewar.communication
 {
     /// <summary>
     /// Interface de comunicação entre o cliente e servidor. Utiliza-se o protocolo
