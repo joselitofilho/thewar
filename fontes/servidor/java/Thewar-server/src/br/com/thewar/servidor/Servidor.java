@@ -137,10 +137,11 @@ public class Servidor implements Runnable {
 	 * @param xml
 	 * @throws Exception
 	 */
-	private static void send(Socket socket, String xml) throws Exception {
+	public static void send(Socket socket, String xml) throws Exception {
 		logger.log(Level.INFO, "Enviando: " + xml);
 		PrintStream out = new PrintStream(socket.getOutputStream());
-		out.print(xml + EOF);
+		//out.print(xml + EOF);
+		out.print(xml);
 		out.flush();
 
 		out = null;
