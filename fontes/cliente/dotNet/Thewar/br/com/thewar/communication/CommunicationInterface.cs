@@ -10,6 +10,7 @@ using System.Xml;
 using Newtonsoft.Json;
 using br.com.thewar.protocolo;
 using Newtonsoft.Json.Linq;
+using br.com.thewar.lang;
 
 namespace br.com.thewar.communication
 {
@@ -17,7 +18,7 @@ namespace br.com.thewar.communication
     /// Interface de comunicação entre o cliente e servidor. Utiliza-se o protocolo
     /// TCP/IP numa comunicação assincrona.
     /// </summary>
-    public class CommunicationInterface
+    public class CommunicationInterface : /*extends*/ASubject
     {
         #region Construtores
         /// <summary>
@@ -87,8 +88,8 @@ namespace br.com.thewar.communication
                 bufferLength = client.GetStream().EndRead(ar);
                 string message = (System.Text.Encoding.ASCII.GetString(data, 0, bufferLength)).ToString();
 
-                MainWindow.ProcessResponse(message);
-                // TODO: Notify(message);
+                SubjectState = message;
+                Notify();
 
                 // Continua lendo do servidor.
                 client.GetStream().BeginRead(data, 0, dataSize, ReceiveMessage, null);

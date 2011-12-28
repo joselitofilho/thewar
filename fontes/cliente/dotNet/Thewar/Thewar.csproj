@@ -91,6 +91,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="br\com\thewar\lang\IObserver.cs" />
+    <Compile Include="br\com\thewar\lang\ASubject.cs" />
     <Compile Include="br\com\thewar\lang\Session.cs" />
     <Compile Include="br\com\thewar\MainManager.cs" />
     <Compile Include="br\com\thewar\model\GenericObject.cs" />

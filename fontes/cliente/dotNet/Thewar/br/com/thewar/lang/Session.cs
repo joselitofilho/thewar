@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using br.com.thewar.model;
+using br.com.thewar.communication;
 
 namespace br.com.thewar.lang
 {
@@ -58,7 +59,13 @@ namespace br.com.thewar.lang
         #endregion
 
         #region Propriedades
+        /// <summary>
+        /// 
+        /// </summary>
         public User User { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> UsersList { get; set; }
         #endregion
     }
