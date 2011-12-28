@@ -23,5 +23,17 @@ namespace Thewar.br.com.thewar.view
         {
             InitializeComponent();
         }
+
+        public void addUser(string nick)
+        {
+            ListViewUsers.Items.Add(nick);
+        }
+
+        public void updateList(List<string> list)
+        {
+            //listUsers = list;
+        }
+
+        //private List<string> listUsers;
     }
 }

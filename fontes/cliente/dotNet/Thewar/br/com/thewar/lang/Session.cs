@@ -17,7 +17,7 @@ namespace br.com.thewar.lang
         /// </summary>
         private Session()
         {
-            // Faz nada.
+            usersList = new List<string>();
         }
         #endregion
 
@@ -36,6 +36,14 @@ namespace br.com.thewar.lang
 
             return session;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nick"></param>
+        public void addUsersList(string nick)
+        {
+            usersList.Add(nick);
+        }
         #endregion
 
         #region Atributos
@@ -43,10 +51,15 @@ namespace br.com.thewar.lang
         /// Singleton desta classe.
         /// </summary>
         private static Session session;
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<string> usersList;
         #endregion
 
         #region Propriedades
         public User User { get; set; }
+        public List<string> UsersList { get; set; }
         #endregion
     }
 }

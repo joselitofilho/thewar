@@ -19,6 +19,8 @@ using br.com.thewar.protocol;
 using br.com.thewar.lang;
 using br.com.thewar.model;
 using Thewar.br.com.thewar.view;
+using br.com.thewar.protocol.response;
+using br.com.thewar.util;
 
 namespace Thewar
 {
@@ -67,11 +69,10 @@ namespace Thewar
                               thiss.GridMain.Children.Remove(thiss.LoginView);
 
                               // Adicionando tela de salas de espera.
-                              //RoomView roomView = new RoomView();
-                              //roomView.Name = "RoomView";
-                              GameView gameView = new GameView();
+                              RoomView roomView = new RoomView();
+                              roomView.Name = "RoomView";
 
-                              thiss.GridMain.Children.Add(gameView);
+                              thiss.GridMain.Children.Add(roomView);
                           }
                       ));
                 }
@@ -82,6 +83,30 @@ namespace Thewar
                     // Processa a resposta para a tela de login.
                     thiss.LoginView.processResponse(l);
                 }
+            }
+            else if (tipo.Equals("userloggedresponse"))
+            {
+                thiss.GridMain.Dispatcher.Invoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(
+                            delegate()
+                            {
+                                // Procurando elemento da sala.
+                                RoomView roomView = UIUtils.FindChild<RoomView>(thiss.GridMain, "RoomView");
+                                if (roomView != null)
+                                {
+                                    UserLoggedResponse userLogged = (UserLoggedResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(UserLoggedResponse));
+                                    Session.addUsersList(userLogged.Nick);
+
+                                    // Adicionando nick na lista de usuários.
+                                    roomView.ListUsers.addUser(userLogged.Nick);
+                                }
+                                else
+                                {
+                                    // TODO: o que fazer quando não estiver na sala e receber essa mensagem?
+                                }
+                            }
+                        ));
             }
         }
 
@@ -94,7 +119,7 @@ namespace Thewar
         /// Interface de comunicação com o servidor. Ela será utilizada em toda a aplicação.
         /// </summary>
         public static CommunicationInterface communication = new CommunicationInterface("127.0.0.1", 1234);
-        //public static InterfaceComunicacao comunicacao = new InterfaceComunicacao("192.168.1.9", 1234);
+        //public static CommunicationInterface communication = new CommunicationInterface("192.168.1.9", 1234);
         /// <summary>
         /// Referência estática para a janela principal.
         /// </summary>

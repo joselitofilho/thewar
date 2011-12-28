@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="200
              " BorderBrush="Black">
     <Grid>
-        <ListView>
+        <ListView x:Name="ListViewUsers">
             <ListViewItem Height="30" Content="Jogador 1" />
             <ListViewItem Height="30" Content="Jogador 2" />
         </ListView>

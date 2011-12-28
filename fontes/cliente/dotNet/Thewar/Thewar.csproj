@@ -98,6 +98,8 @@
     <Compile Include="br\com\thewar\protocol\LoginRequest.cs" />
     <Compile Include="br\com\thewar\InterfaceComuncacao.cs" />
     <Compile Include="br\com\thewar\protocol\LoginResponse.cs" />
+    <Compile Include="br\com\thewar\protocol\response\UserLoggedResponse.cs" />
+    <Compile Include="br\com\thewar\util\UIUtils.cs" />
     <Compile Include="br\com\thewar\view\ChatControl.xaml.cs">
       <DependentUpon>ChatControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -150,9 +152,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="br\com\thewar\util\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="images\mapa_wars.jpg" />
     <Content Include="libs\json\Newtonsoft.Json.dll" />

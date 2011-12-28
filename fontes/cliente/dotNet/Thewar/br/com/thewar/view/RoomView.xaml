@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="286" d:DesignWidth="710" Width="1024" Height="550">
     <Grid>
-        <local:ListUsersControl Margin="890,80,12,12"></local:ListUsersControl>
+        <local:ListUsersControl x:Name="ListUsers" Margin="890,80,12,12"></local:ListUsersControl>
         <local:ChatControl Margin="507,80,215,12"></local:ChatControl>
         <local:RoomItensControl Margin="12,80,608,167"></local:RoomItensControl>
     </Grid>
