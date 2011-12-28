@@ -82,8 +82,16 @@ public class Gerenciador extends Thread {
 			
 			//Servidor.send(socket, "{\"type\":\"login\",\"data\":{\"status\":\"1\"}}");
 			Servidor.send(socket, mapper.writeValueAsString(userInMap));
-
-			//logger.log(Level.INFO, "Jason: " + );
+			
+			userInMap = new HashMap<String, Object>();
+			userInMap.put("type", "userloggedresponse");
+			
+			mapData = new HashMap<String, Object>();
+			mapData.put("nick", "joselito");
+			userInMap.put("data", mapData);
+			
+			//Servidor.send(socket, "{\"type\":\"login\",\"data\":{\"status\":\"1\"}}");
+			Servidor.send(socket, mapper.writeValueAsString(userInMap));
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, null, e);
 		} catch (Exception e) {

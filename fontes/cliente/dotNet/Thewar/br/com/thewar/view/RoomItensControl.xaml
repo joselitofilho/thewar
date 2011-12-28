@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Thewar.br.com.thewar.view.RoomItensControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+    <Grid>
+        <ListView Height="300" HorizontalAlignment="Left" Name="listView1" VerticalAlignment="Top" Width="400">
+            <ListViewItem Padding="5" Background="#ADADAD" VerticalContentAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="375">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="55*" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="55*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Padding="5" Text="Room 1" Grid.Column="0"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Red" FontWeight="Bold" Grid.Column="1" MouseUp="TextBlock_MouseUp"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="Black" Background="White" FontWeight="Bold" Grid.Column="2"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Black" FontWeight="Bold" Grid.Column="3"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Blue" FontWeight="Bold" Grid.Row="1" Grid.Column="1"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Green" FontWeight="Bold" Grid.Row="1" Grid.Column="2"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="Black" Background="Yellow" FontWeight="Bold" Grid.Row="1" Grid.Column="3"></TextBlock>
+                        <StackPanel Grid.RowSpan="2" Grid.Column="4">
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem Padding="5" Background="#ADADAD" VerticalContentAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="375">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="55*" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="55*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Padding="5" Text="Room 2" Grid.Column="0"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Red" FontWeight="Bold" Grid.Column="1"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="Black" Background="White" FontWeight="Bold" Grid.Column="2"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Black" FontWeight="Bold" Grid.Column="3"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Blue" FontWeight="Bold" Grid.Row="1" Grid.Column="1"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="White" Background="Green" FontWeight="Bold" Grid.Row="1" Grid.Column="2"></TextBlock>
+                        <TextBlock Padding="5" Text="" Foreground="Black" Background="Yellow" FontWeight="Bold" Grid.Row="1" Grid.Column="3"></TextBlock>
+                        <StackPanel Grid.RowSpan="2" Grid.Column="4">
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem Height="80" Background="#ADADAD" >
+
+            </ListViewItem>
+            <ListViewItem Height="80" Background="#ADADAD" >
+
+            </ListViewItem>
+        </ListView>
+    </Grid>
+</UserControl>
