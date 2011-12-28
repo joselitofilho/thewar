@@ -74,7 +74,7 @@ public class Server implements Runnable{
 		} catch (IOException e) {
 			
 			// Register the action on the log and close the application
-			logger.log(Level.SEVERE, "ERROR to create the server: " + e.getMessage());
+			logger.log(Level.SEVERE, "error to create the server: " + e.getMessage());
 			System.exit(-1);
 			
 		}
@@ -99,12 +99,12 @@ public class Server implements Runnable{
 	
 				// Log the client connection and transfer the socket to receiver object to treat the conversation
 				logger.log(Level.INFO, "Client " + socket.getRemoteSocketAddress() + " is now connected!");
-				new Receiver(socket).run();
+				new Receiver(socket).start();
 				
 			} catch (IOException e) {
 				
 				// Log the exception
-				logger.log(Level.SEVERE, "ERROR: " + e.getMessage());
+				logger.log(Level.SEVERE, e.getMessage());
 				
 			}
 			

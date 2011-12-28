@@ -2,6 +2,7 @@ package br.com.thewar.server.protocol;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,15 +10,17 @@ import java.util.logging.Logger;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import br.com.thewar.server.dao.LoginDAO;
 import br.com.thewar.server.model.Login;
+import br.com.thewar.server.response.LoginResponse;
 
 /**
  * Class that receive the socket and treat the data, forwarding to the target
  * 
  * @author Bruno Lopes Alcantara Batista
- *
+ * 
  */
-public class Receiver implements Runnable {
+public class Receiver extends Thread {
 
 	// Sentinel variable to while block
 	private boolean execute;
@@ -57,7 +60,8 @@ public class Receiver implements Runnable {
 			int bufferLength;
 
 			/*
-			 * While the execute sentinel varibale is true execute the block bellow
+			 * While the execute sentinel varibale is true execute the block
+			 * bellow
 			 */
 			while (execute) {
 
@@ -71,7 +75,7 @@ public class Receiver implements Runnable {
 				 * If bufferLength is major then 0 read the data and process it
 				 */
 				if (bufferLength > 0) {
-					
+
 					// Read the data and send to the processData
 					in.read(data);
 					processData(new String(data));
@@ -91,13 +95,16 @@ public class Receiver implements Runnable {
 
 	/**
 	 * Process the data receives of the client socket
-	 * @param json data of the client
+	 * 
+	 * @param json
+	 *            data of the client
 	 */
 	private void processData(String json) {
 
 		try {
 
-			// Register the data received of client on the log and create the object mapper of JSON
+			// Register the data received of client on the log and create the
+			// object mapper of JSON
 			logger.log(Level.INFO, "Receive data: " + json);
 			ObjectMapper mapper = new ObjectMapper();
 
@@ -107,12 +114,36 @@ public class Receiver implements Runnable {
 			/*
 			 * Decide who must respond the type received
 			 */
-			if (type.equals("login")) {
+			if (type.equals("loginrequest")) {
 
 				Login l = mapper.readValue(mapper.readTree(json).path("data"),
 						Login.class);
 
-				System.out.println(l.getNick());
+				LoginDAO loginDAO = new LoginDAO();
+
+				l = loginDAO.load(l.getNick(), l.getPass());
+				
+				LoginResponse loginResponse = new LoginResponse();
+
+				if (l != null) {
+
+					System.out.println("DEU CERTO");
+					loginResponse.setStatus(ResponseCode.SUCCESS.getCode());
+					// Servidor.send(socket,
+					// "{\"type\":\"login\",\"data\":{\"status\":\"1\"}}");
+
+				} else {
+
+					System.out.println("DEU ERRADO");
+					loginResponse.setStatus(ResponseCode.LOGIN_UNKNOW_USER.getCode());
+
+				}
+				
+				PrintStream printStream = new PrintStream(
+						socket.getOutputStream());
+				printStream.print(loginResponse.getResponseMessage());
+				printStream.flush();
+				//printStream.close();
 
 			}
 

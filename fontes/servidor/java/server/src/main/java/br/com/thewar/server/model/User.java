@@ -7,9 +7,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Model that represent the user of the game
@@ -18,31 +25,43 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="users")
-@SequenceGenerator(name="SEQ_USER", sequenceName="")
+@Table(name = "users")
+@SequenceGenerator(name="SEQ_USER", sequenceName="seq_user_id")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	// The identity of the user
+	@Id
+	@GeneratedValue(generator="SEQ_USER", strategy = GenerationType.AUTO)
+	private Integer id;
+
 	// The first name of user
+	@Column(nullable = false)
 	private String firstName;
 
 	// The last name of user
+	@Column(nullable = false)
 	private String lastName;
 
 	// The email of user
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	// The twitter usename of user
+	@Column(nullable = true, unique = true)
 	private String twitter;
 
 	// The list of login who user have
+	@OneToMany(mappedBy="user")
 	private List<Login> logins;
 
 	// When the user was created
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
 	// The last
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
 	/**
@@ -75,10 +94,22 @@ public class User implements Serializable {
 		this.twitter = twitter;
 
 	}
-	
+
 	/*
 	 * Begin of the getters and setters of the attributes
 	 */
+
+	public Integer getId() {
+
+		return id;
+
+	}
+
+	public void setId(Integer id) {
+
+		this.id = id;
+
+	}
 
 	public String getFirstName() {
 
@@ -163,7 +194,7 @@ public class User implements Serializable {
 		this.updatedAt = updatedAt;
 
 	}
-	
+
 	/*
 	 * End of the getters and setters of the attributes
 	 */
