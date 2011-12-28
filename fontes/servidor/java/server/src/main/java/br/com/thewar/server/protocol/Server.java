@@ -120,7 +120,12 @@ public class Server implements Runnable {
 
 	}
 
-	
+	/**
+	 * Method that send a message to a list of sockets
+	 * 
+	 * @param message to send
+	 * @param sockets of session
+	 */
 	public static void sendMessage(String message, List<Socket> sockets) {
 
 		if(sockets != null){
