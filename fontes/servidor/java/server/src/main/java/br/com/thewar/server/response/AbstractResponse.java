@@ -17,10 +17,19 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public abstract class AbstractResponse {
 
+	// The class name
 	protected String className;
 	
+	// Hasmap that contains the data of response
 	protected HashMap<String, Object> data;
 	
+	// Hashmap that contains the login response
+	protected Map<String, Object> response;
+	
+	/**
+	 * Abstract class that encapsulate the response logic
+	 * @param className
+	 */
 	protected AbstractResponse(String className) {
 	
 		this.className = className;
@@ -40,14 +49,22 @@ public abstract class AbstractResponse {
 		
 	}
 	
+	/**
+	 * The response of login protocol
+	 * 
+	 * @return a well-formed JSON string object
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	public String getResponseMessage() throws JsonGenerationException, JsonMappingException, IOException{
 		
-		Map<String, Object> userInMap = new HashMap<String, Object>();
+		response = new HashMap<String, Object>();
 		
-		userInMap.put("type", getType());
-		userInMap.put("data", getData());
+		response.put("type", getType());
+		response.put("data", getData());
 		
-		return new ObjectMapper().writeValueAsString(userInMap).toLowerCase();
+		return new ObjectMapper().writeValueAsString(response).toLowerCase();
 		
 	}
 	

@@ -31,6 +31,15 @@ public class Receiver extends Thread {
 	// Logger class to log the actions
 	private Logger logger;
 
+	// Object mapper of JSON
+	private ObjectMapper mapper;
+
+	// PrintStream that write the response to client
+	private PrintStream printStream;
+	
+	// Login response object
+	private LoginResponse loginResponse;
+
 	/**
 	 * This class will receiver the socket data and forward to respective target
 	 * 
@@ -106,7 +115,7 @@ public class Receiver extends Thread {
 			// Register the data received of client on the log and create the
 			// object mapper of JSON
 			logger.log(Level.INFO, "Receive data: " + json);
-			ObjectMapper mapper = new ObjectMapper();
+			mapper = new ObjectMapper();
 
 			// Read the type of data was received
 			String type = mapper.readTree(json).path("type").asText();
@@ -122,30 +131,32 @@ public class Receiver extends Thread {
 				LoginDAO loginDAO = new LoginDAO();
 
 				l = loginDAO.load(l.getNick(), l.getPass());
-				
-				LoginResponse loginResponse = new LoginResponse();
+					
+				loginResponse = new LoginResponse();
 
 				if (l != null) {
 
-					System.out.println("DEU CERTO");
+					// Response Code of SUCCESS
 					loginResponse.setStatus(ResponseCode.SUCCESS.getCode());
-					// Servidor.send(socket,
-					// "{\"type\":\"login\",\"data\":{\"status\":\"1\"}}");
+					
+					Session.getInstance().add(l.getNick(), socket);
 
 				} else {
 
-					System.out.println("DEU ERRADO");
-					loginResponse.setStatus(ResponseCode.LOGIN_UNKNOW_USER.getCode());
+					// Response Code of UNKNOW_USER
+					loginResponse.setStatus(ResponseCode.LOGIN_UNKNOW_USER
+							.getCode());
 
-				}
+				}		
 				
-				PrintStream printStream = new PrintStream(
-						socket.getOutputStream());
-				printStream.print(loginResponse.getResponseMessage());
-				printStream.flush();
-				//printStream.close();
+				loginDAO = null;
 
 			}
+			
+			// PrintStream that write the response to client
+			printStream = new PrintStream(socket.getOutputStream());
+			printStream.print(loginResponse.getResponseMessage());
+			printStream.flush();
 
 		} catch (JsonProcessingException e) {
 

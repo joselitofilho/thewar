@@ -11,7 +11,7 @@ package br.com.thewar.server.response;
 public class LoginResponse extends AbstractResponse {
 
 	/**
-	 * 
+	 * Create the response of login protocol
 	 */
 	public LoginResponse() {
 
