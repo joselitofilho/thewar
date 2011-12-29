@@ -33,7 +33,7 @@ public class Session {
 	private List<String> nicks;
 	
 	// Register events on the log
-	private static Logger logger;
+	private static Logger logger = Logger.getLogger(Session.class.getSimpleName());
 
 	/**
 	 * Private constructor
@@ -41,8 +41,6 @@ public class Session {
 	private Session() {
 
 		sessionMap = new HashMap<String, Socket>();
-		
-		logger = Logger.getLogger(Session.class.getSimpleName());
 
 	}
 

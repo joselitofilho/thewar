@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,7 +166,6 @@ public class Receiver extends Thread {
 			// Get the login in database
 			LoginDAO loginDAO = new LoginDAO();
 			loginRequest = loginDAO.load(loginRequest.getNick(), loginRequest.getPass());
-			loginDAO = null;
 			
 			ResponseCode respCode = ResponseCode.UNKNOW;
 			
@@ -183,6 +183,10 @@ public class Receiver extends Thread {
 			Server.sendMessage(loginResponse.getResponseMessage(), arr);
 			
 			if (respCode == ResponseCode.SUCCESS) {
+				
+				// Fill the last login atribute
+				loginRequest.setLastLogin(new Date());
+				loginDAO.save(loginRequest);
 				
 				// Adds the current socket in the session
 				session.add(loginRequest.getNick(), socket);

@@ -3,11 +3,7 @@ package br.com.thewar.server;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.hibernate.Session;
-
-import br.com.thewar.server.dao.HibernateUtil;
-import br.com.thewar.server.model.Login;
-import br.com.thewar.server.model.User;
+import br.com.thewar.server.dao.InitialData;
 import br.com.thewar.server.protocol.Server;
 
 /**
@@ -25,16 +21,7 @@ public class Main {
 
 		try {
 			
-			User admin = new User("admin", "admin","admin@admin.com", "admin");
-			
-			Login adminLogin = new Login("admin", "admin", admin);
-			
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			
-			session.beginTransaction().begin();
-			session.save(admin);
-			session.save(adminLogin);
-			session.beginTransaction().commit();
+			InitialData.fill();
 			
 			// Start the server
 			Server server = new Server(1234);
