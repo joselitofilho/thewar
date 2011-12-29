@@ -163,9 +163,7 @@ public class Receiver extends Thread {
 		try {
 			
 			// Get the login in database
-			LoginDAO loginDAO = new LoginDAO();
-			loginRequest = loginDAO.load(loginRequest.getNick(), loginRequest.getPass());
-			loginDAO = null;
+			loginRequest = LoginDAO.getInstance().load(loginRequest.getNick(), loginRequest.getPass());
 			
 			ResponseCode respCode = ResponseCode.UNKNOW;
 			

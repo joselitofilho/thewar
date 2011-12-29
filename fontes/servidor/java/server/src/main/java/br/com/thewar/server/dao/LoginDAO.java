@@ -3,6 +3,7 @@
  */
 package br.com.thewar.server.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,10 +34,12 @@ public class LoginDAO implements GenericDAO<Login> {
 
 	private Criteria criteria;
 
+	private static LoginDAO instance;
+
 	/**
-	 * lass that mapping the Login object with the database
+	 * Class that mapping the Login object with the database
 	 */
-	public LoginDAO() {
+	private LoginDAO() {
 
 		logger = Logger.getLogger(LoginDAO.class.getName());
 
@@ -50,6 +53,9 @@ public class LoginDAO implements GenericDAO<Login> {
 	public void save(Login obj) {
 
 		try {
+
+			// Set the date on fields createdAt and updatedAt
+			setDate(obj);
 
 			// Get a hibernate session
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -190,10 +196,10 @@ public class LoginDAO implements GenericDAO<Login> {
 			session.close();
 
 			// Register the action on the log
-			if(login != null){
-				
+			if (login != null) {
+
 				logger.log(Level.INFO, "Listing the Login " + login.getNick());
-				
+
 			}
 
 		} catch (HibernateException e) {
@@ -248,6 +254,50 @@ public class LoginDAO implements GenericDAO<Login> {
 
 		// Return a list of logins
 		return logins;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.thewar.server.dao.GenericDAO#setDate(java.lang.Object)
+	 */
+	public void setDate(Login obj) {
+
+		Date date = new Date();
+
+		// Verify if the obj is new and add the createdAt value and updatedAt
+		// value
+		if (obj.getId() == null) {
+
+			obj.setCreatedAt(date);
+
+			obj.setUpdatedAt(date);
+
+		} else {
+
+			obj.setUpdatedAt(date);
+
+		}
+
+		date = null;
+
+	}
+
+	/**
+	 * Return a instance of LoginDAO
+	 * 
+	 * @return a instance of LoginDAO
+	 */
+	public static LoginDAO getInstance() {
+
+		if (instance == null) {
+
+			instance = new LoginDAO();
+
+		}
+
+		return instance;
 
 	}
 

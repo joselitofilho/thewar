@@ -3,6 +3,7 @@
  */
 package br.com.thewar.server.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,17 +27,19 @@ public class UserDAO implements GenericDAO<User> {
 	private Transaction transaction;
 
 	private Logger logger;
-	
+
 	private User user;
-	
+
 	private List<User> users;
-	
+
 	private Criteria criteria;
+
+	private static UserDAO instance;
 
 	/**
 	 * Class that mapping the User object with the database
 	 */
-	public UserDAO() {
+	private UserDAO() {
 
 		logger = Logger.getLogger(UserDAO.class.getName());
 
@@ -51,6 +54,9 @@ public class UserDAO implements GenericDAO<User> {
 
 		try {
 
+			// Set the date on fields createdAt and updatedAt
+			setDate(obj);
+			
 			// Get a hibernate session
 			session = HibernateUtil.getSessionFactory().openSession();
 
@@ -87,6 +93,8 @@ public class UserDAO implements GenericDAO<User> {
 
 		try {
 
+			setDate(obj);
+
 			// Get a hibernate session
 			session = HibernateUtil.getSessionFactory().openSession();
 
@@ -120,10 +128,10 @@ public class UserDAO implements GenericDAO<User> {
 	 * @see br.com.thewar.server.dao.GenericDAO#load(java.lang.Integer)
 	 */
 	public User load(Integer id) {
-		
+
 		// setting null
 		user = null;
-		
+
 		try {
 
 			// Get a hibernate session
@@ -151,10 +159,10 @@ public class UserDAO implements GenericDAO<User> {
 			logger.log(Level.SEVERE, e.getMessage());
 
 		}
-		
+
 		// Return a users
 		return user;
-		
+
 	}
 
 	/*
@@ -164,10 +172,10 @@ public class UserDAO implements GenericDAO<User> {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> loadAll() {
-	
+
 		// setting null
 		users = null;
-		
+
 		try {
 
 			// Get a hibernate session
@@ -194,10 +202,54 @@ public class UserDAO implements GenericDAO<User> {
 			logger.log(Level.SEVERE, e.getMessage());
 
 		}
-		
+
 		// Return a list of users
 		return users;
-		
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.thewar.server.dao.GenericDAO#setDate(java.lang.Object)
+	 */
+	public void setDate(User obj) {
+
+		Date date = new Date();
+
+		// Verify if the obj is new and add the createdAt value and updatedAt
+		// value
+		if (obj.getId() == null) {
+
+			obj.setCreatedAt(date);
+
+			obj.setUpdatedAt(date);
+
+		} else {
+
+			obj.setUpdatedAt(date);
+
+		}
+
+		date = null;
+
+	}
+
+	/**
+	 * Return a instance of UserDAO
+	 * 
+	 * @return a instance of UserDAO
+	 */
+	public static UserDAO getInstance() {
+
+		if (instance == null) {
+
+			instance = new UserDAO();
+
+		}
+
+		return instance;
+
 	}
 
 }
