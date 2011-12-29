@@ -4,10 +4,13 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.thewar.server.dao.LoginDAO;
@@ -125,38 +128,10 @@ public class Receiver extends Thread {
 
 				Login l = mapper.readValue(mapper.readTree(json).path("data"),
 						Login.class);
-
-				LoginDAO loginDAO = new LoginDAO();
-
-				l = loginDAO.load(l.getNick(), l.getPass());
-					
-				LoginResponse loginResponse = new LoginResponse();
-
-				if (l != null) {
-
-					// Response Code of SUCCESS
-					loginResponse.setStatus(ResponseCode.SUCCESS.getCode());
-					
-					Session.getInstance().add(l.getNick(), socket);
-
-				} else {
-
-					// Response Code of UNKNOW_USER
-					loginResponse.setStatus(ResponseCode.LOGIN_UNKNOW_USER
-							.getCode());
-
-				}		
 				
-				message = loginResponse.getResponseMessage();
-				
-				loginDAO = null;
+				processLogin(l);
 
 			}
-			
-			// PrintStream that write the response to client
-			printStream = new PrintStream(socket.getOutputStream());
-			printStream.print(message);
-			printStream.flush();
 
 		} catch (JsonProcessingException e) {
 
@@ -174,6 +149,54 @@ public class Receiver extends Thread {
 
 		}
 
+	}
+	
+	/**
+	 * Processes the data received by the client login
+	 * 
+	 * @param loginRequest
+	 * 					  data of login request
+	 */
+	private void processLogin(Login loginRequest)
+	{
+		try {
+			LoginDAO loginDAO = new LoginDAO();
+	
+			loginRequest = loginDAO.load(loginRequest.getNick(), loginRequest.getPass());
+			loginDAO = null;
+			
+			ResponseCode respCode = ResponseCode.UNKNOW;
+			
+			// Checking for user data
+			respCode = (loginRequest != null) ? ResponseCode.SUCCESS : ResponseCode.LOGIN_UNKNOW_USER;
+			
+			LoginResponse loginResponse = new LoginResponse();
+			loginResponse.setStatus(respCode.getCode());
+			
+			ArrayList<Socket> arr = new ArrayList<Socket>();
+			// Add the current socket
+			arr.add(socket);
+			
+			// Send message to the list of sockets
+			Server.sendMessage(loginResponse.getResponseMessage(), arr);
+			
+			if (respCode == ResponseCode.SUCCESS) {
+				
+				// Adds the current socket in the session
+				Session.getInstance().add(loginRequest.getNick(), socket);
+				
+				// TODO: enviar a lista de usuário logados..
+				
+			}
+		
+		} catch (JsonGenerationException e) {
+			logger.log(Level.SEVERE, null, e);
+		} catch (JsonMappingException e) {
+			logger.log(Level.SEVERE, null, e);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, null, e);
+		}
+	
 	}
 
 }
