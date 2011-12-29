@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.036" errors="0" skipped="0" tests="1" name="br.com.thewar.server.AppTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/amd64"/>
+    <property name="java.vm.version" value="20.4-b02"/>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."/>
+    <property name="java.vendor.url" value="http://java.sun.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server"/>
+    <property name="java.runtime.version" value="1.6.0_29-b11"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="basedir" value="/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server"/>
+    <property name="java.endorsed.dirs" value="/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="surefire.real.class.path" value="/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/surefire/surefirebooter4579443692940475053.jar"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="os.name" value="Linux"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/amd64/server:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/amd64:/home/bruno/Aplicativos/jdk1.6.0_29/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="surefire.test.class.path" value="/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/test-classes:/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/classes:/home/bruno/.m2/repository/junit/junit/4.10/junit-4.10.jar:/home/bruno/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar:/home/bruno/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.3/jackson-mapper-asl-1.9.3.jar:/home/bruno/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.3/jackson-core-asl-1.9.3.jar:/home/bruno/.m2/repository/org/hibernate/hibernate-core/3.6.9.Final/hibernate-core-3.6.9.Final.jar:/home/bruno/.m2/repository/antlr/antlr/2.7.6/antlr-2.7.6.jar:/home/bruno/.m2/repository/commons-collections/commons-collections/3.1/commons-collections-3.1.jar:/home/bruno/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/home/bruno/.m2/repository/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar:/home/bruno/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar:/home/bruno/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar:/home/bruno/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar:/home/bruno/.m2/repository/org/hibernate/hibernate-c3p0/3.6.9.Final/hibernate-c3p0-3.6.9.Final.jar:/home/bruno/.m2/repository/c3p0/c3p0/0.9.1/c3p0-0.9.1.jar:/home/bruno/.m2/repository/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar:/home/bruno/.m2/repository/org/slf4j/slf4j-simple/1.6.4/slf4j-simple-1.6.4.jar:/home/bruno/.m2/repository/cglib/cglib/2.2.2/cglib-2.2.2.jar:/home/bruno/.m2/repository/asm/asm/3.3.1/asm-3.3.1.jar:/home/bruno/.m2/repository/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar:"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="3.0.0-14-generic"/>
+    <property name="user.home" value="/home/bruno"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="user.name" value="bruno"/>
+    <property name="java.class.path" value="/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/test-classes:/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/classes:/home/bruno/.m2/repository/junit/junit/4.10/junit-4.10.jar:/home/bruno/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar:/home/bruno/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.3/jackson-mapper-asl-1.9.3.jar:/home/bruno/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.3/jackson-core-asl-1.9.3.jar:/home/bruno/.m2/repository/org/hibernate/hibernate-core/3.6.9.Final/hibernate-core-3.6.9.Final.jar:/home/bruno/.m2/repository/antlr/antlr/2.7.6/antlr-2.7.6.jar:/home/bruno/.m2/repository/commons-collections/commons-collections/3.1/commons-collections-3.1.jar:/home/bruno/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/home/bruno/.m2/repository/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar:/home/bruno/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar:/home/bruno/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar:/home/bruno/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar:/home/bruno/.m2/repository/org/hibernate/hibernate-c3p0/3.6.9.Final/hibernate-c3p0-3.6.9.Final.jar:/home/bruno/.m2/repository/c3p0/c3p0/0.9.1/c3p0-0.9.1.jar:/home/bruno/.m2/repository/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar:/home/bruno/.m2/repository/org/slf4j/slf4j-simple/1.6.4/slf4j-simple-1.6.4.jar:/home/bruno/.m2/repository/cglib/cglib/2.2.2/cglib-2.2.2.jar:/home/bruno/.m2/repository/asm/asm/3.3.1/asm-3.3.1.jar:/home/bruno/.m2/repository/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar:"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/home/bruno/Aplicativos/jdk1.6.0_29/jre"/>
+    <property name="sun.java.command" value="/home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/surefire/surefirebooter4579443692940475053.jar /home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/surefire/surefire4205062643281728577tmp /home/bruno/Workspaces/JEE/thewar/fontes/servidor/java/server/target/surefire/surefire3910151799446587696tmp"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="pt"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_29"/>
+    <property name="java.ext.dirs" value="/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.boot.class.path" value="/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/resources.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/rt.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/sunrsasign.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/jsse.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/jce.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/charsets.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/lib/modules/jdk.boot.jar:/home/bruno/Aplicativos/jdk1.6.0_29/jre/classes"/>
+    <property name="java.vendor" value="Sun Microsystems Inc."/>
+    <property name="localRepository" value="/home/bruno/.m2/repository"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="gnome"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0.001" classname="br.com.thewar.server.AppTest" name="testApp"/>
+</testsuite>
