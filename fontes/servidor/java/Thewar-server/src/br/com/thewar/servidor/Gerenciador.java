@@ -90,8 +90,8 @@ public class Gerenciador extends Thread {
 			mapData.put("nick", "joselito");
 			userInMap.put("data", mapData);
 			
-			//Servidor.send(socket, "{\"type\":\"login\",\"data\":{\"status\":\"1\"}}");
-			Servidor.send(socket, mapper.writeValueAsString(userInMap));
+			Servidor.send(socket, "{\"data\":{\"listUsers\":[\"joselito\",\"bruno\"]},\"type\":\"listusersloggedresponse\"}");
+			//Servidor.send(socket, mapper.writeValueAsString(userInMap));
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, null, e);
 		} catch (Exception e) {
