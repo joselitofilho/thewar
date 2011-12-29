@@ -8,11 +8,13 @@
 // Response
 //--------------------------------------------------------------------------------
 {
-  "type":"userloggedresponse",
+  "type":"listusersloggedresponse",
   "data":
     {
-      "nick":"bruno"
+	  "listusers": 
+	  [
+	    "joselito",
+		"bruno"
+	  ]
     }
 }
-    <nick>
-        Nick do usuário logado.
