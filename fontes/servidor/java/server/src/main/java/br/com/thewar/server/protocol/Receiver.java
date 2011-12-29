@@ -36,9 +36,6 @@ public class Receiver extends Thread {
 
 	// PrintStream that write the response to client
 	private PrintStream printStream;
-	
-	// Login response object
-	private LoginResponse loginResponse;
 
 	/**
 	 * This class will receiver the socket data and forward to respective target
@@ -119,6 +116,7 @@ public class Receiver extends Thread {
 
 			// Read the type of data was received
 			String type = mapper.readTree(json).path("type").asText();
+			String message = "";
 
 			/*
 			 * Decide who must respond the type received
@@ -132,7 +130,7 @@ public class Receiver extends Thread {
 
 				l = loginDAO.load(l.getNick(), l.getPass());
 					
-				loginResponse = new LoginResponse();
+				LoginResponse loginResponse = new LoginResponse();
 
 				if (l != null) {
 
@@ -149,13 +147,15 @@ public class Receiver extends Thread {
 
 				}		
 				
+				message = loginResponse.getResponseMessage();
+				
 				loginDAO = null;
 
 			}
 			
 			// PrintStream that write the response to client
 			printStream = new PrintStream(socket.getOutputStream());
-			printStream.print(loginResponse.getResponseMessage());
+			printStream.print(message);
 			printStream.flush();
 
 		} catch (JsonProcessingException e) {
