@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * \name    MainManager.cs
+ * \author  Joselito Viveiros Nogueira Filho - joselitofilhoo@gmail.com
+ * \date    28/12/2011
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,68 +20,76 @@ using br.com.thewar.util;
 namespace br.com.thewar
 {
     /// <summary>
-    /// Singleton
+    /// 
     /// </summary>
     public class MainManager : /*implements*/IObserver
     {
         #region Construtores
         /// <summary>
-        /// 
+        /// Manager client's main.
         /// </summary>
         /// <param name="mainWindow_"></param>
         public MainManager(MainWindow mainWindow_)
         {
+            // Instance of the communication.
+            // TODO: pegar do arquivo de configuração.
             Communication = new CommunicationInterface("127.0.0.1", 1234);
+
             //communication = new CommunicationInterface("192.168.1.9", 1234);
+            // Instance of the session.
             session = Session.getSession();
+
+            // Reference main control.
             mainWindow = mainWindow_;
 
-            // Adicionado a própria classe MainManager(Observer) no Communication(Subject)
+            // Adding the class itself MainManager(Observer) in Communication(Subject).
             Communication.Attach(this);
         }
         #endregion
 
         #region Métodos
-        /// <summary>
-        /// 
-        /// </summary>
+        /**
+         * \overload void IObserver::Update()
+         */
         public void Update()
         {
             processResponse(Communication.SubjectState);
         }
         /// <summary>
-        /// 
+        /// Processes the data received from the server.
         /// </summary>
-        /// <param name="json"></param>
+        /// <param name="json">data in json format.</param>
         private void processResponse(string json)
         {
             JObject jObj = JObject.Parse(json);
             JToken jTk;
 
-            // Descobrindo o tipo da resposta
-            string tipo = jObj.Property("type").Value.ToString();
+            // Searching for the type of response.
+            string type = jObj.Property("type").Value.ToString();
 
-            // Pegando o campo data com os atributos do objeto.
+            // Searching for the data.
             jTk = jObj.Property("data").Value;
 
             JsonSerializer jsonSerializer = new JsonSerializer();
 
-            // Login
-            if (tipo.Equals("loginresponse"))
+            // Type: Login
+            if (type.Equals("loginresponse"))
             {
                 LoginResponse l = (LoginResponse)jsonSerializer.Deserialize(
                     new JTokenReader(jTk), 
                     typeof(LoginResponse));
                 processLogin(l);
             }
-            else if (tipo.Equals("userloggedresponse"))
+            // Type: User Logged
+            else if (type.Equals("userloggedresponse"))
             {
                 UserLoggedResponse userLogged = (UserLoggedResponse)jsonSerializer.Deserialize(
                     new JTokenReader(jTk), 
                     typeof(UserLoggedResponse));
                 processUserLogged(userLogged);
             }
-            else if (tipo.Equals("listusersloggedresponse"))
+            // Type: List Users Logged
+            else if (type.Equals("listusersloggedresponse"))
             {
                 ListUsersLoggedResponse listUsers = (ListUsersLoggedResponse)jsonSerializer.Deserialize(
                     new JTokenReader(jTk),
@@ -85,12 +98,12 @@ namespace br.com.thewar
             }
         }
         /// <summary>
-        /// 
+        /// Processes the login received from the server.
         /// </summary>
-        /// <param name="loginResp"></param>
+        /// <param name="loginResp">Login data</param>
         private void processLogin(LoginResponse loginResp)
         {
-            if (loginResp.Status == 0)
+            if (loginResp.Status == (int)ResponseStatus.SUCCESS)
             {
                 mainWindow.GridMain.Dispatcher.Invoke(
                     System.Windows.Threading.DispatcherPriority.Normal,
