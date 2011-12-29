@@ -34,12 +34,10 @@ public class LoginDAO implements GenericDAO<Login> {
 
 	private Criteria criteria;
 
-	private static LoginDAO instance;
-
 	/**
 	 * Class that mapping the Login object with the database
 	 */
-	private LoginDAO() {
+	public LoginDAO() {
 
 		logger = Logger.getLogger(LoginDAO.class.getName());
 
@@ -281,23 +279,6 @@ public class LoginDAO implements GenericDAO<Login> {
 		}
 
 		date = null;
-
-	}
-
-	/**
-	 * Return a instance of LoginDAO
-	 * 
-	 * @return a instance of LoginDAO
-	 */
-	public static LoginDAO getInstance() {
-
-		if (instance == null) {
-
-			instance = new LoginDAO();
-
-		}
-
-		return instance;
 
 	}
 

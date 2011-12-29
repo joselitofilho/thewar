@@ -34,12 +34,10 @@ public class UserDAO implements GenericDAO<User> {
 
 	private Criteria criteria;
 
-	private static UserDAO instance;
-
 	/**
 	 * Class that mapping the User object with the database
 	 */
-	private UserDAO() {
+	public UserDAO() {
 
 		logger = Logger.getLogger(UserDAO.class.getName());
 
@@ -56,7 +54,7 @@ public class UserDAO implements GenericDAO<User> {
 
 			// Set the date on fields createdAt and updatedAt
 			setDate(obj);
-			
+
 			// Get a hibernate session
 			session = HibernateUtil.getSessionFactory().openSession();
 
@@ -232,23 +230,6 @@ public class UserDAO implements GenericDAO<User> {
 		}
 
 		date = null;
-
-	}
-
-	/**
-	 * Return a instance of UserDAO
-	 * 
-	 * @return a instance of UserDAO
-	 */
-	public static UserDAO getInstance() {
-
-		if (instance == null) {
-
-			instance = new UserDAO();
-
-		}
-
-		return instance;
 
 	}
 
