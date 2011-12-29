@@ -30,7 +30,7 @@ public class Session {
 	private List<Socket> sockets;
 	
 	// Register events on the log
-	private Logger logger;
+	private static Logger logger;
 
 	/**
 	 * Private constructor
