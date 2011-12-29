@@ -102,6 +102,7 @@
     <Compile Include="br\com\thewar\communication\CommunicationInterface.cs" />
     <Compile Include="br\com\thewar\protocol\response\ListUsersLoggedResponse.cs" />
     <Compile Include="br\com\thewar\protocol\response\LoginResponse.cs" />
+    <Compile Include="br\com\thewar\protocol\response\ResponseStatus.cs" />
     <Compile Include="br\com\thewar\protocol\response\UserLoggedResponse.cs" />
     <Compile Include="br\com\thewar\util\UIUtils.cs" />
     <Compile Include="br\com\thewar\view\ChatControl.xaml.cs">
