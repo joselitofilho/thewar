@@ -59,22 +59,29 @@ namespace br.com.thewar
             // Pegando o campo data com os atributos do objeto.
             jTk = jObj.Property("data").Value;
 
-            JsonSerializer serializer = new JsonSerializer();
+            JsonSerializer jsonSerializer = new JsonSerializer();
 
             // Login
             if (tipo.Equals("loginresponse"))
             {
-                LoginResponse l = (LoginResponse)serializer.Deserialize(
+                LoginResponse l = (LoginResponse)jsonSerializer.Deserialize(
                     new JTokenReader(jTk), 
                     typeof(LoginResponse));
                 processLogin(l);
             }
             else if (tipo.Equals("userloggedresponse"))
             {
-                UserLoggedResponse userLogged = (UserLoggedResponse)serializer.Deserialize(
+                UserLoggedResponse userLogged = (UserLoggedResponse)jsonSerializer.Deserialize(
                     new JTokenReader(jTk), 
                     typeof(UserLoggedResponse));
                 processUserLogged(userLogged);
+            }
+            else if (tipo.Equals("listusersloggedresponse"))
+            {
+                ListUsersLoggedResponse listUsers = (ListUsersLoggedResponse)jsonSerializer.Deserialize(
+                    new JTokenReader(jTk),
+                    typeof(ListUsersLoggedResponse));
+                processListUsersLogged(listUsers);
             }
         }
         /// <summary>
@@ -129,6 +136,35 @@ namespace br.com.thewar
 
                                     // Adicionando nick na lista de usuários.
                                     roomView.ListUsers.addUser(userLoggedResp.Nick);
+                                }
+                                else
+                                {
+                                    // TODO: o que fazer quando não estiver na sala e receber essa mensagem?
+                                }
+                            }
+                        ));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listUsersLoggedResp"></param>
+        private void processListUsersLogged(ListUsersLoggedResponse listUsersLoggedResp)
+        {
+            mainWindow.GridMain.Dispatcher.Invoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(
+                            delegate()
+                            {
+                                // Procurando elemento da sala.
+                                RoomView roomView = UIUtils.FindChild<RoomView>(mainWindow.GridMain, "RoomView");
+                                if (roomView != null)
+                                {
+                                    foreach(string nick in listUsersLoggedResp.ListUsers)
+                                    {
+                                        session.addUsersList(nick);
+                                        // Adicionando nick na lista de usuários.
+                                        roomView.ListUsers.addUser(nick);
+                                    }
                                 }
                                 else
                                 {

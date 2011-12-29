@@ -43,7 +43,11 @@ namespace br.com.thewar.lang
         /// <param name="nick"></param>
         public void addUsersList(string nick)
         {
-            usersList.Add(nick);
+            // O nick do jogador atual não é adicionado na lista de usuários.
+            if (nick != User.Login.Nick)
+            {
+                usersList.Add(nick);
+            }
         }
         #endregion
 
