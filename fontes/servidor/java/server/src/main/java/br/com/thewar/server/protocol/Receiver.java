@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -160,8 +161,9 @@ public class Receiver extends Thread {
 	private void processLogin(Login loginRequest)
 	{
 		try {
+			
+			// Get the login in database
 			LoginDAO loginDAO = new LoginDAO();
-	
 			loginRequest = loginDAO.load(loginRequest.getNick(), loginRequest.getPass());
 			loginDAO = null;
 			
@@ -173,7 +175,7 @@ public class Receiver extends Thread {
 			LoginResponse loginResponse = new LoginResponse();
 			loginResponse.setStatus(respCode.getCode());
 			
-			ArrayList<Socket> arr = new ArrayList<Socket>();
+			List<Socket> arr = new ArrayList<Socket>();
 			// Add the current socket
 			arr.add(socket);
 			
@@ -190,11 +192,20 @@ public class Receiver extends Thread {
 			}
 		
 		} catch (JsonGenerationException e) {
+			
+			// Register the exception on log
 			logger.log(Level.SEVERE, null, e);
+			
 		} catch (JsonMappingException e) {
+			
+			// Register the exception on log
 			logger.log(Level.SEVERE, null, e);
+			
 		} catch (IOException e) {
+			
+			// Register the exception on log
 			logger.log(Level.SEVERE, null, e);
+			
 		}
 	
 	}
