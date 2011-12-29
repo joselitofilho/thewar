@@ -31,6 +31,7 @@ namespace br.com.thewar
             session = Session.getSession();
             mainWindow = mainWindow_;
 
+            // Adicionado a própria classe MainManager(Observer) no Communication(Subject)
             Communication.Attach(this);
         }
         #endregion
@@ -63,59 +64,78 @@ namespace br.com.thewar
             // Login
             if (tipo.Equals("loginresponse"))
             {
-                LoginResponse l = (LoginResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(LoginResponse));
-                if (l.Status == 0)
-                {
-                    mainWindow.GridMain.Dispatcher.Invoke(
-                        System.Windows.Threading.DispatcherPriority.Normal,
-                        new Action(
-                          delegate()
-                          {
-                              // Removendo tela de login.
-                              mainWindow.GridMain.Children.Remove(mainWindow.LoginView);
-
-                              // Adicionando tela de salas de espera.
-                              RoomView roomView = new RoomView();
-                              roomView.Name = "RoomView";
-
-                              mainWindow.GridMain.Children.Add(roomView);
-                          }
-                      ));
-                }
-                else
-                {
-                    // Remove o usuário da sessão.
-                    session.User = null;
-                    // Processa a resposta para a tela de login.
-                    mainWindow.LoginView.processResponse(l);
-                }
+                LoginResponse l = (LoginResponse)serializer.Deserialize(
+                    new JTokenReader(jTk), 
+                    typeof(LoginResponse));
+                processLogin(l);
             }
             else if (tipo.Equals("userloggedresponse"))
             {
-                UserLoggedResponse userLogged = (UserLoggedResponse)serializer.Deserialize(new JTokenReader(jTk), typeof(UserLoggedResponse));
-
-                if (userLogged.Nick != session.User.Login.Nick)
-                    mainWindow.GridMain.Dispatcher.Invoke(
-                            System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(
-                                delegate()
-                                {
-                                    // Procurando elemento da sala.
-                                    RoomView roomView = UIUtils.FindChild<RoomView>(mainWindow.GridMain, "RoomView");
-                                    if (roomView != null)
-                                    {
-                                        session.addUsersList(userLogged.Nick);
-
-                                        // Adicionando nick na lista de usuários.
-                                        roomView.ListUsers.addUser(userLogged.Nick);
-                                    }
-                                    else
-                                    {
-                                        // TODO: o que fazer quando não estiver na sala e receber essa mensagem?
-                                    }
-                                }
-                            ));
+                UserLoggedResponse userLogged = (UserLoggedResponse)serializer.Deserialize(
+                    new JTokenReader(jTk), 
+                    typeof(UserLoggedResponse));
+                processUserLogged(userLogged);
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginResp"></param>
+        private void processLogin(LoginResponse loginResp)
+        {
+            if (loginResp.Status == 0)
+            {
+                mainWindow.GridMain.Dispatcher.Invoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(
+                      delegate()
+                      {
+                          // Removendo tela de login.
+                          mainWindow.GridMain.Children.Remove(mainWindow.LoginView);
+
+                          // Adicionando tela de salas de espera.
+                          RoomView roomView = new RoomView();
+                          roomView.Name = "RoomView";
+
+                          mainWindow.GridMain.Children.Add(roomView);
+                      }
+                  ));
+            }
+            else
+            {
+                // Remove o usuário da sessão.
+                session.User = null;
+                // Processa a resposta para a tela de login.
+                mainWindow.LoginView.processResponse(loginResp);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userLoggedResp"></param>
+        private void processUserLogged(UserLoggedResponse userLoggedResp)
+        {
+            if (userLoggedResp.Nick != session.User.Login.Nick)
+                mainWindow.GridMain.Dispatcher.Invoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(
+                            delegate()
+                            {
+                                // Procurando elemento da sala.
+                                RoomView roomView = UIUtils.FindChild<RoomView>(mainWindow.GridMain, "RoomView");
+                                if (roomView != null)
+                                {
+                                    session.addUsersList(userLoggedResp.Nick);
+
+                                    // Adicionando nick na lista de usuários.
+                                    roomView.ListUsers.addUser(userLoggedResp.Nick);
+                                }
+                                else
+                                {
+                                    // TODO: o que fazer quando não estiver na sala e receber essa mensagem?
+                                }
+                            }
+                        ));
         }
         #endregion
 
