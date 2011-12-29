@@ -30,11 +30,13 @@ public class InitialData {
 		Login brunoLogin = new Login("bruno", "1234", bruno);
 		Login joselitoLogin = new Login("joselito", "1234", joselito);
 		
-		UserDAO.getInstance().save(bruno);
-		UserDAO.getInstance().save(joselito);
+		UserDAO userDAO = new UserDAO();
+		userDAO.save(bruno);
+		userDAO.save(joselito);
 		
-		LoginDAO.getInstance().save(brunoLogin);
-		LoginDAO.getInstance().save(joselitoLogin);
+		LoginDAO loginDAO = new LoginDAO();
+		loginDAO.save(brunoLogin);
+		loginDAO.save(joselitoLogin);
 		
 	}
 	
