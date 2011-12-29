@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace br.com.thewar.protocol
+namespace br.com.thewar.protocol.response
 {
     /// <summary>
     /// 

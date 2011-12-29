@@ -26,7 +26,11 @@ namespace Thewar.br.com.thewar.view
 
         public void addUser(string nick)
         {
-            ListViewUsers.Items.Add(nick);
+            ListViewItem item = new ListViewItem();
+            item.Height = 30;
+            item.Content = nick;
+
+            ListViewUsers.Items.Add(item);
         }
 
         public void updateList(List<string> list)

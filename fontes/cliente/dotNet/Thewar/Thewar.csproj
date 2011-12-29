@@ -91,13 +91,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="br\com\thewar\lang\IObserver.cs" />
+    <Compile Include="br\com\thewar\lang\ASubject.cs" />
     <Compile Include="br\com\thewar\lang\Session.cs" />
+    <Compile Include="br\com\thewar\MainManager.cs" />
     <Compile Include="br\com\thewar\model\GenericObject.cs" />
     <Compile Include="br\com\thewar\model\Login.cs" />
     <Compile Include="br\com\thewar\model\User.cs" />
     <Compile Include="br\com\thewar\protocol\LoginRequest.cs" />
-    <Compile Include="br\com\thewar\InterfaceComuncacao.cs" />
-    <Compile Include="br\com\thewar\protocol\LoginResponse.cs" />
+    <Compile Include="br\com\thewar\communication\CommunicationInterface.cs" />
+    <Compile Include="br\com\thewar\protocol\response\ListUsersLoggedResponse.cs" />
+    <Compile Include="br\com\thewar\protocol\response\LoginResponse.cs" />
     <Compile Include="br\com\thewar\protocol\response\UserLoggedResponse.cs" />
     <Compile Include="br\com\thewar\util\UIUtils.cs" />
     <Compile Include="br\com\thewar\view\ChatControl.xaml.cs">

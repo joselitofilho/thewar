@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using br.com.thewar.protocolo;
-using br.com.thewar.protocol;
+using br.com.thewar;
 using br.com.thewar.lang;
 using br.com.thewar.model;
+using br.com.thewar.protocol.response;
+using br.com.thewar.protocolo;
 
 namespace Thewar.br.com.thewar
 {
@@ -61,7 +62,7 @@ namespace Thewar.br.com.thewar
                 };
 
                 // Envia a requisição.
-                MainWindow.communication.SendObject(login);
+                MainManager.Communication.SendObject(login);
             }
             catch (Exception ex)
             {
