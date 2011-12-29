@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="Thewar.br.com.thewar.view.ListUsersControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="200
+             " BorderBrush="Black">
+    <Grid>
+        <ListView x:Name="ListViewUsers">
+            <ListViewItem Height="30" Content="Jogador 1" />
+            <ListViewItem Height="30" Content="Jogador 2" />
+        </ListView>
+    </Grid>
+</UserControl>

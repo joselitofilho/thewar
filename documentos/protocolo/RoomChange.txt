@@ -1,0 +1,33 @@
+//--------------------------------------------------------------------------------
+// Request
+//--------------------------------------------------------------------------------
+{
+  "type":"roomchangerequest",
+  "data":
+    {
+      "room":"1",
+      "pos":"3"
+    }
+}
+    <room>
+		Identificador da sala
+    <pass>
+		Identificador da posição na sala
+		
+//--------------------------------------------------------------------------------
+// Response
+//--------------------------------------------------------------------------------
+{
+  "type":"roomchangeresponse",
+  "data":
+    {
+      "status":"0"
+    }
+}
+    <status>
+        -1: Erro desconhecido
+        0: Sucesso
+        1: Usuário entrou na sala e é o dono
+        2: Usuário mudou de canto na própria sala
+        3: Já existe um jogador na posição que ele deseja entrar
+        4: Não está logado 

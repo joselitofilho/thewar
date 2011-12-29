@@ -66,10 +66,10 @@ public class Servidor implements Runnable {
 		while(rodar)
 		{
 			try {
-	            logger.log(Level.INFO, "Esperando algu�m conectar-se...");
+	            logger.log(Level.INFO, "Esperando alguém conectar-se...");
 	            //Esperando conex�o de algum cliente
 	            socket = serverSocket.accept();
-	            logger.log(Level.INFO, "Algu�m conectou. Seu Socket:" + socket);
+	            logger.log(Level.INFO, "Alguém conectou. Seu Socket:" + socket);
 	
 	            // Agora passa a bola para algu�m tratar o recebimento...
 	            new Gerenciador(socket).start();
