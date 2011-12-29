@@ -29,6 +29,9 @@ public class Session {
 	// List of all sockets of the session
 	private List<Socket> sockets;
 	
+	// List of all nicks of the session
+	private List<String> nicks;
+	
 	// Register events on the log
 	private static Logger logger;
 
@@ -72,7 +75,7 @@ public class Session {
 		sessionMap.remove(nick);
 
 	}
-
+	
 	/**
 	 * Get a socket of specific nikc
 	 * 
@@ -95,7 +98,7 @@ public class Session {
 	 */
 	public List<Socket> getAllSockets() {
 
-		logger.log(Level.INFO, "gel all socket os the session ");
+		logger.log(Level.INFO, "gel all socket of the session ");
 		
 		sockets = null;
 
@@ -122,6 +125,39 @@ public class Session {
 
 	}
 
+	/**
+	 * Get a list of all nicks
+	 * 
+	 * @return a list the nicks
+	 */
+	public List<String> getAllNicks() {
+		
+		logger.log(Level.INFO, "gel all nicks of the session ");
+		
+		nicks = null;
+		
+		if (sessionMap.size() > 0) {
+			
+			nicks = new ArrayList<String>();
+			
+			Collection<String> collection = sessionMap.keySet();
+
+			Iterator<String> iterator = collection.iterator();
+			
+			while (iterator.hasNext()) {
+				
+				String nick = iterator.next();
+				
+				nicks.add(nick);
+				
+			}
+			
+		}
+		
+		return nicks;
+
+	}
+	
 	/**
 	 * Get all session's nicks and sockets
 	 * 

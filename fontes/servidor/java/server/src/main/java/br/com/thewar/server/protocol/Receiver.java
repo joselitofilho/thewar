@@ -2,7 +2,6 @@ package br.com.thewar.server.protocol;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.thewar.server.dao.LoginDAO;
 import br.com.thewar.server.model.Login;
+import br.com.thewar.server.response.ListUsersLoggedResponse;
 import br.com.thewar.server.response.LoginResponse;
 
 /**
@@ -37,9 +37,9 @@ public class Receiver extends Thread {
 
 	// Object mapper of JSON
 	private ObjectMapper mapper;
-
-	// PrintStream that write the response to client
-	private PrintStream printStream;
+	
+	// Sesion object
+	private Session session;
 
 	/**
 	 * This class will receiver the socket data and forward to respective target
@@ -52,6 +52,7 @@ public class Receiver extends Thread {
 		// Preparing the battlefield :-)
 		logger = Logger.getLogger(Receiver.class.getName());
 		execute = true;
+		session = Session.getInstance();
 		this.socket = socket;
 		logger.log(Level.INFO, "Receiver initialized...");
 
@@ -120,7 +121,6 @@ public class Receiver extends Thread {
 
 			// Read the type of data was received
 			String type = mapper.readTree(json).path("type").asText();
-			String message = "";
 
 			/*
 			 * Decide who must respond the type received
@@ -175,8 +175,8 @@ public class Receiver extends Thread {
 			LoginResponse loginResponse = new LoginResponse();
 			loginResponse.setStatus(respCode.getCode());
 			
+			// Add the current socket to the list
 			List<Socket> arr = new ArrayList<Socket>();
-			// Add the current socket
 			arr.add(socket);
 			
 			// Send message to the list of sockets
@@ -185,9 +185,17 @@ public class Receiver extends Thread {
 			if (respCode == ResponseCode.SUCCESS) {
 				
 				// Adds the current socket in the session
-				Session.getInstance().add(loginRequest.getNick(), socket);
+				session.add(loginRequest.getNick(), socket);
 				
-				// TODO: enviar a lista de usuário logados..
+				// Get the list of all users logged
+				List<String> nicks = session.getAllNicks();
+				
+				// Create the response
+				ListUsersLoggedResponse loggedResponse = new ListUsersLoggedResponse();
+				loggedResponse.setUsers(nicks);
+				
+				// Send the message for all users logged
+				Server.sendMessage(loggedResponse.getResponseMessage(), session.getAllSockets());
 				
 			}
 		
