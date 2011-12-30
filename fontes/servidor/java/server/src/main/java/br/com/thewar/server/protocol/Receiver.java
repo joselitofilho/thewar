@@ -175,12 +175,8 @@ public class Receiver extends Thread {
 			LoginResponse loginResponse = new LoginResponse();
 			loginResponse.setStatus(respCode.getCode());
 			
-			// Add the current socket to the list
-			List<Socket> arr = new ArrayList<Socket>();
-			arr.add(socket);
-			
-			// Send message to the list of sockets
-			Server.sendMessage(loginResponse.getResponseMessage(), arr);
+			// Send message to the current socket
+			Server.sendMessage(loginResponse.getResponseMessage(), new Socket[] { socket });
 			
 			if (respCode == ResponseCode.SUCCESS) {
 				
@@ -194,12 +190,17 @@ public class Receiver extends Thread {
 				// Get the list of all users logged
 				List<String> nicks = session.getAllNicks();
 				
-				// Create the response
-				ListUsersLoggedResponse loggedResponse = new ListUsersLoggedResponse();
-				loggedResponse.setUsers(nicks);
+				// Create the response of list users logged
+				ListUsersLoggedResponse listUsersloggedResponse = new ListUsersLoggedResponse();
+				listUsersloggedResponse.setUsers(nicks);
+				
+				// Send the message to the list of users logged into the current socket 
+				Server.sendMessage(listUsersloggedResponse.getResponseMessage(), new Socket[] { socket });
+				
+				// Create the response of the user logged
 				
 				// Send the message for all users logged
-				Server.sendMessage(loggedResponse.getResponseMessage(), session.getAllSockets());
+				//Server.sendMessage(listUsersloggedResponse.getResponseMessage(), session.getAllSockets());
 				
 			}
 		
