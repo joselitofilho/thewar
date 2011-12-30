@@ -34,7 +34,7 @@ namespace br.com.thewar.communication
             client = new TcpClient();
             client.Connect(ip, port);
             data = new byte[dataSize];
-            bufferReceived = new Queue<byte[]>();
+            bufferReceived = new Queue<string>();
 
             consumer = new Thread(ReceiveCallback);
             consumer.Start();
@@ -96,14 +96,14 @@ namespace br.com.thewar.communication
 
                 lock (bufferReceived)
                 {
-                    bufferReceived.Enqueue(data);
+                    string message = (System.Text.Encoding.ASCII.GetString(data, 0, bufferLength)).ToString();
+                    List<string> list = BreakMessageJson(message);
+                    foreach (string msg in list)
+                    {
+                        bufferReceived.Enqueue(message);
+                    }
                 }
-                //string message = (System.Text.Encoding.ASCII.GetString(data, 0, bufferLength)).ToString();
 
-                //SubjectState = message;
-                //Notify();
-
-                // Continua lendo do servidor.
                 client.GetStream().BeginRead(data, 0, dataSize, ReceiveMessage, null);
             }
             catch (Exception ex)
@@ -122,13 +122,45 @@ namespace br.com.thewar.communication
                 {
                     if (thisStatic.bufferReceived.Count > 0)
                     {
-                        byte[] buffer = thisStatic.bufferReceived.Dequeue();
-                        string message = (System.Text.Encoding.ASCII.GetString(buffer, 0, buffer.Length)).ToString();
+                        string message = thisStatic.bufferReceived.Dequeue();
                         thisStatic.SubjectState = message;
                         thisStatic.Notify();
                     }
                 }
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private List<string> BreakMessageJson(string message)
+        {
+            List<string> list = new List<string>();
+            int start = 0;
+            int fechado = 0;
+
+            for (int i = 0; i < message.Length; ++i)
+            {
+                char c = message[i];
+                if (c == '{')
+                {
+                    ++fechado;
+                }
+                else if (c == '}')
+                {
+                    --fechado;
+
+                    if (fechado == 0)
+                    {
+                        string temp = message.Substring(start, i + 1);
+                        list.Add(temp);
+                        start = i + 1;
+                    }
+                }
+            }
+
+            return list;
         }
         #endregion
 
@@ -148,7 +180,7 @@ namespace br.com.thewar.communication
         /// <summary>
         /// Fila das mensagens recebidas do servidor.
         /// </summary>
-        private Queue<byte[]> bufferReceived;
+        private Queue<string> bufferReceived;
         /// <summary>
         /// 
         /// </summary>
