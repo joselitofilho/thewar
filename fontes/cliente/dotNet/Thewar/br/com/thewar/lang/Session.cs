@@ -44,7 +44,7 @@ namespace br.com.thewar.lang
         public void addUsersList(string nick)
         {
             // O nick do jogador atual não é adicionado na lista de usuários.
-            if (nick != User.Login.Nick)
+            if (nick != User.Login.Nick && !usersList.Contains(nick))
             {
                 usersList.Add(nick);
             }
