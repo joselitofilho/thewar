@@ -28,9 +28,16 @@ namespace br.com.thewar.communication
         /// <param name="port"></param>
         public CommunicationInterface(string ip, int port)
         {
+            //
+            thisStatic = this;
+            //
             client = new TcpClient();
             client.Connect(ip, port);
             data = new byte[dataSize];
+            bufferReceived = new Queue<byte[]>();
+
+            consumer = new Thread(ReceiveCallback);
+            consumer.Start();
 
             //
             client.GetStream().BeginRead(data, 0, dataSize, ReceiveMessage, null);
@@ -86,10 +93,15 @@ namespace br.com.thewar.communication
             try
             {
                 bufferLength = client.GetStream().EndRead(ar);
-                string message = (System.Text.Encoding.ASCII.GetString(data, 0, bufferLength)).ToString();
 
-                SubjectState = message;
-                Notify();
+                lock (bufferReceived)
+                {
+                    bufferReceived.Enqueue(data);
+                }
+                //string message = (System.Text.Encoding.ASCII.GetString(data, 0, bufferLength)).ToString();
+
+                //SubjectState = message;
+                //Notify();
 
                 // Continua lendo do servidor.
                 client.GetStream().BeginRead(data, 0, dataSize, ReceiveMessage, null);
@@ -97,6 +109,25 @@ namespace br.com.thewar.communication
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void ReceiveCallback()
+        {
+            while (true)
+            {
+                lock(thisStatic.bufferReceived)
+                {
+                    if (thisStatic.bufferReceived.Count > 0)
+                    {
+                        byte[] buffer = thisStatic.bufferReceived.Dequeue();
+                        string message = (System.Text.Encoding.ASCII.GetString(buffer, 0, buffer.Length)).ToString();
+                        thisStatic.SubjectState = message;
+                        thisStatic.Notify();
+                    }
+                }
             }
         }
         #endregion
@@ -114,6 +145,18 @@ namespace br.com.thewar.communication
         /// Tamanho máximo de dados a receber do servidor.
         /// </summary>
         private int dataSize = 102400;
+        /// <summary>
+        /// Fila das mensagens recebidas do servidor.
+        /// </summary>
+        private Queue<byte[]> bufferReceived;
+        /// <summary>
+        /// 
+        /// </summary>
+        private Thread consumer;
+        /// <summary>
+        /// 
+        /// </summary>
+        private static CommunicationInterface thisStatic;
         #endregion
     }
 }
