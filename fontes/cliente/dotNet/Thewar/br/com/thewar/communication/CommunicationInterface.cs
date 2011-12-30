@@ -100,7 +100,7 @@ namespace br.com.thewar.communication
                     List<string> list = BreakMessageJson(message);
                     foreach (string msg in list)
                     {
-                        bufferReceived.Enqueue(message);
+                        bufferReceived.Enqueue(msg);
                     }
                 }
 
@@ -153,7 +153,7 @@ namespace br.com.thewar.communication
 
                     if (fechado == 0)
                     {
-                        string temp = message.Substring(start, i + 1);
+                        string temp = message.Substring(start, (i + 1)-start);
                         list.Add(temp);
                         start = i + 1;
                     }
