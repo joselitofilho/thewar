@@ -22,7 +22,7 @@ public class UserLoggedResponse extends AbstractResponse {
 	 * 
 	 * @param nick of response
 	 */
-	public void setStatus(String nick) {
+	public void setNick(String nick) {
 	
 		data.put("nick", nick);
 
