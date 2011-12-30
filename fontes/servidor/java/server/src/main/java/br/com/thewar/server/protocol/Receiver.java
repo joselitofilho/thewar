@@ -18,6 +18,7 @@ import br.com.thewar.server.dao.LoginDAO;
 import br.com.thewar.server.model.Login;
 import br.com.thewar.server.response.ListUsersLoggedResponse;
 import br.com.thewar.server.response.LoginResponse;
+import br.com.thewar.server.response.UserLoggedResponse;
 
 /**
  * Class that receive the socket and treat the data, forwarding to the target
@@ -163,9 +164,11 @@ public class Receiver extends Thread {
 	{
 		try {
 			
+			String nick = loginRequest.getNick();
+			
 			// Get the login in database
 			LoginDAO loginDAO = new LoginDAO();
-			loginRequest = loginDAO.load(loginRequest.getNick(), loginRequest.getPass());
+			loginRequest = loginDAO.load(nick, loginRequest.getPass());
 			
 			ResponseCode respCode = ResponseCode.UNKNOW;
 			
@@ -185,7 +188,7 @@ public class Receiver extends Thread {
 				loginDAO.save(loginRequest);
 				
 				// Adds the current socket in the session
-				session.add(loginRequest.getNick(), socket);
+				session.add(nick, socket);
 				
 				// Get the list of all users logged
 				List<String> nicks = session.getAllNicks();
@@ -198,9 +201,11 @@ public class Receiver extends Thread {
 				Server.sendMessage(listUsersloggedResponse.getResponseMessage(), new Socket[] { socket });
 				
 				// Create the response of the user logged
+				UserLoggedResponse userLoggedResponse = new UserLoggedResponse();
+				userLoggedResponse.setNick(nick);
 				
-				// Send the message for all users logged
-				//Server.sendMessage(listUsersloggedResponse.getResponseMessage(), session.getAllSockets());
+				// Send the message for all users logged that this user(nick) logged
+				Server.sendMessage(userLoggedResponse.getResponseMessage(), (Socket[]) session.getAllSockets().toArray());
 				
 			}
 		
