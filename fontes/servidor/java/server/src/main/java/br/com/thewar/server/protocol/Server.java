@@ -126,7 +126,7 @@ public class Server implements Runnable {
 	 * @param message to send
 	 * @param sockets of session
 	 */
-	public static void sendMessage(String message, List<Socket> sockets) {
+	public static void sendMessage(String message, Socket[] sockets) {
 
 		if(sockets != null){
 			
