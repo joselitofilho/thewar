@@ -36,6 +36,8 @@ namespace br.com.thewar.communication
             data = new byte[dataSize];
             bufferReceived = new Queue<string>();
 
+            RunConsumer = true;
+
             consumer = new Thread(ReceiveCallback);
             consumer.Start();
 
@@ -47,6 +49,11 @@ namespace br.com.thewar.communication
         #endregion
 
         #region Métodos
+        public void stopConsumer()
+        {
+            RunConsumer = false;
+            //consumer.
+        }
         /// <summary>
         /// Serializa um objeto no formato JSON e envia para o servidor.
         /// </summary>
@@ -116,7 +123,7 @@ namespace br.com.thewar.communication
         /// </summary>
         private static void ReceiveCallback()
         {
-            while (true)
+            while (RunConsumer)
             {
                 lock(thisStatic.bufferReceived)
                 {
@@ -162,6 +169,13 @@ namespace br.com.thewar.communication
 
             return list;
         }
+        #endregion
+
+        #region Propriedades
+        /// <summary>
+        /// 
+        /// </summary>
+        private static Boolean RunConsumer { get; set; }
         #endregion
 
         #region Atributos
