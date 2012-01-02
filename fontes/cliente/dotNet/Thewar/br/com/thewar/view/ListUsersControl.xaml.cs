@@ -30,7 +30,10 @@ namespace Thewar.br.com.thewar.view
             item.Height = 30;
             item.Content = nick;
 
-            ListViewUsers.Items.Add(item);
+            if (!ListViewUsers.Items.Contains(item))
+            {
+                ListViewUsers.Items.Add(item);
+            }
         }
 
         public void updateList(List<string> list)
