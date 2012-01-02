@@ -174,9 +174,12 @@ namespace br.com.thewar
                                 {
                                     foreach(string nick in listUsersLoggedResp.ListUsers)
                                     {
-                                        session.addUsersList(nick);
-                                        // Adicionando nick na lista de usuários.
-                                        roomView.ListUsers.addUser(nick);
+                                        if (nick != session.User.Login.Nick && !session.UsersList.Contains(nick))
+                                        {
+                                            session.addUsersList(nick);
+                                            // Adicionando nick na lista de usuários.
+                                            roomView.ListUsers.addUser(nick);
+                                        }
                                     }
                                 }
                                 else
