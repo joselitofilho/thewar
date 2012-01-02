@@ -18,7 +18,10 @@ namespace br.com.thewar.lang
         /// </summary>
         private Session()
         {
+            //
             UsersList = new List<string>();
+            //
+            Configuration = Configuration.getConfiguration();
         }
         #endregion
 
@@ -67,6 +70,10 @@ namespace br.com.thewar.lang
         /// 
         /// </summary>
         public List<string> UsersList { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Configuration Configuration { get; set; }
         #endregion
     }
 }

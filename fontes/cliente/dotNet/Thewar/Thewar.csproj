@@ -91,6 +91,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="br\com\thewar\Configuration.cs" />
+    <Compile Include="br\com\thewar\configuration\ConfCommunication.cs" />
+    <Compile Include="br\com\thewar\configuration\ConfDirectories.cs" />
     <Compile Include="br\com\thewar\lang\IObserver.cs" />
     <Compile Include="br\com\thewar\lang\ASubject.cs" />
     <Compile Include="br\com\thewar\lang\Session.cs" />

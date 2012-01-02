@@ -31,11 +31,10 @@ namespace br.com.thewar
         /// <param name="mainWindow_"></param>
         public MainManager(MainWindow mainWindow_)
         {
+            // Instance the configuration.
+            configuration = Configuration.getConfiguration();
             // Instance of the communication.
-            // TODO: pegar do arquivo de configuração.
-            Communication = new CommunicationInterface("127.0.0.1", 1234);
-
-            //communication = new CommunicationInterface("192.168.1.9", 1234);
+            Communication = new CommunicationInterface(configuration.Communication.Ip, configuration.Communication.Port);
             // Instance of the session.
             session = Session.getSession();
 
@@ -200,6 +199,10 @@ namespace br.com.thewar
         /// 
         /// </summary>
         private Session session;
+        /// <summary>
+        /// 
+        /// </summary>
+        private Configuration configuration;
         /// <summary>
         /// Referência estática para a janela principal.
         /// </summary>
