@@ -18,7 +18,7 @@ namespace br.com.thewar.lang
         /// </summary>
         private Session()
         {
-            usersList = new List<string>();
+            UsersList = new List<string>();
         }
         #endregion
 
@@ -44,9 +44,9 @@ namespace br.com.thewar.lang
         public void addUsersList(string nick)
         {
             // O nick do jogador atual não é adicionado na lista de usuários.
-            if (nick != User.Login.Nick && !usersList.Contains(nick))
+            if (nick != User.Login.Nick && !UsersList.Contains(nick))
             {
-                usersList.Add(nick);
+                UsersList.Add(nick);
             }
         }
         #endregion
@@ -56,10 +56,6 @@ namespace br.com.thewar.lang
         /// Singleton desta classe.
         /// </summary>
         private static Session session;
-        /// <summary>
-        /// 
-        /// </summary>
-        private List<string> usersList;
         #endregion
 
         #region Propriedades
