@@ -22,12 +22,12 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <TextBlock Padding="5" Text="Room 1" Grid.Column="0"></TextBlock>
-                        <TextBlock Padding="5" Text="" Foreground="White" Background="Red" FontWeight="Bold" Grid.Column="1" MouseUp="TextBlock_MouseUp"></TextBlock>
-                        <TextBlock Padding="5" Text="" Foreground="Black" Background="White" FontWeight="Bold" Grid.Column="2"></TextBlock>
-                        <TextBlock Padding="5" Text="" Foreground="White" Background="Black" FontWeight="Bold" Grid.Column="3"></TextBlock>
-                        <TextBlock Padding="5" Text="" Foreground="White" Background="Blue" FontWeight="Bold" Grid.Row="1" Grid.Column="1"></TextBlock>
-                        <TextBlock Padding="5" Text="" Foreground="White" Background="Green" FontWeight="Bold" Grid.Row="1" Grid.Column="2"></TextBlock>
-                        <TextBlock Padding="5" Text="" Foreground="Black" Background="Yellow" FontWeight="Bold" Grid.Row="1" Grid.Column="3"></TextBlock>
+                        <TextBlock x:Name="r1_p1" Padding="5" Text="" Foreground="White" Background="Red" FontWeight="Bold" Grid.Column="1" MouseUp="TextBlock_MouseUp"></TextBlock>
+                        <TextBlock x:Name="r1_p2" Padding="5" Text="" Foreground="Black" Background="White" FontWeight="Bold" Grid.Column="2" MouseUp="TextBlock_MouseUp"></TextBlock>
+                        <TextBlock x:Name="r1_p3" Padding="5" Text="" Foreground="White" Background="Black" FontWeight="Bold" Grid.Column="3" MouseUp="TextBlock_MouseUp"></TextBlock>
+                        <TextBlock x:Name="r1_p4" Padding="5" Text="" Foreground="White" Background="Blue" FontWeight="Bold" Grid.Row="1" Grid.Column="1" MouseUp="TextBlock_MouseUp"></TextBlock>
+                        <TextBlock x:Name="r1_p5" Padding="5" Text="" Foreground="White" Background="Green" FontWeight="Bold" Grid.Row="1" Grid.Column="2" MouseUp="TextBlock_MouseUp"></TextBlock>
+                        <TextBlock x:Name="r1_p6" Padding="5" Text="" Foreground="Black" Background="Yellow" FontWeight="Bold" Grid.Row="1" Grid.Column="3" MouseUp="TextBlock_MouseUp"></TextBlock>
                         <StackPanel Grid.RowSpan="2" Grid.Column="4">
                         </StackPanel>
                     </Grid>
