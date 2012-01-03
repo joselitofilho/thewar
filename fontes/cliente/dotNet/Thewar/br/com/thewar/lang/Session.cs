@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using br.com.thewar.model;
 using br.com.thewar.communication;
+using br.com.thewar.protocol.request;
 
 namespace br.com.thewar.lang
 {
     /// <summary>
     /// Singleton.
     /// </summary>
-    public class Session
+    public class Session : Dictionary<object, object>
     {
         #region Contrutores
         /// <summary>
