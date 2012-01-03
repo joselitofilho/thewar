@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import br.com.thewar.server.lang.IObserver;
 
 /**
  * The War server class game
@@ -14,7 +17,7 @@ import java.util.logging.Logger;
  * @author Bruno Lopes Alcantara Batista
  * 
  */
-public class Server implements Runnable {
+public class Server implements Runnable, IObserver {
 
 	/**
 	 * LOGIN Constant
@@ -58,6 +61,8 @@ public class Server implements Runnable {
 	// Logger class to log the actions
 	private static Logger logger;
 
+	private HashMap<Socket, Receiver> socketReceiver;
+
 	/**
 	 * Network server of The War game
 	 * 
@@ -72,6 +77,7 @@ public class Server implements Runnable {
 			logger = Logger.getLogger("Server initialized!");
 			serverSocket = new ServerSocket(port);
 			execute = true;
+			socketReceiver = new HashMap<Socket, Receiver>();
 
 		} catch (IOException e) {
 
@@ -105,9 +111,15 @@ public class Server implements Runnable {
 				logger.log(Level.INFO,
 						"Client " + socket.getRemoteSocketAddress()
 								+ " is now connected!");
-				
+
 				// Create a new receiver object to treat this request
-				new Receiver(socket).start();
+				Receiver receiver = new Receiver(socket);
+
+				receiver.attach(this);
+
+				socketReceiver.put(socket, receiver);
+
+				receiver.start();
 
 			} catch (IOException e) {
 
@@ -123,31 +135,46 @@ public class Server implements Runnable {
 	/**
 	 * Method that send a message to a list of sockets
 	 * 
-	 * @param message to send
-	 * @param sockets of session
+	 * @param message
+	 *            to send
+	 * @param sockets
+	 *            of session
 	 */
-	public static void sendMessage(String message, List<Socket> sockets) {
+	public void sendMessage(String message, List<Socket> sockets) {
 
-		if(sockets != null){
-			
+		if (sockets != null) {
+
 			for (Socket socket : sockets) {
-				
+
 				try {
-					
-					PrintStream printStream = new PrintStream(socket.getOutputStream());
+
+					PrintStream printStream = new PrintStream(
+							socket.getOutputStream());
 					printStream.print(message);
 					printStream.flush();
-					
+
 				} catch (IOException e) {
-					
+
 					// Log the exception
 					logger.log(Level.SEVERE, e.getMessage());
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
+
+	}
+
+	public void Update() {
+
+	}
+
+	public void Update(Socket socket) {
+
+		Receiver r = socketReceiver.get(socket);
+
+		sendMessage(r.getStateMessage(), r.getStateSockets());
+
 	}
 }

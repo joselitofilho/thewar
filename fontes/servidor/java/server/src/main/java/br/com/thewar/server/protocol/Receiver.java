@@ -15,6 +15,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.thewar.server.dao.LoginDAO;
+import br.com.thewar.server.lang.IObserver;
+import br.com.thewar.server.lang.ISubject;
 import br.com.thewar.server.model.Login;
 import br.com.thewar.server.response.ListUsersLoggedResponse;
 import br.com.thewar.server.response.LoginResponse;
@@ -26,7 +28,7 @@ import br.com.thewar.server.response.UserLoggedResponse;
  * @author Bruno Lopes Alcantara Batista
  * 
  */
-public class Receiver extends Thread {
+public class Receiver extends Thread implements ISubject {
 
 	// Sentinel variable to while block
 	private boolean execute;
@@ -39,9 +41,38 @@ public class Receiver extends Thread {
 
 	// Object mapper of JSON
 	private ObjectMapper mapper;
-	
+
 	// Sesion object
 	private Session session;
+
+	//
+	private List<Server> list = new ArrayList<Server>();
+
+	//
+	private String stateMessage;
+
+	//
+	private List<Socket> stateSockets;
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public String getStateMessage() {
+		return stateMessage;
+	}
+
+	public void setStateMessage(String stateMessage) {
+		this.stateMessage = stateMessage;
+	}
+
+	public List<Socket> getStateSockets() {
+		return stateSockets;
+	}
+
+	public void setStateSockets(List<Socket> stateSockets) {
+		this.stateSockets = stateSockets;
+	}
 
 	/**
 	 * This class will receiver the socket data and forward to respective target
@@ -131,7 +162,7 @@ public class Receiver extends Thread {
 
 				Login l = mapper.readValue(mapper.readTree(json).path("data"),
 						Login.class);
-				
+
 				processLogin(l);
 
 			}
@@ -153,81 +184,124 @@ public class Receiver extends Thread {
 		}
 
 	}
-	
+
 	/**
 	 * Processes the data received by the client login
 	 * 
 	 * @param loginRequest
-	 * 					  data of login request
+	 *            data of login request
 	 */
-	private void processLogin(Login loginRequest)
-	{
+	private void processLogin(Login loginRequest) {
 		try {
-			
+
 			String nick = loginRequest.getNick();
-			
+
 			// Get the login in database
 			LoginDAO loginDAO = new LoginDAO();
 			loginRequest = loginDAO.load(nick, loginRequest.getPass());
-			
+
 			ResponseCode respCode = ResponseCode.UNKNOW;
-			
+
 			// Checking for user data
-			respCode = (loginRequest != null) ? ResponseCode.SUCCESS : ResponseCode.LOGIN_UNKNOW_USER;
-			
+			respCode = (loginRequest != null) ? ResponseCode.SUCCESS
+					: ResponseCode.LOGIN_UNKNOW_USER;
+
 			LoginResponse loginResponse = new LoginResponse();
 			loginResponse.setStatus(respCode.getCode());
-			
+
 			// Send message to the current socket
 			ArrayList<Socket> currentSocket = new ArrayList<Socket>();
 			currentSocket.add(socket);
-			Server.sendMessage(loginResponse.getResponseMessage(), currentSocket);
-			
+			notifyObservers(loginResponse.getResponseMessage(), currentSocket);
+
 			if (respCode == ResponseCode.SUCCESS) {
-				
+
 				// Fill the last login atribute
 				loginRequest.setLastLogin(new Date());
 				loginDAO.save(loginRequest);
-				
+
 				// Adds the current socket in the session
 				session.add(nick, socket);
-				
+
 				// Get the list of all users logged
 				List<String> nicks = session.getAllNicks();
-				
+
 				// Create the response of list users logged
 				ListUsersLoggedResponse listUsersloggedResponse = new ListUsersLoggedResponse();
 				listUsersloggedResponse.setUsers(nicks);
-				
-				// Send the message to the list of users logged into the current socket 
-				Server.sendMessage(listUsersloggedResponse.getResponseMessage(), currentSocket);
-				
+
+				// Send the message to the list of users logged into the current
+				// socket
+				notifyObservers(listUsersloggedResponse.getResponseMessage(),
+						currentSocket);
+
 				// Create the response of the user logged
 				UserLoggedResponse userLoggedResponse = new UserLoggedResponse();
 				userLoggedResponse.setNick(nick);
-				
-				// Send the message for all users logged that this user(nick) logged
-				Server.sendMessage(userLoggedResponse.getResponseMessage(), session.getAllSockets());
-				
+
+				// Send the message for all users logged that this user(nick)
+				// logged
+
+				notifyObservers(userLoggedResponse.getResponseMessage(),
+						session.getAllSockets());
+
 			}
-		
+
 		} catch (JsonGenerationException e) {
-			
+
 			// Register the exception on log
 			logger.log(Level.SEVERE, null, e);
-			
+
 		} catch (JsonMappingException e) {
-			
+
 			// Register the exception on log
 			logger.log(Level.SEVERE, null, e);
-			
+
 		} catch (IOException e) {
-			
+
 			// Register the exception on log
 			logger.log(Level.SEVERE, null, e);
-			
+
 		}
-	
+
+	}
+
+	/**
+	 * 
+	 * @param observer
+	 */
+	public void attach(IObserver observer) {
+		list.add((Server) observer);
+	}
+
+	/**
+	 * 
+	 * @param observer
+	 */
+	public void detach(IObserver observer) {
+		list.remove(observer);
+	}
+
+	/**
+	 * 
+	 * @param subjectState
+	 */
+	public void notifyObservers(String stateMessage, List<Socket> stateSockets) {
+
+		this.stateMessage = stateMessage;
+
+		this.stateSockets = stateSockets;
+
+		notifyObservers();
+
+	}
+
+	public void notifyObservers() {
+
+		for (IObserver ob : list) {
+			((Server) ob).Update(socket);
+		}
+
 	}
 
 }
