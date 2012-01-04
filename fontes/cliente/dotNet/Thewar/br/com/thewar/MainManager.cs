@@ -95,6 +95,12 @@ namespace br.com.thewar
                     typeof(ListUsersLoggedResponse));
                 processListUsersLogged(listUsers);
             }
+            // Type: Room Change
+            else if (type.Equals("roomchangeresponse"))
+            {
+                //RoomChangeResponse roomChange = 
+                session.Remove("RoomChangeReq");
+            }
         }
         /// <summary>
         /// Processes the login received from the server.

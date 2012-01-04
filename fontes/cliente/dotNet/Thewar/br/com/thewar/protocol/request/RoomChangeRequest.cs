@@ -11,7 +11,7 @@ namespace br.com.thewar.protocol.request
         /// <summary>
         /// 
         /// </summary>
-        public int Id { get; set; }
+        public int Room { get; set; }
         /// <summary>
         /// 
         /// </summary>

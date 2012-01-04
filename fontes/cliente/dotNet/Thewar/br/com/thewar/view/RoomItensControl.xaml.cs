@@ -47,7 +47,7 @@ namespace Thewar.br.com.thewar.view
                 // Cria a requisição para o servidor.
                 RoomChangeRequest roomChangeReq = new RoomChangeRequest()
                 {
-                    Id = roomId,
+                    Room = roomId,
                     Pos = position
                 };
 
