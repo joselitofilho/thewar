@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.thewar.server.model.Room;
+
 /**
  * Class that maintain the socket session
  * 
@@ -23,17 +25,20 @@ public class Session {
 	// HashMap that contains the session
 	private HashMap<String, Socket> sessionMap;
 
+	private HashMap<Integer, Room> roomList;
+
 	// Instance of this class
 	private static Session instance;
 
 	// List of all sockets of the session
 	private List<Socket> sockets;
-	
+
 	// List of all nicks of the session
 	private List<String> nicks;
-	
+
 	// Register events on the log
-	private static Logger logger = Logger.getLogger(Session.class.getSimpleName());
+	private static Logger logger = Logger.getLogger(Session.class
+			.getSimpleName());
 
 	/**
 	 * Private constructor
@@ -42,6 +47,14 @@ public class Session {
 
 		sessionMap = new HashMap<String, Socket>();
 
+		roomList = new HashMap<Integer, Room>();
+		for (int i = 1; i <= 10; ++i) {
+			roomList.put(i, new Room(i));
+		}
+	}
+
+	public HashMap<Integer, Room> getRoomList() {
+		return roomList;
 	}
 
 	/**
@@ -55,7 +68,7 @@ public class Session {
 	public void add(String nick, Socket socket) {
 
 		logger.log(Level.INFO, "adding socket " + socket.toString());
-		
+
 		sessionMap.put(nick, socket);
 
 	}
@@ -69,11 +82,11 @@ public class Session {
 	public void delete(String nick) {
 
 		logger.log(Level.INFO, "removing nick " + nick);
-		
+
 		sessionMap.remove(nick);
 
 	}
-	
+
 	/**
 	 * Get a socket of specific nikc
 	 * 
@@ -84,8 +97,32 @@ public class Session {
 	public Socket getSocket(String nick) {
 
 		logger.log(Level.INFO, "get socket of nick " + nick);
-		
+
 		return sessionMap.get(nick);
+
+	}
+
+	public String getNick(Socket socket) {
+
+		logger.log(Level.INFO, "get nick of socket " + socket);
+
+		Iterator<String> it = sessionMap.keySet().iterator();
+
+		for (Socket s : sessionMap.values()) {
+
+			if (socket.equals(s)) {
+
+				return it.next();
+
+			} else {
+
+				it.next();
+
+			}
+
+		}
+
+		return null;
 
 	}
 
@@ -97,7 +134,7 @@ public class Session {
 	public List<Socket> getAllSockets() {
 
 		logger.log(Level.INFO, "gel all socket of the session ");
-		
+
 		sockets = null;
 
 		// If sessionMap is major than zero, return a list of session's socket
@@ -129,33 +166,33 @@ public class Session {
 	 * @return a list the nicks
 	 */
 	public List<String> getAllNicks() {
-		
+
 		logger.log(Level.INFO, "gel all nicks of the session ");
-		
+
 		nicks = null;
-		
+
 		if (sessionMap.size() > 0) {
-			
+
 			nicks = new ArrayList<String>();
-			
+
 			Collection<String> collection = sessionMap.keySet();
 
 			Iterator<String> iterator = collection.iterator();
-			
+
 			while (iterator.hasNext()) {
-				
+
 				String nick = iterator.next();
-				
+
 				nicks.add(nick);
-				
+
 			}
-			
+
 		}
-		
+
 		return nicks;
 
 	}
-	
+
 	/**
 	 * Get all session's nicks and sockets
 	 * 
@@ -164,23 +201,22 @@ public class Session {
 	public HashMap<String, Socket> getSession() {
 
 		logger.log(Level.INFO, "get the session list of nicks and sockets ");
-		
+
 		return sessionMap;
 
 	}
-	
-	
+
 	/**
 	 * Return the number of sockets on the session
 	 * 
 	 * @return the size of session
 	 */
 	public Integer size() {
-		
+
 		logger.log(Level.INFO, "get the size of the session");
-		
+
 		return sessionMap.size();
-		
+
 	}
 
 	/**
@@ -189,7 +225,7 @@ public class Session {
 	public static Session getInstance() {
 
 		logger.log(Level.INFO, "returning the instance os session");
-		
+
 		// If instance is equal null, create a new instance of session
 		if (instance == null) {
 

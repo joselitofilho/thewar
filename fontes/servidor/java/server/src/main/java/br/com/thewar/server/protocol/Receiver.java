@@ -18,8 +18,11 @@ import br.com.thewar.server.dao.LoginDAO;
 import br.com.thewar.server.lang.IObserver;
 import br.com.thewar.server.lang.ISubject;
 import br.com.thewar.server.model.Login;
+import br.com.thewar.server.model.Room;
+import br.com.thewar.server.request.RoomChangeRequest;
 import br.com.thewar.server.response.ListUsersLoggedResponse;
 import br.com.thewar.server.response.LoginResponse;
+import br.com.thewar.server.response.RoomChangeResponse;
 import br.com.thewar.server.response.UserLoggedResponse;
 
 /**
@@ -165,6 +168,15 @@ public class Receiver extends Thread implements ISubject {
 
 				processLogin(l);
 
+			} else if (type.equals("roomchangerequest")) {
+
+				RoomChangeRequest roomChangeRequest = mapper.readValue(mapper
+						.readTree(json).path("data"), RoomChangeRequest.class);
+
+				processRoomChange(roomChangeRequest.getRoom(),
+						roomChangeRequest.getPos(), Session.getInstance()
+								.getNick(socket));
+
 			}
 
 		} catch (JsonProcessingException e) {
@@ -183,6 +195,33 @@ public class Receiver extends Thread implements ISubject {
 
 		}
 
+	}
+
+	private void processRoomChange(Integer room, Integer pos, String nick) {
+
+		try {
+			Room r = Session.getInstance().getRoomList().get(room);
+			RoomChangeResponse resp = new RoomChangeResponse();
+			resp.setStatus(r.addPlayer(nick, pos));
+
+			ArrayList<Socket> currentSocket = new ArrayList<Socket>();
+			currentSocket.add(socket);
+
+			notifyObservers(resp.getResponseMessage(), currentSocket);
+			
+			//if (0, 1, 2) {
+			
+			//}
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
