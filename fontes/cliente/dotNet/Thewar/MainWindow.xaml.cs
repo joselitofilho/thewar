@@ -22,6 +22,7 @@ using Thewar.br.com.thewar.view;
 using br.com.thewar.protocol.response;
 using br.com.thewar.util;
 using br.com.thewar.communication;
+using System.Diagnostics;
 
 namespace Thewar
 {
@@ -43,5 +44,12 @@ namespace Thewar
         /// </summary>
         private MainManager mainManager;
         #endregion
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            // Mata a aplicação pois as threads que eram criadas no decorrer da aplicação
+            // não estavam sendo fechadas quando a aplicação fechava normalmente.
+            Process.GetCurrentProcess().Kill();
+        }
     }
 }
