@@ -38,8 +38,12 @@ public class Room implements Serializable {
 		this.nickOwner = nickOwner;
 	}
 
-	public LinkedList<RoomPlayer> getRoomplPlayers() {
+	public LinkedList<RoomPlayer> getRoomlPlayers() {
 		return roomlPlayers;
+	}
+
+	public void setRoomlPlayers(LinkedList<RoomPlayer> roomlPlayers) {
+		this.roomlPlayers = roomlPlayers;
 	}
 
 	public Boolean isPositionEmpty(Integer position) {

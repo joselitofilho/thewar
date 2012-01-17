@@ -20,6 +20,7 @@ import br.com.thewar.server.lang.ISubject;
 import br.com.thewar.server.model.Login;
 import br.com.thewar.server.model.Room;
 import br.com.thewar.server.request.RoomChangeRequest;
+import br.com.thewar.server.response.ListPlayersRoomResponse;
 import br.com.thewar.server.response.ListUsersLoggedResponse;
 import br.com.thewar.server.response.LoginResponse;
 import br.com.thewar.server.response.RoomChangeResponse;
@@ -272,6 +273,18 @@ public class Receiver extends Thread implements ISubject {
 				// Send the message to the list of users logged into the current
 				// socket
 				notifyObservers(listUsersloggedResponse.getResponseMessage(),
+						currentSocket);
+				
+				// Get the list of all players room
+				List<Room> playersRoom = session.getAllPlayersRoom(); 
+				
+				// Create the response of list players room
+				ListPlayersRoomResponse listPlayersRoom = new ListPlayersRoomResponse();
+				listPlayersRoom.setPlayersRoom(playersRoom);
+				
+				// Send the message to the list of users logged into the current
+				// socket
+				notifyObservers(listPlayersRoom.getResponseMessage(),
 						currentSocket);
 
 				// Create the response of the user logged

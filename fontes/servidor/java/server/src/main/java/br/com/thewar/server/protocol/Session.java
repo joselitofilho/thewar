@@ -192,6 +192,19 @@ public class Session {
 		return nicks;
 
 	}
+	
+	public List<Room> getAllPlayersRoom() {
+		
+		ArrayList<Room> r = new ArrayList<Room>();
+		
+		for (Room rl : roomList.values()) {
+			
+			r.add(rl);
+			
+		}
+		
+		return r;
+	}
 
 	/**
 	 * Get all session's nicks and sockets
