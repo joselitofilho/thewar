@@ -81,7 +81,50 @@ class FronteiraTerritorio(object):
         CodigoTerritorio.Argentina: [CodigoTerritorio.Brasil, CodigoTerritorio.Chile],
         CodigoTerritorio.Brasil: [CodigoTerritorio.Argentina, CodigoTerritorio.Chile, CodigoTerritorio.Colombia, CodigoTerritorio.Argelia],
         CodigoTerritorio.Chile: [CodigoTerritorio.Argentina, CodigoTerritorio.Brasil, CodigoTerritorio.Colombia],
-        CodigoTerritorio.Colombia: [CodigoTerritorio.Brasil, CodigoTerritorio.Chile, CodigoTerritorio.Mexico]
+        CodigoTerritorio.Colombia: [CodigoTerritorio.Brasil, CodigoTerritorio.Chile, CodigoTerritorio.Mexico],
+
+        CodigoTerritorio.Mexico: [CodigoTerritorio.Colombia, CodigoTerritorio.NovaYork, CodigoTerritorio.California],
+        CodigoTerritorio.California: [CodigoTerritorio.Mexico, CodigoTerritorio.NovaYork, CodigoTerritorio.Vancouver, CodigoTerritorio.Ottawa],
+        CodigoTerritorio.NovaYork: [CodigoTerritorio.Mexico, CodigoTerritorio.Ottawa, CodigoTerritorio.Labrador, CodigoTerritorio.California],
+        CodigoTerritorio.Vancouver: [CodigoTerritorio.California, CodigoTerritorio.Ottawa, CodigoTerritorio.Alaska, CodigoTerritorio.Mackenzie],
+        CodigoTerritorio.Ottawa: [CodigoTerritorio.Mackenzie, CodigoTerritorio.Vancouver, CodigoTerritorio.California, CodigoTerritorio.NovaYork, CodigoTerritorio.Labrador],
+        CodigoTerritorio.Labrador: [CodigoTerritorio.Groelandia, CodigoTerritorio.Ottawa, CodigoTerritorio.NovaYork],
+        CodigoTerritorio.Alaska: [CodigoTerritorio.Mackenzie, CodigoTerritorio.Vancouver, CodigoTerritorio.Vladivostok],
+        CodigoTerritorio.Mackenzie: [CodigoTerritorio.Alaska, CodigoTerritorio.Vancouver, CodigoTerritorio.Ottawa, CodigoTerritorio.Groelandia],
+        CodigoTerritorio.Groelandia: [CodigoTerritorio.Mackenzie, CodigoTerritorio.Labrador, CodigoTerritorio.Islandia],
+        
+        CodigoTerritorio.Islandia: [CodigoTerritorio.Groelandia, CodigoTerritorio.Inglaterra],
+        CodigoTerritorio.Inglaterra: [CodigoTerritorio.Islandia, CodigoTerritorio.Portugal, CodigoTerritorio.Alemanha, CodigoTerritorio.Suecia],
+        CodigoTerritorio.Suecia: [CodigoTerritorio.Inglaterra, CodigoTerritorio.Moscou],
+        CodigoTerritorio.Moscou: [CodigoTerritorio.Suecia, CodigoTerritorio.Polonia, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Aral, CodigoTerritorio.Omsk],
+        CodigoTerritorio.Polonia: [CodigoTerritorio.Moscou, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Egito, CodigoTerritorio.Alemanha],
+        CodigoTerritorio.Alemanha: [CodigoTerritorio.Portugal, CodigoTerritorio.Polonia],
+        CodigoTerritorio.Portugal: [CodigoTerritorio.Alemanha, CodigoTerritorio.Inglaterra, CodigoTerritorio.Argelia, CodigoTerritorio.Egito],
+        
+        CodigoTerritorio.Argelia: [CodigoTerritorio.Portugal, CodigoTerritorio.Brasil, CodigoTerritorio.Congo, CodigoTerritorio.Sudao, CodigoTerritorio.Egito],
+        CodigoTerritorio.Egito: [CodigoTerritorio.Argelia, CodigoTerritorio.Sudao, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Polonia, CodigoTerritorio.Portugal],
+        CodigoTerritorio.Sudao: [CodigoTerritorio.Egito, CodigoTerritorio.Argelia, CodigoTerritorio.Congo, CodigoTerritorio.AfricaDoSul, CodigoTerritorio.Madagascar],
+        CodigoTerritorio.Congo: [CodigoTerritorio.Argelia, CodigoTerritorio.AfricaDoSul, CodigoTerritorio.Sudao],
+        CodigoTerritorio.AfricaDoSul: [CodigoTerritorio.Congo, CodigoTerritorio.Sudao, CodigoTerritorio.Madagascar],
+        CodigoTerritorio.Madagascar: [CodigoTerritorio.Sudao, CodigoTerritorio.AfricaDoSul],
+        
+        CodigoTerritorio.OrienteMedio: [CodigoTerritorio.Egito, CodigoTerritorio.Polonia, CodigoTerritorio.Moscou, CodigoTerritorio.Aral, CodigoTerritorio.India],
+        CodigoTerritorio.India: [CodigoTerritorio.Sumatra, CodigoTerritorio.Vietna, CodigoTerritorio.China, CodigoTerritorio.Aral, CodigoTerritorio.OrienteMedio],
+        CodigoTerritorio.Vietna: [CodigoTerritorio.Borneo, CodigoTerritorio.China, CodigoTerritorio.India],
+        CodigoTerritorio.Aral: [CodigoTerritorio.Moscou, CodigoTerritorio.Omsk, CodigoTerritorio.China, CodigoTerritorio.India, CodigoTerritorio.OrienteMedio],
+        CodigoTerritorio.China: [CodigoTerritorio.Vietna, CodigoTerritorio.Japao, CodigoTerritorio.Vladivostok, CodigoTerritorio.Tchita, CodigoTerritorio.Mongolia, CodigoTerritorio.Omsk, CodigoTerritorio.Aral, CodigoTerritorio.India],
+        CodigoTerritorio.Japao: [CodigoTerritorio.Vladivostok, CodigoTerritorio.China],
+        CodigoTerritorio.Omsk: [CodigoTerritorio.Moscou, CodigoTerritorio.Aral, CodigoTerritorio.China, CodigoTerritorio.Mongolia, CodigoTerritorio.Dudinka],
+        CodigoTerritorio.Mongolia: [CodigoTerritorio.Dudinka, CodigoTerritorio.Omsk, CodigoTerritorio.China, CodigoTerritorio.Tchita],
+        CodigoTerritorio.Dudinka: [CodigoTerritorio.Omsk, CodigoTerritorio.Mongolia, CodigoTerritorio.Tchita, CodigoTerritorio.Siberia],
+        CodigoTerritorio.Tchita: [CodigoTerritorio.Siberia, CodigoTerritorio.Dudinka, CodigoTerritorio.Mongolia, CodigoTerritorio.Vladivostok],
+        CodigoTerritorio.Siberia: [CodigoTerritorio.Dudinka, CodigoTerritorio.Tchita, CodigoTerritorio.Vladivostok],
+        CodigoTerritorio.Vladivostok: [CodigoTerritorio.Siberia, CodigoTerritorio.Tchita, CodigoTerritorio.China, CodigoTerritorio.Japa],
+        
+        CodigoTerritorio.Autralia: [CodigoTerritorio.NovaGuine, CodigoTerritorio.Sumatra, CodigoTerritorio.Borneo, ],
+        CodigoTerritorio.NovaGuine: [CodigoTerritorio.Australia, CodigoTerritorio.Borneo],
+        CodigoTerritorio.Borneo: [CodigoTerritorio.NovaGuine, CodigoTerritorio.Australia, CodigoTerritorio.Vietna],
+        CodigoTerritorio.Sumatra: [CodigoTerritorio.India, CodigoTerritorio.Australia]
     }
     
     @staticmethod
