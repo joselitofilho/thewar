@@ -53,8 +53,7 @@ function processarMsg_turno(msgParams) {
     appwar_alteraInfoTurnoJogador(msgParams.vezDoJogador);
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         processarMsg_turno_distribuir_tropas_globais(msgParams);
-    }
-    else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
         processarMsg_turno_atacar(msgParams);
@@ -66,6 +65,8 @@ function processarMsg_turno(msgParams) {
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     $('#info_turno_texto').html('Distribuir tropas globais');
     $('#quantidade_de_tropas').html('Quantidade de tropas a colocar: ' + msgParams.quantidadeDeTropas);
+    
+    _territorios.pintarGruposTerritorios();
 }
 
 function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
@@ -74,10 +75,14 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
     else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
     $('#info_turno_texto').html('Distribuir tropas na ' + strGrupoTerritorio);
     $('#quantidade_de_tropas').html('Quantidade de tropas a colocar: ' + msgParams.quantidadeDeTropas);
+    
+    _territorios.pintarGruposTerritorios();
+    _territorios.manterFocoNoGrupo(msgParams.grupoTerritorio);
 }
 
 function processarMsg_turno_atacar(msgParams) {
     $('#info_turno_texto').html('Atacar');
+    _territorios.pintarGruposTerritorios();
 }
 
 function processarMsg_turno_mover(msgParams) {

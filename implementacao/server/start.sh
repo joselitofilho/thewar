@@ -1,3 +1,3 @@
 #!/bin/bash
 
-screen -S war-server python ~/desenvolvimento/thewar-web/implementacao/server/src/server.py
+screen -S war-server python ~/desenvolvimento/jogowar/implementacao/server/src/server.py

@@ -3,96 +3,22 @@ gpscheck.mapa = gpscheck.mapa || {};
 
 var _labelTerritorios = {};
 var _markerTerritorios = {};
+var _poligonosTerritorios = {};
 
 gpscheck.mapa.Territorios = function(mapa) {
 
-	var poligonos_dos_territorios = {};
-	
-	this.desenhaGrupoTerritorio = function(paises, corDaBorda, corDoPreenchimento) {
-        $.each(paises, function(i, pais) {
-            var poligono_pais = new google.maps.Polygon({
-                map: mapa,
-                paths: pais.territorio,
-                strokeColor: corDaBorda,
-                strokeOpacity: 1,
-                strokeWeight: 2,
-                fillColor: corDoPreenchimento,
-                fillOpacity: 0.5,
-                zIndex: 1
-            });
-
-            google.maps.event.addListener(poligono_pais, 'click', function(event) {
-                var colocarTropaMsg = comunicacao_colocarTropa(_labelTerritorios[pais.nome].posicaoJogador, pais.nome, 1);
-                _libwebsocket.enviarObjJson(colocarTropaMsg);
-            });
-        });
-    };
-    
-    this.desenha = function() {
-        this.carregaTerritorios();
-    
-        // America do Norte.
-        this.desenhaGrupoTerritorio([
-            coordenada_alaska,
-            coordenada_california,
-            coordenada_groelandia,
-            coordenada_labrador,
-            coordenada_mackenzie,
-            coordenada_mexico,
-            coordenada_nova_york,
-            coordenada_ottawa,
-            coordenada_vancouver
-        ], "#666600", "#FFFF00");
-        
-        // Africa.
-        this.desenhaGrupoTerritorio([
-            coordenada_africa_do_sul,
-            coordenada_argelia,
-            coordenada_congo,
-            coordenada_egito,
-            coordenada_madagascar,
-            coordenada_sudao
-        ], "#330033", "#FF99FF");
-        
-        // America do Sul.
-        this.desenhaGrupoTerritorio([
-            coordenada_argentina, 
-            coordenada_brasil,
-            coordenada_chile,
-            coordenada_colombia
-        ], "#003300", "#008000");
-        
-        // Oceania.
-        this.desenhaGrupoTerritorio([
-            coordenada_australia,
-            coordenada_borneo,
-            coordenada_nova_guine,
-            coordenada_sumatra
-        ], "#660000", "#FF6666");
-        
-        // Europa.
-        this.desenhaGrupoTerritorio([
-            coordenada_alemanha,
-            coordenada_inglaterra,
-            coordenada_islandia,
-            coordenada_moscou,
-            coordenada_polonia,
-            coordenada_portugal,
-            coordenada_suecia
-        ], "#000099", "#66FFFF");
-        
-        // Asia
-        this.desenhaGrupoTerritorio([
-            coordenada_aral,
-            coordenada_china,
-            coordenada_india,
-            coordenada_japao,
-            coordenada_mongolia,
-            coordenada_oriente_medio,
-            coordenada_vietna,
-            coordenada_vladivostok
-        ], "#CC6600", "#FFCC33");
-    };
+    var COR_BORDA_AMERICA_DO_NORTE = "#666600";
+    var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
+    var COR_BORDA_AMERICA_DO_SUL = "#003300";
+    var COR_PREENCHIMENTO_AMERICA_DO_SUL = "#008000";
+    var COR_BORDA_ASIA = "#CC6600";
+    var COR_PREENCHIMENTO_ASIA = "#FFCC33";
+    var COR_BORDA_EUROPA = "#000099";
+    var COR_PREENCHIMENTO_EUROPA = "#66FFFF";
+    var COR_BORDA_AFRICA = "#330033";
+    var COR_PREENCHIMENTO_AFRICA = "#FF99FF";
+    var COR_BORDA_OCEANIA = "#660000";
+    var COR_PREENCHIMENTO_OCEANIA = "#FF6666";
 
 	this.carregaTerritorios = function() {
 		var territorios = {};
@@ -137,6 +63,202 @@ gpscheck.mapa.Territorios = function(mapa) {
 		territorios["Vladivostok"] = coordenada_vladivostok;
 
 		return territorios;
+	};
+	
+	this.carregaGruposTerritorio = function() {
+	    var grupos = {};
+	    
+	    grupos["Asia"] = [
+            coordenada_aral,
+            coordenada_china,
+            coordenada_india,
+            coordenada_japao,
+            coordenada_mongolia,
+            coordenada_oriente_medio,
+            coordenada_vietna,
+            coordenada_vladivostok
+        ];
+	    grupos["AmericaDoNorte"] = [
+            coordenada_alaska,
+            coordenada_california,
+            coordenada_groelandia,
+            coordenada_labrador,
+            coordenada_mackenzie,
+            coordenada_mexico,
+            coordenada_nova_york,
+            coordenada_ottawa,
+            coordenada_vancouver
+        ];
+	    grupos["Europa"] = [
+            coordenada_alemanha,
+            coordenada_inglaterra,
+            coordenada_islandia,
+            coordenada_moscou,
+            coordenada_polonia,
+            coordenada_portugal,
+            coordenada_suecia
+        ];
+	    grupos["Africa"] = [
+            coordenada_africa_do_sul,
+            coordenada_argelia,
+            coordenada_congo,
+            coordenada_egito,
+            coordenada_madagascar,
+            coordenada_sudao
+        ];
+	    grupos["AmericaDoSul"] = [
+            coordenada_argentina, 
+            coordenada_brasil,
+            coordenada_chile,
+            coordenada_colombia
+        ];
+	    grupos["Oceania"] = [
+            coordenada_australia,
+            coordenada_borneo,
+            coordenada_nova_guine,
+            coordenada_sumatra
+        ];
+	    
+	    return grupos;
+	};
+	
+	this.iniciaGrupoTerritorio = function(paises, corDaBorda, corDoPreenchimento) {
+        $.each(paises, function(i, pais) {
+            var poligono_pais = new google.maps.Polygon({
+                map: mapa,
+                paths: pais.territorio,
+                strokeColor: corDaBorda,
+                strokeOpacity: 1,
+                strokeWeight: 2,
+                fillColor: corDoPreenchimento,
+                fillOpacity: 0.5,
+                zIndex: 1
+            });
+            
+            _poligonosTerritorios[pais.nome] = poligono_pais;
+            
+            google.maps.event.addListener(poligono_pais, 'click', function(event) {
+                var colocarTropaMsg = comunicacao_colocarTropa(_labelTerritorios[pais.nome].posicaoJogador, pais.nome, 1);
+                _libwebsocket.enviarObjJson(colocarTropaMsg);
+            });
+        });
+    };
+    
+    this.desenha = function() {
+        // America do Norte.
+        this.iniciaGrupoTerritorio([
+            coordenada_alaska,
+            coordenada_california,
+            coordenada_groelandia,
+            coordenada_labrador,
+            coordenada_mackenzie,
+            coordenada_mexico,
+            coordenada_nova_york,
+            coordenada_ottawa,
+            coordenada_vancouver
+        ], "#666600", "#FFFF00");
+        
+        // Africa.
+        this.iniciaGrupoTerritorio([
+            coordenada_africa_do_sul,
+            coordenada_argelia,
+            coordenada_congo,
+            coordenada_egito,
+            coordenada_madagascar,
+            coordenada_sudao
+        ], "#330033", "#FF99FF");
+        
+        // America do Sul.
+        this.iniciaGrupoTerritorio([
+            coordenada_argentina, 
+            coordenada_brasil,
+            coordenada_chile,
+            coordenada_colombia
+        ], "#003300", "#008000");
+        
+        // Oceania.
+        this.iniciaGrupoTerritorio([
+            coordenada_australia,
+            coordenada_borneo,
+            coordenada_nova_guine,
+            coordenada_sumatra
+        ], "#660000", "#FF6666");
+        
+        // Europa.
+        this.iniciaGrupoTerritorio([
+            coordenada_alemanha,
+            coordenada_inglaterra,
+            coordenada_islandia,
+            coordenada_moscou,
+            coordenada_polonia,
+            coordenada_portugal,
+            coordenada_suecia
+        ], "#000099", "#66FFFF");
+        
+        // Asia
+        this.iniciaGrupoTerritorio([
+            coordenada_aral,
+            coordenada_china,
+            coordenada_india,
+            coordenada_japao,
+            coordenada_mongolia,
+            coordenada_oriente_medio,
+            coordenada_vietna,
+            coordenada_vladivostok
+        ], "#CC6600", "#FFCC33");
+    };
+    
+    this.manterFocoNoGrupo = function(grupoTerritorio) {
+	    var grupos = this.carregaGruposTerritorio();
+	    
+	    $.each(["AmericaDoNorte", "AmericaDoSul", "Oceania", "Europa", "Asia", "Africa"],
+	    function(i, nomeDoGrupo) {
+	        if (nomeDoGrupo != grupoTerritorio) {
+	            $.each(grupos[nomeDoGrupo], function(i, pais) {
+	                _poligonosTerritorios[pais.nome].setOptions({fillColor: "#333", strokeColor: "#333"});
+	            });
+	        }
+	    });
+	};
+	
+	this.pintarGruposTerritorios = function() {
+    	var grupos = this.carregaGruposTerritorio();
+    	
+	    $.each(grupos["Asia"], function(i, pais) {
+            _poligonosTerritorios[pais.nome].setOptions({
+                fillColor: COR_PREENCHIMENTO_ASIA, 
+                strokeColor: COR_BORDA_ASIA});
+        });
+        
+        $.each(grupos["AmericaDoNorte"], function(i, pais) {
+            _poligonosTerritorios[pais.nome].setOptions({
+                fillColor: COR_PREENCHIMENTO_AMERICA_DO_NORTE, 
+                strokeColor: COR_BORDA_AMERICA_DO_NORTE});
+        });
+        
+        $.each(grupos["Europa"], function(i, pais) {
+            _poligonosTerritorios[pais.nome].setOptions({
+                fillColor: COR_PREENCHIMENTO_EUROPA, 
+                strokeColor: COR_BORDA_EUROPA});
+        });
+        
+        $.each(grupos["Africa"], function(i, pais) {
+            _poligonosTerritorios[pais.nome].setOptions({
+                fillColor: COR_PREENCHIMENTO_AFRICA, 
+                strokeColor: COR_BORDA_AFRICA});
+        });
+        
+        $.each(grupos["AmericaDoSul"], function(i, pais) {
+            _poligonosTerritorios[pais.nome].setOptions({
+                fillColor: COR_PREENCHIMENTO_AMERICA_DO_SUL, 
+                strokeColor: COR_BORDA_AMERICA_DO_SUL});
+        });
+        
+        $.each(grupos["Oceania"], function(i, pais) {
+            _poligonosTerritorios[pais.nome].setOptions({
+                fillColor: COR_PREENCHIMENTO_OCEANIA, 
+                strokeColor: COR_BORDA_OCEANIA});
+        });
 	};
 	
 	this.corDeFundoDaPosicao = function(posicao) {
