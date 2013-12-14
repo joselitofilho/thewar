@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>War</title>
+        
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+        <!-- Bootstrap -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!---->
+        
+        <link href="css/app.css" rel="stylesheet">
+        <link href="css/cores.css" rel="stylesheet">
+        <link href="css/war/cartas.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <div id="geral">
+
+            <div id="topo" class="well well-sm">
+                <div id="idJogador"></div>
+            </div>
+            
+            <div id="conteudo">
+                <div id="menu_jogadores">
+                    <ul>
+                        <li><a id="jogador1" class="cor_vermelha" href="#">-</a></li> 
+                        <li><a id="jogador2" class="cor_azul" href="#">-</a></li>
+                        <li><a id="jogador3" class="cor_verde" href="#">-</a></li>
+                        <li><a id="jogador4" class="cor_preto" href="#">-</a></li>
+                        <li><a id="jogador5" class="cor_branco" href="#">-</a></li>
+                        <li><a id="jogador6" class="cor_amarelo" href="#">-</a></li>
+                    </ul>
+                </div>
+
+                <div id="mapa"></div>
+
+                <div id="controles" style="visibility: hidden;">
+                    <div id="info_turno_fundo_esquerda">
+                        <div id="info_turno_jogador"></div>
+                        <div id="info_turno_texto">
+                            Distribuir tropas na Am. do Norte
+                        </div>
+                    </div>
+
+                    <div id="info_turno_meio">
+                        <button id="btnIniciarPartida" type="button" class="btn btn-default" style="visibility: hidden;"
+                            onclick="iniciarPartida();">Iniciar partida</button>
+                        <button class="btn btn-default" onclick="atacar();">Atacar</button>
+                        <button class="btn btn-default" onclick="mover();">Mover</button>
+                        <div id="quantidade_de_tropas" style="color: #FFF;">Quantidade de tropas: 0</div>
+                    </div>
+ 
+                    <div id="info_turno_fundo_direita">
+                        <div id="btnFinalizarTurno" onclick="finalizarTurno();"></div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!--<div id="rodape">
+                <div id="carta_objetivo">
+                    <div id="cartaObjetivo" class="carta_objetivo carta_objetivo_padrao"></div>
+                </div>
+                <div id="cartas_territorio">
+                    <div class="carta_objetivo carta_objetivo_padrao"></div>
+                    <div class="carta_objetivo carta_objetivo_padrao"></div>
+                    <div class="carta_objetivo carta_objetivo_padrao"></div>
+                </div>
+            </div>-->
+        </div>
+ 
+
+
+        <!-- Google Maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+        <!---->
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <!---->
+        
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <!---->
+        
+        <!-- Coordenada dos mapas -->
+        <!-- America do Sul -->
+        <script type="text/javascript" src="js/war/coordenadasmapa/argentina.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/brasil.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/chile.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/colombia.js"></script>
+        <!---->
+
+        <!-- America do Norte -->
+        <script type="text/javascript" src="js/war/coordenadasmapa/alaska.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/california.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/groelandia.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/labrador.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/mackenzie.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/mexico.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/nova-york.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/ottawa.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/vancouver.js"></script>
+        <!---->
+
+        <!-- Africa -->
+        <script type="text/javascript" src="js/war/coordenadasmapa/africa-do-sul.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/argelia.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/congo.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/egito.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/madagascar.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/sudao.js"></script>
+        <!---->
+
+        <!-- Oceania -->
+        <script type="text/javascript" src="js/war/coordenadasmapa/australia.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/borneo.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/nova-guine.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/sumatra.js"></script>
+        <!---->
+
+        <!-- Asia -->
+        <script type="text/javascript" src="js/war/coordenadasmapa/aral.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/china.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/india.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/japao.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/mongolia.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/oriente-medio.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/vietna.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/vladivostok.js"></script>
+        <!---->
+
+        <!-- Europa -->
+        <script type="text/javascript" src="js/war/coordenadasmapa/alemanha.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/inglaterra.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/islandia.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/portugal.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/polonia.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/moscou.js"></script>
+        <script type="text/javascript" src="js/war/coordenadasmapa/suecia.js"></script>
+        <!---->
+
+        <!-- Do sistema -->
+        <script type="text/javascript" src="js/libs/namespace.js"></script>
+        <script type="text/javascript" src="js/websocket/websocket.js"></script>
+        <script type="text/javascript" src="js/mensagens.js"></script>
+
+        <script type="text/javascript" src="js/label.js"></script>
+        <script type="text/javascript" src="js/comunicacao.js"></script>
+        <script type="text/javascript" src="js/war/mapa.js"></script>
+        <script type="text/javascript" src="js/war/territorios.js"></script>
+        <script type="text/javascript" src="js/war/appwar.js"></script>
+        <!---->
+    </body>
+</html>

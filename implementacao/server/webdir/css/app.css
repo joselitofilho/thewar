@@ -1,0 +1,134 @@
+* {
+	margin:0;
+	padding:0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#topo {
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+}
+
+#idJogador {
+    float: left;
+    right: 10px;
+}
+
+#mapa {
+    position: relative;
+    float: left;
+    width: 1024px;
+    height: 640px;
+    z-index: 998;
+}
+
+#controles {
+    position: absolute;
+    bottom: 0;
+    z-index: 999;
+    width: 1024px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#info_turno_fundo_esquerda {
+    float: left;
+    background: url('../imagens/circulo_cinza_esquerda.png') no-repeat;
+    width: 156px;
+    height: 156px;
+}
+
+#info_turno_jogador {
+    position: relative;
+    top: 40px;
+    left: 25px;
+    background: url('../imagens/soldado_sprite.png') no-repeat;
+    background-position: 0px 0px;
+    width: 60px;
+    height: 64px;
+}
+
+#info_turno_texto {
+    position: relative;
+    top: 45px;
+    width: 110px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: 'PT Sans', sans-serif;
+}
+
+#info_turno_meio {
+    float: left;
+    width: 712px;
+}
+
+#info_turno_fundo_direita {
+    float: right;
+    background: url('../imagens/circulo_cinza_direita.png') no-repeat;
+    width: 156px;
+    height: 156px;
+    right:0;
+}
+
+#btnFinalizarTurno {
+    position: relative;
+    top: 60px;
+    left: 60px;
+    width: 100px;
+    height: 100px;
+    background: url('../imagens/proximo_100x100.png') no-repeat;
+    cursor: pointer;
+}
+
+#geral {
+	min-height:100%;
+	position:relative;
+	width:98%;
+}
+ 
+#conteudo {
+    margin-top: 41px;
+	overflow:hidden;
+}
+
+#menu_jogadores {
+    position: absolute;
+    width: 1024px;
+    z-index: 999;
+}
+
+#menu_jogadores ul {
+    padding:0px;
+    margin:0px;
+    list-style:none;
+    text-align: center;
+}
+
+#menu_jogadores ul li {
+    display: inline;
+}
+
+#menu_jogadores ul li a {
+    width: 140px;
+    display: inline-block;
+    border-radius: 0 0 10px 10px;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.label_tropas {
+    position: relative;
+    left: -50%;
+    top: -8px;
+    white-space: nowrap;
+    border: 0;
+    padding: 2px;
+    font-size: 12px;
+    font-family: 'PT Sans', sans-serif;
+}

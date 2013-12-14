@@ -1,0 +1,44 @@
+.cor_default {
+    background: #555;
+    color: #FFF;
+}
+
+.cor_vermelha {
+    background: #FA0C01;
+    color: #FFF;
+}
+
+.cor_azul {
+    background: #00008B;
+    color: #FFF;
+}
+
+.cor_verde {
+    background: #006400;
+    color: #FFF;
+}
+
+.cor_preto {
+    background: #000;
+    color: #FFF;
+}
+
+.cor_branco {
+    background: #FFF;
+    color: #000;
+}
+
+.cor_amarelo {
+    background: #FFD700;
+    color: #FFF;
+}
+
+.quadrado_jogador {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-right: 5px;
+    border-color: #000;
+    border-width: 1px;
+    border-style: solid;
+}
