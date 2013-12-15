@@ -7,18 +7,21 @@ var _poligonosTerritorios = {};
 
 gpscheck.mapa.Territorios = function(mapa) {
 
-    var COR_BORDA_AMERICA_DO_NORTE = "#666600";
+    var COR_BORDA_AMERICA_DO_NORTE = "#333";//"#666600";
     var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
-    var COR_BORDA_AMERICA_DO_SUL = "#003300";
+    var COR_BORDA_AMERICA_DO_SUL = "#333";//"#003300";
     var COR_PREENCHIMENTO_AMERICA_DO_SUL = "#008000";
-    var COR_BORDA_ASIA = "#CC6600";
+    var COR_BORDA_ASIA = "#333";//"#CC6600";
     var COR_PREENCHIMENTO_ASIA = "#FFCC33";
-    var COR_BORDA_EUROPA = "#000099";
+    var COR_BORDA_EUROPA = "#333";//"#000099";
     var COR_PREENCHIMENTO_EUROPA = "#66FFFF";
-    var COR_BORDA_AFRICA = "#330033";
+    var COR_BORDA_AFRICA = "#333";//"#330033";
     var COR_PREENCHIMENTO_AFRICA = "#FF99FF";
-    var COR_BORDA_OCEANIA = "#660000";
+    var COR_BORDA_OCEANIA = "#333";//"#660000";
     var COR_PREENCHIMENTO_OCEANIA = "#FF6666";
+    
+    territorioClick = null;
+    fronteiras = {};
 
 	this.carregaTerritorios = function() {
 		var territorios = {};
@@ -64,6 +67,56 @@ gpscheck.mapa.Territorios = function(mapa) {
 
 		return territorios;
 	};
+	
+	this.iniciaMapaDasFronteiras = function() {
+	    fronteiras["Argentina"] = ["Brasil", "Chile"];
+        fronteiras["Brasil"] = ["Argentina", "Chile", "Colombia", "Argelia"];
+        fronteiras["Chile"] = ["Argentina", "Brasil", "Colombia"];
+        fronteiras["Colombia"] = ["Brasil", "Chile", "Mexico"];
+
+        fronteiras["Mexico"] = ["Colombia", "NovaYork", "California"];
+        fronteiras["California"] = ["Mexico", "NovaYork", "Vancouver", "Ottawa"];
+        fronteiras["NovaYork"] = ["Mexico", "Ottawa", "Labrador", "California"];
+        fronteiras["Vancouver"] = ["California", "Ottawa", "Alaska", "Mackenzie"];
+        fronteiras["Ottawa"] = ["Mackenzie", "Vancouver", "California", "NovaYork", "Labrador"];
+        fronteiras["Labrador"] = ["Groelandia", "Ottawa", "NovaYork"];
+        fronteiras["Alaska"] = ["Mackenzie", "Vancouver", "Vladivostok"];
+        fronteiras["Mackenzie"] = ["Alaska", "Vancouver", "Ottawa", "Groelandia"];
+        fronteiras["Groelandia"] = ["Mackenzie", "Labrador", "Islandia"];
+        
+        fronteiras["Islandia"] = ["Groelandia", "Inglaterra"];
+        fronteiras["Inglaterra"] = ["Islandia", "Portugal", "Alemanha", "Suecia"];
+        fronteiras["Suecia"] = ["Inglaterra", "Moscou"];
+        fronteiras["Moscou"] = ["Suecia", "Polonia", "OrienteMedio", "Aral", "Omsk"];
+        fronteiras["Polonia"] = ["Moscou", "OrienteMedio", "Egito", "Alemanha"];
+        fronteiras["Alemanha"] = ["Portugal", "Polonia"];
+        fronteiras["Portugal"] = ["Alemanha", "Inglaterra", "Argelia", "Egito"];
+        
+        fronteiras["Argelia"] = ["Portugal", "Brasil", "Congo", "Sudao", "Egito"];
+        fronteiras["Egito"] = ["Argelia", "Sudao", "OrienteMedio", "Polonia", "Portugal"];
+        fronteiras["Sudao"] = ["Egito", "Argelia", "Congo", "AfricaDoSul", "Madagascar"];
+        fronteiras["Congo"] = ["Argelia", "AfricaDoSul", "Sudao"];
+        fronteiras["AfricaDoSul"] = ["Congo", "Sudao", "Madagascar"];
+        fronteiras["Madagascar"] = ["Sudao", "AfricaDoSul"];
+        
+        fronteiras["OrienteMedio"] = ["Egito", "Polonia", "Moscou", "Aral", "India"];
+        fronteiras["India"] = ["Sumatra", "Vietna", "China", "Aral", "OrienteMedio"];
+        fronteiras["Vietna"] = ["Borneo", "China", "India"];
+        fronteiras["Aral"] = ["Moscou", "Omsk", "China", "India", "OrienteMedio"];
+        fronteiras["China"] = ["Vietna", "Japao", "Vladivostok", "Tchita", "Mongolia", "Omsk", "Aral", "India"];
+        fronteiras["Japao"] = ["Vladivostok", "China"];
+        fronteiras["Omsk"] = ["Moscou", "Aral", "China", "Mongolia", "Dudinka"];
+        fronteiras["Mongolia"] = ["Dudinka", "Omsk", "China", "Tchita"];
+        fronteiras["Dudinka"] = ["Omsk", "Mongolia", "Tchita", "Siberia"];
+        fronteiras["Tchita"] = ["Siberia", "Dudinka", "Mongolia", "Vladivostok"];
+        fronteiras["Siberia"] = ["Dudinka", "Tchita", "Vladivostok"];
+        fronteiras["Vladivostok"] = ["Siberia", "Tchita", "China", "Japao"];
+        
+        fronteiras["Australia"] = ["NovaGuine", "Sumatra", "Borneo"];
+        fronteiras["NovaGuine"] = ["Australia", "Borneo"];
+        fronteiras["Borneo"] = ["NovaGuine", "Australia", "Vietna"];
+        fronteiras["Sumatra"] = ["India", "Australia"];
+	}
 	
 	this.carregaGruposTerritorio = function() {
 	    var grupos = {};
@@ -138,13 +191,15 @@ gpscheck.mapa.Territorios = function(mapa) {
             _poligonosTerritorios[pais.nome] = poligono_pais;
             
             google.maps.event.addListener(poligono_pais, 'click', function(event) {
-                var colocarTropaMsg = comunicacao_colocarTropa(_labelTerritorios[pais.nome].posicaoJogador, pais.nome, 1);
-                _libwebsocket.enviarObjJson(colocarTropaMsg);
+                territorioClick(_labelTerritorios[pais.nome].posicaoJogador, pais.nome, 1);
             });
         });
     };
     
-    this.desenha = function() {
+    this.inicia = function(territorioClick_) {
+        this.iniciaMapaDasFronteiras();
+        territorioClick = territorioClick_;
+    
         // America do Norte.
         this.iniciaGrupoTerritorio([
             coordenada_alaska,
@@ -215,7 +270,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    function(i, nomeDoGrupo) {
 	        if (nomeDoGrupo != grupoTerritorio) {
 	            $.each(grupos[nomeDoGrupo], function(i, pais) {
-	                _poligonosTerritorios[pais.nome].setOptions({fillColor: "#333", strokeColor: "#333"});
+	                _poligonosTerritorios[pais.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
 	            });
 	        }
 	    });
@@ -226,39 +281,77 @@ gpscheck.mapa.Territorios = function(mapa) {
     	
 	    $.each(grupos["Asia"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
+                fillOpacity: "0.5", 
                 fillColor: COR_PREENCHIMENTO_ASIA, 
                 strokeColor: COR_BORDA_ASIA});
         });
         
         $.each(grupos["AmericaDoNorte"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
+                fillOpacity: "0.5", 
                 fillColor: COR_PREENCHIMENTO_AMERICA_DO_NORTE, 
                 strokeColor: COR_BORDA_AMERICA_DO_NORTE});
         });
         
         $.each(grupos["Europa"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
+                fillOpacity: "0.5", 
                 fillColor: COR_PREENCHIMENTO_EUROPA, 
                 strokeColor: COR_BORDA_EUROPA});
         });
         
         $.each(grupos["Africa"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
+                fillOpacity: "0.5", 
                 fillColor: COR_PREENCHIMENTO_AFRICA, 
                 strokeColor: COR_BORDA_AFRICA});
         });
         
         $.each(grupos["AmericaDoSul"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
+                fillOpacity: "0.5", 
                 fillColor: COR_PREENCHIMENTO_AMERICA_DO_SUL, 
                 strokeColor: COR_BORDA_AMERICA_DO_SUL});
         });
         
         $.each(grupos["Oceania"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
+                fillOpacity: "0.5", 
                 fillColor: COR_PREENCHIMENTO_OCEANIA, 
                 strokeColor: COR_BORDA_OCEANIA});
         });
+	};
+	
+	this.escureceTodosOsTerritoriosExcetoDoJogador = function(posicaoJogador) {
+	    var territorios = this.carregaTerritorios();
+	    $.each(territorios, function(i, territorio) {
+	        if (posicaoJogador != _labelTerritorios[territorio.nome].posicaoJogador) {
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+	        }
+	    });
+	};
+	
+	this.escureceTodosOsTerritoriosDoJogador = function(posicaoJogador) {
+	    var territorios = this.carregaTerritorios();
+	    $.each(territorios, function(i, territorio) {
+	        if (posicaoJogador == _labelTerritorios[territorio.nome].posicaoJogador) {
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+	        }
+	    });
+	};
+	
+	this.focaNoTerritorioAlvoEAdjacentesDoJogador = function(nomeDoTerritorio, posicaoJogador) {
+    	var me = this;
+	    var territorios = this.carregaTerritorios();
+	    $.each(territorios, function(i, territorio) {
+	        if (territorio.nome == nomeDoTerritorio) {
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
+	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
+	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador ||
+	                _labelTerritorios[territorio.nome].texto == '1') {
+    	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+    	    }
+	    });
 	};
 	
 	this.corDeFundoDaPosicao = function(posicao) {
@@ -335,10 +428,21 @@ gpscheck.mapa.Territorios = function(mapa) {
                 _labelTerritorios[territorio.codigo] = label;
 
                 google.maps.event.addListener(marker, 'click', function(event) {
-                    var colocarTropaMsg = comunicacao_colocarTropa(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo, 1);
-                    _libwebsocket.enviarObjJson(colocarTropaMsg);
+                    territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo, 1);
                 });
 			}
 		});
+	};
+	
+	this.territorioNaoEhDoJogador = function(nomeDoTerritorio, posicaoJogador) {
+	    return (_labelTerritorios[nomeDoTerritorio].posicaoJogador != posicaoJogador);
+	};
+	
+	this.temFronteira = function(nomeDoTerritorio1, nomeDoTerritorio2) {
+	    console.log(nomeDoTerritorio1);
+	    console.log(nomeDoTerritorio2);
+	    console.log(fronteiras[nomeDoTerritorio1]);
+	    console.log(fronteiras[nomeDoTerritorio1].indexOf(nomeDoTerritorio2));
+	    return fronteiras[nomeDoTerritorio1].indexOf(nomeDoTerritorio2) > -1;
 	};
 };
