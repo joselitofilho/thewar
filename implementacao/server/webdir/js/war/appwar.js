@@ -203,15 +203,22 @@ function appwar_alteraInfoTurnoJogador(posicaoJogador) {
 }
 
 function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
-    if (_turno.tipoAcao == TipoAcaoTurno.atacar) {
-        if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
-            _territorios.pintarGruposTerritorios();
-            _territorioAlvo = nomeDoTerritorio;
-            _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+    if (_posicaoJogador == _posicaoJogadorDaVez) {
+        if (_turno.tipoAcao == TipoAcaoTurno.atacar) {
+            if (nomeDoTerritorio == _territorioAlvo) {
+                _territorios.pintarGruposTerritorios();
+                _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
+                _territorioAlvo = null;
+            }
+            else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
+                _territorios.pintarGruposTerritorios();
+                _territorioAlvo = nomeDoTerritorio;
+                _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+            }
+        } else {
+            var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, quantidade);
+            _libwebsocket.enviarObjJson(colocarTropaMsg);
         }
-    } else {
-        var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, quantidade);
-        _libwebsocket.enviarObjJson(colocarTropaMsg);
     }
 }
 

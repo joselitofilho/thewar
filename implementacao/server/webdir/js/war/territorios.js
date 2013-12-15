@@ -7,17 +7,17 @@ var _poligonosTerritorios = {};
 
 gpscheck.mapa.Territorios = function(mapa) {
 
-    var COR_BORDA_AMERICA_DO_NORTE = "#333";//"#666600";
+    var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
     var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
-    var COR_BORDA_AMERICA_DO_SUL = "#333";//"#003300";
+    var COR_BORDA_AMERICA_DO_SUL = "#222";//"#003300";
     var COR_PREENCHIMENTO_AMERICA_DO_SUL = "#008000";
-    var COR_BORDA_ASIA = "#333";//"#CC6600";
+    var COR_BORDA_ASIA = "#222";//"#CC6600";
     var COR_PREENCHIMENTO_ASIA = "#FFCC33";
-    var COR_BORDA_EUROPA = "#333";//"#000099";
+    var COR_BORDA_EUROPA = "#222";//"#000099";
     var COR_PREENCHIMENTO_EUROPA = "#66FFFF";
-    var COR_BORDA_AFRICA = "#333";//"#330033";
+    var COR_BORDA_AFRICA = "#222";//"#330033";
     var COR_PREENCHIMENTO_AFRICA = "#FF99FF";
-    var COR_BORDA_OCEANIA = "#333";//"#660000";
+    var COR_BORDA_OCEANIA = "#222";//"#660000";
     var COR_PREENCHIMENTO_OCEANIA = "#FF6666";
     
     territorioClick = null;
@@ -270,7 +270,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    function(i, nomeDoGrupo) {
 	        if (nomeDoGrupo != grupoTerritorio) {
 	            $.each(grupos[nomeDoGrupo], function(i, pais) {
-	                _poligonosTerritorios[pais.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+	                _poligonosTerritorios[pais.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
 	            });
 	        }
 	    });
@@ -326,7 +326,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    var territorios = this.carregaTerritorios();
 	    $.each(territorios, function(i, territorio) {
 	        if (posicaoJogador != _labelTerritorios[territorio.nome].posicaoJogador) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
 	        }
 	    });
 	};
@@ -335,7 +335,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    var territorios = this.carregaTerritorios();
 	    $.each(territorios, function(i, territorio) {
 	        if (posicaoJogador == _labelTerritorios[territorio.nome].posicaoJogador) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
 	        }
 	    });
 	};
@@ -349,7 +349,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
 	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador ||
 	                _labelTerritorios[territorio.nome].texto == '1') {
-    	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#333", strokeColor: "#333"});
+    	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
     	    }
 	    });
 	};
