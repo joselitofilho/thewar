@@ -95,6 +95,14 @@ function processarMsg_atacar(msgParams) {
     }
 }
 
+function processarMsg_mover(msgParams) {
+    var doTerritorio = msgParams.doTerritorioObj;
+    _labelTerritorios[doTerritorio.codigo].alteraQuantiadeDeTropas("" + doTerritorio.quantidadeDeTropas);
+    
+    var paraOTerritorio = msgParams.paraOTerritorioObj;
+    _labelTerritorios[paraOTerritorio.codigo].alteraQuantiadeDeTropas("" + paraOTerritorio.quantidadeDeTropas);
+}
+
 function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
@@ -169,6 +177,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_turno(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.atacar) {
         processarMsg_atacar(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.mover) {
+        processarMsg_mover(jsonMensagem.params);
     }
 }
 
@@ -210,17 +220,6 @@ function atacar() {
             jogarDados(qtdDadosAtaque, qtdDadosDefesa);
         }
     }
-}
-
-function mover() {
-    moverMsg = new Mensagem(TipoMensagem.mover,
-    {
-        posicaoJogador: 0,
-        doTerritorio: "Brasil",
-        paraOTerritorio: "Chile",
-        quantidade: 1
-    }); 
-    _libwebsocket.enviarObjJson(moverMsg);
 }
 
 function adicionaExercitoNoClickDo(poligono) {
