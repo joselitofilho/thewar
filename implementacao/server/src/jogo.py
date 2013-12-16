@@ -430,7 +430,8 @@ class Jogo(object):
         
         if self._posicaoJogadorDaVez == posicaoJogador:
             if turno.tipoAcao == TipoAcaoTurno.mover:
-                if jogador.temTerritorio(doTerritorio) and jogador.temTerritorio(paraOTerritorio):
+                if jogador.temTerritorio(doTerritorio) and jogador.temTerritorio(paraOTerritorio) and \
+                    FronteiraTerritorio.TemFronteira(doTerritorio, paraOTerritorio):
                     doTerritorioObj = jogador.seuTerritorio(doTerritorio)
                     paraOTerritorioObj = jogador.seuTerritorio(paraOTerritorio)
                     

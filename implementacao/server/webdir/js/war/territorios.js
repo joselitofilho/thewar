@@ -469,4 +469,12 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    _markerTerritorios[codigoTerritorio].setOptions({icon: novoCirculo});
 	    _labelTerritorios[codigoTerritorio].alteraPosicaoJogador(posicaoJogador);
 	};
+	
+	this.barreiraDosTerritorios = function(territorios) {
+	    var bounds = new google.maps.LatLngBounds();
+	    $.each(territorios, function(i, codigoTerritorio) {
+	        bounds.extend(_markerTerritorios[codigoTerritorio].position);
+	    });
+	    return bounds;
+	};
 };

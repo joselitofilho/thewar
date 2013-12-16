@@ -4,6 +4,9 @@ _posicaoJogadorDaVez = -1;
 _territorioAlvoAtaque = null;
 _territoriosAtacante = [];
 
+_territorioAlvoMover = null;
+_territorioMovimento = null;
+
 _animarDadosReferencia = null;
 
 // --------------------------------------------------------------------------------
@@ -60,6 +63,9 @@ function processarMsg_colocar_tropa(msgParams) {
 }
 
 function processarMsg_atacar(msgParams) {
+    var dadosAtaque = msgParams.dadosAtaque;
+    var dadosDefesa = msgParams.dadosDefesa;
+    
     _territorios.pintarGruposTerritorios();
         
     var territorioDaDefesa = msgParams.territorioDaDefesa;
@@ -73,11 +79,6 @@ function processarMsg_atacar(msgParams) {
         _labelTerritorios[territoriosDoAtaque[i].codigo].alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
     }
     _territorios.focaNosTerritorios(codigoTerritorios);
-    
-    pararAnimacaoDosDados();
-    
-    var dadosAtaque = msgParams.dadosAtaque;
-    var dadosDefesa = msgParams.dadosDefesa;
     
     for (i = 0; i < dadosAtaque.length; i++) {
         $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
@@ -93,6 +94,14 @@ function processarMsg_atacar(msgParams) {
         
         _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
     }
+}
+
+function processarMsg_atacar_comDados(msgParams) {
+    var dadosAtaque = msgParams.dadosAtaque;
+    var dadosDefesa = msgParams.dadosDefesa;
+    
+    // Iniciar animacao de jogar os dados...
+    jogarDados(dadosAtaque.length, dadosDefesa.length, msgParams);
 }
 
 function processarMsg_mover(msgParams) {
@@ -148,6 +157,11 @@ function processarMsg_turno_atacar(msgParams) {
 
 function processarMsg_turno_mover(msgParams) {
     $('#info_turno_texto').html('Mover');
+    _territorios.pintarGruposTerritorios();
+    
+    if (_posicaoJogador == msgParams.vezDoJogador) {
+        _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -176,7 +190,7 @@ function posRecebimentoMensagemServidor(valor) {
     } else if (jsonMensagem.tipo == TipoMensagem.turno) {
         processarMsg_turno(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.atacar) {
-        processarMsg_atacar(jsonMensagem.params);
+        processarMsg_atacar_comDados(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.mover) {
         processarMsg_mover(jsonMensagem.params);
     }
@@ -200,8 +214,10 @@ function finalizarTurno() {
 
 function atacar() {
     if (_posicaoJogadorDaVez == _posicaoJogador) {
+        var territorios = [];
         var qtdDadosDefesa = _territorios.quantidadeDeTropaDoTerritorio(_territorioAlvoAtaque);
         var qtdDadosAtaque = 0;
+        territorios.push(_territorioAlvoAtaque);
         
         $.each(_territoriosAtacante, function(i, codigoTerritorio) {
             var qtdTropas = _territorios.quantidadeDeTropaDoTerritorio(codigoTerritorio);
@@ -210,14 +226,16 @@ function atacar() {
             } else {
                 qtdDadosAtaque += qtdTropas;
             }
+            territorios.push(codigoTerritorio);
         });
+        
+        var bounds = _territorios.barreiraDosTerritorios(territorios);
+        // TODO: Desabilitar quando a idéia estiver mais amadurecida...
+        //_mapaGoogle.fitBounds(bounds);
         
         if (qtdDadosDefesa > 0 && qtdDadosAtaque > 0) {     
             var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);
             _libwebsocket.enviarObjJson(atacarMsg);
-            
-            // Iniciar animacao de jogar os dados...
-            jogarDados(qtdDadosAtaque, qtdDadosDefesa);
         }
     }
 }
@@ -287,6 +305,34 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
             var moverMsg = comunicacao_mover(_posicaoJogador, nomeDoTerritorio, 
                 _territorioAlvoAtaque, 1);
             _libwebsocket.enviarObjJson(moverMsg);
+        } else if (_turno.tipoAcao == TipoAcaoTurno.mover) {
+            if (!_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
+                if (nomeDoTerritorio == _territorioAlvoMover) {
+                    _territorios.pintarGruposTerritorios();
+                    _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
+                    _territorioAlvoMover = null;
+                    _territorioMovimento = null;
+                }
+                else if (_territorioAlvoMover == null) {
+                    _territorios.pintarGruposTerritorios();
+                    _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
+                    _territorioAlvoMover = nomeDoTerritorio;
+                    _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+                } else if (_territorioMovimento == null) {
+                    _territorioMovimento = nomeDoTerritorio;
+                    _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
+                } else if(_territorioMovimento == nomeDoTerritorio) {
+                    var moverMsg = comunicacao_mover(_posicaoJogadorDaVez, nomeDoTerritorio, 
+                        _territorioAlvoMover, 1);
+                    _libwebsocket.enviarObjJson(moverMsg);
+                } else {
+                    _territorios.pintarGruposTerritorios();
+                    _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
+                    _territorioAlvoMover = nomeDoTerritorio;
+                    _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+                    _territorioMovimento = null;
+                }
+            }
         } else {
             var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, quantidade);
             _libwebsocket.enviarObjJson(colocarTropaMsg);
@@ -294,7 +340,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
     }
 }
 
-function jogarDados(qtdDadosAtaque, qtdDadosDefesa) {
+function jogarDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
     try {
         if (_animarDadosReferencia == null) {
             $('#da2').css('visibility', 'hidden');
@@ -307,7 +353,8 @@ function jogarDados(qtdDadosAtaque, qtdDadosDefesa) {
             if (qtdDadosDefesa >= 2) $('#dd2').css('visibility', 'visible');
             if (qtdDadosDefesa >= 3) $('#dd3').css('visibility', 'visible');
             
-            _animarDadosReferencia = setInterval(animarDados, 20);
+            _animarDadosReferencia = setInterval(animarDados, 50);
+            setTimeout(function() { pararAnimacaoDosDados(msgParams); }, 1500);
         }
     } catch(ex) {
         console.log("Error in fnTimer:\n" + ex);
@@ -331,10 +378,12 @@ function animarDados() {
     $('#dd3').css('background-position', (dd3*-40) + 'px -40px');
 }
 
-function pararAnimacaoDosDados() {
+function pararAnimacaoDosDados(msgParams) {
     try {
         clearInterval(_animarDadosReferencia);
         _animarDadosReferencia = null;
+        
+        processarMsg_atacar(msgParams);
     } catch(ex) {
         console.log("Error in fnTimer:\n" + ex);
     }
