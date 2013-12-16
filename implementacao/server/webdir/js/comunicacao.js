@@ -26,3 +26,13 @@ function comunicacao_atacar(posicaoJogador, codigoTerritorioAlvo, codigosTerrito
         paraOTerritorio: codigoTerritorioAlvo
     });
 }
+
+function comunicacao_mover(posicaoJogador, doTerritorio, paraOTerritorio, quantidade) {
+    return new Mensagem(TipoMensagem.mover,
+    {
+        posicaoJogador: posicaoJogador,
+        doTerritorio: doTerritorio,
+        paraOTerritorio: paraOTerritorio,
+        quantidade: quantidade
+    }); 
+}

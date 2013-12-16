@@ -195,14 +195,14 @@ function atacar() {
         
         $.each(_territoriosAtacante, function(i, codigoTerritorio) {
             var qtdTropas = _territorios.quantidadeDeTropaDoTerritorio(codigoTerritorio);
-            if (qtdTropas <= 3 && qtdTropas > 1) {
+            if (qtdTropas <= 3 && qtdTropas > 0) {
                 qtdDadosAtaque += qtdTropas - 1;
             } else {
                 qtdDadosAtaque += qtdTropas;
             }
         });
         
-        if (qtdDadosDefesa > 0 && qtdDadosAtaque > 1) {     
+        if (qtdDadosDefesa > 0 && qtdDadosAtaque > 0) {     
             var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);
             _libwebsocket.enviarObjJson(atacarMsg);
             
@@ -284,6 +284,10 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
                     }
                 }
             }
+        } else if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
+            var moverMsg = comunicacao_mover(_posicaoJogador, nomeDoTerritorio, 
+                _territorioAlvoAtaque, 1);
+            _libwebsocket.enviarObjJson(moverMsg);
         } else {
             var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, quantidade);
             _libwebsocket.enviarObjJson(colocarTropaMsg);
