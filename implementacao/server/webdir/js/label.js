@@ -1,10 +1,10 @@
 // Define the overlay, derived from google.maps.OverlayView
-function Label(opt_options, corTexto) {
+function Label(opt_options) {
     // Initialization
     this.setValues(opt_options);
     
     this.texto = '1';
-    this.corTexto = corTexto;
+    this.corTexto = '#FFF';
     this.posicaoJogador = -1;
 
     // Label specific
@@ -56,6 +56,14 @@ Label.prototype.draw = function() {
 
 Label.prototype.alteraQuantiadeDeTropas = function(qtd) {
     this.texto = qtd;
-    //this.draw();
     this.span_.innerHTML = this.texto;  
+};
+
+Label.prototype.alteraPosicaoJogador = function(posicaoJogador) {
+    this.posicaoJogador = posicaoJogador;
+    if (posicaoJogador == 3) {
+        this.corTexto = '#000';
+    } else {
+        this.corTexto = '#FFF';
+    }
 };

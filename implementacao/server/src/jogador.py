@@ -67,8 +67,12 @@ class Jogador(object):
         return False
         
     def temOsTerritorios(self, listaCodigoTerritorio):
+        codigosTerritoriosDoJogador = []
+        for t in self._territorios:
+            codigosTerritoriosDoJogador.append(t.codigo)
+            
         for t in listaCodigoTerritorio:
-            if t not in self._territorios:
+            if t not in codigosTerritoriosDoJogador:
                 return False
         return True
 

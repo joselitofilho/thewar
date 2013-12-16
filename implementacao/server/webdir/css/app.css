@@ -132,3 +132,23 @@ html, body {
     font-size: 12px;
     font-family: 'PT Sans', sans-serif;
 }
+
+#dados {
+    float: right;
+}
+
+.dado {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url('../imagens/dados.png') no-repeat;
+    margin: 2px 2px;
+}
+
+.dado_ataque {
+    background-position: 0px 0px;
+}
+
+.dado_defesa {
+    background-position: 0px -40px;
+}

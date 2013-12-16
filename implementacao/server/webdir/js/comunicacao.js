@@ -1,13 +1,28 @@
 // --------------------------------------------------------------------------------
 // Mensagens que são enviadas para o servidor.
 // --------------------------------------------------------------------------------
+function comunicacao_iniciarPartida() {
+    return new Mensagem(TipoMensagem.iniciar_partida, null);
+}
+
+function comunicacao_finalizarTurno() {
+    return new Mensagem(TipoMensagem.finalizar_turno, null);
+}
+
 function comunicacao_colocarTropa(posicaoJogador, codigoTerritorio, qtd) {
-    var colocarTropaMsg = new Mensagem(TipoMensagem.colocar_tropa,
+    return new Mensagem(TipoMensagem.colocar_tropa,
     {
         posicaoJogador: posicaoJogador,
         territorio: codigoTerritorio,
         quantidade: qtd
     });
+}
 
-    return colocarTropaMsg;
+function comunicacao_atacar(posicaoJogador, codigoTerritorioAlvo, codigosTerritoriosAtacante) {
+    return new Mensagem(TipoMensagem.atacar,
+    {
+        posicaoJogador: posicaoJogador,
+        dosTerritorios: codigosTerritoriosAtacante,
+        paraOTerritorio: codigoTerritorioAlvo
+    });
 }

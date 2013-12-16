@@ -17,7 +17,8 @@ var TipoAcaoTurno = {
     distribuir_tropas_globais: "DistribuirTropasGlobais",
     distribuir_tropas_grupo_territorio: "DistribuirTropasGrupoTerritorio",
     atacar: "Atacar",
-    mover: "Mover"
+    mover: "Mover",
+    mover_apos_conquistar_territorio: "MoverAposConquistarTerritorio"
 };
 
 function Mensagem(tipo, params) {

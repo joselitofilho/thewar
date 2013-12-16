@@ -329,7 +329,7 @@ class Jogo(object):
                             if quantidadeDadosDefesa > 3:
                                 quantidadeDadosDefesa = 3
                             break
-                
+                    
                     if quantidadeDadosDefesa > 0:
                         # Sortear os dados da defesa.
                         dadosDefesa = []
@@ -348,14 +348,21 @@ class Jogo(object):
                                 FronteiraTerritorio.TemFronteira(
                                     territorioDaDefesa.Codigo, territorioObj.Codigo)):
                                 territoriosDoAtaque.append(territorioObj)
-                                quantidadeDadosAtaque += territorioObj.QuantidadeDeTropas
-                                if quantidadeDadosAtaque > 3:
-                                    quantidadeDadosAtaque = 3
+                                
+                                if territorioObj.QuantidadeDeTropas > 3:
+                                    quantidadeDadosAtaque += territorioObj.QuantidadeDeTropas
+                                elif territorioObj.QuantidadeDeTropas > 1:
+                                    quantidadeDadosAtaque += territorioObj.QuantidadeDeTropas - 1
+                                else:
+                                    temErro = True
                             else:
                                 temErro = True
                                 break
                     
                         if not temErro:
+                            if quantidadeDadosAtaque > 3:
+                                quantidadeDadosAtaque = 3
+                        
                             # Sortear os dados do ataque.
                             dadosAtaque = []
                             for i in range(0, quantidadeDadosAtaque):
@@ -402,10 +409,10 @@ class Jogo(object):
                     else:
                         temErro = True
                 
-                if temErro:
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                    print "# " + jsonMsg
-                    socket.sendMessage(jsonMsg)
+                    if temErro:
+                        jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
+                        print "# " + jsonMsg
+                        socket.sendMessage(jsonMsg)
                     
     def defesaVenceu(self, i, territoriosDoAtaque, jogador):
         pos = i

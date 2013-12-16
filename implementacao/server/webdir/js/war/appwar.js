@@ -1,7 +1,10 @@
 _posicaoJogador = -1;
 _turno = null;
 _posicaoJogadorDaVez = -1;
-_territorioAlvo = null;
+_territorioAlvoAtaque = null;
+_territoriosAtacante = [];
+
+_animarDadosReferencia = null;
 
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
@@ -54,6 +57,42 @@ function processarMsg_carta_objetivo(msgParams) {
 function processarMsg_colocar_tropa(msgParams) {
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     $('#quantidade_de_tropas').html('Quantidade de tropas a colocar: ' + msgParams.quantidadeDeTropasRestante);
+}
+
+function processarMsg_atacar(msgParams) {
+    _territorios.pintarGruposTerritorios();
+        
+    var territorioDaDefesa = msgParams.territorioDaDefesa;
+    var territoriosDoAtaque = msgParams.territoriosDoAtaque;
+    var codigoTerritorios = [territorioDaDefesa.codigo];
+            
+    _labelTerritorios[territorioDaDefesa.codigo].alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
+    
+    for (i = 0; i < territoriosDoAtaque.length; i++) {
+        codigoTerritorios.push(territoriosDoAtaque[i].codigo);
+        _labelTerritorios[territoriosDoAtaque[i].codigo].alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
+    }
+    _territorios.focaNosTerritorios(codigoTerritorios);
+    
+    pararAnimacaoDosDados();
+    
+    var dadosAtaque = msgParams.dadosAtaque;
+    var dadosDefesa = msgParams.dadosDefesa;
+    
+    for (i = 0; i < dadosAtaque.length; i++) {
+        $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
+    }
+    
+    for (i = 0; i < dadosDefesa.length; i++) {
+        $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
+    }
+    
+    if (msgParams.conquistouTerritorio) {
+        _turno = {};
+        _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;
+        
+        _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
+    }
 }
 
 function processarMsg_turno(msgParams) {
@@ -128,6 +167,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_colocar_tropa(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.turno) {
         processarMsg_turno(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.atacar) {
+        processarMsg_atacar(jsonMensagem.params);
     }
 }
 
@@ -138,23 +179,37 @@ function posFechamentoSocket(valor) {
 function iniciarPartida() {
     var btnIniciarPartida = document.getElementById("btnIniciarPartida");
     btnIniciarPartida.disabled = true;
-    iniciarPartidaMsg = new Mensagem(TipoMensagem.iniciar_partida, null);
+    iniciarPartidaMsg = comunicacao_iniciarPartida();
     _libwebsocket.enviarObjJson(iniciarPartidaMsg);
 }
 
 function finalizarTurno() {
-    finalizarPartidaMsg = new Mensagem(TipoMensagem.finalizar_turno, null);
+    finalizarPartidaMsg = comunicacao_finalizarTurno();
     _libwebsocket.enviarObjJson(finalizarPartidaMsg);
 }
 
 function atacar() {
-    atacarMsg = new Mensagem(TipoMensagem.atacar,
-    {
-        posicaoJogador: 0,
-        dosTerritorios: ["Brasil"],
-        paraOTerritorio: "Chile"
-    });
-    _libwebsocket.enviarObjJson(atacarMsg);
+    if (_posicaoJogadorDaVez == _posicaoJogador) {
+        var qtdDadosDefesa = _territorios.quantidadeDeTropaDoTerritorio(_territorioAlvoAtaque);
+        var qtdDadosAtaque = 0;
+        
+        $.each(_territoriosAtacante, function(i, codigoTerritorio) {
+            var qtdTropas = _territorios.quantidadeDeTropaDoTerritorio(codigoTerritorio);
+            if (qtdTropas <= 3 && qtdTropas > 1) {
+                qtdDadosAtaque += qtdTropas - 1;
+            } else {
+                qtdDadosAtaque += qtdTropas;
+            }
+        });
+        
+        if (qtdDadosDefesa > 0 && qtdDadosAtaque > 1) {     
+            var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);
+            _libwebsocket.enviarObjJson(atacarMsg);
+            
+            // Iniciar animacao de jogar os dados...
+            jogarDados(qtdDadosAtaque, qtdDadosDefesa);
+        }
+    }
 }
 
 function mover() {
@@ -205,20 +260,80 @@ function appwar_alteraInfoTurnoJogador(posicaoJogador) {
 function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         if (_turno.tipoAcao == TipoAcaoTurno.atacar) {
-            if (nomeDoTerritorio == _territorioAlvo) {
+            if (nomeDoTerritorio == _territorioAlvoAtaque) {
                 _territorios.pintarGruposTerritorios();
                 _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
-                _territorioAlvo = null;
+                _territorioAlvoAtaque = null;
+                _territoriosAtacante = [];
             }
             else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();
-                _territorioAlvo = nomeDoTerritorio;
+                _territorioAlvoAtaque = nomeDoTerritorio;
                 _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+                _territoriosAtacante = [];
+            }
+            else if (_territorioAlvoAtaque != null) {
+                if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
+                    var indiceTerritorio = _territoriosAtacante.indexOf(nomeDoTerritorio);
+                    if (indiceTerritorio == -1) {
+                        _territoriosAtacante.push(nomeDoTerritorio);
+                        _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
+                    } else {
+                        _territoriosAtacante.splice(indiceTerritorio, 1);
+                        _territorios.diminuiBrilhoTerritorio(nomeDoTerritorio);
+                    }
+                }
             }
         } else {
             var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, quantidade);
             _libwebsocket.enviarObjJson(colocarTropaMsg);
         }
+    }
+}
+
+function jogarDados(qtdDadosAtaque, qtdDadosDefesa) {
+    try {
+        if (_animarDadosReferencia == null) {
+            $('#da2').css('visibility', 'hidden');
+            $('#da3').css('visibility', 'hidden');
+            if (qtdDadosAtaque >= 2) $('#da2').css('visibility', 'visible');
+            if (qtdDadosAtaque >= 3) $('#da3').css('visibility', 'visible');
+            
+            $('#dd2').css('visibility', 'hidden');
+            $('#dd3').css('visibility', 'hidden');
+            if (qtdDadosDefesa >= 2) $('#dd2').css('visibility', 'visible');
+            if (qtdDadosDefesa >= 3) $('#dd3').css('visibility', 'visible');
+            
+            _animarDadosReferencia = setInterval(animarDados, 20);
+        }
+    } catch(ex) {
+        console.log("Error in fnTimer:\n" + ex);
+    }
+}
+
+function animarDados() {
+    var da1 = Math.floor(Math.random()*6);
+    var da2 = Math.floor(Math.random()*6);
+    var da3 = Math.floor(Math.random()*6);
+    var dd1 = Math.floor(Math.random()*6);
+    var dd2 = Math.floor(Math.random()*6);
+    var dd3 = Math.floor(Math.random()*6);
+    
+    $('#da1').css('background-position', (da1*-40) + 'px 0px');
+    $('#da2').css('background-position', (da2*-40) + 'px 0px');
+    $('#da3').css('background-position', (da3*-40) + 'px 0px');
+    
+    $('#dd1').css('background-position', (dd1*-40) + 'px -40px');
+    $('#dd2').css('background-position', (dd2*-40) + 'px -40px');
+    $('#dd3').css('background-position', (dd3*-40) + 'px -40px');
+}
+
+function pararAnimacaoDosDados() {
+    try {
+        clearInterval(_animarDadosReferencia);
+        _animarDadosReferencia = null;
+    } catch(ex) {
+        console.log("Error in fnTimer:\n" + ex);
     }
 }
 

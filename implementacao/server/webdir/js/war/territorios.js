@@ -340,6 +340,14 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    });
 	};
 	
+	this.aumentaBrilhoTerritorio = function(nomeDoTerritorio) {
+	    _poligonosTerritorios[nomeDoTerritorio].setOptions({fillOpacity: "1"});
+	};
+	
+	this.diminuiBrilhoTerritorio = function(nomeDoTerritorio) {
+	    _poligonosTerritorios[nomeDoTerritorio].setOptions({fillOpacity: "0.5"});
+	};
+	
 	this.focaNoTerritorioAlvoEAdjacentesDoJogador = function(nomeDoTerritorio, posicaoJogador) {
     	var me = this;
 	    var territorios = this.carregaTerritorios();
@@ -348,9 +356,20 @@ gpscheck.mapa.Territorios = function(mapa) {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
 	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
 	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador ||
-	                _labelTerritorios[territorio.nome].texto == '1') {
+	                me.quantidadeDeTropaDoTerritorio(territorio.nome) == 1) {
     	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
     	    }
+	    });
+	};
+	
+	this.focaNosTerritorios = function (territoriosParaFoco) {
+	    var territorios = this.carregaTerritorios();
+	    $.each(territorios, function(i, territorio) {
+	        if (territoriosParaFoco.indexOf(territorio.nome) == -1) {
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
+	        } else {
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
+	        }
 	    });
 	};
 	
@@ -380,18 +399,10 @@ gpscheck.mapa.Territorios = function(mapa) {
         return corDeFundo;
 	}
 	
-	this.corDoTextoDaPosicao = function(posicao) {
-	    var corDoTexto = '#FFF';
-        if (posicao == 3) corDoTexto = '#000';
-        
-        return corDoTexto;
-	}
-
 	this.iniciaLabelDosTerritorios = function(territorios, posicaoJogador) {
 		var territorioJs = this.carregaTerritorios();
         
         var corDeFundo = this.corDeFundoDaPosicao(posicaoJogador);
-        var corDoTexto = this.corDoTextoDaPosicao(posicaoJogador);
 
         var circulo = {
             path: google.maps.SymbolPath.CIRCLE, 
@@ -415,14 +426,12 @@ gpscheck.mapa.Territorios = function(mapa) {
 		        
 		        var label = new Label({
                     map: mapa
-                }, corDoTexto);
+                });
                 label.bindTo('position', marker, 'position');
                 label.bindTo('text', marker, 'position');
                
                 label.texto = '1';
-                label.posicaoJogador = posicaoJogador;
-
-                label.metadata = {pos: posicaoJogador};
+                label.alteraPosicaoJogador(posicaoJogador);
 
                 _markerTerritorios[territorio.codigo] = marker;
                 _labelTerritorios[territorio.codigo] = label;
@@ -434,15 +443,30 @@ gpscheck.mapa.Territorios = function(mapa) {
 		});
 	};
 	
-	this.territorioNaoEhDoJogador = function(nomeDoTerritorio, posicaoJogador) {
-	    return (_labelTerritorios[nomeDoTerritorio].posicaoJogador != posicaoJogador);
+	this.territorioNaoEhDoJogador = function(codigoTerritorio, posicaoJogador) {
+	    return (_labelTerritorios[codigoTerritorio].posicaoJogador != posicaoJogador);
 	};
 	
 	this.temFronteira = function(nomeDoTerritorio1, nomeDoTerritorio2) {
-	    console.log(nomeDoTerritorio1);
-	    console.log(nomeDoTerritorio2);
-	    console.log(fronteiras[nomeDoTerritorio1]);
-	    console.log(fronteiras[nomeDoTerritorio1].indexOf(nomeDoTerritorio2));
 	    return fronteiras[nomeDoTerritorio1].indexOf(nomeDoTerritorio2) > -1;
+	};
+	
+	this.quantidadeDeTropaDoTerritorio = function(nomeDoTerritorio) {
+	    return Number(_labelTerritorios[nomeDoTerritorio].texto);
+	};
+	
+	this.alteraDonoTerritorio = function(codigoTerritorio, posicaoJogador) {
+	    var corDeFundo = this.corDeFundoDaPosicao(posicaoJogador);
+
+        var novoCirculo = {
+            path: google.maps.SymbolPath.CIRCLE, 
+            fillColor: corDeFundo,
+            fillOpacity: 0.8,
+            scale: 15,
+            strokeColor: "#000000",
+            strokeWeight: 2
+        };
+	    _markerTerritorios[codigoTerritorio].setOptions({icon: novoCirculo});
+	    _labelTerritorios[codigoTerritorio].alteraPosicaoJogador(posicaoJogador);
 	};
 };
