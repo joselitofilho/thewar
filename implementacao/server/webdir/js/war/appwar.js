@@ -40,23 +40,21 @@ function processarMsg_jogo_fase_I(msgParams) {
         var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
         _territorios.iniciaLabelDosTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
-
+    
+    $('#btnIniciarPartida').css('visibility', 'hidden');
     $('#controles').css('visibility', 'visible');
+    $('#quantidade_de_tropas').css('visibility', 'visible');
 
     appwar_alteraInfoTurnoJogador(msgParams.jogadorQueComeca);
 }
 
 function processarMsg_carta_objetivo(msgParams) {
-    var btnIniciarPartida = document.getElementById("btnIniciarPartida");
-    btnIniciarPartida.style.visibility = "hidden";
-
-    var cartaObjetivo = document.getElementById("cartaObjetivo");
-    cartaObjetivo.setAttribute('class', 'carta_objetivo carta_objetivo_' + (Number(msgParams.objetivo)+1));
+    $('#cartaObjetivo').attr('class', 'carta_objetivo carta_objetivo_' + (Number(msgParams.objetivo)+1));
 }
 
 function processarMsg_colocar_tropa(msgParams) {
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
-    $('#quantidade_de_tropas').html('Quantidade de tropas a colocar: ' + msgParams.quantidadeDeTropasRestante);
+    $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropasRestante);
 }
 
 function processarMsg_atacar(msgParams) {
@@ -133,7 +131,7 @@ function processarMsg_turno(msgParams) {
 
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     $('#info_turno_texto').html('Distribuir tropas globais');
-    $('#quantidade_de_tropas').html('Quantidade de tropas a colocar: ' + msgParams.quantidadeDeTropas);
+    $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
@@ -144,7 +142,7 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
     if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
     else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
     $('#info_turno_texto').html('Distribuir tropas na ' + strGrupoTerritorio);
-    $('#quantidade_de_tropas').html('Quantidade de tropas a colocar: ' + msgParams.quantidadeDeTropas);
+    $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
     _territorios.manterFocoNoGrupo(msgParams.grupoTerritorio);

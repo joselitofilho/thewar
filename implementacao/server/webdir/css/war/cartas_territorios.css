@@ -1,6 +1,6 @@
 #cartasTerritorios {
     position: absolute;
-    top: 41px;
+    top: 418px;
     left: 270px;
     z-index: 999;
     visibility: hidden;
@@ -12,6 +12,7 @@
     background: url("../../imagens/cartasTerritorios_sprite.png") no-repeat;
     float: left;
     margin-left: 4px;
+    cursor: pointer;
 }
 
 .carta_territorio_vazia { background-position: 0px 0px; }
