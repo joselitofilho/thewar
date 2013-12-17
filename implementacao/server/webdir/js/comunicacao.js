@@ -1,6 +1,22 @@
 // --------------------------------------------------------------------------------
 // Mensagens que são enviadas para o servidor.
 // --------------------------------------------------------------------------------
+function comunicacao_entrar(usuario, senha) {
+    return new Mensagem(TipoMensagem.entrar,
+    {
+        usuario: usuario,
+        senha: senha
+    });
+}
+
+function comunicacao_registrar(usuario, senha) {
+    return new Mensagem(TipoMensagem.registrar,
+    {
+        usuario: usuario,
+        senha: senha
+    });
+}
+
 function comunicacao_iniciarPartida() {
     return new Mensagem(TipoMensagem.iniciar_partida, null);
 }

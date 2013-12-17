@@ -24,7 +24,11 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             print "[%s] Enviou: %s" % (self.peerstr, msg)
             mensagem = Mensagem()
             mensagem.fromJson(msg)
-            if mensagem.tipo == TipoMensagem.iniciar_partida:
+            if mensagem.tipo == TipoMensagem.entrar:
+                pass
+            elif mensagem.tipo == TipoMensagem.registrar:
+                pass
+            elif mensagem.tipo == TipoMensagem.iniciar_partida:
                 _gerenciador.iniciaPartida()
             elif mensagem.tipo == TipoMensagem.finalizar_turno:
                 _gerenciador.finalizaTurno(self)
@@ -54,7 +58,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
         if not client in self.clients:
             print "registered client " + client.peerstr
             self.clients.append(client)
-            _gerenciador.clienteConectou(client)
+            #_gerenciador.clienteConectou(client)
 
     def unregister(self, client):
         if client in self.clients:

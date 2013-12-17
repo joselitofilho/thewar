@@ -236,6 +236,7 @@ function posRecebimentoMensagemServidor(valor) {
 function posFechamentoSocket(valor) {
     //alert("Você perdeu a conexao com o servidor. Reinicie o browser.");
     $('#bloqueador_tela').css('visibility', 'visible');
+    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#botao_recarregar').css('visibility', 'visible');
 }
 
@@ -478,8 +479,17 @@ function pararAnimacaoDosDados(msgParams) {
     }
 }
 
+function appwar_entrar() {
+    var entrarMsg = comunicacao_entrar($('#inputUsuario').val(), $('#inputSenha').val());
+    _libwebsocket.enviarObjJson(entrarMsg);
+}
+
+function appwar_registrar() {
+    var registrarMsg = comunicacao_registrar($('#inputUsuario').val(), $('#inputSenha').val());
+    _libwebsocket.enviarObjJson(registrarMsg);
+}
+
 function appwar_recarregarPagina() {
-    //$('#botao_recarregar').css('visibility', 'hidden');
     location.reload();
 }
 

@@ -1,4 +1,6 @@
 var TipoMensagem = {
+    entrar: "Entrar",
+    registrar: "Registrar",
     erro: "Erro",
     entrou_na_sala: "EntrouNaSala",
     lista_sala: "ListaSala",
