@@ -12,11 +12,21 @@
         
         <link href="css/app.css" rel="stylesheet">
         <link href="css/cores.css" rel="stylesheet">
-        <link href="css/war/cartas.css" rel="stylesheet">
+        <link href="css/war/cartas_objetivos.css" rel="stylesheet">
+        <link href="css/war/cartas_territorios.css" rel="stylesheet">
 
     </head>
     <body>
         <div id="cartaObjetivo" class="carta_objetivo carta_objetivo_padrao"></div>
+        
+        <div id="cartasTerritorios">
+            <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia"></div>
+            <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia"></div>
+            <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia"></div>
+            <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia"></div>
+            <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia"></div>
+        </div>
+        
         <div id="geral">
 
             <div id="topo" class="well well-sm">
@@ -50,6 +60,7 @@
                             onclick="iniciarPartida();">Iniciar partida</button>
                         <button class="btn btn-default" onclick="atacar();">Atacar</button>
                         <button class="btn btn-default" onclick="mostrarCartaObjetivo();">Objetivo</button>
+                        <button class="btn btn-default" onclick="mostrarCartasTerritorios();">Cartas territorios</button>
                         <div id="quantidade_de_tropas" style="color: #FFF;">Quantidade de tropas: 0</div>
                         
                         <div id="dados">

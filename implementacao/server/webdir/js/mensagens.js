@@ -10,6 +10,7 @@ var TipoMensagem = {
     colocar_tropa: "ColocarTropa",
     atacar: "Atacar",
     mover: "Mover",
+    cartas_territorios: "CartasTerritorio",
     turno: "Turno"
 };
 

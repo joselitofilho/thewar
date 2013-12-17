@@ -109,6 +109,13 @@ function processarMsg_mover(msgParams) {
     _labelTerritorios[paraOTerritorio.codigo].alteraQuantiadeDeTropas("" + paraOTerritorio.quantidadeDeTropas);
 }
 
+function processarMsg_cartas_territorios(msgParams) {
+    for (i=0; i<msgParams.length; i++) {
+        var cartaTerritorio = msgParams[i];
+        $('#cartaTerritorio' + (i+1)).attr('class','carta_territorio carta_territorio_' + cartaTerritorio.codigoTerritorio);
+    }
+}
+
 function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
@@ -190,6 +197,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_atacar_comDados(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.mover) {
         processarMsg_mover(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.cartas_territorios) {
+        processarMsg_cartas_territorios(jsonMensagem.params);
     }
 }
 
@@ -242,6 +251,14 @@ function mostrarCartaObjetivo() {
         $('#cartaObjetivo').css('visibility', 'hidden');
     } else {
         $('#cartaObjetivo').css('visibility', 'visible');
+    }
+}
+
+function mostrarCartasTerritorios() {
+    if ($('#cartasTerritorios').css("visibility") == 'visible') {
+        $('#cartasTerritorios').css('visibility', 'hidden');
+    } else {
+        $('#cartasTerritorios').css('visibility', 'visible');
     }
 }
 
