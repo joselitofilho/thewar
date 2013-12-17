@@ -234,7 +234,9 @@ function posRecebimentoMensagemServidor(valor) {
 }
 
 function posFechamentoSocket(valor) {
-    alert("Voce perdeu a conexao com o servidor. Reinicie o browser.");
+    //alert("Você perdeu a conexao com o servidor. Reinicie o browser.");
+    $('#bloqueador_tela').css('visibility', 'visible');
+    $('#botao_recarregar').css('visibility', 'visible');
 }
 
 function iniciarPartida() {
@@ -474,6 +476,11 @@ function pararAnimacaoDosDados(msgParams) {
     } catch(ex) {
         console.log("Error in fnTimer:\n" + ex);
     }
+}
+
+function appwar_recarregarPagina() {
+    //$('#botao_recarregar').css('visibility', 'hidden');
+    location.reload();
 }
 
 function iniciarApp() {

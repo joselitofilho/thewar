@@ -13,7 +13,7 @@ html, body {
 #topo {
     position: fixed;
     top: 0;
-    z-index: 9999;
+    z-index: 9001;
     width: 41px;
     text-align: center;
 }
@@ -21,6 +21,18 @@ html, body {
 #idJogador {
     float: left;
     right: 10px;
+}
+
+#btnIniciarPartida {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    top: 255px;
+    left: 480px;
+    background: url('../imagens/iniciar.png') no-repeat;
+    cursor: pointer;
+    z-index: 1000;
+    visibility: hidden;
 }
 
 #mapa {
@@ -171,4 +183,27 @@ html, body {
 
 .dado_defesa {
     background-position: 0px -40px;
+}
+
+#bloqueador_tela {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: visible;
+    z-index: 9000;
+    visibility: hidden;
+}
+
+#botao_recarregar {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    background: url('../imagens/recarregar.png') no-repeat;
+    left: 50%;
+    top: 50%;
+    z-index: 9001;
+    cursor: pointer;
+    visibility: hidden;
 }

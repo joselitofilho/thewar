@@ -36,16 +36,18 @@
             <div id="conteudo">
                 <div id="menu_jogadores">
                     <ul>
-                        <li><a id="jogador1" class="cor_vermelha" href="#">-</a></li> 
-                        <li><a id="jogador2" class="cor_azul" href="#">-</a></li>
-                        <li><a id="jogador3" class="cor_verde" href="#">-</a></li>
-                        <li><a id="jogador4" class="cor_preto" href="#">-</a></li>
-                        <li><a id="jogador5" class="cor_branco" href="#">-</a></li>
-                        <li><a id="jogador6" class="cor_amarelo" href="#">-</a></li>
+                        <li><a id="jogador1" class="cor_vermelha" href="javascript:void(0)">-</a></li> 
+                        <li><a id="jogador2" class="cor_azul" href="javascript:void(0)">-</a></li>
+                        <li><a id="jogador3" class="cor_verde" href="javascript:void(0)">-</a></li>
+                        <li><a id="jogador4" class="cor_preto" href="javascript:void(0)">-</a></li>
+                        <li><a id="jogador5" class="cor_branco" href="javascript:void(0)">-</a></li>
+                        <li><a id="jogador6" class="cor_amarelo" href="javascript:void(0)">-</a></li>
                     </ul>
                 </div>
                 
                 <div id="info_quantidade_de_tropas">Tropas restante:<br><span id="quantidade_de_tropas">0</span></div>
+
+                <div id="btnIniciarPartida" onclick="iniciarPartida();"></div>
 
                 <div id="mapa"></div>
 
@@ -58,8 +60,6 @@
                     </div>
 
                     <div id="info_turno_meio">
-                        <button id="btnIniciarPartida" type="button" class="btn btn-default" style="visibility: hidden;"
-                            onclick="iniciarPartida();">Iniciar partida</button>
                         <button class="btn btn-default" onclick="atacar();">Atacar</button>
                         <button class="btn btn-default" onclick="mostrarCartaObjetivo();">Objetivo</button>
                         <button class="btn btn-default" onclick="mostrarCartasTerritorios();">Cartas territorios</button>
@@ -83,10 +83,11 @@
                         <div id="btnFinalizarTurno" onclick="finalizarTurno();"></div>
                     </div>
                 </div>
-
             </div>
-            
         </div>
+
+        <div id="bloqueador_tela"></div>
+        <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
 
         <!-- Google Maps -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
