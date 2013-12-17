@@ -539,9 +539,12 @@ class Jogo(object):
 
     def enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio(self):
         if self._jogadorDaVezConquistouTerritorio:
+            print "Jogador da vez: ", self._posicaoJogadorDaVez
             jogador = self._jogadores[self._posicaoJogadorDaVez]
             cartaTerritorio = self.pegaUmaCartaTerritorioDoBaralho()
-            jogador.cartasTerritorio.append(cartaTerritorio)
+            print "Cartas territorios: ", cartaTerritorio
+            print "Antes: ",jogador.cartasTerritorio
+            jogador.adicionaCartaTerritorio(cartaTerritorio)
             
             jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)
             print "# " + jsonMsg

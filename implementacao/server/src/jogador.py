@@ -8,6 +8,8 @@ class Jogador(object):
 
     def __init__(self, socket):
         self._socket = socket
+        self._territorios = []
+        self._cartasTerritorio = []
         
     def gruposTerritorio(self):
         retorno = []
@@ -106,6 +108,9 @@ class Jogador(object):
                 return t
                 
         return None
+    
+    def adicionaCartaTerritorio(self, cartaTerritorio):
+        self._cartasTerritorio.append(cartaTerritorio)
 
     @property
     def socket(self):
