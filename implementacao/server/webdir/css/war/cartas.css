@@ -1,3 +1,11 @@
+#cartaObjetivo {
+    position: absolute;
+    top: 390px;
+    left: 660px;
+    z-index: 999;
+    visibility: hidden;
+}
+
 .carta_objetivo {
     width: 85px;
     height: 148px;

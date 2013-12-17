@@ -16,14 +16,12 @@ function processarMsg_lista_sala(msgParams) {
     var listaJogadores = msgParams.lista;
     for (i=0; i < listaJogadores.length; i++) {
         var posicaoJogador = Number(listaJogadores[i]) + 1;
-        var divJogador = document.getElementById("jogador" + posicaoJogador);
-        divJogador.innerHTML = "Jogador " + posicaoJogador;
+        $("#jogador" + posicaoJogador).html(posicaoJogador);
     }
 }
 
 function processarMsg_entrou_na_sala(msgParams) {
-    var divJogador = document.getElementById("idJogador");
-    divJogador.innerHTML = "Jogador " + (Number(msgParams.posicao) + 1);
+    $("#idJogador").html(Number(msgParams.posicao) + 1);
     
     _posicaoJogador = Number(msgParams.posicao);
 
@@ -53,7 +51,6 @@ function processarMsg_carta_objetivo(msgParams) {
     btnIniciarPartida.style.visibility = "hidden";
 
     var cartaObjetivo = document.getElementById("cartaObjetivo");
-    cartaObjetivo.style.visibility = "visible";
     cartaObjetivo.setAttribute('class', 'carta_objetivo carta_objetivo_' + (Number(msgParams.objetivo)+1));
 }
 
@@ -237,6 +234,14 @@ function atacar() {
             var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);
             _libwebsocket.enviarObjJson(atacarMsg);
         }
+    }
+}
+
+function mostrarCartaObjetivo() {
+    if ($('#cartaObjetivo').css("visibility") == 'visible') {
+        $('#cartaObjetivo').css('visibility', 'hidden');
+    } else {
+        $('#cartaObjetivo').css('visibility', 'visible');
     }
 }
 

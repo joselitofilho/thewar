@@ -100,7 +100,7 @@ html, body {
 
 #menu_jogadores {
     position: absolute;
-    width: 1024px;
+    width: 200px;
     z-index: 999;
 }
 
@@ -116,9 +116,9 @@ html, body {
 }
 
 #menu_jogadores ul li a {
-    width: 140px;
+    width: 30px;
     display: inline-block;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 4px 4px;
     font-family: 'PT Sans', sans-serif;
 }
 

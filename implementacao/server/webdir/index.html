@@ -16,6 +16,7 @@
 
     </head>
     <body>
+        <div id="cartaObjetivo" class="carta_objetivo carta_objetivo_padrao"></div>
         <div id="geral">
 
             <div id="topo" class="well well-sm">
@@ -48,6 +49,7 @@
                         <button id="btnIniciarPartida" type="button" class="btn btn-default" style="visibility: hidden;"
                             onclick="iniciarPartida();">Iniciar partida</button>
                         <button class="btn btn-default" onclick="atacar();">Atacar</button>
+                        <button class="btn btn-default" onclick="mostrarCartaObjetivo();">Objetivo</button>
                         <div id="quantidade_de_tropas" style="color: #FFF;">Quantidade de tropas: 0</div>
                         
                         <div id="dados">
@@ -71,19 +73,7 @@
 
             </div>
             
-            <!--<div id="rodape">
-                <div id="carta_objetivo">
-                    <div id="cartaObjetivo" class="carta_objetivo carta_objetivo_padrao"></div>
-                </div>
-                <div id="cartas_territorio">
-                    <div class="carta_objetivo carta_objetivo_padrao"></div>
-                    <div class="carta_objetivo carta_objetivo_padrao"></div>
-                    <div class="carta_objetivo carta_objetivo_padrao"></div>
-                </div>
-            </div>-->
         </div>
- 
-
 
         <!-- Google Maps -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
