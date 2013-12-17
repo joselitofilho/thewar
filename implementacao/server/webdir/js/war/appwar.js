@@ -9,6 +9,8 @@ _territorioMovimento = null;
 
 _animarDadosReferencia = null;
 
+_cartasTerritoriosSelecionadas = [];
+
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
@@ -260,14 +262,26 @@ function mostrarCartasTerritorios() {
     }
 }
 
-function adicionaExercitoNoClickDo(poligono) {
-    google.maps.event.addListener(poligono, 'click', function (event) {
-        var markermap = new google.maps.Marker({
-            position: event.latLng,
-            map: _mapaGoogle,
-            title: "Exercitos: "
-        });
-    });
+function selecionarCartaTerritorio(num) {
+    var nomeDoElemento = '#cartaTerritorio' + num;
+    var classesDoElemento = $(nomeDoElemento).attr('class').split(' ');
+    
+    if (classesDoElemento.length > 1 && classesDoElemento[1] != 'carta_territorio_vazia') {
+        var nomeDividido = classesDoElemento[1].split('_');
+        if (nomeDividido.length == 3) {
+            // Carta não estava selecionada.
+            $(nomeDoElemento).removeClass(classesDoElemento[1]);
+            $(nomeDoElemento).addClass(classesDoElemento[1] + '_selecionado');
+            
+            _cartasTerritoriosSelecionadas.push(nomeDividido[2]);
+        } else if (nomeDividido.length == 4) {
+            // Carta estava selecionada.
+            $(nomeDoElemento).removeClass(classesDoElemento[1]);
+            $(nomeDoElemento).addClass(nomeDividido[0] + '_' + nomeDividido[1] + '_' + nomeDividido[2]);
+            
+            _cartasTerritoriosSelecionadas.splice(_cartasTerritoriosSelecionadas.indexOf(nomeDividido[2]), 1);
+        }
+    }
 }
 
 function appwar_alteraInfoTurnoJogador(posicaoJogador) {

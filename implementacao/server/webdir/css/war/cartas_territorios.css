@@ -60,3 +60,50 @@
 .carta_territorio_Vladivostok { background-position: -2898px 0px; }
 
 .carta_territorio_Coringa { background-position: -2967px 0px; }
+
+/* Cartas territorios quando estão selecionadas */
+.carta_territorio_vazia_selecionado { background-position: 0px -120px; }
+.carta_territorio_AfricaDoSul_selecionado { background-position: -69px -120px; }
+.carta_territorio_Alaska_selecionado { background-position: -138px -120px; }
+.carta_territorio_Alemanha_selecionado { background-position: -207px -120px; }
+.carta_territorio_Aral_selecionado { background-position: -276px -120px; }
+.carta_territorio_Argelia_selecionado { background-position: -345px -120px; }
+.carta_territorio_Argentina_selecionado { background-position: -414px -120px; }
+.carta_territorio_Australia_selecionado { background-position: -483px -120px; }
+.carta_territorio_Borneo_selecionado { background-position: -552px -120px; }
+.carta_territorio_Brasil_selecionado { background-position: -621px -120px; }
+.carta_territorio_California_selecionado { background-position: -690px -120px; }
+.carta_territorio_Chile_selecionado { background-position: -759px -120px; }
+.carta_territorio_China_selecionado { background-position: -828px -120px; }
+.carta_territorio_Colombia_selecionado { background-position: -897px -120px; }
+.carta_territorio_Congo_selecionado { background-position: -966px -120px; }
+.carta_territorio_Dudinka_selecionado { background-position: -1035px -120px; }
+.carta_territorio_Egito_selecionado { background-position: -1104px -120px; }
+.carta_territorio_Groelandia_selecionado { background-position: -1173px -120px; }
+.carta_territorio_India_selecionado { background-position: -1242px -120px; }
+.carta_territorio_Inglaterra_selecionado { background-position: -1311px -120px; }
+.carta_territorio_Islandia_selecionado { background-position: -1380px -120px; }
+.carta_territorio_Japao_selecionado { background-position: -1449px -120px; }
+.carta_territorio_Labrador_selecionado { background-position: -1518px -120px; }
+.carta_territorio_Mackenzie_selecionado { background-position: -1587px -120px; }
+.carta_territorio_Madagascar_selecionado { background-position: -1656px -120px; }
+.carta_territorio_Mexico_selecionado { background-position: -1725px -120px; }
+.carta_territorio_Mongolia_selecionado { background-position: -1794px -120px; }
+.carta_territorio_Moscou_selecionado { background-position: -1863px -120px; }
+.carta_territorio_NovaGuine_selecionado { background-position: -1932px -120px; }
+.carta_territorio_NovaYork_selecionado { background-position: -2001px -120px; }
+.carta_territorio_Omsk_selecionado { background-position: -2070px -120px; }
+.carta_territorio_OrienteMedio_selecionado { background-position: -2139px -120px; }
+.carta_territorio_Ottawa_selecionado { background-position: -2208px -120px; }
+.carta_territorio_Polonia_selecionado { background-position: -2277px -120px; }
+.carta_territorio_Portugal_selecionado { background-position: -2346px -120px; }
+.carta_territorio_Siberia_selecionado { background-position: -2415px -120px; }
+.carta_territorio_Sudao_selecionado { background-position: -2484px -120px; }
+.carta_territorio_Suecia_selecionado { background-position: -2553px -120px; }
+.carta_territorio_Sumatra_selecionado { background-position: -2622px -120px; }
+.carta_territorio_Tchita_selecionado { background-position: -2691px -120px; }
+.carta_territorio_Vancouver_selecionado { background-position: -2760px -120px; }
+.carta_territorio_Vietna_selecionado { background-position: -2829px -120px; }
+.carta_territorio_Vladivostok_selecionado { background-position: -2898px -120px; }
+
+.carta_territorio_Coringa_selecionado { background-position: -2967px -120px; }
