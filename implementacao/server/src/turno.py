@@ -9,10 +9,6 @@ class Turno(object):
     _gruposTerritorio = []
     _grupoTerritorioAtual = None
     
-    # Atributo utilizado para o turno: trocar cartas.
-    _obrigatorioTrocaDeCartas = False
-    _trocouCartas = False
-    
     # Atributos utilizado para o turno: mover tropas apos conquistar territorio.
     _tropasParaMoverAposAtaque = 0
     _territoriosDoAtaqueDaConquista = []
@@ -60,20 +56,6 @@ class Turno(object):
     @grupoTerritorioAtual.setter
     def grupoTerritorioAtual(self, valor):
         self._grupoTerritorioAtual = valor
-        
-    @property
-    def obrigatorioTrocaDeCartas(self):
-        return self._obrigatorioTrocaDeCartas
-    @obrigatorioTrocaDeCartas.setter
-    def obrigatorioTrocaDeCartas(self, valor):
-        self._obrigatorioTrocaDeCartas = valor
-
-    @property
-    def trocouCartas(self):
-        return self._trocouCartas
-    @trocouCartas.setter
-    def trocouCartas(self, valor):
-        self._trocouCartas = valor
         
     @property
     def tropasParaMoverAposAtaque(self):

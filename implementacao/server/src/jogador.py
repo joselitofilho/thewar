@@ -111,6 +111,9 @@ class Jogador(object):
     
     def adicionaCartaTerritorio(self, cartaTerritorio):
         self._cartasTerritorio.append(cartaTerritorio)
+    
+    def removeCartaTerritorio(self, cartaTerritorio):
+        self._cartasTerritorio.remove(cartaTerritorio)
 
     @property
     def socket(self):

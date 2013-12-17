@@ -14,7 +14,8 @@ html, body {
     position: fixed;
     top: 0;
     z-index: 9999;
-    width: 100%;
+    width: 41px;
+    text-align: center;
 }
 
 #idJogador {
@@ -95,7 +96,6 @@ html, body {
 }
  
 #conteudo {
-    margin-top: 41px;
 	overflow:hidden;
 }
 
@@ -103,7 +103,7 @@ html, body {
     position: absolute;
     width: 200px;
     z-index: 999;
-    left: 0;
+    left: 45px;
 }
 
 #menu_jogadores ul {

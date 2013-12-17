@@ -36,3 +36,11 @@ function comunicacao_mover(posicaoJogador, doTerritorio, paraOTerritorio, quanti
         quantidade: quantidade
     }); 
 }
+
+function comunicacao_trocar_cartas_territorio(posicaoJogador, cartasTerritorios) {
+    return new Mensagem(TipoMensagem.trocar_cartas_territorio,
+    {
+        posicaoJogador: posicaoJogador,
+        cartasTerritorios: cartasTerritorios
+    });
+}

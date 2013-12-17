@@ -11,12 +11,16 @@ var TipoMensagem = {
     atacar: "Atacar",
     mover: "Mover",
     cartas_territorios: "CartasTerritorio",
-    turno: "Turno"
+    trocar_cartas_territorio: "TrocarCartasTerritorio",
+    turno: "Turno",
+    colocar_tropa_na_troca_de_cartas_territorios: "ColocarTropaNaTrocaDeCartasTerritorios"
 };
 
 var TipoAcaoTurno = {
     distribuir_tropas_globais: "DistribuirTropasGlobais",
     distribuir_tropas_grupo_territorio: "DistribuirTropasGrupoTerritorio",
+    distribuir_tropas_troca_de_cartas: "DistribuirTropasTrocaDeCartas",
+    trocar_cartas: "TrocarCartas",
     atacar: "Atacar",
     mover: "Mover",
     mover_apos_conquistar_territorio: "MoverAposConquistarTerritorio"

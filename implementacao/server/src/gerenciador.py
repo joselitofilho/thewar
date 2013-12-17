@@ -89,12 +89,13 @@ class Gerenciador(object):
             self._jogo.finalizaTurno(socket)
 
     def requisicao(self, socket, mensagem):
+        # TODO: Pegar a posicao do jogador pelo socket.
         if mensagem.tipo == TipoMensagem.colocar_tropa:
             posicaoJogador = mensagem.params['posicaoJogador']
             territorio = mensagem.params['territorio']
             quantidade = mensagem.params['quantidade']
             if self._jogo != None:
-                self._jogo.colocaTropa(socket, posicaoJogador, territorio, quantidade)
+                self._jogo.colocaTropaReq(socket, posicaoJogador, territorio, quantidade)
         elif mensagem.tipo == TipoMensagem.atacar:
             posicaoJogador = mensagem.params['posicaoJogador']
             dosTerritorios = mensagem.params['dosTerritorios']
@@ -107,5 +108,6 @@ class Gerenciador(object):
             quantidade = mensagem.params['quantidade']
             self._jogo.move(socket, posicaoJogador, doTerritorio, paraOTerritorio, quantidade)
         elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
-            cartasTerritorio = mensagem.params['cartasTerritorio']
+            posicaoJogador = mensagem.params['posicaoJogador']
+            cartasTerritorio = mensagem.params['cartasTerritorios']
             self._jogo.trocaCartasTerritorio(socket, posicaoJogador, cartasTerritorio)

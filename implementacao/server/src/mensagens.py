@@ -15,7 +15,7 @@ class TipoMensagem:
     mover = "Mover"
     cartas_territorio = "CartasTerritorio"
     trocar_cartas_territorio = "TrocarCartasTerritorio"
-    territorios = "Territorios"
+    colocar_tropa_na_troca_de_cartas_territorios = "ColocarTropaNaTrocaDeCartasTerritorios"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -74,6 +74,11 @@ class AcaoTrocarCartas(AcaoTurno):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, posicaoJogador)
         self.obrigatorio = obrigatorio
 
+class AcaoDistribuirTropasTrocaDeCartas(AcaoTurno):
+    def __init__(self, tipoAcao, numeroDoTurno, posicaoJogador, quantidadeDeTropas):
+        AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, posicaoJogador)
+        self.quantidadeDeTropas = quantidadeDeTropas
+
 class ColocarTropa(object):
     def __init__(self, posicaoJogador, territorio, quantidadeDeTropasRestante):
         self.posicaoJogador = posicaoJogador
@@ -98,4 +103,9 @@ class Mover(object):
 class Territorios(object):
     def __init__(self, posicaoJogador, territorios):
         self.posicaoJogador = posicaoJogador
+        self.territorios = territorios
+        
+class ColocarTropaNaTrocaDeCartasTerritorios(object):
+    def __init__(self, posicaoJogador, territorios):
+        self.posicaoJogador = posicaoJogador;
         self.territorios = territorios

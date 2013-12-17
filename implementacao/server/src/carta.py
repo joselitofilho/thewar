@@ -13,6 +13,7 @@ class CartaCor:
     Todas = "Todas"
 
 class CartasTerritorio(object):
+    Coringa = "Coringa"
 
     @staticmethod
     def Todas():
@@ -72,8 +73,8 @@ class CartasTerritorio(object):
         todas.append(CartaTerritorio(CodigoTerritorio.Sumatra, CartaForma.Quadrado, CartaCor.Amarela))
         
         # 2 cartas Coringa
-        todas.append(CartaTerritorio("Coringa", CartaForma.Todas, CartaCor.Todas))
-        todas.append(CartaTerritorio("Coringa", CartaForma.Todas, CartaCor.Todas))
+        todas.append(CartaTerritorio(CartasTerritorio.Coringa, CartaForma.Todas, CartaCor.Todas))
+        todas.append(CartaTerritorio(CartasTerritorio.Coringa, CartaForma.Todas, CartaCor.Todas))
 
         return todas
 

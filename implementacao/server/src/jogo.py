@@ -77,21 +77,21 @@ class Jogo(object):
         jogadorDaVez = self._posicaoJogadorDaVez
         # Qual a acao que ele deve fazer...
         tipoAcaoDoTurno = turno.tipoAcao
+        
+        jogador = self._jogadores[jogadorDaVez]
 
         acao = None
         # Preencher os dados da acao
         if tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_globais:
-            jogador = self._jogadores[jogadorDaVez]
             turno.quantidadeDeTropas = math.floor(len(jogador.territorios) / 2);
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
-            jogador = self._jogadores[jogadorDaVez]
             turno.grupoTerritorioAtual = turno.gruposTerritorio.pop(0)
             turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
             acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, 
                 turno.quantidadeDeTropas, turno.grupoTerritorioAtual)
         elif tipoAcaoDoTurno == TipoAcaoTurno.trocar_cartas:
-            acao = AcaoTrocarCartas(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, turno.obrigatorioTrocaDeCartas)
+            acao = AcaoTrocarCartas(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, (len(jogador.cartasTerritorio) >= 5))
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, turno.quantidadeDeTropas)
         else:
@@ -105,6 +105,8 @@ class Jogo(object):
         random.shuffle(self._cartasTerritorioDoBaralho)
         random.shuffle(self._cartasTerritorioDoBaralho)
         self._cartasTerritorioDescartadas = []
+        
+        self._numeroDaTroca = 1
 
         return self.criaAcaoDoTurno(self._turno)
 
@@ -189,8 +191,10 @@ class Jogo(object):
                 if len(jogador.gruposTerritorio()) > 0:
                     turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
                     turno.gruposTerritorio = list(jogador.gruposTerritorio())
-                else:
+                elif len(jogador.cartasTerritorio) > 2:
                     turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+                else:
+                    turno.tipoAcao = TipoAcaoTurno.atacar
                     
                 acaoDoTurno = self.criaAcaoDoTurno(turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
@@ -198,12 +202,13 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             if turno.quantidadeDeTropas == 0:
+                jogador = self._jogadores[self._posicaoJogadorDaVez]
                 if len(turno.gruposTerritorio) == 0:
-                    jogador = self._jogadores[self._posicaoJogadorDaVez]
-                    turno.tipoAcao = TipoAcaoTurno.trocar_cartas
-                    turno.obrigatorioTrocaDeCartas = (len(jogador.cartasTerritorio) >= 5)
-                    turno.troucouCartas = False
-                    
+                    if len(jogador.cartasTerritorio) > 2:
+                        turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+                    else:
+                        turno.tipoAcao = TipoAcaoTurno.atacar
+
                 acaoDoTurno = self.criaAcaoDoTurno(turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
@@ -211,14 +216,20 @@ class Jogo(object):
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             if turno.quantidadeDeTropas == 0:
                 jogador = self._jogadores[self._posicaoJogadorDaVez]
-                turno.tipoAcao = TipoAcaoTurno.trocar_cartas
-                turno.obrigatorioTrocaDeCartas = (len(jogador.cartasTerritorio) >= 5)
-                turno.troucouCartas = False
+                if len(jogador.cartasTerritorio) > 2:
+                    turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+                else:
+                    turno.tipoAcao = TipoAcaoTurno.atacar
+                
+                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+                erro = False
 
         elif turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
-            if (turno.obrigatorioTrocaDeCartas and turno.trocouCartas) \
-                or not turno.obrigatorioTrocaDeCartas:
+            jogador = self._jogadores[self._posicaoJogadorDaVez]
+            if len(jogador.cartasTerritorio) < 5:
                 turno.tipoAcao = TipoAcaoTurno.atacar
+                
                 acaoDoTurno = self.criaAcaoDoTurno(turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
@@ -236,8 +247,9 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.mover:
             self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
-
+            
             self.passaParaProximoJogador()
+            turno.trocouCartas = False
 
             if self.todosJogaram():
                 turno.numero += 1
@@ -272,7 +284,7 @@ class Jogo(object):
         acaoDoTurno = self.criaAcaoDoTurno(self._turno)
         self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
         
-    def colocaTropa(self, socket, posicaoJogador, codigoTerritorio, quantidade):
+    def colocaTropaReq(self, socket, posicaoJogador, codigoTerritorio, quantidade):
         turno = self._turno
         jogador = self._jogadores[posicaoJogador]
         
@@ -307,7 +319,20 @@ class Jogo(object):
             jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
             print "# " + jsonMsg
             socket.sendMessage(jsonMsg)
-            
+    
+    def colocaTropaNaTrocaDeCartasTerritorios(self, posicaoJogador, cartasParaTroca):
+        territoriosBeneficiados = []
+        jogador = self._jogadores[posicaoJogador]
+    
+        # Verifica se o jogador tem os territorios das cartas, se tiver, adiciona duas tropas nele.
+        for carta in cartasParaTroca:
+            if jogador.temTerritorio(carta.codigoTerritorio):
+                territorio = jogador.adicionaTropasNoTerritorio(carta.codigoTerritorio, 2)
+                territoriosBeneficiados.append(territorio);
+                
+        self.enviaMsgParaTodos(TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios, 
+            ColocarTropaNaTrocaDeCartasTerritorios(posicaoJogador, territoriosBeneficiados))
+    
     def ataca(self, socket, posicaoJogador, dosTerritorios, paraOTerritorio):
         turno = self._turno
         jogador = self._jogadores[posicaoJogador]
@@ -478,35 +503,61 @@ class Jogo(object):
                     print "# " + jsonMsg
                     socket.sendMessage(jsonMsg)
     
-    def trocaCartasTerritorio(socket, posicaoJogador, cartasTerritorio):
-        if turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
+    def trocaCartasTerritorio(self, socket, posicaoJogador, cartasTerritorio):
+        turno = self._turno
+        if turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
+            self._posicaoJogadorDaVez == posicaoJogador and \
+            len(cartasTerritorio) == 3:
+            
             jogador = self._jogadores[posicaoJogador]
-            temErro = False
+            
+            cartasParaTroca = []
+            for carta in jogador.cartasTerritorio:
+                if carta.codigoTerritorio in cartasTerritorio:
+                    cartasParaTroca.append(carta)
 
-            # Verifica se o jogador tem as cartas.
-            cartasTerritorioDoJogador = jogador.cartasTerritorio
-            for c in cartasTerritorio:
-                if c not in cartasTerritorioDoJogador:
-                    temErro = True
-                    break
-
-            if temErro:
+            if len(cartasParaTroca) != 3:
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
                 print "# " + jsonMsg
                 socket.sendMessage(jsonMsg)
             else:
                 # Se chegou aqui, eh porque o jogador tem as cartas dos territorios.
+                
+                # Verifica se a troca pode ser feita.
+                #   - 3 formas iguais
+                #   - 3 formas diferentes
+                
+                podeTrocar = False
+                if CartasTerritorio.Coringa in cartasParaTroca:
+                    podeTrocar = True
+                elif cartasParaTroca[0].forma == cartasParaTroca[1].forma == cartasParaTroca[2].forma:
+                    podeTrocar = True
+                elif cartasParaTroca[0].forma != cartasParaTroca[1].forma != cartasParaTroca[2].forma:
+                    podeTrocar = True
+                
+                if podeTrocar:
+                    turno.trocouCartas = True
+                    
+                    # Envia informacao do turno.
+                    turno.quantidadeDeTropas = self.calculaQuantidadeDeTropasDaTroca(self._numeroDaTroca)
+                    self._numeroDaTroca += 1
+                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_troca_de_cartas
+                    acaoDoTurno = self.criaAcaoDoTurno(turno)
+                    self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+                
+                    self.colocaTropaNaTrocaDeCartasTerritorios(posicaoJogador, cartasParaTroca)
 
-                # Verifica se o jogador tem os territorios das cartas, se tiver, adiciona duas tropas nele.
-                for c in cartasTerritorio:
-                    if jogador.temTerritorio(c.codigoTerritorio):
-                        # TODO: Melhorar isso depois pra enviar uma mensagem unica.
-                        self.colocaTropa(jogador.socket, posicaoJogador, c.codigoTerritorio, 2)
-
-                turno.quantidadeDeTropas = self.calculaQuantidadeDeTropasDaTroca(self._numeroDaTroca)
-                turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_troca_de_cartas
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
-                self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+                    # Remove e envia ao jogador suas cartas de territorios atualizadas.
+                    for carta in cartasParaTroca:
+                        jogador.removeCartaTerritorio(carta)
+                        self._cartasTerritorioDescartadas.append(carta);
+                    jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)
+                    print "# " + jsonMsg
+                    jogador.socket.sendMessage(jsonMsg)
+                else:
+                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
+                    print "# " + jsonMsg
+                    socket.sendMessage(jsonMsg)                    
 
     def jogarDado(self):
         dado = [1,2,3,4,5,6]
@@ -515,7 +566,7 @@ class Jogo(object):
         random.shuffle(dado)
         return dado[0]
 
-    def calculaQuantidadeDeTropasDaTroca(numeroDaTroca):
+    def calculaQuantidadeDeTropasDaTroca(self, numeroDaTroca):
         if 1 <= numeroDaTroca <= 5:
             return (numeroDaTroca * 2) + 2
         else:
