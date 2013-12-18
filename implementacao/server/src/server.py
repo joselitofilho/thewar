@@ -17,8 +17,6 @@ import banco
 from mensagens import *
                                
 class BroadcastServerProtocol(WebSocketServerProtocol):
-    def onOpen(self):
-        self.factory.register(self)
 
     def onMessage(self, msg, binary):
         if not binary:
@@ -26,13 +24,30 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             mensagem = Mensagem()
             mensagem.fromJson(msg)
             if mensagem.tipo == TipoMensagem.entrar:
-                if _banco.usuarioExiste(mensagem.params['usuario'], mensagem.params['senha']):
+                params = {}
+                
+                usuario = mensagem.params['usuario']
+                if self.factory.usuarioEstaConectado(usuario):
+                    params["status"] = 2
+                    # TODO: Enviar mensagem para o outro socket do usuario uma 
+                    # mensagem com o motivo da sua desconexao.
+                    # jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
+                    # print "# ", jsonMsg
+                    # self.sendMessage(jsonMsg)
+                    
+                    self.factory.desconectaUsuario(usuario)
+            
+                if _banco.usuarioExiste(usuario, mensagem.params['senha']):
+                    self.factory.clienteConectou(self, usuario)
                     _gerenciador.clienteConectou(self)
+                    
+                    params["status"] = 1
+                    jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
+                    print "# ", jsonMsg
+                    self.sendMessage(jsonMsg)
                 else:
-                    params = {}
-                    params["req"] = TipoMensagem.entrar
-                    params["status"] = False
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, params), default=lambda o: o.__dict__)
+                    params["status"] = 0
+                    jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
                     print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
 
@@ -63,6 +78,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
         WebSocketServerFactory.__init__(self, url, debug = debug, debugCodePaths = debugCodePaths)
         self.clients = []
         self.tickcount = 0
+        self.clientesConectados = {}
 
     def register(self, client):
         if not client in self.clients:
@@ -80,6 +96,19 @@ class BroadcastServerFactory(WebSocketServerFactory):
         for c in self.clients:
             c.sendMessage(msg)
             print "message sent to " + c.peerstr
+    
+    def usuarioEstaConectado(self, usuario):
+        return usuario in self.clientesConectados
+    
+    def clienteConectou(self, socket, usuario):
+        self.register(socket)
+        self.clientesConectados[usuario] = socket
+        
+    def desconectaUsuario(self, usuario):
+        socket = self.clientesConectados[usuario]
+        socket.sendClose()
+        self.unregister(socket)
+        del self.clientesConectados[usuario]
 
 if __name__ == '__main__':
 
