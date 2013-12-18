@@ -37,7 +37,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     
                     self.factory.desconectaUsuario(usuario)
             
-                if _banco.usuarioExiste(usuario, mensagem.params['senha']):
+                if _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha']):
                     self.factory.clienteConectou(self, usuario)
                     _gerenciador.clienteConectou(self)
                     
@@ -52,7 +52,18 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.registrar:
-                pass
+                params = {}
+                usuario = mensagem.params['usuario']
+                senha = mensagem.params['senha']
+                if _banco.usuarioExiste(usuario):
+                    params["status"] = 0
+                else:
+                    _banco.registraUsuario(usuario, senha)
+                    params["status"] = 1
+                    
+                jsonMsg = json.dumps(Mensagem(TipoMensagem.registrar, params), default=lambda o: o.__dict__)
+                print "# ", jsonMsg
+                self.sendMessage(jsonMsg)
             elif mensagem.tipo == TipoMensagem.iniciar_partida:
                 _gerenciador.iniciaPartida()
             elif mensagem.tipo == TipoMensagem.finalizar_turno:

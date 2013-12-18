@@ -10,6 +10,14 @@ html, body {
     font-family: 'PT Sans', sans-serif;
 }
 
+#alerta {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    visibility: hidden;
+    z-index: 9010;
+}
+
 #topo {
     position: fixed;
     top: 0;

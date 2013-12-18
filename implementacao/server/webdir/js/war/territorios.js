@@ -40,6 +40,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 		territorios["China"] = coordenada_china;
 		territorios["Colombia"] = coordenada_colombia;
 		territorios["Congo"] = coordenada_congo;
+		territorios["Dudinka"] = coordenada_dudinka;
 		territorios["Egito"] = coordenada_egito;
 		territorios["Groelandia"] = coordenada_groelandia;
 		territorios["India"] = coordenada_india;
@@ -54,6 +55,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 		territorios["Moscou"] = coordenada_moscou;
 		territorios["NovaGuine"] = coordenada_nova_guine;
 		territorios["NovaYork"] = coordenada_nova_york;
+		territorios["Omsk"] = coordenada_omsk;
 		territorios["OrienteMedio"] = coordenada_oriente_medio;
 		territorios["Ottawa"] = coordenada_ottawa;
 		territorios["Polonia"] = coordenada_polonia;
@@ -124,9 +126,11 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    grupos["Asia"] = [
             coordenada_aral,
             coordenada_china,
+            coordenada_dudinka,
             coordenada_india,
             coordenada_japao,
             coordenada_mongolia,
+            coordenada_omsk,
             coordenada_oriente_medio,
             coordenada_vietna,
             coordenada_vladivostok
@@ -254,9 +258,11 @@ gpscheck.mapa.Territorios = function(mapa) {
         this.iniciaGrupoTerritorio([
             coordenada_aral,
             coordenada_china,
+            coordenada_dudinka,
             coordenada_india,
             coordenada_japao,
             coordenada_mongolia,
+            coordenada_omsk,
             coordenada_oriente_medio,
             coordenada_vietna,
             coordenada_vladivostok

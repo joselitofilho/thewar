@@ -17,6 +17,29 @@ _cartasTerritoriosSelecionadas = [];
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
+function processarMsg_registrar(msgParams) {
+    if (msgParams.status == 1) {
+        $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
+        $('#alerta').addClass('alert-success');
+        $('#alerta_texto').html("Registrado com sucesso.");
+        $('#alerta').css('visibility', 'visible');
+    } else if (msgParams.status == 0) {
+        $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
+        $('#alerta').addClass('alert-info');
+        $('#alerta_texto').html("Você já está registrado!");
+        $('#alerta').css('visibility', 'visible');
+    }
+}
+
+function processarMsg_entrar(msgParams) {
+    if (msgParams.status != 1) {
+        $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
+        $('#alerta').addClass('alert-danger');
+        $('#alerta_texto').html("Verifique se seus dados estão corretos e certifique-se de que você já está registrado..");
+        $('#alerta').css('visibility', 'visible');
+    } 
+}
+
 function processarMsg_lista_sala(msgParams) {
     var listaJogadores = msgParams.lista;
     for (i=0; i < listaJogadores.length; i++) {
@@ -209,7 +232,11 @@ function posAberturaSocket(valor) {
 function posRecebimentoMensagemServidor(valor) {
     console.log('Recebeu msg ' + valor);
     var jsonMensagem = JSON.parse(valor);
-    if (jsonMensagem.tipo == TipoMensagem.lista_sala) {
+    if (jsonMensagem.tipo == TipoMensagem.registrar) {
+        processarMsg_registrar(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.entrar) {
+        processarMsg_entrar(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.lista_sala) {
         processarMsg_lista_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.entrou_na_sala) {
         processarMsg_entrou_na_sala(jsonMensagem.params);
