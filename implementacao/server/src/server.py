@@ -13,6 +13,7 @@ from autobahn.websocket import WebSocketServerFactory, \
                                WebSocketServerProtocol, \
                                listenWS
 import gerenciador
+import banco
 from mensagens import *
                                
 class BroadcastServerProtocol(WebSocketServerProtocol):
@@ -25,7 +26,16 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             mensagem = Mensagem()
             mensagem.fromJson(msg)
             if mensagem.tipo == TipoMensagem.entrar:
-                pass
+                if _banco.usuarioExiste(mensagem.params['usuario'], mensagem.params['senha']):
+                    _gerenciador.clienteConectou(self)
+                else:
+                    params = {}
+                    params["req"] = TipoMensagem.entrar
+                    params["status"] = False
+                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, params), default=lambda o: o.__dict__)
+                    print "# ", jsonMsg
+                    self.sendMessage(jsonMsg)
+
             elif mensagem.tipo == TipoMensagem.registrar:
                 pass
             elif mensagem.tipo == TipoMensagem.iniciar_partida:
@@ -58,7 +68,6 @@ class BroadcastServerFactory(WebSocketServerFactory):
         if not client in self.clients:
             print "registered client " + client.peerstr
             self.clients.append(client)
-            #_gerenciador.clienteConectou(client)
 
     def unregister(self, client):
         if client in self.clients:
@@ -92,6 +101,7 @@ if __name__ == '__main__':
     listenWS(factory)
 
     _gerenciador = gerenciador.Gerenciador(factory)
+    _banco = banco.Banco()
 
     webdir = File("./webdir")
     web = Site(webdir)

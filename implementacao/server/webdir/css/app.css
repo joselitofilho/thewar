@@ -23,6 +23,7 @@ html, body {
     top: 100px;
     z-index: 9001;
     margin-left: 40%;
+    visibility: hidden;
 }
 
 .form-signin {

@@ -30,8 +30,9 @@ function processarMsg_entrou_na_sala(msgParams) {
     
     _posicaoJogador = Number(msgParams.posicao);
 
-    var btnIniciarPartida = document.getElementById("btnIniciarPartida");
-    btnIniciarPartida.style.visibility = (msgParams.dono) ? "visible" : "hidden";
+    $('#btnIniciarPartida').css('visibility', ((msgParams.dono) ? 'visible' : 'hidden'));
+    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+    $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
 function processarMsg_saiu_da_sala(msgParams) {
@@ -202,7 +203,7 @@ function processarMsg_turno_mover(msgParams) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function posAberturaSocket(valor) {
-    //console.log('Conexão socket iniciada.');
+    $('#painelRegistrarOuEntrar').css('visibility', 'visible');
 }
 
 function posRecebimentoMensagemServidor(valor) {
