@@ -442,7 +442,7 @@ class Jogo(object):
     def defesaVenceu(self, i, territoriosDoAtaque, jogador):
         pos = i
         while pos >= 0:
-            if pos < len(territoriosDoAtaque):
+            if pos < len(territoriosDoAtaque) and territoriosDoAtaque[pos].QuantidadeDeTropas > 1:
                 territoriosDoAtaque[pos] = jogador.removeTropasNoTerritorio(
                     territoriosDoAtaque[pos].Codigo,
                     1)
