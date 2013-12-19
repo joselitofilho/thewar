@@ -6,6 +6,8 @@ _territorioAlvoAtaque = null;
 _territoriosAtacante = [];
 _jaPodeAtacar = true;
 
+_territorioConquistado = null;
+
 _territorioAlvoMover = null;
 _territorioMovimento = null;
 _jaPodeMover = true;
@@ -19,11 +21,13 @@ _cartasTerritoriosSelecionadas = [];
 // --------------------------------------------------------------------------------
 function processarMsg_registrar(msgParams) {
     if (msgParams.status == 1) {
+        $('#alerta').show();
         $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
         $('#alerta').addClass('alert-success');
         $('#alerta_texto').html("Registrado com sucesso.");
         $('#alerta').css('visibility', 'visible');
     } else if (msgParams.status == 0) {
+        $('#alerta').show();
         $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
         $('#alerta').addClass('alert-info');
         $('#alerta_texto').html("Você já está registrado!");
@@ -33,6 +37,7 @@ function processarMsg_registrar(msgParams) {
 
 function processarMsg_entrar(msgParams) {
     if (msgParams.status != 1) {
+        $('#alerta').show();
         $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
         $('#alerta').addClass('alert-danger');
         $('#alerta_texto').html("Verifique se seus dados estão corretos e certifique-se de que você já está registrado..");
@@ -93,8 +98,8 @@ function processarMsg_colocar_tropa(msgParams) {
 
 function processarMsg_atacar(msgParams) {
     var dadosAtaque = msgParams.dadosAtaque;
-    var dadosDefesa = msgParams.dadosDefesa;
-    
+    var dadosDefesa = msgParams.dadosDefesa;   
+
     _territorios.pintarGruposTerritorios();
         
     var territorioDaDefesa = msgParams.territorioDaDefesa;
@@ -118,10 +123,14 @@ function processarMsg_atacar(msgParams) {
     }
     
     if (msgParams.conquistouTerritorio) {
+        _territorioAlvoAtaque = null;
         _turno = {};
         _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;
+        _territorioConquistado = msgParams.territorioDaDefesa.codigo;
         
         _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
+
+        appwar_mudarCursor('mover_para_fora');
     }
     
     _jaPodeAtacar = true;
@@ -136,6 +145,10 @@ function processarMsg_atacar_comDados(msgParams) {
 }
 
 function processarMsg_mover(msgParams) {
+    if (_posicaoJogador == _posicaoJogadorDaVez) {
+        appwar_mudarCursor('mover_para_fora');
+    }
+
     var doTerritorio = msgParams.doTerritorioObj;
     _labelTerritorios[doTerritorio.codigo].alteraQuantiadeDeTropas("" + doTerritorio.quantidadeDeTropas);
     
@@ -181,6 +194,12 @@ function processarMsg_turno(msgParams) {
 }
 
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
+    if (_posicaoJogador == _posicaoJogadorDaVez) {
+        appwar_mudarCursor('colocar_tropa');
+    } else {
+        appwar_mudarCursor('');
+    }
+
     $('#info_turno_texto').html('Distribuir tropas globais');
     $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropas);
     
@@ -204,11 +223,15 @@ function processarMsg_turno_trocar_cartas(msgParams) {
 }
 
 function processarMsg_turno_atacar(msgParams) {
+    _territorioConquistado = null;
     $('#info_turno_texto').html('Atacar');
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
+        appwar_mudarCursor('alvo');
         _territorios.escureceTodosOsTerritoriosDoJogador(msgParams.vezDoJogador);
+    } else {
+        appwar_mudarCursor('');
     }
 }
 
@@ -217,7 +240,10 @@ function processarMsg_turno_mover(msgParams) {
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
+        appwar_mudarCursor('mover_para_dentro');
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
+    } else {
+        appwar_mudarCursor('');
     }
 }
 
@@ -387,7 +413,35 @@ function appwar_alteraInfoTurnoJogador(posicaoJogador) {
     }
 }
 
-function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
+function territorioMouseMoveFunc(evento, posicaoJogador, nomeDoTerritorio) {
+    if (!isNaN(evento.edge) || !isNaN(evento.vertex)) {
+        document.getElementById("mapa").className = '';
+    } else if (_posicaoJogadorDaVez == _posicaoJogador) {
+        if (_turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+            $('#mapa').attr('class', 'mouse_colocar_tropa');
+        } else if (_turno.tipoAcao == TipoAcaoTurno.atacar) {
+            if (_territorioAlvoAtaque == null) {
+                $('#mapa').attr('class', 'mouse_alvo');
+            } else {
+                $('#mapa').attr('class', 'mouse_atacar');
+            }
+        } else if (_turno.tipoAcao == TipoAcaoTurno.mover) {
+            if (_territorioAlvoMover == null) {
+                $('#mapa').attr('class', 'mouse_mover_tropas_para_dentro');
+            } else {
+                $('#mapa').attr('class', 'mouse_mover_tropas_para_fora');
+            }
+        }
+    } else {
+        document.getElementById("mapa").className = '';
+    }
+}
+
+function territorioMouseOutFunc(posicaoJogador, nomeDoTerritorio) {
+    document.getElementById("mapa").className = '';
+}
+
+function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         if (_turno.tipoAcao == TipoAcaoTurno.atacar) {
             if (nomeDoTerritorio == _territorioAlvoAtaque) {
@@ -395,12 +449,14 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
                 _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
                 _territorioAlvoAtaque = null;
                 _territoriosAtacante = [];
+                appwar_mudarCursor('alvo');
             }
             else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();
                 _territorioAlvoAtaque = nomeDoTerritorio;
                 _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                 _territoriosAtacante = [];
+                appwar_mudarCursor('atacar');
             }
             else if (_territorioAlvoAtaque != null) {
                 if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
@@ -415,11 +471,11 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
                 }
             }
         } else if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
-            if (_territorioAlvoAtaque == nomeDoTerritorio) {
+            if (_territorioConquistado == nomeDoTerritorio) {
                 finalizarTurno();
             } else {
                 var moverMsg = comunicacao_mover(_posicaoJogador, nomeDoTerritorio, 
-                    _territorioAlvoAtaque, 1);
+                    _territorioConquistado, 1);
                 _libwebsocket.enviarObjJson(moverMsg);
                 _jaPodeMover = false;
             }
@@ -430,11 +486,13 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
                     _territorioAlvoMover = null;
                     _territorioMovimento = null;
+                    appwar_mudarCursor('mover_para_dentro');
                 } else if (_territorioAlvoMover == null) {
                     _territorios.pintarGruposTerritorios();
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
                     _territorioAlvoMover = nomeDoTerritorio;
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+                    appwar_mudarCursor('mover_para_fora');
                 } else if (_territorioMovimento == null && _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
                     _territorioMovimento = nomeDoTerritorio;
                     _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
@@ -449,10 +507,11 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio, quantidade) {
                     _territorioAlvoMover = nomeDoTerritorio;
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                     _territorioMovimento = null;
+                    appwar_mudarCursor('mover_para_fora');
                 }
             }
         } else {
-            var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, quantidade);
+            var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, 1);
             _libwebsocket.enviarObjJson(colocarTropaMsg);
         }
     }
@@ -532,7 +591,23 @@ function iniciarApp() {
     mapa = new gpscheck.mapa.Mapa();
     mapa.inicia(divMapa, 10.0, 10.0);
     _territorios = new gpscheck.mapa.Territorios(_mapaGoogle);
-    _territorios.inicia(territorioClickFunc);
+    _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
+}
+
+function appwar_mudarCursor(tipo) {
+    if (tipo == 'colocar_tropa') {
+        $('body').attr('class', 'mouse_colocar_tropa');
+    }  else if (tipo == 'alvo') {
+        $('body').attr('class', 'mouse_alvo');
+    }  else if (tipo == 'atacar') {
+        $('body').attr('class', 'mouse_atacar');
+    } else if (tipo == 'mover_para_fora') {
+        $('body').attr('class', 'mouse_mover_tropas_para_fora');
+    } else if (tipo == 'mover_para_dentro') {
+        $('body').attr('class', 'mouse_mover_tropas_para_dentro');
+    } else {
+        $('body').attr('class', '');
+    } 
 }
 
 (function(){

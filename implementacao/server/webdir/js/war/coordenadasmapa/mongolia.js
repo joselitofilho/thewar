@@ -1,6 +1,6 @@
 var coordenada_mongolia = {
 	nome: "Mongolia",
-	centro: new google.maps.LatLng(48.45835188280866, 100.546875),
+	centro: new google.maps.LatLng(46.316584, 103.359375),
 	territorio: [
 		new google.maps.LatLng(46.6,91.02),
 		new google.maps.LatLng(45.25,90.9),

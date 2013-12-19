@@ -30,7 +30,7 @@ html, body {
     position: absolute;
     top: 100px;
     z-index: 9001;
-    margin-left: 40%;
+    left: 400px;
     visibility: hidden;
 }
 
@@ -92,6 +92,7 @@ html, body {
     z-index: 999;
     width: 1024px;
     background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
 }
 
 #info_turno_fundo_esquerda {
@@ -243,8 +244,8 @@ html, body {
     width: 128px;
     height: 128px;
     background: url('../imagens/recarregar.png') no-repeat;
-    left: 50%;
-    top: 50%;
+    top: 255px;
+    left: 480px;
     z-index: 9001;
     cursor: pointer;
     visibility: hidden;

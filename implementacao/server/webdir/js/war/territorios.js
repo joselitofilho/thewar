@@ -21,6 +21,8 @@ gpscheck.mapa.Territorios = function(mapa) {
     var COR_PREENCHIMENTO_OCEANIA = "#FF6666";
     
     territorioClick = null;
+    territorioMouseMove = null;
+    territorioMouseOut = null;
     fronteiras = {};
 
 	this.carregaTerritorios = function() {
@@ -60,6 +62,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 		territorios["Ottawa"] = coordenada_ottawa;
 		territorios["Polonia"] = coordenada_polonia;
 		territorios["Portugal"] = coordenada_portugal;
+		territorios["Siberia"] = coordenada_siberia;
 		territorios["Sudao"] = coordenada_sudao;
 		territorios["Suecia"] = coordenada_suecia;
 		territorios["Sumatra"] = coordenada_sumatra;
@@ -132,6 +135,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_mongolia,
             coordenada_omsk,
             coordenada_oriente_medio,
+            coordenada_siberia,
             coordenada_vietna,
             coordenada_vladivostok
         ];
@@ -194,14 +198,24 @@ gpscheck.mapa.Territorios = function(mapa) {
             
             _poligonosTerritorios[pais.nome] = poligono_pais;
             
+            google.maps.event.addListener(poligono_pais, 'mousemove', function(event) {
+                territorioMouseMove(event, _labelTerritorios[pais.nome].posicaoJogador, pais.nome);
+            });
+
+            google.maps.event.addListener(poligono_pais, 'mouseout', function() {
+                territorioMouseOut(_labelTerritorios[pais.nome].posicaoJogador, pais.nome);
+            });
+
             google.maps.event.addListener(poligono_pais, 'click', function(event) {
-                territorioClick(_labelTerritorios[pais.nome].posicaoJogador, pais.nome, 1);
+                territorioClick(_labelTerritorios[pais.nome].posicaoJogador, pais.nome);
             });
         });
     };
     
-    this.inicia = function(territorioClick_) {
+    this.inicia = function(territorioClick_, territorioMouseMove_, territorioMouseOut_) {
         this.iniciaMapaDasFronteiras();
+        territorioMouseMove = territorioMouseMove_;
+        territorioMouseOut = territorioMouseOut_;
         territorioClick = territorioClick_;
     
         // America do Norte.
@@ -264,6 +278,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_mongolia,
             coordenada_omsk,
             coordenada_oriente_medio,
+            coordenada_siberia,
             coordenada_vietna,
             coordenada_vladivostok
         ], "#CC6600", "#FFCC33");
@@ -443,7 +458,7 @@ gpscheck.mapa.Territorios = function(mapa) {
                 _labelTerritorios[territorio.codigo] = label;
 
                 google.maps.event.addListener(marker, 'click', function(event) {
-                    territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo, 1);
+                    territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
                 });
 			}
 		});
