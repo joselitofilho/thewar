@@ -1,3 +1,7 @@
+//
+// http://soundbible.com/tags-war.html
+//
+
 _posicaoJogador = -1;
 _turno = null;
 _posicaoJogadorDaVez = -1;
@@ -87,6 +91,7 @@ function processarMsg_carta_objetivo(msgParams) {
 }
 
 function processarMsg_colocar_tropa(msgParams) {
+    this.tocarSom(this, 'colocarTropa.mp3');
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropasRestante);
     
@@ -140,6 +145,8 @@ function processarMsg_atacar_comDados(msgParams) {
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
     
+    this.tocarSom(this, "jogarDados.mp3");
+    
     // Iniciar animacao de jogar os dados...
     jogarDados(dadosAtaque.length, dadosDefesa.length, msgParams);
 }
@@ -148,6 +155,8 @@ function processarMsg_mover(msgParams) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         appwar_mudarCursor('mover_para_fora');
     }
+    
+    this.tocarSom(this, 'positivo_' + (Math.floor(Math.random()*4)+1) + '.wav');
 
     var doTerritorio = msgParams.doTerritorioObj;
     _labelTerritorios[doTerritorio.codigo].alteraQuantiadeDeTropas("" + doTerritorio.quantidadeDeTropas);
@@ -195,6 +204,7 @@ function processarMsg_turno(msgParams) {
 
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
+        this.tocarSom(this, "buzina.mp3");
         appwar_mudarCursor('colocar_tropa');
     } else {
         appwar_mudarCursor('');
@@ -223,6 +233,8 @@ function processarMsg_turno_trocar_cartas(msgParams) {
 }
 
 function processarMsg_turno_atacar(msgParams) {
+    this.tocarSom(this, 'atacar.wav');
+
     _territorioConquistado = null;
     $('#info_turno_texto').html('Atacar');
     _territorios.pintarGruposTerritorios();
@@ -236,6 +248,8 @@ function processarMsg_turno_atacar(msgParams) {
 }
 
 function processarMsg_turno_mover(msgParams) {
+    this.tocarSom(this, 'mover.wav');
+    
     $('#info_turno_texto').html('Mover');
     _territorios.pintarGruposTerritorios();
     
@@ -457,11 +471,13 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                 _territoriosAtacante = [];
                 appwar_mudarCursor('atacar');
+                this.tocarSom(this, 'alvo.mp3');
             }
             else if (_territorioAlvoAtaque != null) {
                 if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
                     var indiceTerritorio = _territoriosAtacante.indexOf(nomeDoTerritorio);
                     if (indiceTerritorio == -1) {
+                        this.tocarSom(this, 'simSenhor_' + (Math.floor(Math.random()*4)+1) + '.wav');
                         _territoriosAtacante.push(nomeDoTerritorio);
                         _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
                     } else {
@@ -493,6 +509,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorioAlvoMover = nomeDoTerritorio;
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                     appwar_mudarCursor('mover_para_fora');
+                    this.tocarSom(this, 'vamosLa.wav');
                 } else if (_territorioMovimento == null && _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
                     _territorioMovimento = nomeDoTerritorio;
                     _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
@@ -508,6 +525,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                     _territorioMovimento = null;
                     appwar_mudarCursor('mover_para_fora');
+                    this.tocarSom(this, 'vamosLa.wav');
                 }
             }
         } else {
@@ -592,6 +610,8 @@ function iniciarApp() {
     mapa.inicia(divMapa, 10.0, 10.0);
     _territorios = new gpscheck.mapa.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
+    
+    //this.tocarSomDeFundo(divMapa);
 }
 
 function appwar_mudarCursor(tipo) {
@@ -608,6 +628,34 @@ function appwar_mudarCursor(tipo) {
     } else {
         $('body').attr('class', '');
     } 
+}
+
+function tocarSom(el, soundfile, volume) {
+    if(typeof(a)==='undefined') volume = 1.0;
+
+    //if (el.mp3) {
+    //    if(el.mp3.paused) el.mp3.play();
+    //    else el.mp3.pause();
+    //} else {
+        el.mp3 = new Audio("http://war.jogowar.com.br:9092/sons/" + soundfile);
+        el.mp3.volume = 1.0;
+        el.mp3.play();
+    //}
+}
+
+function tocarSomDeFundo(el) {
+    if (el.mp3) {
+        if(el.mp3.paused) el.mp3.play();
+        else el.mp3.pause();
+    } else {
+        el.mp3 = new Audio("http://war.jogowar.com.br:9092/sons/lux_aeterna.mp3");
+        el.mp3.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        el.mp3.volume = 0.1;
+        el.mp3.play();
+    }
 }
 
 (function(){

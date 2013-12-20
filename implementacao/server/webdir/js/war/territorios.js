@@ -66,6 +66,7 @@ gpscheck.mapa.Territorios = function(mapa) {
 		territorios["Sudao"] = coordenada_sudao;
 		territorios["Suecia"] = coordenada_suecia;
 		territorios["Sumatra"] = coordenada_sumatra;
+		territorios["Tchita"] = coordenada_tchita;
 		territorios["Vancouver"] = coordenada_vancouver;
 		territorios["Vietna"] = coordenada_vietna;
 		territorios["Vladivostok"] = coordenada_vladivostok;
@@ -123,6 +124,43 @@ gpscheck.mapa.Territorios = function(mapa) {
         fronteiras["Sumatra"] = ["India", "Australia"];
 	}
 	
+	this.desenhaFronteira = function(caminho) {
+	    new google.maps.Polyline({
+            path: caminho,
+            strokeColor: "#FFF", strokeOpacity: 1, strokeWeight: 3,
+            map: mapa
+        });
+	};
+	
+	this.iniciaPontesEntreTerritorios = function() {
+	    var coords = [
+	        [new google.maps.LatLng(19.311143,85.781250),new google.maps.LatLng(5.965754,95.273438)],
+	        [new google.maps.LatLng(10.833306,108.984375),new google.maps.LatLng(4.039618,113.730469)],
+	        [new google.maps.LatLng(-7.013668,106.699219),new google.maps.LatLng(-20.138470,119.707031)],
+	        [new google.maps.LatLng(-1.581830,116.718750),new google.maps.LatLng(-14.604847,125.859375)],
+	        [new google.maps.LatLng(-1.581830,116.718750),new google.maps.LatLng(-3.688855,133.417969)],
+	        [new google.maps.LatLng(-5.266008,137.636719),new google.maps.LatLng(-12.039321,134.648438)],
+	        [new google.maps.LatLng(-5.266008,-34.980469),new google.maps.LatLng(10.141932,-14.414063)],
+	        [new google.maps.LatLng(-12.039321,49.042969),new google.maps.LatLng(1.230374,45.351563)],
+	        [new google.maps.LatLng(-25.799891,44.121094),new google.maps.LatLng(-28.613459,33.046875)],
+	        [new google.maps.LatLng(53.540307,160.488281),new google.maps.LatLng(53.540307,-152.226563),new google.maps.LatLng(59.977005,-143.964844)],
+	        [new google.maps.LatLng(70.436799,-68.906250),new google.maps.LatLng(72.127936,-55.371094)],
+	        [new google.maps.LatLng(56.072035,-60.820313),new google.maps.LatLng(62.431074,-50.449219)],
+	        [new google.maps.LatLng(68.656555,-25.488281),new google.maps.LatLng(66.018018,-19.511719)],
+	        [new google.maps.LatLng(63.782486,-15.996094),new google.maps.LatLng(58.263287,-6.679688)],
+	        [new google.maps.LatLng(55.178868,-1.230469),new google.maps.LatLng(59.355596,5.449219)],
+	        [new google.maps.LatLng(55.178868,-1.230469),new google.maps.LatLng(53.540307,6.152344)],
+	        [new google.maps.LatLng(37.160317,23.906250),new google.maps.LatLng(31.503629,25.488281)],
+	        [new google.maps.LatLng(38.685510,17.226563),new google.maps.LatLng(31.353637,19.511719)],
+	        [new google.maps.LatLng(42.811522,4.042969),new google.maps.LatLng(37.020098,5.800781)]
+	    ];
+        
+        var me = this;
+        $.each(coords, function(i, coord) {
+            me.desenhaFronteira(coord);    
+        });
+	};
+	
 	this.carregaGruposTerritorio = function() {
 	    var grupos = {};
 	    
@@ -136,6 +174,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_omsk,
             coordenada_oriente_medio,
             coordenada_siberia,
+            coordenada_tchita,
             coordenada_vietna,
             coordenada_vladivostok
         ];
@@ -217,6 +256,8 @@ gpscheck.mapa.Territorios = function(mapa) {
         territorioMouseMove = territorioMouseMove_;
         territorioMouseOut = territorioMouseOut_;
         territorioClick = territorioClick_;
+        
+        this.iniciaPontesEntreTerritorios();
     
         // America do Norte.
         this.iniciaGrupoTerritorio([
@@ -229,7 +270,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_nova_york,
             coordenada_ottawa,
             coordenada_vancouver
-        ], "#666600", "#FFFF00");
+        ], COR_BORDA_AMERICA_DO_NORTE, COR_PREENCHIMENTO_AMERICA_DO_NORTE);
         
         // Africa.
         this.iniciaGrupoTerritorio([
@@ -239,7 +280,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_egito,
             coordenada_madagascar,
             coordenada_sudao
-        ], "#330033", "#FF99FF");
+        ], COR_BORDA_AFRICA, COR_PREENCHIMENTO_AFRICA);
         
         // America do Sul.
         this.iniciaGrupoTerritorio([
@@ -247,7 +288,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_brasil,
             coordenada_chile,
             coordenada_colombia
-        ], "#003300", "#008000");
+        ], COR_BORDA_AMERICA_DO_SUL, COR_PREENCHIMENTO_AMERICA_DO_SUL);
         
         // Oceania.
         this.iniciaGrupoTerritorio([
@@ -255,7 +296,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_borneo,
             coordenada_nova_guine,
             coordenada_sumatra
-        ], "#660000", "#FF6666");
+        ], COR_BORDA_OCEANIA, COR_PREENCHIMENTO_OCEANIA);
         
         // Europa.
         this.iniciaGrupoTerritorio([
@@ -266,7 +307,7 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_polonia,
             coordenada_portugal,
             coordenada_suecia
-        ], "#000099", "#66FFFF");
+        ], COR_BORDA_EUROPA, COR_PREENCHIMENTO_EUROPA);
         
         // Asia
         this.iniciaGrupoTerritorio([
@@ -279,9 +320,10 @@ gpscheck.mapa.Territorios = function(mapa) {
             coordenada_omsk,
             coordenada_oriente_medio,
             coordenada_siberia,
+            coordenada_tchita,
             coordenada_vietna,
             coordenada_vladivostok
-        ], "#CC6600", "#FFCC33");
+        ], COR_BORDA_ASIA, COR_PREENCHIMENTO_ASIA);
     };
     
     this.manterFocoNoGrupo = function(grupoTerritorio) {
