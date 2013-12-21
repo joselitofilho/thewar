@@ -485,7 +485,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 this.tocarSom(this, 'alvo.mp3');
             }
             else if (_territorioAlvoAtaque != null) {
-                if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
+                if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1 &&
+                    _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoAtaque)) {
                     var indiceTerritorio = _territoriosAtacante.indexOf(nomeDoTerritorio);
                     if (indiceTerritorio == -1) {
                         this.tocarSom(this, 'simSenhor_' + (Math.floor(Math.random()*4)+1) + '.wav');
@@ -521,7 +522,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                     appwar_mudarCursor('mover_para_fora');
                     this.tocarSom(this, 'vamosLa.wav');
-                } else if (_territorioMovimento == null && _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
+                } else if (_territorioMovimento == null && 
+                           _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
                     _territorioMovimento = nomeDoTerritorio;
                     _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
                 } else if(_territorioMovimento == nomeDoTerritorio) {
