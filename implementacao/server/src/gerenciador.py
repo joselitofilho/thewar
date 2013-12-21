@@ -29,13 +29,7 @@ class Gerenciador(object):
     def clienteDesconectou(self, cliente):
         if self._estado == Estado.iniciando_sala:
             jogador = self._jogadores[cliente]
-            posicaoJogador = self._sala.remove(jogador)
-
-            saiuDaSalaMsg = SaiuDaSala(posicaoJogador)
-
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.saiu_da_sala, saiuDaSalaMsg), default=lambda o: o.__dict__)
-            print "# ", jsonMsg
-            self._websocket.broadcast(jsonMsg)
+            self._sala.remove(jogador.usuario)
 
     def iniciaPartida(self):
         if self._estado == Estado.iniciando_sala:

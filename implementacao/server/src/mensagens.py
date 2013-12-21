@@ -36,8 +36,8 @@ class ListaSala(object):
         self.lista = lista
 
 class SaiuDaSala(object):
-    def __init__(self, posicao):
-        self.posicao = posicao
+    def __init__(self, jogadorDaSala):
+        self.jogadorDaSala = jogadorDaSala
 
 class TerritoriosPorJogador(object):
     def __init__(self, posicao, territorios):

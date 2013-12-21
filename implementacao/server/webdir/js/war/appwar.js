@@ -70,7 +70,7 @@ function processarMsg_entrou_na_sala(msgParams) {
 }
 
 function processarMsg_saiu_da_sala(msgParams) {
-    var posicaoJogador = Number(msgParams.posicao) + 1;
+    var posicaoJogador = Number(msgParams.jogadorDaSala.posicao) + 1;
     var divJogador = document.getElementById("jogador" + posicaoJogador);
     divJogador.innerHTML = "-";
 }
