@@ -10,6 +10,10 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!---->
 
+        <!-- Audio Player -->
+        <link href="css/audioPlayer.css" rel="stylesheet">
+        <!---->
+
         <link href="css/mouse_cursor.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <link href="css/cores.css" rel="stylesheet">
@@ -111,6 +115,13 @@
         <div id="bloqueador_tela"></div>
         <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
 
+        <section>
+            <span class="audioSliderTooltip"></span>
+            <div id="audioSlider"></div>
+            <span class="audioPlayerVolume"></span>
+            <audio id="audioPlayer" autoplay></audio>
+        </section>
+
         <!-- Google Maps -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
         <!---->
@@ -121,6 +132,11 @@
         
         <!-- Bootstrap -->
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <!---->
+
+        <!-- AudioPlayer -->
+        <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
         <!---->
 
         <!-- Coordenada dos mapas -->

@@ -623,6 +623,48 @@ function iniciarApp() {
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
     
     //this.tocarSomDeFundo(divMapa);
+    
+    iniciarControleDeAudio();
+}
+
+function iniciarControleDeAudio() {
+    var audioSlider  = $('#audioSlider');
+    var audioSliderTooltip = $('.audioSliderTooltip');
+    var audioPlayer = $('#audioPlayer').get(0);
+
+    audioSliderTooltip.hide();
+
+    audioSlider.slider({
+            value: 50,
+            min: 0,
+            max: 100,
+            range: 'min',
+            animate: true,
+            step: 1,
+            start: function(e, ui) {
+                audioSliderTooltip.fadeIn('fast');
+            },
+            slide: function(e, ui) {
+                var valor = ui.value;
+                var volume = $('.audioPlayerVolume');
+
+                audioSliderTooltip.css('left', valor).text(valor);
+                if (valor <= 5) { 
+                    volume.css('background-position', '0 0');
+                } else if (valor <= 25) {
+                    volume.css('background-position', '0 -25px');
+                } else if (valor <= 75) {
+                    volume.css('background-position', '0 -50px');
+                } else {
+                    volume.css('background-position', '0 -75px');
+                }
+
+                audioPlayer.volume = ui.value / 100.0;
+            },
+            stop: function(e, ui) {
+                audioSliderTooltip.fadeOut('fast');
+            }
+    });
 }
 
 function appwar_mudarCursor(tipo) {
@@ -641,15 +683,16 @@ function appwar_mudarCursor(tipo) {
     } 
 }
 
-function tocarSom(el, soundfile, volume) {
-    if(typeof(a)==='undefined') volume = 1.0;
+function tocarSom(el, soundfile) {
+    var el = $('#audioPlayer').get(0);
+    var volume = $('#audioSlider').slider('value') / 100.0;
 
     //if (el.mp3) {
     //    if(el.mp3.paused) el.mp3.play();
     //    else el.mp3.pause();
     //} else {
         el.mp3 = new Audio("http://war.jogowar.com.br:9092/sons/" + soundfile);
-        el.mp3.volume = 0.1;
+        el.mp3.volume = volume;
         el.mp3.play();
     //}
 }

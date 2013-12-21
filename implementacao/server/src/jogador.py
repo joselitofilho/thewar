@@ -9,6 +9,7 @@ class Jogador(object):
 
     def __init__(self, usuario):
         self._usuario = usuario
+        self._socket = None
         self._territorios = []
         self._cartasTerritorio = []
         
@@ -126,6 +127,9 @@ class Jogador(object):
     @property
     def socket(self):
         return self._socket
+    @socket.setter
+    def socket(self, valor):
+        self._socket = valor;
 
     @property
     def objetivo(self):
