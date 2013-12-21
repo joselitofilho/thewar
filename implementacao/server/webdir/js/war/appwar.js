@@ -167,8 +167,11 @@ function processarMsg_mover(msgParams) {
     
     var paraOTerritorio = msgParams.paraOTerritorioObj;
     _labelTerritorios[paraOTerritorio.codigo].alteraQuantiadeDeTropas("" + paraOTerritorio.quantidadeDeTropas);
-    
-    _territorios.focaNosTerritorios([doTerritorio.codigo, paraOTerritorio.codigo]);
+   
+    if (_posicaoJogador != _posicaoJogadorDaVez) {
+        _territorios.pintarGruposTerritorios();
+        _territorios.focaNosTerritorios([doTerritorio.codigo, paraOTerritorio.codigo]);
+    }
 
     _jaPodeMover = true;
 }
@@ -525,7 +528,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     appwar_mudarCursor('mover_para_fora');
                     this.tocarSom(this, 'vamosLa.wav');
                 } else if (_territorioMovimento == null && 
-                           _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
+                           _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1 &&
+                           _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoMover)) {
                     _territorioMovimento = nomeDoTerritorio;
                     _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
                 } else if(_territorioMovimento == nomeDoTerritorio) {
@@ -533,7 +537,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                         _territorioAlvoMover, 1);
                     _libwebsocket.enviarObjJson(moverMsg);
                     _jaPodeMover = false;
-                } else {
+                } else if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1 &&
+                           _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoMover)){
                     _territorios.pintarGruposTerritorios();
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
                     _territorioAlvoMover = nomeDoTerritorio;

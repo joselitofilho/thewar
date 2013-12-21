@@ -54,26 +54,23 @@ class Gerenciador(object):
             self._jogo.finalizaTurno(jogador.usuario)
 
     def requisicao(self, cliente, mensagem):
-        jogador = self._jogadores[cliente]
-        usuario = jogador.usuario
-        # TODO: Pegar a posicao do jogador pelo socket.
-        if mensagem.tipo == TipoMensagem.colocar_tropa:
-            territorio = mensagem.params['territorio']
-            quantidade = mensagem.params['quantidade']
-            if self._jogo != None:
+        if self._jogo != None:
+            jogador = self._jogadores[cliente]
+            usuario = jogador.usuario
+
+            if mensagem.tipo == TipoMensagem.colocar_tropa:
+                territorio = mensagem.params['territorio']
+                quantidade = mensagem.params['quantidade']
                 self._jogo.colocaTropaReq(usuario, territorio, quantidade)
-        elif mensagem.tipo == TipoMensagem.atacar:
-            posicaoJogador = mensagem.params['posicaoJogador']
-            dosTerritorios = mensagem.params['dosTerritorios']
-            paraOTerritorio = mensagem.params['paraOTerritorio']
-            self._jogo.ataca(socket, posicaoJogador, dosTerritorios, paraOTerritorio)
-        elif mensagem.tipo == TipoMensagem.mover:
-            posicaoJogador = mensagem.params['posicaoJogador']
-            doTerritorio = mensagem.params['doTerritorio']
-            paraOTerritorio = mensagem.params['paraOTerritorio']
-            quantidade = mensagem.params['quantidade']
-            self._jogo.move(socket, posicaoJogador, doTerritorio, paraOTerritorio, quantidade)
-        elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
-            posicaoJogador = mensagem.params['posicaoJogador']
-            cartasTerritorio = mensagem.params['cartasTerritorios']
-            self._jogo.trocaCartasTerritorio(socket, posicaoJogador, cartasTerritorio)
+            elif mensagem.tipo == TipoMensagem.atacar:
+                dosTerritorios = mensagem.params['dosTerritorios']
+                paraOTerritorio = mensagem.params['paraOTerritorio']
+                self._jogo.ataca(usuario, dosTerritorios, paraOTerritorio)
+            elif mensagem.tipo == TipoMensagem.mover:
+                doTerritorio = mensagem.params['doTerritorio']
+                paraOTerritorio = mensagem.params['paraOTerritorio']
+                quantidade = mensagem.params['quantidade']
+                self._jogo.move(usuario, doTerritorio, paraOTerritorio, quantidade)
+            elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
+                cartasTerritorio = mensagem.params['cartasTerritorios']
+                self._jogo.trocaCartasTerritorio(usuario, posicaoJogador, cartasTerritorio)

@@ -377,11 +377,13 @@ class Jogo(object):
         self.enviaMsgParaTodos(TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios, 
             ColocarTropaNaTrocaDeCartasTerritorios(posicaoJogador, territoriosBeneficiados))
     
-    def ataca(self, socket, posicaoJogador, dosTerritorios, paraOTerritorio):
+    def ataca(self, usuario, dosTerritorios, paraOTerritorio):
         turno = self._turno
+        posicaoJogador = self._posicaoJogadorDaVez
         jogador = self._jogadores[posicaoJogador]
+        socket = self._clientes[posicaoJogador]
         
-        if self._posicaoJogadorDaVez == posicaoJogador:
+        if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.atacar:
                 if jogador.temOsTerritorios(dosTerritorios) and not jogador.temTerritorio(paraOTerritorio):
                     temErro = False
@@ -493,11 +495,13 @@ class Jogo(object):
                 break
             pos -= 1
         
-    def move(self, socket, posicaoJogador, doTerritorio, paraOTerritorio, quantidade):
+    def move(self, usuario, doTerritorio, paraOTerritorio, quantidade):
         turno = self._turno
+        posicaoJogador = self._posicaoJogadorDaVez
         jogador = self._jogadores[posicaoJogador]
+        socket = self._clientes[posicaoJogador]
         
-        if self._posicaoJogadorDaVez == posicaoJogador:
+        if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.mover:
                 if jogador.temTerritorio(doTerritorio) and jogador.temTerritorio(paraOTerritorio) and \
                     FronteiraTerritorio.TemFronteira(doTerritorio, paraOTerritorio):
@@ -547,10 +551,14 @@ class Jogo(object):
                     print "# " + jsonMsg
                     socket.sendMessage(jsonMsg)
     
-    def trocaCartasTerritorio(self, socket, posicaoJogador, cartasTerritorio):
+    def trocaCartasTerritorio(self, usuario, cartasTerritorio):
         turno = self._turno
+        posicaoJogador = self._posicaoJogadorDaVez
+        jogador = self._jogadores[posicaoJogador]
+        socket = self._clientes[posicaoJogador]
+
         if turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
-            self._posicaoJogadorDaVez == posicaoJogador and \
+            jogador.usuario == usuario and \
             len(cartasTerritorio) == 3:
             
             jogador = self._jogadores[posicaoJogador]
@@ -597,7 +605,7 @@ class Jogo(object):
                         self._cartasTerritorioDescartadas.append(carta);
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)
                     print "# " + jsonMsg
-                    jogador.socket.sendMessage(jsonMsg)
+                    self._clientes[self._posicaoJogadorDaVez].sendMessage(jsonMsg)
                 else:
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
                     print "# " + jsonMsg
@@ -643,7 +651,7 @@ class Jogo(object):
             
             jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)
             print "# " + jsonMsg
-            jogador.socket.sendMessage(jsonMsg)
+            self._clientes[self._posicaoJogadorDaVez].sendMessage(jsonMsg)
 
             self._jogadorDaVezConquistouTerritorio = False
 
