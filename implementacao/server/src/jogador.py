@@ -2,6 +2,7 @@ from territorio import *
 
 class Jogador(object):
     _usuario = None
+    _posicaoNaSala = -1
     _socket = None
     _objetivo = None
     _territorios = []
@@ -9,6 +10,7 @@ class Jogador(object):
 
     def __init__(self, usuario):
         self._usuario = usuario
+        self._posicaoNaSala = -1
         self._socket = None
         self._territorios = []
         self._cartasTerritorio = []
@@ -123,6 +125,13 @@ class Jogador(object):
     @usuario.setter
     def usuario(self, valor):
         self._usuario = valor
+
+    @property
+    def posicaoNaSala(self):
+        return self._posicaoNaSala
+    @posicaoNaSala.setter
+    def posicaoNaSala(self, valor):
+        self._posicaoNaSala = valor
 
     @property
     def socket(self):

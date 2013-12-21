@@ -10,18 +10,21 @@ class Gerenciador(object):
     _estado = None 
     _sala = None
     _jogo = None
+    _jogadores = {}
 
     def __init__(self, websocket):
         self._websocket = websocket
         self._estado = Estado.iniciando_sala
         self._sala = Sala()
+        self._jogadores = {}
 
     def clienteConectou(self, cliente, usuario):
         if self._estado == Estado.iniciando_sala:
             jogador = Jogador(usuario)
             jogador.socket = cliente
+            self._jogadores[cliente] = jogador
 
-            posicaoJogador = self._sala.adiciona(jogador)
+            posicaoJogador = self._sala.adiciona(cliente, jogador)
             donoDaSala = (self._sala.dono == posicaoJogador)
 
             # Apenas para o jogador que acabou de entrar na sala, indicamos se ele eh o dono da sala.
@@ -38,8 +41,7 @@ class Gerenciador(object):
 
     def clienteDesconectou(self, cliente):
         if self._estado == Estado.iniciando_sala:
-            jogador = Jogador(cliente)
-
+            jogador = self._jogadores[cliente]
             posicaoJogador = self._sala.remove(jogador)
 
             saiuDaSalaMsg = SaiuDaSala(posicaoJogador)

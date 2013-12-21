@@ -7,21 +7,35 @@ class Sala(object):
 
     def __init__(self):
         print "Sala criada."
+    
+    def salaEstaCheia(self):
+        return len(self._jogadores) == 6;
 
-    def adiciona(self, jogador):
+    def adiciona(self, cliente, jogador):
+        if self.salaEstaCheia():
+            return -1
+
         posicao = self._proximaPosicao
+        
+        jogador.posicaoNaSala = posicao
 
         self.verificaDono(posicao)
 
         self._jogadores[posicao] = jogador
-        self._proximaPosicao = (posicao + 1) % 6
+
+        for i in range(1, 6):
+            proximaPosicao = (posicao + i) % 6
+            if proximaPosicao not in self._jogadores.keys():
+                self._proximaPosicao = proximaPosicao
+                break
+
         return posicao
 
     def remove(self, jogador):
         posicao = -1
         for k, v in self._jogadores.iteritems():
             # TODO: Equals do objeto jogador...
-            if v.socket == jogador.socket:
+            if v.usuario == jogador.usuario:
                 posicao = k
                 self._proximaPosicao = posicao
 
