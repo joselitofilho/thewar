@@ -24,21 +24,7 @@ class Gerenciador(object):
             jogador.socket = cliente
             self._jogadores[cliente] = jogador
 
-            posicaoJogador = self._sala.adiciona(cliente, jogador)
-            donoDaSala = (self._sala.dono == posicaoJogador)
-
-            # Apenas para o jogador que acabou de entrar na sala, indicamos se ele eh o dono da sala.
-            jogadorDaSala = JogadorDaSala(usuario, posicaoJogador, donoDaSala)
-            entrouNaSalaMsg = EntrouNaSala(jogadorDaSala)
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.entrou_na_sala, entrouNaSalaMsg), default=lambda o: o.__dict__)
-            print "# ", jsonMsg
-            cliente.sendMessage(jsonMsg)
-
-            # Envia a todos os clientes a lista da sala.
-            listaSalaMsg = ListaSala(self._sala.lista())
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.lista_sala, listaSalaMsg), default=lambda o: o.__dict__) 
-            print "# ", jsonMsg
-            self._websocket.broadcast(jsonMsg)
+            self._sala.adiciona(cliente, usuario)
 
     def clienteDesconectou(self, cliente):
         if self._estado == Estado.iniciando_sala:

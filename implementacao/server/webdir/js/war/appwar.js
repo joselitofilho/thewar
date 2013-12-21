@@ -52,8 +52,9 @@ function processarMsg_entrar(msgParams) {
 function processarMsg_lista_sala(msgParams) {
     var listaJogadores = msgParams.lista;
     for (i=0; i < listaJogadores.length; i++) {
-        var posicaoJogador = Number(listaJogadores[i]) + 1;
-        $("#jogador" + posicaoJogador).html(posicaoJogador);
+        var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
+        var usuario = listaJogadores[i].usuario;
+        $("#jogador" + posicaoJogador).html(usuario);
     }
 }
 
@@ -638,7 +639,7 @@ function iniciarControleDeAudio() {
     audioSliderTooltip.hide();
 
     audioSlider.slider({
-            value: 50,
+            value: 20,
             min: 0,
             max: 100,
             range: 'min',
