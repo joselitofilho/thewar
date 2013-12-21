@@ -38,7 +38,7 @@ class Sala(object):
 
         if jogador != None:
             listaSalaMsg = ListaSala(self._jogadores.values())
-            self.enviaParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
+            self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
 
     def remove(self, usuario):
         posicao = -1
@@ -52,7 +52,7 @@ class Sala(object):
             jogador = self._jogadores[posicao]
 
             saiuDaSalaMsg = SaiuDaSala(jogador)
-            self.enviaParaTodos(TipoMensagem.saiu_da_sala, saiuDaSalaMsg)
+            self.enviaMsgParaTodos(TipoMensagem.saiu_da_sala, saiuDaSalaMsg)
 
             del self._jogadores[posicao]
             del self._clientes[posicao]
@@ -64,15 +64,19 @@ class Sala(object):
     def lista(self):
         return self._jogadoresDaSala
 
-    def enviaParaTodos(self, tipo, msg):
+    def enviaMsgParaTodos(self, tipo, msg):
+        jsonMsg = json.dumps(Mensagem(tipo, msg), default=lambda o: o.__dict__)
         for socket in self._clientes.values():
-            jsonMsg = json.dumps(Mensagem(tipo, msg), default=lambda o: o.__dict__)
-            print "# ", jsonMsg
             socket.sendMessage(jsonMsg)
+        print "# ", jsonMsg
 
     @property
     def jogadores(self):
         return self._jogadores
+
+    @property
+    def clientes(self):
+        return self._clientes
 
     @property
     def dono(self):

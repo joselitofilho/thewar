@@ -1,3 +1,4 @@
+import os
 import math
 import random
 
@@ -9,7 +10,10 @@ from carta import *
 
 class Jogo(object):
     _turno = None
+
+    _clientes = {}
     _jogadores = {}
+
     _ordemJogadores = []
     _indiceOrdemJogadores = None
     # Posicao do jogador que esta jogando no momento.
@@ -24,11 +28,18 @@ class Jogo(object):
 
     _numeroDaTroca = 1
     
-    def __init__(self, jogadores):
+    def __init__(self, clientes, jogadores):
         self._turno = Turno()
+
+        self._clientes = clientes
         self._jogadores = jogadores
+
         self._ordemJogadores = self._jogadores.keys()
         random.seed()
+
+    def inicia(self):
+        self.iniciaFaseI()
+        self.iniciaTurnos()
 
     def faseI_DefinirQuemComeca(self):
         self._cabecaDaFila = random.randrange(len(self._jogadores))
@@ -70,9 +81,9 @@ class Jogo(object):
             for j in range(inicio, fim):
                 territoriosJogador_i.append(territorios[j])
 
-            self._jogadores[self._posicaoJogadorDaVez].territorios = territoriosJogador_i
+            self._jogadores[self._posicaoJogadorDaVez].iniciaTerritorios(territoriosJogador_i)
             listaTerritoriosPorJogador.append(
-                    TerritoriosPorJogador(self._jogadores.keys()[self._posicaoJogadorDaVez], self._jogadores[self._posicaoJogadorDaVez].territorios))
+                    TerritoriosPorJogador(self._posicaoJogadorDaVez, self._jogadores[self._posicaoJogadorDaVez].territorios))
             
             inicio = inicio + incremento[i]
             self.passaParaProximoJogador();
@@ -120,8 +131,23 @@ class Jogo(object):
             acao = AcaoTurno(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez)
 
         return acao
+ 
+    def iniciaFaseI(self):
+        jogadorQueComeca = self.faseI_DefinirQuemComeca()
+        territoriosDosJogadores = self.faseI_DistribuirTerritorios()
+        cartasObjetivos = self.faseI_DefinirObjetivos()
+        
+        self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, JogoFaseI(jogadorQueComeca, territoriosDosJogadores))
 
-    def inicia(self):
+        # NOTA: A carta objetivo deve ser enviada apenas ao jogador.
+        for i in range(len(self._jogadores)):
+            jsonMsg = json.dumps(Mensagem(
+                TipoMensagem.carta_objetivo,
+                CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
+            print "# ", jsonMsg
+            self._clientes[i].sendMessage(jsonMsg)
+
+    def iniciaTurnos(self):
         self._cartasTerritorioDoBaralho = list(CartasTerritorio.Todas())
         random.shuffle(self._cartasTerritorioDoBaralho)
         random.shuffle(self._cartasTerritorioDoBaralho)
@@ -130,7 +156,8 @@ class Jogo(object):
         
         self._numeroDaTroca = 1
 
-        return self.criaAcaoDoTurno(self._turno)
+        acaoDoTurno = self.criaAcaoDoTurno(self._turno)
+        self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
     def todosJogaram(self):
         return self._cabecaDaFila == self._indiceOrdemJogadores
@@ -596,8 +623,8 @@ class Jogo(object):
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        for k, v in self._jogadores.iteritems():
-            v.socket.sendMessage(jsonMsg)
+        for socket in self._clientes.values():
+            socket.sendMessage(jsonMsg)
         print "# ", jsonMsg
 
     def pegaUmaCartaTerritorioDoBaralho(self):

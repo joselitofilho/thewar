@@ -492,7 +492,7 @@ gpscheck.mapa.Territorios = function(mapa) {
                 });
                 label.bindTo('position', marker, 'position');
                 label.bindTo('text', marker, 'position');
-               
+              
                 label.texto = '1';
                 label.alteraPosicaoJogador(posicaoJogador);
 

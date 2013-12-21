@@ -16,12 +16,12 @@ class Gerenciador(object):
         self._websocket = websocket
         self._estado = Estado.iniciando_sala
         self._sala = Sala()
+        self._jogo = None
         self._jogadores = {}
 
     def clienteConectou(self, cliente, usuario):
-        if self._estado == Estado.iniciando_sala:
+        if self._estado == Estado.iniciando_sala and self._jogo == None:
             jogador = Jogador(usuario)
-            jogador.socket = cliente
             self._jogadores[cliente] = jogador
 
             self._sala.adiciona(cliente, usuario)
@@ -32,41 +32,21 @@ class Gerenciador(object):
             self._sala.remove(jogador.usuario)
 
     def iniciaPartida(self):
-        if self._estado == Estado.iniciando_sala:
+        if self._jogo == None:
+            jogadoresDaSala = self._sala.jogadores
+            clientes = self._sala.clientes
 
-            jogadores = self._sala.jogadores
-            self._jogo = Jogo(jogadores)
-            
-            jogadorQueComeca = self._jogo.faseI_DefinirQuemComeca()
-            territoriosDosJogadores = self._jogo.faseI_DistribuirTerritorios()
-            cartasObjetivos = self._jogo.faseI_DefinirObjetivos()
+            jogadoresDoJogo = {}
+            for k, v in clientes.iteritems():
+                jogadorDaSala = jogadoresDaSala[k]
+                jogadoresDoJogo[k] = JogadorDoJogo(
+                        jogadorDaSala.usuario,
+                        jogadorDaSala.posicao,
+                        jogadorDaSala.dono)
+            self._jogo = Jogo(clientes, jogadoresDoJogo)
 
-            jsonMsg = json.dumps(Mensagem(
-                TipoMensagem.jogo_fase_I, 
-                JogoFaseI(jogadorQueComeca, territoriosDosJogadores)), default=lambda o: o.__dict__)
-            print "# ", jsonMsg
-            self._websocket.broadcast(jsonMsg)
-
-            # NOTA: A carta objetivo deve ser enviada apenas ao jogador.
-            for i in range(len(jogadores)):
-                jsonMsg = json.dumps(Mensagem(
-                    TipoMensagem.carta_objetivo,
-                    CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
-                print "# ", jsonMsg
-                jogadores[i].socket.sendMessage(jsonMsg)
-
-            self._estado = Estado.iniciando_jogo
-
-            self.iniciaTurnoDoJogo()
-
-    def iniciaTurnoDoJogo(self):
-        if self._estado == Estado.iniciando_jogo:
+            self._jogo.inicia()
             self._estado = Estado.jogando
-            acaoDoTurno = self._jogo.inicia()
-            
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.turno, acaoDoTurno), default=lambda o: o.__dict__)
-            self._websocket.broadcast(jsonMsg)
-            print "# ", jsonMsg
 
     def finalizaTurno(self, socket):
         if self._estado == Estado.jogando:

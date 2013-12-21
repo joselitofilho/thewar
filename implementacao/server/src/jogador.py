@@ -6,6 +6,21 @@ class JogadorDaSala(object):
         self.posicao = posicao
         self.dono = dono
 
+class JogadorDoJogo(object):
+    def __init__(self, usuario, posicao, dono):
+        self.usuario = usuario
+        self.posicao = posicao
+        self.dono = dono
+        self.objetivo = -1
+
+        self.territorios = []
+        self.cartasTerritorio = []
+
+    def iniciaTerritorios(self, codigosTerritorios):
+        self.territorios = []
+        for t in codigosTerritorios:
+            self.territorios.append(Territorio(t))
+
 class Jogador(object):
     _usuario = None
     _posicaoNaSala = -1
