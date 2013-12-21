@@ -34,7 +34,7 @@ class Gerenciador(object):
     def iniciaPartida(self):
         if self._jogo == None:
             jogadoresDaSala = self._sala.jogadores
-            clientes = self._sala.clientes
+            clientes = self._sala.clientes.copy()
 
             jogadoresDoJogo = {}
             for k, v in clientes.iteritems():
@@ -48,18 +48,20 @@ class Gerenciador(object):
             self._jogo.inicia()
             self._estado = Estado.jogando
 
-    def finalizaTurno(self, socket):
+    def finalizaTurno(self, cliente):
         if self._estado == Estado.jogando:
-            self._jogo.finalizaTurno(socket)
+            jogador = self._jogadores[cliente]
+            self._jogo.finalizaTurno(jogador.usuario)
 
-    def requisicao(self, socket, mensagem):
+    def requisicao(self, cliente, mensagem):
+        jogador = self._jogadores[cliente]
+        usuario = jogador.usuario
         # TODO: Pegar a posicao do jogador pelo socket.
         if mensagem.tipo == TipoMensagem.colocar_tropa:
-            posicaoJogador = mensagem.params['posicaoJogador']
             territorio = mensagem.params['territorio']
             quantidade = mensagem.params['quantidade']
             if self._jogo != None:
-                self._jogo.colocaTropaReq(socket, posicaoJogador, territorio, quantidade)
+                self._jogo.colocaTropaReq(usuario, territorio, quantidade)
         elif mensagem.tipo == TipoMensagem.atacar:
             posicaoJogador = mensagem.params['posicaoJogador']
             dosTerritorios = mensagem.params['dosTerritorios']

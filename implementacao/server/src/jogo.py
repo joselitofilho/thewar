@@ -1,4 +1,3 @@
-import os
 import math
 import random
 
@@ -230,7 +229,7 @@ class Jogo(object):
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
-    def finalizaTurno_I(self, socket):
+    def finalizaTurno_I(self):
         turno = self._turno
         erro = True
 
@@ -309,14 +308,15 @@ class Jogo(object):
             erro = False
 
         if erro:
+            socket = self.clientes[_posicaoJogadorDaVez]
             jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
             print "# " + jsonMsg
             socket.sendMessage(jsonMsg)
 
-    def finalizaTurno(self, socket):
+    def finalizaTurno(self, usuario):
         posicaoJogador = -1
         for k, v in self._jogadores.iteritems():
-            if v.socket == socket:
+            if v.usuario == usuario:
                 posicaoJogador = k
 
         if posicaoJogador == self._posicaoJogadorDaVez:
@@ -325,7 +325,7 @@ class Jogo(object):
             elif self._turno.numero == 2:
                 self.finalizaTurno_2()
             else:
-                self.finalizaTurno_I(socket)
+                self.finalizaTurno_I()
     
     def finalizaTurno_moverAposConquistarTerritorio(self):
         self._turno.reiniciarVariaveisExtras()
@@ -333,12 +333,12 @@ class Jogo(object):
         acaoDoTurno = self.criaAcaoDoTurno(self._turno)
         self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
         
-    def colocaTropaReq(self, socket, posicaoJogador, codigoTerritorio, quantidade):
+    def colocaTropaReq(self, usuario, codigoTerritorio, quantidade):
         turno = self._turno
-        jogador = self._jogadores[posicaoJogador]
+        jogador = self._jogadores[self._posicaoJogadorDaVez]
         
         erro = True
-        if self._posicaoJogadorDaVez == posicaoJogador and jogador.socket == socket:
+        if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais or \
                 turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
                 if quantidade <= turno.quantidadeDeTropas and jogador.temTerritorio(codigoTerritorio):
@@ -348,7 +348,7 @@ class Jogo(object):
                     quantidadeTotalRestante = turno.quantidadeDeTropas
     
                     self.enviaMsgParaTodos(TipoMensagem.colocar_tropa, 
-                        ColocarTropa(posicaoJogador, territorio, quantidadeTotalRestante))
+                        ColocarTropa(self._posicaoJogadorDaVez, territorio, quantidadeTotalRestante))
                     erro = False
             elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
                 if quantidade <= turno.quantidadeDeTropas and \
@@ -361,14 +361,9 @@ class Jogo(object):
                     quantidadeTotalRestante = turno.quantidadeDeTropas
     
                     self.enviaMsgParaTodos(TipoMensagem.colocar_tropa, 
-                        ColocarTropa(posicaoJogador, territorio, quantidadeTotalRestante))
+                        ColocarTropa(self._posicaoJogadorDaVez, territorio, quantidadeTotalRestante))
                     erro = False
 
-        if erro:
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-            print "# " + jsonMsg
-            socket.sendMessage(jsonMsg)
-    
     def colocaTropaNaTrocaDeCartasTerritorios(self, posicaoJogador, cartasParaTroca):
         territoriosBeneficiados = []
         jogador = self._jogadores[posicaoJogador]
