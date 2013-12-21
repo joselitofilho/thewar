@@ -58,11 +58,12 @@ function processarMsg_lista_sala(msgParams) {
 }
 
 function processarMsg_entrou_na_sala(msgParams) {
-    $("#idJogador").html(Number(msgParams.posicao) + 1);
-    
-    _posicaoJogador = Number(msgParams.posicao);
+    var jogadorDaSala = msgParams.jogadorDaSala;
+    _posicaoJogador = Number(jogadorDaSala.posicao);
 
-    $('#btnIniciarPartida').css('visibility', ((msgParams.dono) ? 'visible' : 'hidden'));
+    $("#idJogador").html(jogadorDaSala.usuario);
+
+    $('#btnIniciarPartida').css('visibility', ((jogadorDaSala.dono) ? 'visible' : 'hidden'));
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#bloqueador_tela').css('visibility', 'hidden');
 }

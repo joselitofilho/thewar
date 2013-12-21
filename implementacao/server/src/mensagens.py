@@ -28,9 +28,8 @@ class Mensagem(object):
         self.__dict__ = json.loads(jsonMsg)
 
 class EntrouNaSala(object):
-    def __init__(self, posicao, dono):
-        self.posicao = posicao
-        self.dono = dono
+    def __init__(self, jogadorDaSala):
+        self.jogadorDaSala = jogadorDaSala
 
 class ListaSala(object):
     def __init__(self, lista):

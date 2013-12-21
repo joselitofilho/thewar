@@ -28,7 +28,8 @@ class Gerenciador(object):
             donoDaSala = (self._sala.dono == posicaoJogador)
 
             # Apenas para o jogador que acabou de entrar na sala, indicamos se ele eh o dono da sala.
-            entrouNaSalaMsg = EntrouNaSala(posicaoJogador, donoDaSala)
+            jogadorDaSala = JogadorDaSala(usuario, posicaoJogador, donoDaSala)
+            entrouNaSalaMsg = EntrouNaSala(jogadorDaSala)
             jsonMsg = json.dumps(Mensagem(TipoMensagem.entrou_na_sala, entrouNaSalaMsg), default=lambda o: o.__dict__)
             print "# ", jsonMsg
             cliente.sendMessage(jsonMsg)

@@ -1,5 +1,11 @@
 from territorio import *
 
+class JogadorDaSala(object):
+    def __init__(self, usuario, posicao, dono):
+        self.usuario = usuario
+        self.posicao = posicao
+        self.dono = dono
+
 class Jogador(object):
     _usuario = None
     _posicaoNaSala = -1
