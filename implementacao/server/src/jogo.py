@@ -43,17 +43,39 @@ class Jogo(object):
         random.shuffle(territorios)
 
         listaTerritoriosPorJogador = []
-        incremento = len(territorios) / len(self._jogadores)
-        for i in range(len(self._jogadores)):
+        incremento = []
+        
+        # Calculando incremento.
+        quantidadeDeJogadores = len(self._jogadores)
+        if quantidadeDeJogadores == 4:
+            incremento.append(11)
+            incremento.append(11)
+            incremento.append(10)
+            incremento.append(10)
+        elif quantidadeDeJogadores == 5:
+            incremento.append(9)
+            incremento.append(9)
+            incremento.append(8)
+            incremento.append(8)
+            incremento.append(8)
+        else:
+            for i in range(quantidadeDeJogadores):
+                incremento.append(42 / quantidadeDeJogadores)
+        inicio = 0
+        fim = 0
+        for i in range(quantidadeDeJogadores):
+            fim = fim + incremento[i]
+
             territoriosJogador_i = []
-            inicio = incremento * i
-            fim = incremento * (i+1)
             for j in range(inicio, fim):
                 territoriosJogador_i.append(territorios[j])
 
-            self._jogadores[i].territorios = territoriosJogador_i
+            self._jogadores[self._posicaoJogadorDaVez].territorios = territoriosJogador_i
             listaTerritoriosPorJogador.append(
-                    TerritoriosPorJogador(self._jogadores.keys()[i], self._jogadores[i].territorios))
+                    TerritoriosPorJogador(self._jogadores.keys()[self._posicaoJogadorDaVez], self._jogadores[self._posicaoJogadorDaVez].territorios))
+            
+            inicio = inicio + incremento[i]
+            self.passaParaProximoJogador();
 
         return listaTerritoriosPorJogador
 

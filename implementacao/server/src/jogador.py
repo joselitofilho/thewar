@@ -1,13 +1,14 @@
 from territorio import *
 
 class Jogador(object):
+    _usuario = None
     _socket = None
     _objetivo = None
     _territorios = []
     _cartasTerritorio = []
 
-    def __init__(self, socket):
-        self._socket = socket
+    def __init__(self, usuario):
+        self._usuario = usuario
         self._territorios = []
         self._cartasTerritorio = []
         
@@ -114,6 +115,13 @@ class Jogador(object):
     
     def removeCartaTerritorio(self, cartaTerritorio):
         self._cartasTerritorio.remove(cartaTerritorio)
+
+    @property
+    def usuario(self):
+        return self._usuario
+    @usuario.setter
+    def usuario(self, valor):
+        self._usuario = valor
 
     @property
     def socket(self):

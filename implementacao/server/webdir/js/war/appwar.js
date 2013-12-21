@@ -105,20 +105,13 @@ function processarMsg_atacar(msgParams) {
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;   
 
-    _territorios.pintarGruposTerritorios();
-        
     var territorioDaDefesa = msgParams.territorioDaDefesa;
     var territoriosDoAtaque = msgParams.territoriosDoAtaque;
-    var codigoTerritorios = [territorioDaDefesa.codigo];
-            
     _labelTerritorios[territorioDaDefesa.codigo].alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
-    
     for (i = 0; i < territoriosDoAtaque.length; i++) {
-        codigoTerritorios.push(territoriosDoAtaque[i].codigo);
         _labelTerritorios[territoriosDoAtaque[i].codigo].alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
     }
-    _territorios.focaNosTerritorios(codigoTerritorios);
-    
+   
     for (i = 0; i < dadosAtaque.length; i++) {
         $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
     }
@@ -144,7 +137,16 @@ function processarMsg_atacar(msgParams) {
 function processarMsg_atacar_comDados(msgParams) {
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
-    
+
+    _territorios.pintarGruposTerritorios();
+    var territorioDaDefesa = msgParams.territorioDaDefesa;
+    var territoriosDoAtaque = msgParams.territoriosDoAtaque;
+    var codigoTerritorios = [territorioDaDefesa.codigo];
+    for (i = 0; i < territoriosDoAtaque.length; i++) {
+        codigoTerritorios.push(territoriosDoAtaque[i].codigo);
+    }
+    _territorios.focaNosTerritorios(codigoTerritorios);
+
     this.tocarSom(this, "jogarDados.mp3");
     
     // Iniciar animacao de jogar os dados...
@@ -164,6 +166,8 @@ function processarMsg_mover(msgParams) {
     var paraOTerritorio = msgParams.paraOTerritorioObj;
     _labelTerritorios[paraOTerritorio.codigo].alteraQuantiadeDeTropas("" + paraOTerritorio.quantidadeDeTropas);
     
+    _territorios.focaNosTerritorios([doTerritorio.codigo, paraOTerritorio.codigo]);
+
     _jaPodeMover = true;
 }
 
@@ -261,6 +265,11 @@ function processarMsg_turno_mover(msgParams) {
     }
 }
 
+function processarMsg_erro() {
+    _jaPodeAtacar = true;
+    _jaPodeMover = true;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Métodos utilizados na biblioteca de WebSocket
 ////////////////////////////////////////////////////////////////////////////////
@@ -298,6 +307,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_cartas_territorios(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios) {
         processarMsg_colocar_tropa_na_troca_de_cartas_territorios(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.erro) {
+        processarMsg_erro();
     }
 }
 
@@ -638,7 +649,7 @@ function tocarSom(el, soundfile, volume) {
     //    else el.mp3.pause();
     //} else {
         el.mp3 = new Audio("http://war.jogowar.com.br:9092/sons/" + soundfile);
-        el.mp3.volume = 1.0;
+        el.mp3.volume = 0.1;
         el.mp3.play();
     //}
 }

@@ -39,7 +39,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             
                 if _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha']):
                     self.factory.clienteConectou(self, usuario)
-                    _gerenciador.clienteConectou(self)
+                    _gerenciador.clienteConectou(self, usuario)
                     
                     params["status"] = 1
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)

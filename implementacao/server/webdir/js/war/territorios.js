@@ -449,10 +449,10 @@ gpscheck.mapa.Territorios = function(mapa) {
                 corDeFundo = '#006400';
                 break;
             case 3:
-                corDeFundo = '#FFF';
+                corDeFundo = '#000';
                 break;
             case 4:
-                corDeFundo = '#000';
+                corDeFundo = '#FFF';
                 break;
             case 5:
                 corDeFundo = '#FFD700';
@@ -470,7 +470,7 @@ gpscheck.mapa.Territorios = function(mapa) {
         var circulo = {
             path: google.maps.SymbolPath.CIRCLE, 
             fillColor: corDeFundo,
-            fillOpacity: 0.8,
+            fillOpacity: 1,
             scale: 15,
             strokeColor: "#000000",
             strokeWeight: 2

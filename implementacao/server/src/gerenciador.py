@@ -16,9 +16,10 @@ class Gerenciador(object):
         self._estado = Estado.iniciando_sala
         self._sala = Sala()
 
-    def clienteConectou(self, cliente):
+    def clienteConectou(self, cliente, usuario):
         if self._estado == Estado.iniciando_sala:
-            jogador = Jogador(cliente)
+            jogador = Jogador(usuario)
+            jogador.socket = cliente
 
             posicaoJogador = self._sala.adiciona(jogador)
             donoDaSala = (self._sala.dono == posicaoJogador)
