@@ -17,7 +17,8 @@ var TipoMensagem = {
     turno: "Turno",
     colocar_tropa_na_troca_de_cartas_territorios: "ColocarTropaNaTrocaDeCartasTerritorios",
     entrou_no_jogo: "EntrouNoJogo",
-    saiu_do_jogo: "SaiuDoJogo"
+    saiu_do_jogo: "SaiuDoJogo",
+    atualiza_territorios: "AtualizaTerritorios"
 };
 
 var TipoAcaoTurno = {

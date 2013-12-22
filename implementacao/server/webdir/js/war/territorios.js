@@ -540,4 +540,49 @@ gpscheck.mapa.Territorios = function(mapa) {
 	    });
 	    return bounds;
 	};
+
+	this.atualizaTerritorios = function(territorios, posicaoJogador) {
+
+		var territorioJs = this.carregaTerritorios();
+        
+        var corDeFundo = this.corDeFundoDaPosicao(posicaoJogador);
+
+        var circulo = {
+            path: google.maps.SymbolPath.CIRCLE, 
+            fillColor: corDeFundo,
+            fillOpacity: 1,
+            scale: 15,
+            strokeColor: "#000000",
+            strokeWeight: 2
+        };
+
+		$.each(territorios, function(i, territorio) {
+			if (territorioJs[territorio.codigo]) {
+				var posicao = territorioJs[territorio.codigo].centro;
+		        var marker = new google.maps.Marker({
+		            position: posicao,
+		            map: mapa,
+		            icon: circulo,
+		            title: territorio.nome,
+		            zIndex: 2
+		        });
+		        
+		        var label = new Label({
+                    map: mapa
+                });
+                label.bindTo('position', marker, 'position');
+                label.bindTo('text', marker, 'position');
+              
+                label.texto = territorio.quantidadeDeTropas;
+                label.alteraPosicaoJogador(posicaoJogador);
+
+                _markerTerritorios[territorio.codigo] = marker;
+                _labelTerritorios[territorio.codigo] = label;
+
+                google.maps.event.addListener(marker, 'click', function(event) {
+                    territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                });
+			}
+		});
+	};
 };

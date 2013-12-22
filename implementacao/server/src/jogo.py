@@ -663,12 +663,44 @@ class Jogo(object):
         olheiro = True
         posicao = -1
         for k, v in self._jogadores.iteritems():
+            if posicao != -1:
+                break
+
             if v.usuario == usuario:
                 posicao = k
                 olheiro = False
                 self._clientes[k] = cliente
                 print "Envia dados atualizados do jogo..."
-                break
+
+                listaJogadoresInfoCurta = []
+                territoriosDosJogadores = []
+
+                # Enviar lista dos jogadores
+                for j in self._jogadores.values():
+                    listaJogadoresInfoCurta.append({
+                        "usuario": j.usuario,
+                        "posicao": j.posicao,
+                    })
+                    territoriosDosJogadores.append({
+                        "territorios": j.territorios,
+                        "posicao": j.posicao
+                    })
+
+                self.enviaMsgParaCliente(TipoMensagem.lista_sala,
+                    ListaSala(listaJogadoresInfoCurta), 
+                    cliente)
+
+                # Enviar como estao os territorios.
+                self.enviaMsgParaCliente(TipoMensagem.atualiza_territorios, 
+                    AtualizaTerritorios(territoriosDosJogadores),
+                    cliente)
+                
+                # Se for a vez dele
+                #     Enviar acao do turno
+                
+                #jsonMsg = json.dumps(Mensagem(TipoMensagem., jogador.cartasTerritorio), default=lambda o: o.__dict__)
+                #print "# " + jsonMsg
+                #cliente.sendMessage(jsonMsg)
 
         if olheiro:
             print "Adicionar jogador como olheiro..."
@@ -681,6 +713,11 @@ class Jogo(object):
                 self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, k))
                 del self._clientes[k]
                 break
+
+    def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
+        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+        print "# " + jsonMsg
+        cliente.sendMessage(jsonMsg)
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)

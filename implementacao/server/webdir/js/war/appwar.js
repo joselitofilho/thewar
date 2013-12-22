@@ -64,7 +64,9 @@ function processarMsg_entrou_na_sala(msgParams) {
 
     $("#idJogador").html(jogadorDaSala.usuario);
 
-    $('#btnIniciarPartida').css('visibility', ((jogadorDaSala.dono) ? 'visible' : 'hidden'));
+    if (typeof jogadorDaSala.dono != 'undefined') {
+        $('#btnIniciarPartida').css('visibility', ((jogadorDaSala.dono) ? 'visible' : 'hidden'));
+    }
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#bloqueador_tela').css('visibility', 'hidden');
 }
@@ -201,14 +203,16 @@ function processarMsg_colocar_tropa_na_troca_de_cartas_territorios(msgParams) {
 
 function processarMsg_entrou_no_jogo(msgParams) {
     var posicaoJogador = Number(msgParams.posicao);
+    var usuario = msgParams.usuario;
 
-    $("#idJogador").html(msgParams.usuario);
-    $("#jogador" + (posicaoJogador+1)).html(msgParams.usuario);
+    if (posicaoJogador > -1) {
+        $("#idJogador").html(usuario);
+        $("#jogador" + (posicaoJogador+1)).html(usuario);
 
-    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
-    if (_posicaoJogador == -1) {
-        _posicaoJogador = posicaoJogador;
-        $('#bloqueador_tela').css('visibility', 'hidden');
+        $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+        if (_posicaoJogador == -1) _posicaoJogador = posicaoJogador;
+    } else {
+        alert("Olheiro " + usuario + " entrou.");
     }
 
     // TODO: Exibir algum aviso de que o jogador entrou... 
@@ -220,6 +224,16 @@ function processarMsg_saiu_do_jogo(msgParams) {
     divJogador.innerHTML = "-";
 
     // TODO: Exibir algum aviso de que o jogador foi embora....
+}
+
+function processarMsg_atualiza_territorios(msgParams) {
+    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
+        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
+        _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+    }
+    
+    $('#controles').css('visibility', 'visible');
+    $('#quantidade_de_tropas').css('visibility', 'visible');
 }
 
 function processarMsg_turno(msgParams) {
@@ -346,6 +360,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_entrou_no_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.saiu_do_jogo) {
         processarMsg_saiu_do_jogo(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.atualiza_territorios) {
+        processarMsg_atualiza_territorios(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }
