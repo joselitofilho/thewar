@@ -95,7 +95,7 @@ gpscheck.mapa.Territorios = function(mapa) {
         fronteiras["Suecia"] = ["Inglaterra", "Moscou"];
         fronteiras["Moscou"] = ["Suecia", "Polonia", "OrienteMedio", "Aral", "Omsk"];
         fronteiras["Polonia"] = ["Moscou", "OrienteMedio", "Egito", "Alemanha"];
-        fronteiras["Alemanha"] = ["Portugal", "Polonia"];
+        fronteiras["Alemanha"] = ["Portugal", "Polonia", "Inglaterra"];
         fronteiras["Portugal"] = ["Alemanha", "Inglaterra", "Argelia", "Egito"];
         
         fronteiras["Argelia"] = ["Portugal", "Brasil", "Congo", "Sudao", "Egito"];

@@ -180,7 +180,8 @@ function processarMsg_mover(msgParams) {
 
     _jaPodeMover = true;
 
-    if (doTerritorio.quantidadeDeTropas == 1 && _posicaoJogador == _posicaoJogadorDaVez) {
+    if ( doTerritorio.quantidadeDeTropas == 1 && 
+        _posicaoJogador == _posicaoJogadorDaVez) {
         territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
     }
 }
@@ -594,8 +595,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                         _territorioAlvoMover, 1);
                     _libwebsocket.enviarObjJson(moverMsg);
                     _jaPodeMover = false;
-                } else if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1 &&
-                           _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoMover)){
+                } else {
                     _territorios.pintarGruposTerritorios();
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
                     _territorioAlvoMover = nomeDoTerritorio;

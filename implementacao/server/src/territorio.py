@@ -98,7 +98,7 @@ class FronteiraTerritorio(object):
         CodigoTerritorio.Suecia: [CodigoTerritorio.Inglaterra, CodigoTerritorio.Moscou],
         CodigoTerritorio.Moscou: [CodigoTerritorio.Suecia, CodigoTerritorio.Polonia, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Aral, CodigoTerritorio.Omsk],
         CodigoTerritorio.Polonia: [CodigoTerritorio.Moscou, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Egito, CodigoTerritorio.Alemanha],
-        CodigoTerritorio.Alemanha: [CodigoTerritorio.Portugal, CodigoTerritorio.Polonia],
+        CodigoTerritorio.Alemanha: [CodigoTerritorio.Portugal, CodigoTerritorio.Polonia, CodigoTerritorio.Inglaterra],
         CodigoTerritorio.Portugal: [CodigoTerritorio.Alemanha, CodigoTerritorio.Inglaterra, CodigoTerritorio.Argelia, CodigoTerritorio.Egito],
         
         CodigoTerritorio.Argelia: [CodigoTerritorio.Portugal, CodigoTerritorio.Brasil, CodigoTerritorio.Congo, CodigoTerritorio.Sudao, CodigoTerritorio.Egito],
