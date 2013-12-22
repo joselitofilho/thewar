@@ -112,6 +112,9 @@ function processarMsg_atacar(msgParams) {
     _labelTerritorios[territorioDaDefesa.codigo].alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
     for (i = 0; i < territoriosDoAtaque.length; i++) {
         _labelTerritorios[territoriosDoAtaque[i].codigo].alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
+        if (territoriosDoAtaque[i].quantidadeDeTropas == 1) {
+            territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
+        }
     }
    
     for (i = 0; i < dadosAtaque.length; i++) {
@@ -131,6 +134,18 @@ function processarMsg_atacar(msgParams) {
         _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
 
         appwar_mudarCursor('mover_para_fora');
+
+        if (_posicaoJogador == _posicaoJogadorDaVez) {
+            for (i=0; i < territoriosDoAtaque.length; i++) {
+                if (territoriosDoAtaque[i].quantidadeDeTropas > 1) {
+                    var moverMsg = comunicacao_mover(_posicaoJogador, 
+                                      territoriosDoAtaque[i].codigo,
+                                      territorioDaDefesa.codigo, 1);
+                    setTimeout(function() { _libwebsocket.enviarObjJson(moverMsg) }, 300);
+                    break;
+                }
+            }
+        }
     }
     
     _jaPodeAtacar = true;
@@ -160,6 +175,9 @@ function processarMsg_mover(msgParams) {
         appwar_mudarCursor('mover_para_fora');
     }
     
+    // NOTE: O log aqui é para dar um "retardo" para que seja pintado corretamente...
+    console.log("Mover: Com o log ele faz o esperado... vai entender!!!");
+
     this.tocarSom(this, 'positivo_' + (Math.floor(Math.random()*4)+1) + '.wav');
 
     var doTerritorio = msgParams.doTerritorioObj;
@@ -318,7 +336,6 @@ function posRecebimentoMensagemServidor(valor) {
 }
 
 function posFechamentoSocket(valor) {
-    //alert("Você perdeu a conexao com o servidor. Reinicie o browser.");
     $('#bloqueador_tela').css('visibility', 'visible');
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#botao_recarregar').css('visibility', 'visible');
