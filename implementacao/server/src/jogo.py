@@ -661,8 +661,10 @@ class Jogo(object):
 
     def adiciona(self, cliente, usuario):
         olheiro = True
+        posicao = -1
         for k, v in self._jogadores.iteritems():
             if v.usuario == usuario:
+                posicao = k
                 olheiro = False
                 self._clientes[k] = cliente
                 print "Envia dados atualizados do jogo..."
@@ -670,14 +672,13 @@ class Jogo(object):
 
         if olheiro:
             print "Adicionar jogador como olheiro..."
-
-        # TODO: Enviar mensagem que jogador entrou...
+        
+        self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, posicao))
 
     def remove(self, usuario):
         for k, v in self._jogadores.iteritems():
             if v.usuario == usuario:
-                self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, 
-                        SaiuDoJogo(usuario, k))
+                self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, k))
                 del self._clientes[k]
                 break
 

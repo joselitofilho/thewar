@@ -199,6 +199,21 @@ function processarMsg_colocar_tropa_na_troca_de_cartas_territorios(msgParams) {
     }
 }
 
+function processarMsg_entrou_no_jogo(msgParams) {
+    var posicaoJogador = Number(msgParams.posicao);
+
+    $("#idJogador").html(msgParams.usuario);
+    $("#jogador" + (posicaoJogador+1)).html(msgParams.usuario);
+
+    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+    if (_posicaoJogador == -1) {
+        _posicaoJogador = posicaoJogador;
+        $('#bloqueador_tela').css('visibility', 'hidden');
+    }
+
+    // TODO: Exibir algum aviso de que o jogador entrou... 
+}
+
 function processarMsg_saiu_do_jogo(msgParams) {
     var posicaoJogador = Number(msgParams.posicao) + 1;
     var divJogador = document.getElementById("jogador" + posicaoJogador);
@@ -327,6 +342,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_cartas_territorios(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios) {
         processarMsg_colocar_tropa_na_troca_de_cartas_territorios(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.entrou_no_jogo) {
+        processarMsg_entrou_no_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.saiu_do_jogo) {
         processarMsg_saiu_do_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {

@@ -56,8 +56,9 @@ class CartaObjetivo(object):
         self.objetivo = objetivo
 
 class EntrouNoJogo(object):
-    def __init__(self, jogador):
-        self.jogador = jogador
+    def __init__(self, usuario, posicao):
+        self.usuario = usuario
+        self.posicao = posicao
 
 class SaiuDoJogo(object):
     def __init__(self, usuario, posicao):
