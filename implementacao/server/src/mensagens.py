@@ -20,7 +20,7 @@ class TipoMensagem:
     colocar_tropa_na_troca_de_cartas_territorios = "ColocarTropaNaTrocaDeCartasTerritorios"
     entrou_no_jogo = "EntrouNoJogo"
     saiu_do_jogo = "SaiuDoJogo"
-    atualiza_territorios = "AtualizaTerritorios"
+    carrega_jogo = "CarregaJogo"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -35,8 +35,8 @@ class EntrouNaSala(object):
         self.jogadorDaSala = jogadorDaSala
 
 class ListaSala(object):
-    def __init__(self, lista):
-        self.lista = lista
+    def __init__(self, listaJogadores):
+        self.listaJogadores = listaJogadores
 
 class SaiuDaSala(object):
     def __init__(self, jogadorDaSala):
@@ -66,9 +66,11 @@ class SaiuDoJogo(object):
         self.usuario = usuario
         self.posicao = posicao
 
-class AtualizaTerritorios(object):
-    def __init__(self, territoriosDosJogadores):
+class CarregaJogo(object):
+    def __init__(self, posicao, territoriosDosJogadores, listaJogadores):
+        self.jogadorDaVez = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
+        self.listaJogadores = listaJogadores
 
 class AcaoTurno(object):
     def __init__(self, tipoAcao, numeroDoTurno, posicaoJogador):

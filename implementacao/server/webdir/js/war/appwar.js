@@ -50,7 +50,7 @@ function processarMsg_entrar(msgParams) {
 }
 
 function processarMsg_lista_sala(msgParams) {
-    var listaJogadores = msgParams.lista;
+    var listaJogadores = msgParams.listaJogadores;
     for (i=0; i < listaJogadores.length; i++) {
         var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
         var usuario = listaJogadores[i].usuario;
@@ -226,7 +226,9 @@ function processarMsg_saiu_do_jogo(msgParams) {
     // TODO: Exibir algum aviso de que o jogador foi embora....
 }
 
-function processarMsg_atualiza_territorios(msgParams) {
+function processarMsg_carrega_jogo(msgParams) {
+    processarMsg_lista_sala(msgParams);
+
     for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
         var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
         _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
@@ -234,6 +236,11 @@ function processarMsg_atualiza_territorios(msgParams) {
     
     $('#controles').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
+    
+    _posicaoJogadorDaVez = msgParams.jogadorDaVez;
+    appwar_alteraInfoTurnoJogador(msgParams.jogadorDaVez);
+
+    $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
 function processarMsg_turno(msgParams) {
@@ -360,8 +367,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_entrou_no_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.saiu_do_jogo) {
         processarMsg_saiu_do_jogo(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.atualiza_territorios) {
-        processarMsg_atualiza_territorios(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.carrega_jogo) {
+        processarMsg_carrega_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }

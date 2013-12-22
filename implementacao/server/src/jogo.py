@@ -686,13 +686,12 @@ class Jogo(object):
                         "posicao": j.posicao
                     })
 
-                self.enviaMsgParaCliente(TipoMensagem.lista_sala,
-                    ListaSala(listaJogadoresInfoCurta), 
-                    cliente)
+                # Envia para todos que o jogador entou no jogo.
+                self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, posicao))
 
                 # Enviar como estao os territorios.
-                self.enviaMsgParaCliente(TipoMensagem.atualiza_territorios, 
-                    AtualizaTerritorios(territoriosDosJogadores),
+                self.enviaMsgParaCliente(TipoMensagem.carrega_jogo, 
+                    CarregaJogo(self._posicaoJogadorDaVez, territoriosDosJogadores, listaJogadoresInfoCurta),
                     cliente)
                 
                 # Se for a vez dele
@@ -705,8 +704,6 @@ class Jogo(object):
         if olheiro:
             print "Adicionar jogador como olheiro..."
         
-        self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, posicao))
-
     def remove(self, usuario):
         for k, v in self._jogadores.iteritems():
             if v.usuario == usuario:
