@@ -676,10 +676,13 @@ class Jogo(object):
 
                 # Enviar lista dos jogadores
                 for j in self._jogadores.values():
-                    listaJogadoresInfoCurta.append({
-                        "usuario": j.usuario,
-                        "posicao": j.posicao,
-                    })
+                    # Verifica se o jogador ainda esta conectado.
+                    if j.posicao in self._clientes.keys():
+                        listaJogadoresInfoCurta.append({
+                            "usuario": j.usuario,
+                            "posicao": j.posicao,
+                        })
+                    
                     territoriosDosJogadores.append({
                         "territorios": j.territorios,
                         "posicao": j.posicao
