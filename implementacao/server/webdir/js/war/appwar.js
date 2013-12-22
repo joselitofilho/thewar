@@ -206,11 +206,12 @@ function processarMsg_entrou_no_jogo(msgParams) {
     var usuario = msgParams.usuario;
 
     if (posicaoJogador > -1) {
-        $("#idJogador").html(usuario);
-        $("#jogador" + (posicaoJogador+1)).html(usuario);
-
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
-        if (_posicaoJogador == -1) _posicaoJogador = posicaoJogador;
+        if (_posicaoJogador == -1) {
+            _posicaoJogador = posicaoJogador;
+            $("#idJogador").html(usuario);
+            $("#jogador" + (posicaoJogador+1)).html(usuario);
+        }
     } else {
         alert("Olheiro " + usuario + " entrou.");
     }

@@ -142,11 +142,13 @@ class Jogo(object):
         acao = None
         # Preencher os dados da acao
         if tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_globais:
-            turno.quantidadeDeTropas = math.floor(len(jogador.territorios) / 2);
+            if turno.quantidadeDeTropas == 0:
+                turno.quantidadeDeTropas = math.floor(len(jogador.territorios) / 2);
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             turno.grupoTerritorioAtual = turno.gruposTerritorio.pop(0)
-            turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
+            if turno.quantidadeDeTropas == 0:
+                turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
             acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, 
                 turno.quantidadeDeTropas, turno.grupoTerritorioAtual)
         elif tipoAcaoDoTurno == TipoAcaoTurno.trocar_cartas:
@@ -663,9 +665,6 @@ class Jogo(object):
         olheiro = True
         posicao = -1
         for k, v in self._jogadores.iteritems():
-            if posicao != -1:
-                break
-
             if v.usuario == usuario:
                 posicao = k
                 olheiro = False
@@ -686,20 +685,16 @@ class Jogo(object):
                         "posicao": j.posicao
                     })
 
-                # Envia para todos que o jogador entou no jogo.
                 self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, posicao))
 
-                # Enviar como estao os territorios.
                 self.enviaMsgParaCliente(TipoMensagem.carrega_jogo, 
                     CarregaJogo(self._posicaoJogadorDaVez, territoriosDosJogadores, listaJogadoresInfoCurta),
                     cliente)
                 
-                # Se for a vez dele
-                #     Enviar acao do turno
+                acaoDoTurno = self.criaAcaoDoTurno(self._turno)
+                self.enviaMsgParaCliente(TipoMensagem.turno, acaoDoTurno, cliente)
                 
-                #jsonMsg = json.dumps(Mensagem(TipoMensagem., jogador.cartasTerritorio), default=lambda o: o.__dict__)
-                #print "# " + jsonMsg
-                #cliente.sendMessage(jsonMsg)
+                break
 
         if olheiro:
             print "Adicionar jogador como olheiro..."
