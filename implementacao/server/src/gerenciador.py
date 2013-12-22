@@ -20,16 +20,19 @@ class Gerenciador(object):
         self._jogadores = {}
 
     def clienteConectou(self, cliente, usuario):
-        if self._estado == Estado.iniciando_sala and self._jogo == None:
-            jogador = Jogador(usuario)
-            self._jogadores[cliente] = jogador
-
+        self._jogadores[cliente] = usuario
+        
+        if self._jogo == None:
             self._sala.adiciona(cliente, usuario)
+        else:
+            self._jogo.adiciona(cliente, usuario)
 
     def clienteDesconectou(self, cliente):
-        if self._estado == Estado.iniciando_sala:
-            jogador = self._jogadores[cliente]
-            self._sala.remove(jogador.usuario)
+        usuario = self._jogadores[cliente]
+        if self._jogo == None:
+            self._sala.remove(usuario)
+        else:
+            self._jogo.remove(usuario)
 
     def iniciaPartida(self):
         if self._jogo == None:
@@ -50,13 +53,12 @@ class Gerenciador(object):
 
     def finalizaTurno(self, cliente):
         if self._estado == Estado.jogando:
-            jogador = self._jogadores[cliente]
-            self._jogo.finalizaTurno(jogador.usuario)
+            usuario = self._jogadores[cliente]
+            self._jogo.finalizaTurno(usuario)
 
     def requisicao(self, cliente, mensagem):
         if self._jogo != None:
-            jogador = self._jogadores[cliente]
-            usuario = jogador.usuario
+            usuario = self._jogadores[cliente]
 
             if mensagem.tipo == TipoMensagem.colocar_tropa:
                 territorio = mensagem.params['territorio']

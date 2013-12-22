@@ -10,8 +10,8 @@ from carta import *
 class Jogo(object):
     _turno = None
 
-    _clientes = {}
-    _jogadores = {}
+    _clientes = {} #[posicao] = socket
+    _jogadores = {} #[posicao] = jogadorDoJogo
 
     _ordemJogadores = []
     _indiceOrdemJogadores = None
@@ -39,6 +39,21 @@ class Jogo(object):
     def inicia(self):
         self.iniciaFaseI()
         self.iniciaTurnos()
+
+    def iniciaFaseI(self):
+        jogadorQueComeca = self.faseI_DefinirQuemComeca()
+        territoriosDosJogadores = self.faseI_DistribuirTerritorios()
+        cartasObjetivos = self.faseI_DefinirObjetivos()
+        
+        self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, JogoFaseI(jogadorQueComeca, territoriosDosJogadores))
+
+        # NOTA: A carta objetivo deve ser enviada apenas ao jogador.
+        for i in range(len(self._jogadores)):
+            jsonMsg = json.dumps(Mensagem(
+                TipoMensagem.carta_objetivo,
+                CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
+            print "# ", jsonMsg
+            self._clientes[i].sendMessage(jsonMsg)
 
     def faseI_DefinirQuemComeca(self):
         self._cabecaDaFila = random.randrange(len(self._jogadores))
@@ -102,6 +117,18 @@ class Jogo(object):
 
         return objetivoPorJogadores
     
+    def iniciaTurnos(self):
+        self._cartasTerritorioDoBaralho = list(CartasTerritorio.Todas())
+        random.shuffle(self._cartasTerritorioDoBaralho)
+        random.shuffle(self._cartasTerritorioDoBaralho)
+        random.shuffle(self._cartasTerritorioDoBaralho)
+        self._cartasTerritorioDescartadas = []
+        
+        self._numeroDaTroca = 1
+
+        acaoDoTurno = self.criaAcaoDoTurno(self._turno)
+        self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+
     def criaAcaoDoTurno(self, turno):
         # Qual o turno que esta: 1, 2, 3, ...
         numeroDoTurno = turno.numero
@@ -131,33 +158,6 @@ class Jogo(object):
 
         return acao
  
-    def iniciaFaseI(self):
-        jogadorQueComeca = self.faseI_DefinirQuemComeca()
-        territoriosDosJogadores = self.faseI_DistribuirTerritorios()
-        cartasObjetivos = self.faseI_DefinirObjetivos()
-        
-        self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, JogoFaseI(jogadorQueComeca, territoriosDosJogadores))
-
-        # NOTA: A carta objetivo deve ser enviada apenas ao jogador.
-        for i in range(len(self._jogadores)):
-            jsonMsg = json.dumps(Mensagem(
-                TipoMensagem.carta_objetivo,
-                CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
-            print "# ", jsonMsg
-            self._clientes[i].sendMessage(jsonMsg)
-
-    def iniciaTurnos(self):
-        self._cartasTerritorioDoBaralho = list(CartasTerritorio.Todas())
-        random.shuffle(self._cartasTerritorioDoBaralho)
-        random.shuffle(self._cartasTerritorioDoBaralho)
-        random.shuffle(self._cartasTerritorioDoBaralho)
-        self._cartasTerritorioDescartadas = []
-        
-        self._numeroDaTroca = 1
-
-        acaoDoTurno = self.criaAcaoDoTurno(self._turno)
-        self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
-
     def todosJogaram(self):
         return self._cabecaDaFila == self._indiceOrdemJogadores
 
@@ -634,12 +634,6 @@ class Jogo(object):
         else:
             return (2 * numeroDaTroca) + (3 * (numeroDaTroca - 5))
 
-    def enviaMsgParaTodos(self, tipoMensagem, params):
-        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        for socket in self._clientes.values():
-            socket.sendMessage(jsonMsg)
-        print "# ", jsonMsg
-
     def pegaUmaCartaTerritorioDoBaralho(self):
         if len(self._cartasTerritorioDoBaralho) == 0:
             self._cartasTerritorioDoBaralho = list(self._cartasTerritorioDescartadas)
@@ -664,4 +658,32 @@ class Jogo(object):
             self._clientes[self._posicaoJogadorDaVez].sendMessage(jsonMsg)
 
             self._jogadorDaVezConquistouTerritorio = False
+
+    def adiciona(self, cliente, usuario):
+        olheiro = True
+        for k, v in self._jogadores.iteritems():
+            if v.usuario == usuario:
+                olheiro = False
+                self._clientes[k] = cliente
+                print "Envia dados atualizados do jogo..."
+                break
+
+        if olheiro:
+            print "Adicionar jogador como olheiro..."
+
+        # TODO: Enviar mensagem que jogador entrou...
+
+    def remove(self, usuario):
+        for k, v in self._jogadores.iteritems():
+            if v.usuario == usuario:
+                self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, 
+                        SaiuDoJogo(usuario, k))
+                del self._clientes[k]
+                break
+
+    def enviaMsgParaTodos(self, tipoMensagem, params):
+        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+        for socket in self._clientes.values():
+            socket.sendMessage(jsonMsg)
+        print "# ", jsonMsg
 

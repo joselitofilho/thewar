@@ -5,7 +5,7 @@ class Sala(object):
     _proximaPosicao = 0
     _jogadores = {}
     _dono = None
-    _clientes = {}
+    _clientes = {} #[posicao] = socket
 
     def __init__(self):
         print "Sala criada."
