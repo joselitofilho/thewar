@@ -450,12 +450,22 @@ class Jogo(object):
                                     if dadosAtaque[i] > dadosDefesa[i]:
                                         # Ataque venceu.
                                         territorioDaDefesa = jogadorDefesa.removeTropasNoTerritorio(
-                                                territorioDaDefesa.Codigo,
-                                                1)
+                                                territorioDaDefesa.Codigo, 1)
+
                                         # Verifica se o territorio foi conquistado.
                                         if territorioDaDefesa.QuantidadeDeTropas == 0:
                                             jogadorDefesa.territorios.remove(territorioDaDefesa)
                                             jogador.territorios.append(territorioDaDefesa)
+
+                                            # Movendo uma tropa para o territorio conquistado.
+                                            territorioDaDefesa = jogador.adicionaTropasNoTerritorio(
+                                                    territorioDaDefesa.Codigo, 1)
+
+                                            for t in territoriosDoAtaque:
+                                                if t.QuantidadeDeTropas > 1:
+                                                    jogador.removeTropasNoTerritorio(t.Codigo, 1)
+                                                    break
+                                            ######
 
                                             conquistouTerritorio = True
                                             self._jogadorDaVezConquistouTerritorio = True
@@ -466,8 +476,8 @@ class Jogo(object):
                                                 if t.QuantidadeDeTropas > 1:
                                                     turno.territoriosDoAtaqueDaConquista.append(t.Codigo)
                                                     turno.tropasParaMoverAposAtaque += t.QuantidadeDeTropas
-                                                    if turno.tropasParaMoverAposAtaque > 3:
-                                                        turno.tropasParaMoverAposAtaque = 3
+                                                    if turno.tropasParaMoverAposAtaque > 2:
+                                                        turno.tropasParaMoverAposAtaque = 2
                                             turno.territorioConquistado = territorioDaDefesa.Codigo
                                             break
                                     else:
