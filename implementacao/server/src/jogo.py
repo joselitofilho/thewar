@@ -156,6 +156,8 @@ class Jogo(object):
             acao = AcaoTrocarCartas(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, (len(jogador.cartasTerritorio) >= 5))
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, turno.quantidadeDeTropas)
+        elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
+            acao = AcaoJogoTerminou(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez, jogador.objetivo, jogador.usuario)
         else:
             acao = AcaoTurno(tipoAcaoDoTurno, numeroDoTurno, jogadorDaVez)
 
@@ -197,28 +199,34 @@ class Jogo(object):
                 turno.gruposTerritorio = list(jogador.gruposTerritorio())
                 turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
             else:
-                self.passaParaProximoJogador()
-
-                if self.todosJogaram():
-                    turno.numero = 2
-                    turno.tipoAcao = TipoAcaoTurno.atacar
+                if self.temUmVencedor():
+                    turno.tipoAcao = TipoAcaoTurno.jogo_terminou
                 else:
-                    turno.numero = 1
-                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                    self.passaParaProximoJogador()
+
+                    if self.todosJogaram():
+                        turno.numero = 2
+                        turno.tipoAcao = TipoAcaoTurno.atacar
+                    else:
+                        turno.numero = 1
+                        turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and turno.quantidadeDeTropas == 0:
             if len(turno.gruposTerritorio) == 0:
-                self.passaParaProximoJogador()
-                
-                if self.todosJogaram():
-                    turno.numero = 2
-                    turno.tipoAcao = TipoAcaoTurno.atacar
+                if self.temUmVencedor():
+                    turno.tipoAcao = TipoAcaoTurno.jogo_terminou
                 else:
-                    turno.numero = 1
-                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                    self.passaParaProximoJogador()
+                
+                    if self.todosJogaram():
+                        turno.numero = 2
+                        turno.tipoAcao = TipoAcaoTurno.atacar
+                    else:
+                        turno.numero = 1
+                        turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
@@ -237,16 +245,19 @@ class Jogo(object):
                 self.finalizaTurno_moverAposConquistarTerritorio()
 
         elif turno.tipoAcao == TipoAcaoTurno.mover:
-            self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
-
-            self.passaParaProximoJogador()
-
-            if self.todosJogaram():
-                turno.numero = 3
-                turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+            if self.temUmVencedor():
+                turno.tipoAcao = TipoAcaoTurno.jogo_terminou
             else:
-                turno.numero = 2
-                turno.tipoAcao = TipoAcaoTurno.atacar
+                self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
+
+                self.passaParaProximoJogador()
+
+                if self.todosJogaram():
+                    turno.numero = 3
+                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                else:
+                    turno.numero = 2
+                    turno.tipoAcao = TipoAcaoTurno.atacar
 
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
@@ -317,8 +328,7 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.mover:
             if self.temUmVencedor():
-                # TODO: Enviar mensagem que tem um vencedor.
-                erro = False
+                turno.tipoAcao = TipoAcaoTurno.jogo_terminou
             else:
                 self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
             
@@ -329,12 +339,12 @@ class Jogo(object):
                     turno.numero += 1
                 turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
             
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
-                self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
-                erro = False
+            acaoDoTurno = self.criaAcaoDoTurno(turno)
+            self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+            erro = False
 
         if erro:
-            socket = self.clientes[_posicaoJogadorDaVez]
+            socket = self._clientes[_posicaoJogadorDaVez]
             jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
             print "# " + jsonMsg
             socket.sendMessage(jsonMsg)
@@ -743,7 +753,7 @@ class Jogo(object):
     def temUmVencedor(self):
         jogador = self._jogadores[self._posicaoJogadorDaVez]
         objetivo = FabricaObjetivo().cria(jogador.objetivo)
-        return objetivo.completou()
+        return objetivo.completou(jogador, self._jogadores)
 
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):

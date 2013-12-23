@@ -6,3 +6,4 @@ class TipoAcaoTurno:
     atacar = "Atacar"
     mover = "Mover"
     mover_apos_conquistar_territorio = "MoverAposConquistarTerritorio"
+    jogo_terminou = "JogoTerminou"

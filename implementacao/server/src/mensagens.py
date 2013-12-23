@@ -99,6 +99,12 @@ class AcaoDistribuirTropasTrocaDeCartas(AcaoTurno):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, posicaoJogador)
         self.quantidadeDeTropas = quantidadeDeTropas
 
+class AcaoJogoTerminou(AcaoTurno):
+    def __init__(self, tipoAcao, numeroDoTurno, posicaoJogador, objetivo, usuario):
+        AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, posicaoJogador)
+        self.objetivo = objetivo
+        self.ganhador = usuario
+
 class ColocarTropa(object):
     def __init__(self, posicaoJogador, territorio, quantidadeDeTropasRestante):
         self.posicaoJogador = posicaoJogador
