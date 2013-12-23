@@ -114,9 +114,9 @@ gpscheck.mapa.Territorios = function(mapa) {
         fronteiras["Omsk"] = ["Moscou", "Aral", "China", "Mongolia", "Dudinka"];
         fronteiras["Mongolia"] = ["Dudinka", "Omsk", "China", "Tchita"];
         fronteiras["Dudinka"] = ["Omsk", "Mongolia", "Tchita", "Siberia"];
-        fronteiras["Tchita"] = ["Siberia", "Dudinka", "Mongolia", "Vladivostok"];
+        fronteiras["Tchita"] = ["Siberia", "Dudinka", "Mongolia", "Vladivostok", "China"];
         fronteiras["Siberia"] = ["Dudinka", "Tchita", "Vladivostok"];
-        fronteiras["Vladivostok"] = ["Siberia", "Tchita", "China", "Japao"];
+        fronteiras["Vladivostok"] = ["Siberia", "Tchita", "China", "Japao", "Alaska"];
         
         fronteiras["Australia"] = ["NovaGuine", "Sumatra", "Borneo"];
         fronteiras["NovaGuine"] = ["Australia", "Borneo"];

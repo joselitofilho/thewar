@@ -129,6 +129,8 @@ function processarMsg_atacar(msgParams) {
     }
     
     if (msgParams.conquistouTerritorio) {
+        this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
+
         _territorioAlvoAtaque = null;
         _turno = {};
         _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;

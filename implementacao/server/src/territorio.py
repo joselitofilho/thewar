@@ -117,9 +117,9 @@ class FronteiraTerritorio(object):
         CodigoTerritorio.Omsk: [CodigoTerritorio.Moscou, CodigoTerritorio.Aral, CodigoTerritorio.China, CodigoTerritorio.Mongolia, CodigoTerritorio.Dudinka],
         CodigoTerritorio.Mongolia: [CodigoTerritorio.Dudinka, CodigoTerritorio.Omsk, CodigoTerritorio.China, CodigoTerritorio.Tchita],
         CodigoTerritorio.Dudinka: [CodigoTerritorio.Omsk, CodigoTerritorio.Mongolia, CodigoTerritorio.Tchita, CodigoTerritorio.Siberia],
-        CodigoTerritorio.Tchita: [CodigoTerritorio.Siberia, CodigoTerritorio.Dudinka, CodigoTerritorio.Mongolia, CodigoTerritorio.Vladivostok],
+        CodigoTerritorio.Tchita: [CodigoTerritorio.Siberia, CodigoTerritorio.Dudinka, CodigoTerritorio.Mongolia, CodigoTerritorio.Vladivostok, CodigoTerritorio.China],
         CodigoTerritorio.Siberia: [CodigoTerritorio.Dudinka, CodigoTerritorio.Tchita, CodigoTerritorio.Vladivostok],
-        CodigoTerritorio.Vladivostok: [CodigoTerritorio.Siberia, CodigoTerritorio.Tchita, CodigoTerritorio.China, CodigoTerritorio.Japao],
+        CodigoTerritorio.Vladivostok: [CodigoTerritorio.Siberia, CodigoTerritorio.Tchita, CodigoTerritorio.China, CodigoTerritorio.Japao, CodigoTerritorio.Alaska],
         
         CodigoTerritorio.Australia: [CodigoTerritorio.NovaGuine, CodigoTerritorio.Sumatra, CodigoTerritorio.Borneo],
         CodigoTerritorio.NovaGuine: [CodigoTerritorio.Australia, CodigoTerritorio.Borneo],

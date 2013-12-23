@@ -344,7 +344,7 @@ class Jogo(object):
             erro = False
 
         if erro:
-            socket = self._clientes[_posicaoJogadorDaVez]
+            socket = self._clientes[self._posicaoJogadorDaVez]
             jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
             print "# " + jsonMsg
             socket.sendMessage(jsonMsg)
@@ -505,10 +505,16 @@ class Jogo(object):
 
                                             conquistouTerritorio = True
 
-                                            # Verifica se o jogador destruiu o outro.
+                                            # Verifica se o jogador destruiu o outro. Caso positivo, as cartas dos territorios
+                                            # do jogador derrotado vai para o jogador que o destruiu.
                                             if len(jogadorDefesa.territorios) == 0:
                                                 jogador.jogadoresDestruidos.append(jogadorDefesa.posicao)
                                                 jogador.cartasTerritorio.extend(jogadorDefesa.cartasTerritorio)
+                                                # Envia as cartas atualizadas para o cliente.
+                                                jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, 
+                                                    jogador.cartasTerritorio), default=lambda o: o.__dict__)
+                                                print "# " + jsonMsg
+                                                self._clientes[jogador.posicao].sendMessage(jsonMsg)
 
                                             self._jogadorDaVezConquistouTerritorio = True
                                             turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
@@ -689,11 +695,8 @@ class Jogo(object):
 
     def enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio(self):
         if self._jogadorDaVezConquistouTerritorio:
-            print "Jogador da vez: ", self._posicaoJogadorDaVez
             jogador = self._jogadores[self._posicaoJogadorDaVez]
             cartaTerritorio = self.pegaUmaCartaTerritorioDoBaralho()
-            print "Cartas territorios: ", cartaTerritorio
-            print "Antes: ",jogador.cartasTerritorio
             jogador.adicionaCartaTerritorio(cartaTerritorio)
             
             jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)

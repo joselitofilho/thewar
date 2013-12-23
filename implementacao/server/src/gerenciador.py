@@ -75,4 +75,4 @@ class Gerenciador(object):
                 self._jogo.move(usuario, doTerritorio, paraOTerritorio, quantidade)
             elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
                 cartasTerritorio = mensagem.params['cartasTerritorios']
-                self._jogo.trocaCartasTerritorio(usuario, posicaoJogador, cartasTerritorio)
+                self._jogo.trocaCartasTerritorio(usuario, cartasTerritorio)
