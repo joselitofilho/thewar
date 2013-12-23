@@ -20,32 +20,33 @@ _animarDadosReferencia = null;
 
 _cartasTerritoriosSelecionadas = [];
 
+function exibirAlerta(tipo, msg) {
+    $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
+    $('#alerta').addClass(tipo);
+    $('#alerta_texto').html(msg);
+    $('#alerta').css('visibility', 'visible');
+    $("#alerta")
+        .fadeIn('slow')
+        .animate({opacity : 1.0}, 2000)
+        .fadeOut('slow', function() {
+            $(this).hide();
+        });
+}
+
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
 function processarMsg_registrar(msgParams) {
     if (msgParams.status == 1) {
-        $('#alerta').show();
-        $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
-        $('#alerta').addClass('alert-success');
-        $('#alerta_texto').html("Registrado com sucesso.");
-        $('#alerta').css('visibility', 'visible');
+        exibirAlerta('alert-success', 'Registrado com sucesso.');
     } else if (msgParams.status == 0) {
-        $('#alerta').show();
-        $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
-        $('#alerta').addClass('alert-info');
-        $('#alerta_texto').html("Você já está registrado!");
-        $('#alerta').css('visibility', 'visible');
+        exibirAlerta('alert-info', 'Voce ja esta registrado.');
     }
 }
 
 function processarMsg_entrar(msgParams) {
     if (msgParams.status != 1) {
-        $('#alerta').show();
-        $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
-        $('#alerta').addClass('alert-danger');
-        $('#alerta_texto').html("Verifique se seus dados estão corretos e certifique-se de que você já está registrado..");
-        $('#alerta').css('visibility', 'visible');
+        exibirAlerta('alert-danger', 'Verifique se seus dados estao corretos e tente novamente.');
     } 
 }
 
@@ -145,14 +146,16 @@ function processarMsg_atacar_comDados(msgParams) {
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
 
-    _territorios.pintarGruposTerritorios();
     var territorioDaDefesa = msgParams.territorioDaDefesa;
     var territoriosDoAtaque = msgParams.territoriosDoAtaque;
     var codigoTerritorios = [territorioDaDefesa.codigo];
     for (i = 0; i < territoriosDoAtaque.length; i++) {
         codigoTerritorios.push(territoriosDoAtaque[i].codigo);
     }
-    _territorios.focaNosTerritorios(codigoTerritorios);
+    if (_posicaoJogador != _posicaoJogadorDaVez) {
+        _territorios.pintarGruposTerritorios();
+        _territorios.focaNosTerritorios(codigoTerritorios);
+    }
 
     this.tocarSom(this, "jogarDados.mp3");
     
@@ -562,9 +565,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 }
             }
         } else if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
-            if (_territorioConquistado == nomeDoTerritorio) {
-                finalizarTurno();
-            } else {
+            if (_territorioConquistado != nomeDoTerritorio) {
                 var moverMsg = comunicacao_mover(_posicaoJogador, nomeDoTerritorio, 
                     _territorioConquistado, 1);
                 _libwebsocket.enviarObjJson(moverMsg);

@@ -6,6 +6,7 @@ from turno import *
 from tipoAcaoTurno import *
 from territorio import * 
 from carta import * 
+from objetivos import * 
 
 class Jogo(object):
     _turno = None
@@ -100,7 +101,7 @@ class Jogo(object):
                     TerritoriosPorJogador(self._posicaoJogadorDaVez, self._jogadores[self._posicaoJogadorDaVez].territorios))
             
             inicio = inicio + incremento[i]
-            self.passaParaProximoJogador();
+            self.passaParaProximoJogador(False);
 
         return listaTerritoriosPorJogador
 
@@ -163,7 +164,7 @@ class Jogo(object):
     def todosJogaram(self):
         return self._cabecaDaFila == self._indiceOrdemJogadores
 
-    def passaParaProximoJogador(self):
+    def passaParaProximoJogador(self, comVerificacaoExtra = True):
         # Verifica se o jogador ainda esta no jogo. Caso nao esteja, pula a vez dele.
         ok = False
         for i in range(len(self._ordemJogadores)):
@@ -171,9 +172,15 @@ class Jogo(object):
             self._indiceOrdemJogadores = (self._indiceOrdemJogadores + 1) % len(self._ordemJogadores)
             self._posicaoJogadorDaVez = self._ordemJogadores[self._indiceOrdemJogadores]
             self._jogadorDaVezConquistouTerritorio = False
+            
+            # Verifica se o jogador esta logado na sala e nao foi destruido.
             if self._posicaoJogadorDaVez in self._clientes.keys():
-                ok = True
-                break
+                if not comVerificacaoExtra:
+                    ok = True
+                    break
+                elif len(self._jogadores[self._posicaoJogadorDaVez].territorios) > 0:
+                    ok = True
+                    break
 
         print "Quando saiu: ", self._indiceOrdemJogadores, self._posicaoJogadorDaVez
         
@@ -309,18 +316,22 @@ class Jogo(object):
                 erro = False
 
         elif turno.tipoAcao == TipoAcaoTurno.mover:
-            self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
+            if self.temUmVencedor():
+                # TODO: Enviar mensagem que tem um vencedor.
+                erro = False
+            else:
+                self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
             
-            self.passaParaProximoJogador()
-            turno.trocouCartas = False
+                self.passaParaProximoJogador()
+                turno.trocouCartas = False
 
-            if self.todosJogaram():
-                turno.numero += 1
-            turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                if self.todosJogaram():
+                    turno.numero += 1
+                turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
             
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
-            self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
-            erro = False
+                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+                erro = False
 
         if erro:
             socket = self.clientes[_posicaoJogadorDaVez]
@@ -483,6 +494,12 @@ class Jogo(object):
                                             ######
 
                                             conquistouTerritorio = True
+
+                                            # Verifica se o jogador destruiu o outro.
+                                            if len(jogadorDefesa.territorios) == 0:
+                                                jogador.jogadoresDestruidos.append(jogadorDefesa.posicao)
+                                                jogador.cartasTerritorio.extend(jogadorDefesa.cartasTerritorio)
+
                                             self._jogadorDaVezConquistouTerritorio = True
                                             turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
                                             turno.tropasParaMoverAposAtaque = 0
@@ -495,6 +512,7 @@ class Jogo(object):
                                                         turno.tropasParaMoverAposAtaque = 2
                                             turno.territorioConquistado = territorioDaDefesa.Codigo
                                             break
+
                                     else:
                                         # Defesa venceu.
                                         self.defesaVenceu(i, territoriosDoAtaque, jogador)
@@ -721,6 +739,12 @@ class Jogo(object):
                 self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, k))
                 del self._clientes[k]
                 break
+
+    def temUmVencedor(self):
+        jogador = self._jogadores[self._posicaoJogadorDaVez]
+        objetivo = FabricaObjetivo().cria(jogador.objetivo)
+        return objetivo.completou()
+
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)

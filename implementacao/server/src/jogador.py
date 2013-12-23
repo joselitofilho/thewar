@@ -16,6 +16,8 @@ class JogadorDoJogo(object):
         self.territorios = []
         self.cartasTerritorio = []
 
+        self.jogadoresDestruidos = []
+
     def iniciaTerritorios(self, codigosTerritorios):
         self.territorios = []
         for t in codigosTerritorios:
@@ -124,6 +126,9 @@ class JogadorDoJogo(object):
     
     def removeCartaTerritorio(self, cartaTerritorio):
         self.cartasTerritorio.remove(cartaTerritorio)
+
+    def destruiuJogador(self, posicao):
+        return posicao in self.jogadoresDestruidos
 
 class Jogador(object):
     _usuario = None
