@@ -198,17 +198,6 @@ html, body {
     font-size: 20px;
 }
 
-.label_tropas {
-    position: relative;
-    left: -50%;
-    top: -8px;
-    white-space: nowrap;
-    border: 0;
-    padding: 2px;
-    font-size: 12px;
-    font-family: 'PT Sans', sans-serif;
-}
-
 #dados {
     float: right;
 }

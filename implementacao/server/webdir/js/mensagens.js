@@ -28,7 +28,8 @@ var TipoAcaoTurno = {
     trocar_cartas: "TrocarCartas",
     atacar: "Atacar",
     mover: "Mover",
-    mover_apos_conquistar_territorio: "MoverAposConquistarTerritorio"
+    mover_apos_conquistar_territorio: "MoverAposConquistarTerritorio",
+    jogo_terminou = "JogoTerminou"
 };
 
 function Mensagem(tipo, params) {

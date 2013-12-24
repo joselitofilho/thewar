@@ -5,6 +5,8 @@ var _labelTerritorios = {};
 var _markerTerritorios = {};
 var _poligonosTerritorios = {};
 
+var _piscarLoopFunc = {};
+
 gpscheck.mapa.Territorios = function(mapa) {
 
     var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
@@ -585,4 +587,27 @@ gpscheck.mapa.Territorios = function(mapa) {
 			}
 		});
 	};
+
+    this.piscar = function(codigoTerritorio) {
+        utilTerritorio_polygonFadein(codigoTerritorio, _poligonosTerritorios[codigoTerritorio],
+            500,
+            function() {
+                utilTerritorio_polygonFadeout(codigoTerritorio, _poligonosTerritorios[codigoTerritorio], 500) 
+            });
+
+        /*_piscarLoopFunc[codigoTerritorio] = setInterval(function() {
+            utilTerritorio_polygonFadein(codigoTerritorio, _poligonosTerritorios[codigoTerritorio],
+            500,
+            function() {
+                utilTerritorio_polygonFadeout(codigoTerritorio, _poligonosTerritorios[codigoTerritorio], 500) 
+            });
+        }, 1000);
+        setTimeout(function() {
+            if (_piscarLoopFunc[codigoTerritorio] != null) {
+                clearInterval(_piscarLoopFunc[codigoTerritorio]);
+                _piscarLoopFunc[codigoTerritorio] = null;
+                delete _piscarLoopFunc[codigoTerritorio];
+            }
+        }, 3000);*/
+    };
 };

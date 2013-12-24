@@ -97,6 +97,7 @@ function processarMsg_carta_objetivo(msgParams) {
 
 function processarMsg_colocar_tropa(msgParams) {
     this.tocarSom(this, 'colocarTropa.mp3');
+    _territorios.piscar(msgParams.territorio.codigo);
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropasRestante);
     
@@ -108,13 +109,25 @@ function processarMsg_colocar_tropa(msgParams) {
 
 function processarMsg_atacar(msgParams) {
     var dadosAtaque = msgParams.dadosAtaque;
-    var dadosDefesa = msgParams.dadosDefesa;   
+    var dadosDefesa = msgParams.dadosDefesa;
+
+    var diferencaDeQuantidade = 0;
 
     var territorioDaDefesa = msgParams.territorioDaDefesa;
-    var territoriosDoAtaque = msgParams.territoriosDoAtaque;
-    _labelTerritorios[territorioDaDefesa.codigo].alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
+    var territoriosDoAtaque = msgParams.territoriosDoAtaque;i
+
+    var labelTerritorioDefesa = _labelTerritorios[territorioDaDefesa.codigo];
+    diferencaDeQuantidade = Number(labelTerritorioDefesa.texto) - territorioDaDefesa.quantidadeDeTropas;
+    if (!msgParams.conquistouTerritorio)
+        labelTerritorioDefesa.perdeuTropas(diferencaDeQuantidade);
+    labelTerritorioDefesa.alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
+
     for (i = 0; i < territoriosDoAtaque.length; i++) {
-        _labelTerritorios[territoriosDoAtaque[i].codigo].alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
+        var labelTerritorioAtaque = _labelTerritorios[territoriosDoAtaque[i].codigo];
+        diferencaDeQuantidade = Number(labelTerritorioAtaque.texto) - territoriosDoAtaque[i].quantidadeDeTropas;
+        if (!msgParams.conquistouTerritorio)
+            labelTerritorioAtaque.perdeuTropas(diferencaDeQuantidade);
+        labelTerritorioAtaque.alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
         if (territoriosDoAtaque[i].quantidadeDeTropas == 1) {
             territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
         }
@@ -138,7 +151,10 @@ function processarMsg_atacar(msgParams) {
         
         _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
 
-        appwar_mudarCursor('mover_para_fora');
+
+        if (_posicaoJogador == _posicaoJogadorDaVez) {
+            appwar_mudarCursor('mover_para_fora');
+        }
     }
     
     _jaPodeAtacar = true;
@@ -266,6 +282,8 @@ function processarMsg_turno(msgParams) {
         processarMsg_turno_atacar(msgParams);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
         processarMsg_turno_mover(msgParams);
+    } else if (msgParams.tipoAcao == TipoAcaoTurno.jogo_terminou) {
+        processarMsg_turno_jogo_terminou(msgParams);
     }
 }
 
@@ -326,6 +344,10 @@ function processarMsg_turno_mover(msgParams) {
     } else {
         appwar_mudarCursor('');
     }
+}
+
+function processarMsg_turno_jogo_terminou(msgParams) {
+    alert(msgParams.ganhador + ' venceu o jogo!');
 }
 
 function processarMsg_erro() {
