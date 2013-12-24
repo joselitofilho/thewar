@@ -121,18 +121,25 @@ function processarMsg_atacar(msgParams) {
     if (!msgParams.conquistouTerritorio)
         labelTerritorioDefesa.perdeuTropas(diferencaDeQuantidade);
     labelTerritorioDefesa.alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
-
+    
+    var clicar = false;
+    var fazSentidoMoverAposConquistar = false;
     for (i = 0; i < territoriosDoAtaque.length; i++) {
         var labelTerritorioAtaque = _labelTerritorios[territoriosDoAtaque[i].codigo];
         diferencaDeQuantidade = Number(labelTerritorioAtaque.texto) - territoriosDoAtaque[i].quantidadeDeTropas;
         if (!msgParams.conquistouTerritorio)
             labelTerritorioAtaque.perdeuTropas(diferencaDeQuantidade);
         labelTerritorioAtaque.alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
-        if (territoriosDoAtaque[i].quantidadeDeTropas == 1) {
-            territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
-        }
+        
+        if (territoriosDoAtaque[i].quantidadeDeTropas == 1) clicar = true;
+        if (territoriosDoAtaque[i].quantidadeDeTropas > 1) fazSentidoMoverAposConquistar = true;
     }
-   
+
+    if (clicar && !fazSentidoMoverAposConquistar) {
+        territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
+    }
+
+    // TODO: Escurecer dados que perderam...
     for (i = 0; i < dadosAtaque.length; i++) {
         $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
     }
@@ -145,15 +152,18 @@ function processarMsg_atacar(msgParams) {
         this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
 
         _territorioAlvoAtaque = null;
-        _turno = {};
-        _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;
-        _territorioConquistado = msgParams.territorioDaDefesa.codigo;
-        
         _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
 
-
-        if (_posicaoJogador == _posicaoJogadorDaVez) {
-            appwar_mudarCursor('mover_para_fora');
+        if (!fazSentidoMoverAposConquistar) {
+            finalizarTurno();
+        } else {
+            _turno = {};
+            _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;
+            _territorioConquistado = msgParams.territorioDaDefesa.codigo;
+        
+            if (_posicaoJogador == _posicaoJogadorDaVez) {
+                appwar_mudarCursor('mover_para_fora');
+            }
         }
     }
     
@@ -201,7 +211,7 @@ function processarMsg_mover(msgParams) {
 
     _jaPodeMover = true;
 
-    if ( doTerritorio.quantidadeDeTropas == 1 && 
+    if (doTerritorio.quantidadeDeTropas == 1 && 
         _posicaoJogador == _posicaoJogadorDaVez) {
         territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
     }
@@ -228,12 +238,12 @@ function processarMsg_entrou_no_jogo(msgParams) {
     var usuario = msgParams.usuario;
 
     if (posicaoJogador > -1) {
-        $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
         if (_posicaoJogador == -1) {
+            $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
             _posicaoJogador = posicaoJogador;
             $("#idJogador").html(usuario);
-            $("#jogador" + (posicaoJogador+1)).html(usuario);
         }
+        $("#jogador" + (posicaoJogador+1)).html(usuario);
     } else {
         alert("Olheiro " + usuario + " entrou.");
     }
@@ -592,7 +602,9 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 }
             }
         } else if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
-            if (_territorioConquistado != nomeDoTerritorio) {
+            if (_territorioConquistado == nomeDoTerritorio) {
+                finalizarTurno();
+            } else {
                 var moverMsg = comunicacao_mover(_posicaoJogador, nomeDoTerritorio, 
                     _territorioConquistado, 1);
                 _libwebsocket.enviarObjJson(moverMsg);

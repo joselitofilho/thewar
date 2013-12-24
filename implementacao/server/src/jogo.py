@@ -749,7 +749,9 @@ class Jogo(object):
                 break
 
         if olheiro:
-            print "Adicionar jogador como olheiro..."
+            #self._olheiros[usuario] = cliente
+            #self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, -1))
+            pass
         
     def remove(self, usuario):
         for k, v in self._jogadores.iteritems():
