@@ -710,10 +710,10 @@ class Jogo(object):
         posicao = -1
         for k, v in self._jogadores.iteritems():
             if v.usuario == usuario:
+                # Jogador reconectou!
                 posicao = k
                 olheiro = False
                 self._clientes[k] = cliente
-                print "Envia dados atualizados do jogo..."
 
                 listaJogadoresInfoCurta = []
                 territoriosDosJogadores = []
@@ -734,8 +734,13 @@ class Jogo(object):
 
                 self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, posicao))
 
+                jogador = self._jogadores[posicao];
                 self.enviaMsgParaCliente(TipoMensagem.carrega_jogo, 
-                    CarregaJogo(self._posicaoJogadorDaVez, territoriosDosJogadores, listaJogadoresInfoCurta),
+                    CarregaJogo(self._posicaoJogadorDaVez, 
+                        territoriosDosJogadores, 
+                        listaJogadoresInfoCurta,
+                        jogador.objetivo,
+                        jogador.cartasTerritorio),
                     cliente)
                 
                 acaoDoTurno = self.criaAcaoDoTurno(self._turno)

@@ -259,7 +259,10 @@ function processarMsg_carrega_jogo(msgParams) {
     
     $('#controles').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
-    
+
+    processarMsg_carta_objetivo(msgParams);
+    processarMsg_cartas_territorios(msgParams.cartasTerritorio);
+
     _posicaoJogadorDaVez = msgParams.jogadorDaVez;
     appwar_alteraInfoTurnoJogador(msgParams.jogadorDaVez);
 

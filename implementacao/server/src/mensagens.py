@@ -67,10 +67,12 @@ class SaiuDoJogo(object):
         self.posicao = posicao
 
 class CarregaJogo(object):
-    def __init__(self, posicao, territoriosDosJogadores, listaJogadores):
+    def __init__(self, posicao, territoriosDosJogadores, listaJogadores, objetivo, cartasTerritorio):
         self.jogadorDaVez = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
         self.listaJogadores = listaJogadores
+        self.objetivo = objetivo;
+        self.cartasTerritorio = cartasTerritorio
 
 class AcaoTurno(object):
     def __init__(self, tipoAcao, numeroDoTurno, posicaoJogador):
