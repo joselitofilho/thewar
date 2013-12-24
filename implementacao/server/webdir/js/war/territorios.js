@@ -154,7 +154,9 @@ gpscheck.mapa.Territorios = function(mapa) {
 	        [new google.maps.LatLng(55.178868,-1.230469),new google.maps.LatLng(53.540307,6.152344)],
 	        [new google.maps.LatLng(37.160317,23.906250),new google.maps.LatLng(31.503629,25.488281)],
 	        [new google.maps.LatLng(38.685510,17.226563),new google.maps.LatLng(31.353637,19.511719)],
-	        [new google.maps.LatLng(42.811522,4.042969),new google.maps.LatLng(37.020098,5.800781)]
+	        [new google.maps.LatLng(42.811522,4.042969),new google.maps.LatLng(37.020098,5.800781)],
+	        [new google.maps.LatLng(40.313043,141.855469),new google.maps.LatLng(59.085739,148.359375)],
+	        [new google.maps.LatLng(33.431441,133.066406),new google.maps.LatLng(28.613459,121.992188)]
 	    ];
         
         var me = this;

@@ -734,24 +734,6 @@ function appwar_recarregarPagina() {
     location.reload();
 }
 
-function iniciarApp() {
-    _libwebsocket = new gpscheck.comunicacao.GPSWebSocket(9002);
-    _libwebsocket.FOnOpen(posAberturaSocket);
-    _libwebsocket.FOnMessage(posRecebimentoMensagemServidor);
-    _libwebsocket.FOnClose(posFechamentoSocket);
-    _libwebsocket.iniciar();
-
-    var divMapa = document.getElementById("mapa");
-    mapa = new gpscheck.mapa.Mapa();
-    mapa.inicia(divMapa, 10.0, 10.0);
-    _territorios = new gpscheck.mapa.Territorios(_mapaGoogle);
-    _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
-    
-    //this.tocarSomDeFundo(divMapa);
-    
-    iniciarControleDeAudio();
-}
-
 function iniciarControleDeAudio() {
     var audioSlider  = $('#audioSlider');
     var audioSliderTooltip = $('.audioSliderTooltip');
@@ -839,6 +821,24 @@ function tocarSomDeFundo(el) {
         el.mp3.volume = 0.1;
         el.mp3.play();
     }
+}
+
+function iniciarApp() {
+    _libwebsocket = new gpscheck.comunicacao.GPSWebSocket(9002);
+    _libwebsocket.FOnOpen(posAberturaSocket);
+    _libwebsocket.FOnMessage(posRecebimentoMensagemServidor);
+    _libwebsocket.FOnClose(posFechamentoSocket);
+    _libwebsocket.iniciar();
+
+    var divMapa = document.getElementById("mapa");
+    mapa = new gpscheck.mapa.Mapa();
+    mapa.inicia(divMapa, 10.0, 10.0);
+    _territorios = new gpscheck.mapa.Territorios(_mapaGoogle);
+    _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
+    
+    //this.tocarSomDeFundo(divMapa);
+    
+    iniciarControleDeAudio();
 }
 
 (function(){
