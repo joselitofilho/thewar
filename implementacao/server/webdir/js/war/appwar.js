@@ -63,7 +63,7 @@ function processarMsg_entrou_na_sala(msgParams) {
     var jogadorDaSala = msgParams.jogadorDaSala;
     _posicaoJogador = Number(jogadorDaSala.posicao);
 
-    $("#idJogador").html(jogadorDaSala.usuario);
+    appwar_alterarTituloDaPagina(jogadorDaSala.usuario);
 
     if (typeof jogadorDaSala.dono != 'undefined') {
         $('#btnIniciarPartida').css('visibility', ((jogadorDaSala.dono) ? 'visible' : 'hidden'));
@@ -122,7 +122,7 @@ function processarMsg_atacar(msgParams) {
         labelTerritorioDefesa.perdeuTropas(diferencaDeQuantidade);
     labelTerritorioDefesa.alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
     
-    var clicar = false;
+    var temTerritorioInvalido = false;
     var fazSentidoMoverAposConquistar = false;
     for (i = 0; i < territoriosDoAtaque.length; i++) {
         var labelTerritorioAtaque = _labelTerritorios[territoriosDoAtaque[i].codigo];
@@ -131,12 +131,20 @@ function processarMsg_atacar(msgParams) {
             labelTerritorioAtaque.perdeuTropas(diferencaDeQuantidade);
         labelTerritorioAtaque.alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
         
-        if (territoriosDoAtaque[i].quantidadeDeTropas == 1) clicar = true;
+        if (territoriosDoAtaque[i].quantidadeDeTropas == 1) temTerritorioInvalido = true;
         if (territoriosDoAtaque[i].quantidadeDeTropas > 1) fazSentidoMoverAposConquistar = true;
     }
 
-    if (clicar && !fazSentidoMoverAposConquistar) {
-        territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
+    if (msgParams.conquistouTerritorio) {
+        if (!fazSentidoMoverAposConquistar) {
+            setTimeout(function() {
+                territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
+            }, 1000);
+        }
+    } else if (temTerritorioInvalido) {
+        setTimeout(function() {
+            territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
+        }, 1000);
     }
 
     // TODO: Escurecer dados que perderam...
@@ -213,7 +221,18 @@ function processarMsg_mover(msgParams) {
 
     if (doTerritorio.quantidadeDeTropas == 1 && 
         _posicaoJogador == _posicaoJogadorDaVez) {
-        territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
+        
+        var fazSentidoMoverAposConquistar = false;
+        if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
+            $.each(_territoriosAtacante, function(i, codigoTerritorio) {
+                var qtdTropas = _territorios.quantidadeDeTropaDoTerritorio(codigoTerritorio);
+                if (qtdTropas > 1) fazSentidoMoverAposConquistar = true;
+            });
+        }
+        
+        if (!fazSentidoMoverAposConquistar) {
+            territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
+        }
     }
 }
 
@@ -241,7 +260,7 @@ function processarMsg_entrou_no_jogo(msgParams) {
         if (_posicaoJogador == -1) {
             $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
             _posicaoJogador = posicaoJogador;
-            $("#idJogador").html(usuario);
+            appwar_alterarTituloDaPagina(usuario);
         }
         $("#jogador" + (posicaoJogador+1)).html(usuario);
     } else {
@@ -787,6 +806,10 @@ function appwar_mudarCursor(tipo) {
     } else {
         $('body').attr('class', '');
     } 
+}
+
+function appwar_alterarTituloDaPagina(str) {
+    document.title = str + ' | JogoWar';
 }
 
 function tocarSom(el, soundfile) {
