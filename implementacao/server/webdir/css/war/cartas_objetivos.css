@@ -1,72 +1,39 @@
 #cartaObjetivo {
-    position: absolute;
-    top: 348px;
-    left: 660px;
-    z-index: 999;
-    visibility: hidden;
+    position: relative;
+    max-width: 1024px;
+    margin: 0 auto;
+    text-align:left; /* "remédio" para o hack do IE */
 }
 
 .carta_objetivo {
-    width: 85px;
-    height: 148px;
+    width: 300px;
+    height: 400px;
 }
 
-.carta_objetivo_padrao {
-    background: url("../../imagens/ObjetivoPadrao.bmp") no-repeat;
+.carta_objetivo_1 { background: url("../../imagens/cartasObjetivo_sprite.png") 0px 0px no-repeat; }
+.carta_objetivo_2 { background: url("../../imagens/cartasObjetivo_sprite.png") -300px 0px no-repeat; }
+.carta_objetivo_3 { background: url("../../imagens/cartasObjetivo_sprite.png") -600px 0px no-repeat; }
+.carta_objetivo_4 { background: url("../../imagens/cartasObjetivo_sprite.png") -900px 0px no-repeat; }
+.carta_objetivo_5 { background: url("../../imagens/cartasObjetivo_sprite.png") -1200px 0px no-repeat; }
+.carta_objetivo_6 { background: url("../../imagens/cartasObjetivo_sprite.png") -1500px 0px no-repeat; }
+.carta_objetivo_7 { background: url("../../imagens/cartasObjetivo_sprite.png") -180px 0px no-repeat; }
+.carta_objetivo_8 { background: url("../../imagens/cartasObjetivo_sprite.png") -2100px 0px no-repeat; }
+.carta_objetivo_9 { background: url("../../imagens/cartasObjetivo_sprite.png") -2400px 0px no-repeat; }
+.carta_objetivo_10 { background: url("../../imagens/cartasObjetivo_sprite.png") -2700px 0px no-repeat; }
+.carta_objetivo_11 { background: url("../../imagens/cartasObjetivo_sprite.png") -3000px 0px no-repeat; }
+.carta_objetivo_12 { background: url("../../imagens/cartasObjetivo_sprite.png") -3300px 0px no-repeat; }
+.carta_objetivo_13 { background: url("../../imagens/cartasObjetivo_sprite.png") -3600px 0px no-repeat; }
+.carta_objetivo_14 { background: url("../../imagens/cartasObjetivo_sprite.png") -3900px 0px no-repeat; }
+
+#painel_objetivo {
+    visibility: hidden;
 }
 
-.carta_objetivo_1 {
-    background: url("../../imagens/Objetivo01.bmp") no-repeat;
-}
-
-.carta_objetivo_2 {
-    background: url("../../imagens/Objetivo02.bmp") no-repeat;
-}
-
-.carta_objetivo_3 {
-    background: url("../../imagens/Objetivo03.bmp") no-repeat;
-}
-
-.carta_objetivo_4 {
-    background: url("../../imagens/Objetivo04.bmp") no-repeat;
-}
-
-.carta_objetivo_5 {
-    background: url("../../imagens/Objetivo05.bmp") no-repeat;
-}
-
-.carta_objetivo_6 {
-    background: url("../../imagens/Objetivo06.bmp") no-repeat;
-}
-
-.carta_objetivo_7 {
-    background: url("../../imagens/Objetivo07.bmp") no-repeat;
-}
-
-.carta_objetivo_8 {
-    background: url("../../imagens/Objetivo08.bmp") no-repeat;
-}
-
-.carta_objetivo_9 {
-    background: url("../../imagens/Objetivo09.bmp") no-repeat;
-}
-
-.carta_objetivo_10 {
-    background: url("../../imagens/Objetivo10.bmp") no-repeat;
-}
-
-.carta_objetivo_11 {
-    background: url("../../imagens/Objetivo11.bmp") no-repeat;
-}
-
-.carta_objetivo_12 {
-    background: url("../../imagens/Objetivo12.bmp") no-repeat;
-}
-
-.carta_objetivo_13 {
-    background: url("../../imagens/Objetivo13.bmp") no-repeat;
-}
-
-.carta_objetivo_14 {
-    background: url("../../imagens/Objetivo14.bmp") no-repeat;
+.pm_content {
+    position: absolute;
+    padding-top: 100px;
+    text-align:center; /* hack para o IE */
+    width: 100%;
+    height: 100%;
+    z-index: 9001;
 }

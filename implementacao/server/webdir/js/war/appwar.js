@@ -482,12 +482,14 @@ function atacar() {
     }
 }
 
-function mostrarCartaObjetivo() {
-    if ($('#cartaObjetivo').css("visibility") == 'visible') {
-        $('#cartaObjetivo').css('visibility', 'hidden');
-    } else {
-        $('#cartaObjetivo').css('visibility', 'visible');
-    }
+function appwar_painelObjetivoAbrir() {
+    $('#painel_objetivo').css('visibility', 'visible');
+    $('#bloqueador_tela').css('visibility', 'visible');
+}
+
+function appwar_painelObjetivoFechar() {
+    $('#painel_objetivo').css('visibility', 'hidden');
+    $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
 function mostrarCartasTerritorios() {
