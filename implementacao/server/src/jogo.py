@@ -34,6 +34,8 @@ class Jogo(object):
         self._clientes = clientes
         self._jogadores = jogadores
 
+        self._olheiros = {}
+
         self._ordemJogadores = self._jogadores.keys()
         random.seed()
 
@@ -706,6 +708,23 @@ class Jogo(object):
             self._jogadorDaVezConquistouTerritorio = False
 
     def adiciona(self, cliente, usuario):
+        listaJogadoresInfoCurta = []
+        territoriosDosJogadores = []
+
+        # Prepara as informacoes.
+        for j in self._jogadores.values():
+            # Verifica se o jogador ainda esta conectado.
+            if j.posicao in self._clientes.keys():
+                listaJogadoresInfoCurta.append({
+                    "usuario": j.usuario,
+                    "posicao": j.posicao,
+                })
+                    
+            territoriosDosJogadores.append({
+                "territorios": j.territorios,
+                "posicao": j.posicao
+            })
+
         olheiro = True
         posicao = -1
         for k, v in self._jogadores.iteritems():
@@ -749,16 +768,28 @@ class Jogo(object):
                 break
 
         if olheiro:
-            #self._olheiros[usuario] = cliente
-            #self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, -1))
-            pass
+            self._olheiros[usuario] = cliente
+            self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, 7))
+            
+            self.enviaMsgParaCliente(TipoMensagem.carrega_jogo_olheiro, 
+                CarregaJogoOlheiro(self._posicaoJogadorDaVez, 
+                    territoriosDosJogadores, 
+                    listaJogadoresInfoCurta),
+                cliente)
+                
+            acaoDoTurno = self.criaAcaoDoTurno(self._turno)
+            self.enviaMsgParaCliente(TipoMensagem.turno, acaoDoTurno, cliente)
         
     def remove(self, usuario):
-        for k, v in self._jogadores.iteritems():
-            if v.usuario == usuario:
-                self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, k))
-                del self._clientes[k]
-                break
+        if usuario in self._olheiros.keys():
+            self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, 7))
+            del self._olheiros[usuario]
+        else:
+            for k, v in self._jogadores.iteritems():
+                if v.usuario == usuario:
+                    self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, k))
+                    del self._clientes[k]
+                    break
 
     def temUmVencedor(self):
         jogador = self._jogadores[self._posicaoJogadorDaVez]
@@ -774,6 +805,8 @@ class Jogo(object):
     def enviaMsgParaTodos(self, tipoMensagem, params):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
         for socket in self._clientes.values():
+            socket.sendMessage(jsonMsg)
+        for socket in self._olheiros.values():
             socket.sendMessage(jsonMsg)
         print "# ", jsonMsg
 

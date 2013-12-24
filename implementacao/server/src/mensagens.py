@@ -21,6 +21,7 @@ class TipoMensagem:
     entrou_no_jogo = "EntrouNoJogo"
     saiu_do_jogo = "SaiuDoJogo"
     carrega_jogo = "CarregaJogo"
+    carrega_jogo_olheiro = "CarregaJogoOlheiro"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -73,6 +74,12 @@ class CarregaJogo(object):
         self.listaJogadores = listaJogadores
         self.objetivo = objetivo;
         self.cartasTerritorio = cartasTerritorio
+
+class CarregaJogoOlheiro(object):
+    def __init__(self, posicao, territoriosDosJogadores, listaJogadores):
+        self.jogadorDaVez = posicao
+        self.territoriosDosJogadores = territoriosDosJogadores
+        self.listaJogadores = listaJogadores
 
 class AcaoTurno(object):
     def __init__(self, tipoAcao, numeroDoTurno, posicaoJogador):

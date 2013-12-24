@@ -298,6 +298,25 @@ function processarMsg_carrega_jogo(msgParams) {
     $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
+function processarMsg_carrega_jogo_olheiro(msgParams) {
+    processarMsg_lista_sala(msgParams);
+
+    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
+        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
+        _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+    }
+
+    alert('???');
+    
+    $('#controles').css('visibility', 'visible');
+    $('#quantidade_de_tropas').css('visibility', 'visible');
+
+    _posicaoJogadorDaVez = msgParams.jogadorDaVez;
+    appwar_alteraInfoTurnoJogador(msgParams.jogadorDaVez);
+
+    $('#bloqueador_tela').css('visibility', 'hidden');
+}
+
 function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
@@ -430,6 +449,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_saiu_do_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.carrega_jogo) {
         processarMsg_carrega_jogo(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.carrega_jogo_olheiro) {
+        processarMsg_carrega_jogo_olheiro(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }
