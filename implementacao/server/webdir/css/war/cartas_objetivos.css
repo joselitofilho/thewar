@@ -1,3 +1,16 @@
+#painel_objetivo {
+    visibility: hidden;
+}
+
+.po_content {
+    position: absolute;
+    padding-top: 100px;
+    text-align:center; /* hack para o IE */
+    width: 100%;
+    height: 100%;
+    z-index: 9001;
+}
+
 #cartaObjetivo {
     position: relative;
     max-width: 1024px;
@@ -24,16 +37,3 @@
 .carta_objetivo_12 { background: url("../../imagens/cartasObjetivo_sprite.png") -3300px 0px no-repeat; }
 .carta_objetivo_13 { background: url("../../imagens/cartasObjetivo_sprite.png") -3600px 0px no-repeat; }
 .carta_objetivo_14 { background: url("../../imagens/cartasObjetivo_sprite.png") -3900px 0px no-repeat; }
-
-#painel_objetivo {
-    visibility: hidden;
-}
-
-.pm_content {
-    position: absolute;
-    padding-top: 100px;
-    text-align:center; /* hack para o IE */
-    width: 100%;
-    height: 100%;
-    z-index: 9001;
-}

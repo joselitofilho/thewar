@@ -76,16 +76,16 @@ class Jogo(object):
         # Calculando incremento.
         quantidadeDeJogadores = len(self._jogadores)
         if quantidadeDeJogadores == 4:
-            incremento.append(11)
-            incremento.append(11)
             incremento.append(10)
             incremento.append(10)
+            incremento.append(11)
+            incremento.append(11)
         elif quantidadeDeJogadores == 5:
+            incremento.append(8)
+            incremento.append(8)
+            incremento.append(8)
             incremento.append(9)
             incremento.append(9)
-            incremento.append(8)
-            incremento.append(8)
-            incremento.append(8)
         else:
             for i in range(quantidadeDeJogadores):
                 incremento.append(42 / quantidadeDeJogadores)

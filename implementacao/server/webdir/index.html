@@ -43,18 +43,32 @@
             <div id="alerta_texto"></div>
         </div>
 
-        <div id="painel_objetivo" onclick="appwar_painelObjetivoFechar();">
-            <div class="pm_content">
+        <div id="painel_objetivo" onclick="appwar_fechaPainelObjetivo();">
+            <div class="po_content">
                 <div id="cartaObjetivo" class="carta_objetivo"></div>
             </div>
+            
+            <div id="po_fundo" class="bloqueador_tela"></div>
         </div>
         
-        <div id="cartasTerritorios">
-            <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(1);"></div>
-            <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(2);"></div>
-            <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(3);"></div>
-            <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(4);"></div>
-            <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(5);"></div>
+        <div id="painel_cartas_territorios">
+            <div class="pct_content">
+                <div id="cartasTerritorios">
+                    <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(1);"></div>
+                    <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(2);"></div>
+                    <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(3);"></div>
+                    <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(4);"></div>
+                    <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(5);"></div>
+                </div>
+            </div>
+            
+            <div class="pct_controles">
+                <div class="pct_botoes">
+                    <button class="btn btn-default" onclick="appwar_trocaCartasTerritorios();">Trocar cartas</button>
+                </div>
+            </div>
+            
+            <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
         </div>
         
         <div id="geral">
@@ -91,9 +105,8 @@
 
                     <div id="info_turno_meio">
                         <button class="btn btn-default" onclick="atacar();">Atacar</button>
-                        <button class="btn btn-default" onclick="appwar_painelObjetivoAbrir();">Objetivo</button>
-                        <button class="btn btn-default" onclick="mostrarCartasTerritorios();">Cartas territorios</button>
-                        <button class="btn btn-default" onclick="trocarCartasTerritorios();">Trocar cartas</button>
+                        <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">Objetivo</button>
+                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">Cartas territorios</button>
                         
                         <div id="dados">
                             <div id="dadosAtaque">

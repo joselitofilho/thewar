@@ -261,13 +261,17 @@ function processarMsg_entrou_no_jogo(msgParams) {
             $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
             _posicaoJogador = posicaoJogador;
             appwar_alterarTituloDaPagina(usuario);
+            
+            // Olheiro.
+            if (posicaoJogador == 7) {
+                alert("Este jogo já está em andamento. Você poderá apenas assistí-lo.");
+            }
+        } else if(posicaoJogador == 7) {
+            alert(usuario + " está olhando esta partida.");
         }
+        
         $("#jogador" + (posicaoJogador+1)).html(usuario);
-    } else {
-        alert("Olheiro " + usuario + " entrou.");
     }
-
-    // TODO: Exibir algum aviso de que o jogador entrou... 
 }
 
 function processarMsg_saiu_do_jogo(msgParams) {
@@ -305,8 +309,6 @@ function processarMsg_carrega_jogo_olheiro(msgParams) {
         var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
         _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
-
-    alert('???');
     
     $('#controles').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
@@ -503,22 +505,24 @@ function atacar() {
     }
 }
 
-function appwar_painelObjetivoAbrir() {
+function appwar_abrePainelObjetivo() {
     $('#painel_objetivo').css('visibility', 'visible');
-    $('#bloqueador_tela').css('visibility', 'visible');
+    $('#po_fundo').css('visibility', 'visible');
 }
 
-function appwar_painelObjetivoFechar() {
+function appwar_fechaPainelObjetivo() {
     $('#painel_objetivo').css('visibility', 'hidden');
-    $('#bloqueador_tela').css('visibility', 'hidden');
+    $('#po_fundo').css('visibility', 'hidden');
 }
 
-function mostrarCartasTerritorios() {
-    if ($('#cartasTerritorios').css("visibility") == 'visible') {
-        $('#cartasTerritorios').css('visibility', 'hidden');
-    } else {
-        $('#cartasTerritorios').css('visibility', 'visible');
-    }
+function appwar_abrePainelCartasTerritorios() {
+    $('#painel_cartas_territorios').css('visibility', 'visible');
+    $('#pct_fundo').css('visibility', 'visible');
+}
+
+function appwar_fechaPainelCartasTerritorios() {
+    $('#painel_cartas_territorios').css('visibility', 'hidden');
+    $('#pct_fundo').css('visibility', 'hidden');
 }
 
 function selecionarCartaTerritorio(num) {
@@ -544,7 +548,7 @@ function selecionarCartaTerritorio(num) {
     }
 }
 
-function trocarCartasTerritorios() {
+function appwar_trocaCartasTerritorios() {
     if (_cartasTerritoriosSelecionadas.length == 3) {
         var msg = comunicacao_trocar_cartas_territorio(_posicaoJogador, _cartasTerritoriosSelecionadas);
         _libwebsocket.enviarObjJson(msg);
