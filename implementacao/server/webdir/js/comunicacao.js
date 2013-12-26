@@ -60,3 +60,10 @@ function comunicacao_trocar_cartas_territorio(posicaoJogador, cartasTerritorios)
         cartasTerritorios: cartasTerritorios
     });
 }
+
+function comunicacao_alteraPosicaoNaSala(posicao) {
+    return new Mensagem(TipoMensagem.altera_posicao_na_sala,
+    {
+        novaPosicao: posicao
+    });
+}

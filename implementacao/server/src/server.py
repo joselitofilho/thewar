@@ -71,7 +71,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             elif (mensagem.tipo == TipoMensagem.colocar_tropa or 
                 mensagem.tipo == TipoMensagem.atacar or 
                 mensagem.tipo == TipoMensagem.mover or
-                mensagem.tipo == TipoMensagem.trocar_cartas_territorio):
+                mensagem.tipo == TipoMensagem.trocar_cartas_territorio or
+                mensagem.tipo == TipoMensagem.altera_posicao_na_sala):
                 _gerenciador.requisicao(self, mensagem)
 
     def connectionLost(self, reason):

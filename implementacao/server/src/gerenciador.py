@@ -57,9 +57,14 @@ class Gerenciador(object):
             self._jogo.finalizaTurno(usuario)
 
     def requisicao(self, cliente, mensagem):
-        if self._jogo != None:
-            usuario = self._jogadores[cliente]
-
+        usuario = self._jogadores[cliente]
+        
+        if self._sala != None and self._jogo == None:
+            if mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
+                novaPosicao = mensagem.params['novaPosicao']
+                self._sala.alteraPosicao(usuario, novaPosicao)
+                
+        elif self._jogo != None:
             if mensagem.tipo == TipoMensagem.colocar_tropa:
                 territorio = mensagem.params['territorio']
                 quantidade = mensagem.params['quantidade']

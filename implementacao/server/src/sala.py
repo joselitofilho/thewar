@@ -44,7 +44,7 @@ class Sala(object):
         posicao = -1
         for k, v in self._jogadores.iteritems():
             # TODO: Equals do objeto jogador...
-            if v.usuario == usuario:
+            if v != None and v.usuario == usuario:
                 posicao = k
                 self._proximaPosicao = posicao
 
@@ -56,6 +56,20 @@ class Sala(object):
 
             del self._jogadores[posicao]
             del self._clientes[posicao]
+            
+    def alteraPosicao(self, usuario, novaPosicao):
+        if 0 <= novaPosicao <= 5:
+            posicaoAtual = -1
+            for k, v in self._jogadores.iteritems():
+                if v != None and v.usuario == usuario:
+                    posicaoAtual = k
+                    v.posicao = novaPosicao
+                    self._jogadores[novaPosicao] = self._jogadores[k]
+                    self._jogadores[k] = None
+                    
+                    msg = AlteraPosicaoNaSala(self._jogadores[novaPosicao], k)
+                    self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, msg)
+                    break
 
     def verificaDono(self, posicao):
         if self._dono == None:

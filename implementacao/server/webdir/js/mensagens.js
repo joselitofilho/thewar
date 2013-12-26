@@ -19,7 +19,8 @@ var TipoMensagem = {
     entrou_no_jogo: "EntrouNoJogo",
     saiu_do_jogo: "SaiuDoJogo",
     carrega_jogo: "CarregaJogo",
-    carrega_jogo_olheiro: "CarregaJogoOlheiro"
+    carrega_jogo_olheiro: "CarregaJogoOlheiro",
+    altera_posicao_na_sala: "AlteraPosicaoNaSala"
 };
 
 var TipoAcaoTurno = {
