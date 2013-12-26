@@ -68,7 +68,7 @@ html, body {
     right: 10px;
 }
 
-#btnIniciarPartida {
+#divIniciarPartida {
     position: absolute;
     width: 128px;
     height: 128px;

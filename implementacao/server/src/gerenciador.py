@@ -35,7 +35,7 @@ class Gerenciador(object):
             self._jogo.remove(usuario)
 
     def iniciaPartida(self):
-        if self._jogo == None:
+        if len(self._sala.jogadores) >= 3 and self._jogo == None:
             jogadoresDaSala = self._sala.jogadores
             clientes = self._sala.clientes.copy()
 

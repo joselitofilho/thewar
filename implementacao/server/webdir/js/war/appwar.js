@@ -20,6 +20,8 @@ _animarDadosReferencia = null;
 
 _cartasTerritoriosSelecionadas = [];
 
+_quantidadeDeJogadoreNaSala = 0;
+
 function exibirAlerta(tipo, msg) {
     $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
     $('#alerta').addClass(tipo);
@@ -56,7 +58,10 @@ function processarMsg_lista_sala(msgParams) {
         var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
         var usuario = listaJogadores[i].usuario;
         $("#jogador" + posicaoJogador).html(usuario);
+        $("#sala_jogador" + posicaoJogador).html(usuario);
     }
+    
+    _quantidadeDeJogadoreNaSala = listaJogadores.length;
 }
 
 function processarMsg_entrou_na_sala(msgParams) {
@@ -70,12 +75,14 @@ function processarMsg_entrou_na_sala(msgParams) {
     }
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#bloqueador_tela').css('visibility', 'hidden');
+    
+    $('#sala').css('visibility', 'visible');
 }
 
 function processarMsg_saiu_da_sala(msgParams) {
     var posicaoJogador = Number(msgParams.jogadorDaSala.posicao) + 1;
-    var divJogador = document.getElementById("jogador" + posicaoJogador);
-    divJogador.innerHTML = "-";
+    $("#jogador" + posicaoJogador).html("-");
+    $("#sala_jogador" + posicaoJogador).html("-");
 }
 
 function processarMsg_jogo_fase_I(msgParams) {
@@ -84,6 +91,7 @@ function processarMsg_jogo_fase_I(msgParams) {
         _territorios.iniciaLabelDosTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
     
+    $('#sala').css('visibility', 'hidden');
     $('#btnIniciarPartida').css('visibility', 'hidden');
     $('#controles').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
@@ -465,10 +473,12 @@ function posFechamentoSocket(valor) {
 }
 
 function iniciarPartida() {
-    var btnIniciarPartida = document.getElementById("btnIniciarPartida");
-    btnIniciarPartida.disabled = true;
-    iniciarPartidaMsg = comunicacao_iniciarPartida();
-    _libwebsocket.enviarObjJson(iniciarPartidaMsg);
+    if (_quantidadeDeJogadoreNaSala >= 3) {
+        iniciarPartidaMsg = comunicacao_iniciarPartida();
+        _libwebsocket.enviarObjJson(iniciarPartidaMsg);
+    } else {
+        alert('Para iniciar o jogo é preciso pelo menos 3 jogadores na sala.');
+    }
 }
 
 function finalizarTurno() {

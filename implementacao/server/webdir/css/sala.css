@@ -1,0 +1,72 @@
+#sala {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    margin-left: -340px;
+    width: 680px;
+    visibility: hidden;
+    z-index: 9001;
+}
+
+#sala .form-signin {
+    max-width: 680px;
+}
+
+#sala ul {
+    padding:0px;
+    margin:0px;
+    list-style:none;
+    text-align: center;
+}
+
+#sala ul li {
+    display: inline;
+}
+
+#sala ul li a {
+    width: 100px;
+    height: 112px;
+    display: inline-block;
+    padding-top: 100px;
+    padding-left: 24px;
+    color: #000;
+}
+
+#sala ul li a:link,
+#sala ul li a:visited,
+#sala ul li a:active {
+    text-decoration: none;
+}
+
+#sala .sala_posicoes {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#btnIniciarPartida {
+    visibility: hidden;
+}
+
+.jogador_sala_vermelho {
+    background: url('../imagens/soldados_sala.png') 0px 0px no-repeat;
+}
+
+.jogador_sala_azul {
+    background: url('../imagens/soldados_sala.png') -100px 0px no-repeat;
+}
+
+.jogador_sala_verde {
+    background: url('../imagens/soldados_sala.png') -200px 0px no-repeat;
+}
+
+.jogador_sala_preto {
+    background: url('../imagens/soldados_sala.png') -300px 0px no-repeat;
+}
+
+.jogador_sala_branco {
+    background: url('../imagens/soldados_sala.png') -400px 0px no-repeat;
+}
+
+.jogador_sala_amarelo {
+    background: url('../imagens/soldados_sala.png') -500px 0px no-repeat;
+}

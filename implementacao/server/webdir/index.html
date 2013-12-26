@@ -18,6 +18,7 @@
         <link href="css/mouse_cursor.css" rel="stylesheet">
         <link href="css/label_tropas.css" rel="stylesheet">
         <link href="css/cores.css" rel="stylesheet">
+        <link href="css/sala.css" rel="stylesheet">
         <link href="css/war/cartas_objetivos.css" rel="stylesheet">
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
 
@@ -77,6 +78,24 @@
                 <div id="idJogador"></div>
             </div>-->
             
+            <div id="sala">
+                <div class="form-signin">
+                    <h2 class="form-signin-heading">Selecionar posição</h2>
+                    <div class="sala_posicoes">
+                        <ul>
+                            <li><a id="sala_jogador1" class="jogador_sala_vermelho" href="javascript:void(0)">-</a></li> 
+                            <li><a id="sala_jogador2" class="jogador_sala_azul" href="javascript:void(0)">-</a></li>
+                            <li><a id="sala_jogador3" class="jogador_sala_verde" href="javascript:void(0)">-</a></li>
+                            <li><a id="sala_jogador4" class="jogador_sala_preto" href="javascript:void(0)">-</a></li>
+                            <li><a id="sala_jogador5" class="jogador_sala_branco" href="javascript:void(0)">-</a></li>
+                            <li><a id="sala_jogador6" class="jogador_sala_amarelo" href="javascript:void(0)">-</a></li>
+                        </ul>
+                    </div>
+                    
+                    <button id="btnIniciarPartida" class="btn btn-default" onclick="iniciarPartida();">Iniciar partida</button>
+                </div>
+            </div>
+            
             <div id="jogo">
                 <div id="menu_jogadores">
                     <ul>
@@ -91,7 +110,7 @@
                 
                 <div id="info_quantidade_de_tropas">Tropas restante:<br><span id="quantidade_de_tropas">0</span></div>
 
-                <div id="btnIniciarPartida" onclick="iniciarPartida();"></div>
+                <!--<div id="btnIniciarPartida" onclick="iniciarPartida();"></div>-->
 
                 <div id="mapa"></div>
 
