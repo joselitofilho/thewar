@@ -228,17 +228,8 @@ function processarMsg_mover(msgParams) {
     _jaPodeMover = true;
 
     if (doTerritorio.quantidadeDeTropas == 1 && 
-        _posicaoJogador == _posicaoJogadorDaVez) {
-        
-        var fazSentidoMoverAposConquistar = false;
-        if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
-            $.each(_territoriosAtacante, function(i, codigoTerritorio) {
-                var qtdTropas = _territorios.quantidadeDeTropaDoTerritorio(codigoTerritorio);
-                if (qtdTropas > 1) fazSentidoMoverAposConquistar = true;
-            });
-        }
-        
-        if (!fazSentidoMoverAposConquistar) {
+        _posicaoJogador == _posicaoJogadorDaVez &&
+        _turno.tipoAcao != TipoAcaoTurno.mover_apos_conquistar_territorio) {
             territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
         }
     }
