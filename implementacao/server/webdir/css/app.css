@@ -30,9 +30,10 @@ html, body {
 #painelRegistrarOuEntrar {
     position: absolute;
     top: 100px;
-    z-index: 9001;
-    left: 400px;
+    left: 50%;
+    margin-left: -150px;
     visibility: hidden;
+    z-index: 9001;
 }
 
 .form-signin {
@@ -72,11 +73,12 @@ html, body {
     width: 128px;
     height: 128px;
     top: 255px;
-    left: 480px;
+    left: 50%;
+    margin-left: -64px;
     background: url('../imagens/iniciar.png') no-repeat;
     cursor: pointer;
-    z-index: 1000;
     visibility: hidden;
+    z-index: 1000;
 }
 
 #mapa {
@@ -149,10 +151,12 @@ html, body {
 #geral {
 	min-height:100%;
 	position:relative;
-	width:98%;
+	max-width: 1024px;
+	left: 50%;
+	margin-left: -512px;
 }
  
-#conteudo {
+#jogo {
 	overflow:hidden;
 }
 
@@ -247,8 +251,9 @@ html, body {
     height: 128px;
     background: url('../imagens/recarregar.png') no-repeat;
     top: 255px;
-    left: 480px;
-    z-index: 9001;
+    left: 50%;
+    margin-left: -64px;
     cursor: pointer;
     visibility: hidden;
+    z-index: 9001;
 }
