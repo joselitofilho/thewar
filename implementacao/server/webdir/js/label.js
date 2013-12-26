@@ -84,15 +84,22 @@ Label.prototype.alteraPosicaoJogador = function(posicaoJogador) {
 
 Label.prototype.perdeuTropas = function(quantidade) {
     if (quantidade > 0) {
-        $(this.spanInfoTropasPerdidas_).css("background-position", (quantidade*-20)+"px 0px");
+        $(this.spanInfoTropasPerdidas_).css("background-position", ((quantidade-1)*-20)+"px 0px");
         
         this.spanInfoTropasPerdidas_.style.opacity = 1.0;
         this.spanInfoTropasPerdidas_.style.top = 0;
         $(this.spanInfoTropasPerdidas_)
             .animate({
-                opacity: 0.0,
                 "top": "-=50px"
-            }, 2000, function() {/*Animacao complete.*/});
+                }, 
+                2000, 
+                function() { 
+                    $(this).animate({
+                      opacity: 0.0,  
+                    }),
+                    1000
+                }
+            );
     }
 };
 

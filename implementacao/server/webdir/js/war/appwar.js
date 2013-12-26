@@ -107,7 +107,8 @@ function processarMsg_colocar_tropa(msgParams) {
     this.tocarSom(this, 'colocarTropa.mp3');
     _territorios.piscar(msgParams.territorio.codigo);
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
-    $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropasRestante);
+    
+    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropasRestante);
     
     if ((msgParams.quantidadeDeTropasRestante == 0) && 
         (msgParams.posicaoJogador == _posicaoJogador)) {
@@ -157,19 +158,23 @@ function processarMsg_atacar(msgParams) {
     }
 
     for (i = 0; i < dadosAtaque.length; i++) {
-        if (i < dadosDefesa.length && dadosAtaque[i] <= dadosDefesa[i]) {
+        if (i < dadosDefesa.length) {
+            if (dadosAtaque[i] <= dadosDefesa[i])
+                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
+            else
+                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
+        } else
             $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
-        } else {
-            $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
-        }
     }
     
     for (i = 0; i < dadosDefesa.length; i++) {
-        if (i < dadosAtaque.length && dadosDefesa[i] < dadosAtaque[i]) {
+        if (i < dadosAtaque.length) {
+            if (dadosDefesa[i] < dadosAtaque[i])
+                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
+            else
+                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');    
+        } else
             $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
-        } else {
-            $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
-        }
     }
     
     if (msgParams.conquistouTerritorio) {
@@ -355,7 +360,8 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     }
 
     $('#info_turno_texto').html('Distribuir tropas globais');
-    $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropas);
+    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.distribuir_tropas_globais);
+    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
@@ -366,7 +372,8 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
     if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
     else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
     $('#info_turno_texto').html('Distribuir tropas na ' + strGrupoTerritorio);
-    $('#quantidade_de_tropas').html(msgParams.quantidadeDeTropas);
+    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.distribuir_tropas_grupo_territorio);
+    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
     _territorios.manterFocoNoGrupo(msgParams.grupoTerritorio);
@@ -374,6 +381,7 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
 
 function processarMsg_turno_trocar_cartas(msgParams) {
     $('#info_turno_texto').html('Trocar cartas');
+    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.trocar_cartas);
 }
 
 function processarMsg_turno_atacar(msgParams) {
@@ -381,6 +389,7 @@ function processarMsg_turno_atacar(msgParams) {
 
     _territorioConquistado = null;
     $('#info_turno_texto').html('Atacar');
+    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.atacar);
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
@@ -395,6 +404,7 @@ function processarMsg_turno_mover(msgParams) {
     this.tocarSom(this, 'mover.wav');
     
     $('#info_turno_texto').html('Mover');
+    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.mover);
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
@@ -531,6 +541,11 @@ function appwar_abrePainelCartasTerritorios() {
 function appwar_fechaPainelCartasTerritorios() {
     $('#painel_cartas_territorios').css('visibility', 'hidden');
     $('#pct_fundo').css('visibility', 'hidden');
+}
+
+function appwar_alteraQuantidadeDeTropas(valor) {
+    $('#quantidade_de_tropas').html(valor);
+    $('#ac_info').html('Tropas restantes: ' + valor);
 }
 
 function selecionarCartaTerritorio(num) {
@@ -767,6 +782,36 @@ function appwar_registrar() {
 
 function appwar_recarregarPagina() {
     location.reload();
+}
+
+function appwar_alteraTodosOsIconesParaCinza() {
+    $('#ac_1').removeClass('ac_1');
+    $('#ac_2').removeClass('ac_2');
+    $('#ac_3').removeClass('ac_3');
+    $('#ac_4').removeClass('ac_4');
+    $('#ac_1').addClass('ac_1_cinza');
+    $('#ac_2').addClass('ac_2_cinza');
+    $('#ac_3').addClass('ac_3_cinza');
+    $('#ac_4').addClass('ac_4_cinza');
+}
+
+function appwar_alteraIconeAcaoTurno(acao) {
+    appwar_alteraTodosOsIconesParaCinza();
+    if (acao == TipoAcaoTurno.distribuir_tropas_globais ||
+        acao == TipoAcaoTurno.distribuir_tropas_grupo_territorio ||
+        acao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+        $('#ac_1').removeClass('ac_1_cinza');
+        $('#ac_1').addClass('ac_1');
+    } else if (acao == TipoAcaoTurno.trocar_cartas) {
+        $('#ac_2').removeClass('ac_2_cinza');
+        $('#ac_2').addClass('ac_2');
+    } else if (acao == TipoAcaoTurno.atacar) {
+        $('#ac_3').removeClass('ac_3_cinza');
+        $('#ac_3').addClass('ac_3');
+    } else if (acao == TipoAcaoTurno.mover) {
+        $('#ac_4').removeClass('ac_4_cinza');
+        $('#ac_4').addClass('ac_4');
+    }
 }
 
 function iniciarControleDeAudio() {

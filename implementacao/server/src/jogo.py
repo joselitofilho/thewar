@@ -172,7 +172,6 @@ class Jogo(object):
         # Verifica se o jogador ainda esta no jogo. Caso nao esteja, pula a vez dele.
         ok = False
         for i in range(len(self._ordemJogadores)):
-            print "Quando entrou: ", self._indiceOrdemJogadores, self._posicaoJogadorDaVez, i
             self._indiceOrdemJogadores = (self._indiceOrdemJogadores + 1) % len(self._ordemJogadores)
             self._posicaoJogadorDaVez = self._ordemJogadores[self._indiceOrdemJogadores]
             self._jogadorDaVezConquistouTerritorio = False
@@ -186,8 +185,6 @@ class Jogo(object):
                     ok = True
                     break
 
-        print "Quando saiu: ", self._indiceOrdemJogadores, self._posicaoJogadorDaVez
-        
         if not ok:
             # TODO: O que fazer quando ninguen estiver conectado no jogo?
             print "Ninguem esta mais conectado no jogo... O que fazer?"

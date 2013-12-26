@@ -19,6 +19,7 @@
         <link href="css/label_tropas.css" rel="stylesheet">
         <link href="css/cores.css" rel="stylesheet">
         <link href="css/sala.css" rel="stylesheet">
+        <link href="css/jogo.css" rel="stylesheet">
         <link href="css/war/cartas_objetivos.css" rel="stylesheet">
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
 
@@ -108,7 +109,7 @@
                     </ul>
                 </div>
                 
-                <div id="info_quantidade_de_tropas">Tropas restante:<br><span id="quantidade_de_tropas">0</span></div>
+                <!--<div id="info_quantidade_de_tropas">Tropas restante:<br><span id="quantidade_de_tropas">0</span></div>-->
 
                 <!--<div id="btnIniciarPartida" onclick="iniciarPartida();"></div>-->
 
@@ -117,15 +118,24 @@
                 <div id="controles" style="visibility: hidden;">
                     <div id="info_turno_fundo_esquerda">
                         <div id="info_turno_jogador"></div>
-                        <div id="info_turno_texto">
-                            Distribuir tropas na Am. do Norte
-                        </div>
+                        <div id="info_turno_texto"></div>
                     </div>
 
                     <div id="info_turno_meio">
-                        <button class="btn btn-default" onclick="atacar();">Atacar</button>
                         <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">Objetivo</button>
                         <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">Cartas territorios</button>
+                        
+                        <div id="acoes_turno">
+                            <div class="ac_icones">
+                                <ul>
+                                    <li><a id="ac_1" class="ac_icon ac_1_cinza" href="javascript:void(0)"></a></li> 
+                                    <li><a id="ac_2" class="ac_icon ac_2_cinza" href="javascript:void(0)"></a></li>
+                                    <li><a id="ac_3" class="ac_icon ac_3_cinza" href="javascript:void(0)" onclick="atacar();"></a></li>
+                                    <li><a id="ac_4" class="ac_icon ac_4_cinza" href="javascript:void(0)"></a></li>
+                                </ul>
+                            </div>
+                            <div id="ac_info"></div>
+                        </div>
                         
                         <div id="dados">
                             <div id="dadosAtaque">
@@ -145,6 +155,18 @@
                         <div id="btnFinalizarTurno" onclick="finalizarTurno();"></div>
                     </div>
                 </div>
+                
+                <!--<div id="acoes_turno">
+                    <div class="ac_titulo">Distribuir tropas</div>
+                    <div class="ac_icones">
+                        <ul>
+                            <li><a id="ac_1" class="ac_icon" href="javascript:void(0)"></a></li> 
+                            <li><a id="ac_2" class="ac_icon" href="javascript:void(0)"></a></li>
+                            <li><a id="ac_3" class="ac_icon" href="javascript:void(0)"></a></li>
+                            <li><a id="ac_4" class="ac_icon" href="javascript:void(0)"></a></li>
+                        </ul>
+                    </div>
+                </div>-->
             </div>
         </div>
 
