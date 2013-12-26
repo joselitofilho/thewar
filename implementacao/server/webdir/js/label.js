@@ -17,10 +17,16 @@ function Label(opt_options) {
 
     var spanInfoTropasPerdidas = this.spanInfoTropasPerdidas_ = document.createElement('span');
     spanInfoTropasPerdidas.setAttribute('class', 'label_info_tropas_perdidas');
+    
+    var divExplosao = this.divExplosao_ = document.createElement('div');
+    divExplosao.setAttribute('class', 'label_div_explosao');
+    $(this.divExplosao_).css("background", "url('../imagens/explosao_50px_sprite.png') no-repeat");
+    $(this.divExplosao_).css('visibility', 'hidden');
 
     var div = this.div_ = document.createElement('div');
     div.appendChild(span);
     div.appendChild(spanInfoTropasPerdidas);
+    div.appendChild(divExplosao);
     div.style.cssText = 'position: absolute; display: none';
 };
 Label.prototype = new google.maps.OverlayView;
@@ -89,4 +95,18 @@ Label.prototype.perdeuTropas = function(quantidade) {
                 "top": "-=50px"
             }, 2000, function() {/*Animacao complete.*/});
     }
+};
+
+Label.prototype.explosao = function() {
+    $(this.divExplosao_).css('visibility', 'visible');
+    $(".label_div_explosao").css("background-position", "0px 0px");
+    var i = 0;
+    var explosaoLoop = setInterval(function() {
+        $(".label_div_explosao").css("background-position", (i*-50)+"px 0px");
+        ++i;
+    }, 100);
+    setTimeout(function() {
+        $(".label_div_explosao").css('visibility', 'hidden');
+        clearInterval(explosaoLoop);
+    }, 2700);
 };

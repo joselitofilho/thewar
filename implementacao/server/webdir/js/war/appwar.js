@@ -144,6 +144,7 @@ function processarMsg_atacar(msgParams) {
     }
 
     if (msgParams.conquistouTerritorio) {
+        labelTerritorioDefesa.explosao();
         if (!fazSentidoMoverAposConquistar) {
             setTimeout(function() {
                 territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
@@ -230,8 +231,7 @@ function processarMsg_mover(msgParams) {
     if (doTerritorio.quantidadeDeTropas == 1 && 
         _posicaoJogador == _posicaoJogadorDaVez &&
         _turno.tipoAcao != TipoAcaoTurno.mover_apos_conquistar_territorio) {
-            territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
-        }
+        territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
     }
 }
 
