@@ -156,13 +156,20 @@ function processarMsg_atacar(msgParams) {
         }, 1000);
     }
 
-    // TODO: Escurecer dados que perderam...
     for (i = 0; i < dadosAtaque.length; i++) {
-        $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
+        if (i < dadosDefesa.length && dadosAtaque[i] <= dadosDefesa[i]) {
+            $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
+        } else {
+            $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
+        }
     }
     
     for (i = 0; i < dadosDefesa.length; i++) {
-        $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
+        if (i < dadosAtaque.length && dadosDefesa[i] < dadosAtaque[i]) {
+            $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
+        } else {
+            $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
+        }
     }
     
     if (msgParams.conquistouTerritorio) {

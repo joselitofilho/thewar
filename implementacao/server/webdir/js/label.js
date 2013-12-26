@@ -64,8 +64,6 @@ Label.prototype.draw = function() {
         div.style.top = position.y + 'px';
         div.style.display = 'block';
         this.span_.innerHTML = this.texto;
-        this.spanInfoTropasPerdidas_.innerHTML = this.infoTropasPerdidas;
-        $(this.spanInfoTropasPerdidas_).css("opacity", "0.0");
     }
 };
 
@@ -86,7 +84,8 @@ Label.prototype.alteraPosicaoJogador = function(posicaoJogador) {
 
 Label.prototype.perdeuTropas = function(quantidade) {
     if (quantidade > 0) {
-        this.spanInfoTropasPerdidas_.innerHTML = '-' + quantidade;
+        $(this.spanInfoTropasPerdidas_).css("background-position", (quantidade*-20)+"px 0px");
+        
         this.spanInfoTropasPerdidas_.style.opacity = 1.0;
         this.spanInfoTropasPerdidas_.style.top = 0;
         $(this.spanInfoTropasPerdidas_)

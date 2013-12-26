@@ -2,7 +2,6 @@
     position: relative;
     left: -50%;
     top: -8px;
-    margin-left: 8px;
     white-space: nowrap;
     border: 0;
     padding: 0;
@@ -10,14 +9,17 @@
 }
 
 .label_info_tropas_perdidas {
-    position: relative;
-    left: 5px;
+    position: absolute;
+    left: 0;
     top: 0;
-    white-space: nowrap;
     border: 0;
-    padding: 0px;
+    padding-left: 20px;
     font-size: 20px;
     color: #FFF;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    background: url('../imagens/numeros/negativo_20px_sprite.png') 0px 0px no-repeat;
 }
 
 .label_div_explosao {
