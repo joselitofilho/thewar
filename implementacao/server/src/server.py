@@ -132,10 +132,10 @@ if __name__ == '__main__':
 
         
     ServerFactory = BroadcastServerFactory
-    factory = ServerFactory("ws://localhost:9002",
+    factory = ServerFactory("ws://localhost:8080",
                             debug = debug,
                             debugCodePaths = debug)
-    print 'Servido websocket iniciado na porta 9002.'
+    print 'Servido websocket iniciado na porta 8080.'
 
     factory.protocol = BroadcastServerProtocol
     factory.setProtocolOptions(allowHixie76 = True)

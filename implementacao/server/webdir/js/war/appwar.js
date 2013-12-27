@@ -68,6 +68,8 @@ function processarMsg_jogo_fase_I(msgParams) {
 
 function processarMsg_carta_objetivo(msgParams) {
     $('#cartaObjetivo').attr('class', 'carta_objetivo carta_objetivo_' + (Number(msgParams.objetivo)+1));
+    
+    appwar_abrePainelObjetivo();
 }
 
 function processarMsg_colocar_tropa(msgParams) {
@@ -873,7 +875,7 @@ function tocarSomDeFundo(el) {
 }
 
 function iniciarApp() {
-    _libwebsocket = new gpscheck.comunicacao.GPSWebSocket(9002);
+    _libwebsocket = new gpscheck.comunicacao.GPSWebSocket(8080);
     _libwebsocket.FOnOpen(posAberturaSocket);
     _libwebsocket.FOnMessage(posRecebimentoMensagemServidor);
     _libwebsocket.FOnClose(posFechamentoSocket);
