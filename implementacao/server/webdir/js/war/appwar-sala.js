@@ -4,10 +4,11 @@
 function processarMsg_lista_sala(msgParams) {
     var listaJogadores = msgParams.listaJogadores;
     for (i=0; i < listaJogadores.length; i++) {
-        var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
-        var usuario = listaJogadores[i].usuario;
-        $("#jogador" + posicaoJogador).html(usuario);
-        $("#sala_jogador" + posicaoJogador).html(usuario);
+        if (listaJogadores[i] != null) {
+            var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
+            var usuario = listaJogadores[i].usuario;
+            sala_preencheJogador(posicaoJogador, usuario);
+        }
     }
     
     _quantidadeDeJogadoreNaSala = listaJogadores.length;
@@ -30,22 +31,41 @@ function processarMsg_entrou_na_sala(msgParams) {
 
 function processarMsg_saiu_da_sala(msgParams) {
     var posicaoJogador = Number(msgParams.jogadorDaSala.posicao) + 1;
-    $("#jogador" + posicaoJogador).html("-");
-    $("#sala_jogador" + posicaoJogador).html("-");
+    sala_limpaPosicao(posicaoJogador);
+    
+    var usuario = msgParams.novoDono.usuario;
+    var novoDonoPosicao = Number(msgParams.novoDono.posicao) + 1;
+    sala_preencheJogador(novoDonoPosicao, usuario);
+    
+    if (_posicaoJogador == msgParams.novoDono.posicao) {
+        $('#btnIniciarPartida').css('visibility', ((msgParams.novoDono.dono) ? 'visible' : 'hidden'));
+    }
 }
 
 function processarMsg_altera_posicao_na_sala(msgParams) {
     var posicaoAntigaJogador = Number(msgParams.posicaoAntiga) + 1;
-    $("#jogador" + posicaoAntigaJogador).html("-");
-    $("#sala_jogador" + posicaoAntigaJogador).html("-");
+    sala_limpaPosicao(posicaoAntigaJogador);
     
     var usuario = msgParams.jogadorDaSala.usuario;
     var novaPosicaoJogador = Number(msgParams.jogadorDaSala.posicao) + 1;
-    $("#jogador" + novaPosicaoJogador).html(usuario);
-    $("#sala_jogador" + novaPosicaoJogador).html(usuario);
+    sala_preencheJogador(novaPosicaoJogador, usuario);
+    
+    if (_posicaoJogador == msgParams.posicaoAntiga) {
+        _posicaoJogador = Number(msgParams.jogadorDaSala.posicao);
+    }
 }
 
 /* Funções gerais */
+function sala_limpaPosicao(posicao) {
+    $("#jogador" + posicao).html("-");
+    $("#sala_jogador" + posicao).html("-");
+}
+
+function sala_preencheJogador(posicao, usuario) {
+    $("#jogador" + posicao).html(usuario);
+    $("#sala_jogador" + posicao).html(usuario);
+}
+
 function appwar_alteraPosicaoSala(posicao) {
     msg = comunicacao_alteraPosicaoNaSala(posicao);
     _libwebsocket.enviarObjJson(msg);

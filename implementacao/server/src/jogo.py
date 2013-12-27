@@ -56,12 +56,14 @@ class Jogo(object):
                 TipoMensagem.carta_objetivo,
                 CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
             print "# ", jsonMsg
-            self._clientes[i].sendMessage(jsonMsg)
+            posicaoJogador = self._ordemJogadores[i]
+            self._clientes[posicaoJogador].sendMessage(jsonMsg)
 
     def faseI_DefinirQuemComeca(self):
         self._cabecaDaFila = random.randrange(len(self._jogadores))
         self._indiceOrdemJogadores = self._cabecaDaFila
         self._posicaoJogadorDaVez = self._ordemJogadores[self._cabecaDaFila]
+        
         return self._posicaoJogadorDaVez
 
     def faseI_DistribuirTerritorios(self):
@@ -115,7 +117,8 @@ class Jogo(object):
 
         objetivoPorJogadores = []
         for i in range(len(self._jogadores)):
-            self._jogadores[i].objetivo = objetivos[i]
+            posicaoJogador = self._ordemJogadores[i]
+            self._jogadores[posicaoJogador].objetivo = objetivos[i]
             objetivoPorJogadores.append(objetivos[i])
 
         return objetivoPorJogadores
@@ -725,7 +728,7 @@ class Jogo(object):
         olheiro = True
         posicao = -1
         for k, v in self._jogadores.iteritems():
-            if v.usuario == usuario:
+            if v != None and v.usuario == usuario:
                 # Jogador reconectou!
                 posicao = k
                 olheiro = False
