@@ -67,3 +67,10 @@ function comunicacao_alteraPosicaoNaSala(posicao) {
         novaPosicao: posicao
     });
 }
+
+function comunicacao_MsgChatJogo(texto) {
+    return new Mensagem(TipoMensagem.msg_chat_jogo,
+    {
+        texto: texto
+    });
+}

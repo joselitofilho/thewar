@@ -25,6 +25,7 @@ class TipoMensagem:
     altera_posicao_na_sala = "AlteraPosicaoNaSala"
     jogador_destruido = "JogadorDestruido"
     jogo_interrompido = "JogoInterrompido"
+    msg_chat_jogo = "MsgChatJogo"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -161,3 +162,8 @@ class JogadorDestruido(object):
 class JogoInterrompido(object):
     def __init__(self, identificador):
         self.identificador = identificador
+        
+class MsgChatJogo(object):
+    def __init__(self, usuario, texto):
+        self.usuario = usuario
+        self.texto = texto

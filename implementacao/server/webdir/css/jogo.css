@@ -175,3 +175,22 @@
 .dado_defesa {
     background-position: 0px -40px;
 }
+
+#chat_do_jogo {
+    float: left;
+}
+
+#chat_do_jogo textarea {
+    display: block;
+    resize: none;
+    width: 300px;
+    height: 100px;
+    border: 0;
+    background-color: #FFF;
+    cursor: text;
+}
+
+#chat_do_jogo input {
+    display: inline;
+    width: 232px;
+}

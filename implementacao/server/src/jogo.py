@@ -28,7 +28,7 @@ class Jogo(object):
     def __init__(self, gerenciador, clientes, jogadores):
         self.gerenciador = gerenciador
         
-        self._id = 1
+        self.id = 1
         self._turno = Turno()
 
         self._clientes = clientes
@@ -364,9 +364,6 @@ class Jogo(object):
                 self.finalizaTurno_2()
             else:
                 self.finalizaTurno_I()
-        
-        if self.temUmVencedor():
-                self.gerenciador.jogoTerminou(self.id)
     
     def finalizaTurno_moverAposConquistarTerritorio(self):
         self._turno.reiniciarVariaveisExtras()
@@ -806,6 +803,9 @@ class Jogo(object):
 
     def temJogadorOnLine(self):
         return len(self._clientes) > 0
+        
+    def msgChat(self, usuario, texto):
+        self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo, MsgChatJogo(usuario, texto))
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
@@ -821,4 +821,4 @@ class Jogo(object):
         print "# ", jsonMsg
 
     def __del__(self):
-        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self._id))
+        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.id))

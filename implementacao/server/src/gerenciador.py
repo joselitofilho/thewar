@@ -34,7 +34,7 @@ class Gerenciador(object):
             self._jogo.remove(usuario)
             
             if not self._jogo.temJogadorOnLine():
-                self.jogoTerminou(self._jogo.identificador)
+                self.jogoTerminou(self._jogo.id)
         
         del self._jogadores[cliente]
 
@@ -85,6 +85,9 @@ class Gerenciador(object):
             elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
                 cartasTerritorio = mensagem.params['cartasTerritorios']
                 self._jogo.trocaCartasTerritorio(usuario, cartasTerritorio)
+            elif mensagem.tipo == TipoMensagem.msg_chat_jogo:
+                texto = mensagem.params['texto']
+                self._jogo.msgChat(usuario, texto)
                 
     def jogoTerminou(self, idJogo):
         del self._jogo

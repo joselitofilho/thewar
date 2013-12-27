@@ -20,7 +20,8 @@ var TipoMensagem = {
     saiu_do_jogo: "SaiuDoJogo",
     carrega_jogo: "CarregaJogo",
     carrega_jogo_olheiro: "CarregaJogoOlheiro",
-    altera_posicao_na_sala: "AlteraPosicaoNaSala"
+    altera_posicao_na_sala: "AlteraPosicaoNaSala",
+    msg_chat_jogo: "MsgChatJogo"
 };
 
 var TipoAcaoTurno = {

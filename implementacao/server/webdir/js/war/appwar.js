@@ -446,6 +446,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_carrega_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.carrega_jogo_olheiro) {
         processarMsg_carrega_jogo_olheiro(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_jogo) {
+        jogo_processaMsg_msg_chat_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }
@@ -854,8 +856,6 @@ function appwar_alterarTituloDaPagina(str) {
 function tocarSom(el, soundfile) {
     var el = $('#audioPlayer').get(0);
     var volume = $('#audioSlider').slider('value') / 100.0;
-    
-    console.log("Volume: " + volume);
 
     //if (el.mp3) {
     //    if(el.mp3.paused) el.mp3.play();

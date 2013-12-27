@@ -124,8 +124,21 @@
                     </div>
 
                     <div id="info_turno_meio">
-                        <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">Objetivo</button>
-                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">Cartas territorios</button>
+                        <div id="chat_do_jogo">
+                            <textarea id="ct_mensagens" class="form-control" readonly></textarea>
+                            <input id="ct_texto" type="text" 
+                                class="form-control" 
+                                placeholder="Digite sua mensagem aqui."
+                                onkeypress="return ct_texto_onkeypress(event);" />
+                            <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
+                        </div>
+                        
+                        <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">
+                            <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
+                        </button>
+                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                            <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
+                        </button>
                         
                         <div id="acoes_turno">
                             <div class="ac_icones">
@@ -276,6 +289,7 @@
         <script type="text/javascript" src="js/war/territorios.js"></script>
         <script type="text/javascript" src="js/war/appwar.js"></script>
         <script type="text/javascript" src="js/war/appwar-sala.js"></script>
+        <script type="text/javascript" src="js/war/jogo.js"></script>
         <!---->
     </body>
 </html>
