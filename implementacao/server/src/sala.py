@@ -2,27 +2,27 @@ from jogador import *
 from mensagens import *
 
 class Sala(object):
-    _proximaPosicao = 0
-    _jogadores = {}
-    _dono = None
-    _clientes = {} #[posicao] = socket
-
     def __init__(self):
+        self.proximaPosicao = 0
+        self.jogadores = {}
+        self.dono = None
+        self.clientes = {} #[posicao] = socket
+    
         print "Sala criada."
     
     def salaEstaCheia(self):
-        return len(self._jogadores) == 6;
+        return len(self.jogadores) == 6;
 
     def adiciona(self, cliente, usuario):
         jogador = None
 
         if not self.salaEstaCheia():
-            posicao = self._proximaPosicao
+            posicao = self.proximaPosicao
             self.verificaDono(posicao)
        
-            jogador = JogadorDaSala(usuario, posicao, (self._dono == posicao))
-            self._jogadores[posicao] = jogador
-            self._clientes[posicao] = cliente
+            jogador = JogadorDaSala(usuario, posicao, (self.dono == posicao))
+            self.jogadores[posicao] = jogador
+            self.clientes[posicao] = cliente
 
             self.defineProximaPosicao()
 
@@ -33,21 +33,21 @@ class Sala(object):
         cliente.sendMessage(jsonMsg)
 
         if jogador != None:
-            listaSalaMsg = ListaSala(self._jogadores.values())
+            listaSalaMsg = ListaSala(self.jogadores.values())
             self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
 
     def remove(self, usuario):
         posicao = -1
-        for k, v in self._jogadores.iteritems():
+        for k, v in self.jogadores.iteritems():
             # TODO: Equals do objeto jogador...
             if v.usuario == usuario:
                 posicao = k
 
         if posicao > -1:
-            jogador = self._jogadores[posicao]
+            jogador = self.jogadores[posicao]
             
-            del self._jogadores[posicao]
-            del self._clientes[posicao]
+            del self.jogadores[posicao]
+            del self.clientes[posicao]
             
             self.defineProximaPosicao()
             
@@ -55,27 +55,27 @@ class Sala(object):
                 self.verificaDono();
             
             novoDono = None
-            if self._dono != None:
-                novoDono = self._jogadores[self._dono]
+            if self.dono != None:
+                novoDono = self.jogadores[self.dono]
                 novoDono.dono = True
             saiuDaSalaMsg = SaiuDaSala(jogador, novoDono)
             self.enviaMsgParaTodos(TipoMensagem.saiu_da_sala, saiuDaSalaMsg)
             
     def alteraPosicao(self, usuario, novaPosicao):
         try:
-            if 0 <= novaPosicao <= 5 and novaPosicao not in self._jogadores.keys():
+            if 0 <= novaPosicao <= 5 and novaPosicao not in self.jogadores.keys():
                 posicaoAtual = -1
-                for k, v in self._jogadores.iteritems():
+                for k, v in self.jogadores.iteritems():
                     if v != None and v.usuario == usuario:
                         posicaoAtual = k
                         v.posicao = novaPosicao
-                        self._jogadores[novaPosicao] = self._jogadores[k]
-                        del self._jogadores[k]
+                        self.jogadores[novaPosicao] = self.jogadores[k]
+                        del self.jogadores[k]
                         
-                        self._clientes[novaPosicao] = self._clientes[k]
-                        del self._clientes[k]
+                        self.clientes[novaPosicao] = self.clientes[k]
+                        del self.clientes[k]
                         
-                        msg = AlteraPosicaoNaSala(self._jogadores[novaPosicao], k)
+                        msg = AlteraPosicaoNaSala(self.jogadores[novaPosicao], k)
                         self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, msg)
                         
                         self.defineProximaPosicao()
@@ -84,39 +84,31 @@ class Sala(object):
             print "Unexpected error:", sys.exc_info()[0]
 
     def verificaDono(self, posicao = -1):
-        if self._dono == None:
-            self._dono = posicao
+        if self.dono == None:
+            self.dono = posicao
         else:
-            self._dono = None
-            for pos in self._jogadores.keys():
-                self._dono = pos
+            self.dono = None
+            for pos in self.jogadores.keys():
+                self.dono = pos
                 break
                     
     def defineProximaPosicao(self):
         for i in range(6):
             proximaPosicao = i % 6
-            if proximaPosicao not in self._jogadores.keys():
-                self._proximaPosicao = proximaPosicao
+            if proximaPosicao not in self.jogadores.keys():
+                self.proximaPosicao = proximaPosicao
                 break
 
     def lista(self):
-        return self._jogadoresDaSala
+        return self.jogadoresDaSala
 
     def enviaMsgParaTodos(self, tipo, msg):
         jsonMsg = json.dumps(Mensagem(tipo, msg), default=lambda o: o.__dict__)
-        for socket in self._clientes.values():
+        for socket in self.clientes.values():
             if socket != None:
                 socket.sendMessage(jsonMsg)
         print "# ", jsonMsg
 
-    @property
-    def jogadores(self):
-        return self._jogadores
-
-    @property
-    def clientes(self):
-        return self._clientes
-
-    @property
-    def dono(self):
-        return self._dono
+    def __del__(self):
+        del self.jogadores
+        del self.clientes

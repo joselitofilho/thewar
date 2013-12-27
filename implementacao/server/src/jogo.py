@@ -11,9 +11,6 @@ from objetivos import *
 class Jogo(object):
     _turno = None
 
-    _clientes = {} #[posicao] = socket
-    _jogadores = {} #[posicao] = jogadorDoJogo
-
     _ordemJogadores = []
     _indiceOrdemJogadores = None
     # Posicao do jogador que esta jogando no momento.
@@ -28,7 +25,10 @@ class Jogo(object):
 
     _numeroDaTroca = 1
     
-    def __init__(self, clientes, jogadores):
+    def __init__(self, gerenciador, clientes, jogadores):
+        self.gerenciador = gerenciador
+        
+        self._id = 1
         self._turno = Turno()
 
         self._clientes = clientes
@@ -232,7 +232,7 @@ class Jogo(object):
 
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
-
+            
     def finalizaTurno_2(self):
         turno = self._turno
 
@@ -263,7 +263,7 @@ class Jogo(object):
 
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
-
+            
     def finalizaTurno_I(self):
         turno = self._turno
         erro = True
@@ -344,7 +344,7 @@ class Jogo(object):
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             erro = False
-
+            
         if erro:
             socket = self._clientes[self._posicaoJogadorDaVez]
             jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
@@ -364,6 +364,9 @@ class Jogo(object):
                 self.finalizaTurno_2()
             else:
                 self.finalizaTurno_I()
+        
+        if self.temUmVencedor():
+                self.gerenciador.jogoTerminou(self.id)
     
     def finalizaTurno_moverAposConquistarTerritorio(self):
         self._turno.reiniciarVariaveisExtras()
@@ -801,6 +804,8 @@ class Jogo(object):
         objetivo = FabricaObjetivo().cria(jogador.objetivo)
         return objetivo.completou(jogador, self._jogadores)
 
+    def temJogadorOnLine(self):
+        return len(self._clientes) > 0
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
@@ -815,3 +820,5 @@ class Jogo(object):
             socket.sendMessage(jsonMsg)
         print "# ", jsonMsg
 
+    def __del__(self):
+        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self._id))

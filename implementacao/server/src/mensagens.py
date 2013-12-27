@@ -24,6 +24,7 @@ class TipoMensagem:
     carrega_jogo_olheiro = "CarregaJogoOlheiro"
     altera_posicao_na_sala = "AlteraPosicaoNaSala"
     jogador_destruido = "JogadorDestruido"
+    jogo_interrompido = "JogoInterrompido"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -156,3 +157,7 @@ class ColocarTropaNaTrocaDeCartasTerritorios(object):
 class JogadorDestruido(object):
     def __init__(self, jogador):
         self.jogador = jogador
+        
+class JogoInterrompido(object):
+    def __init__(self, identificador):
+        self.identificador = identificador

@@ -14,7 +14,6 @@ class Gerenciador(object):
 
     def __init__(self, websocket):
         self._websocket = websocket
-        self._estado = Estado.iniciando_sala
         self._sala = Sala()
         self._jogo = None
         self._jogadores = {}
@@ -33,6 +32,11 @@ class Gerenciador(object):
             self._sala.remove(usuario)
         else:
             self._jogo.remove(usuario)
+            
+            if not self._jogo.temJogadorOnLine():
+                self.jogoTerminou(self._jogo.identificador)
+        
+        del self._jogadores[cliente]
 
     def iniciaPartida(self):
         if len(self._sala.jogadores) >= 3 and self._jogo == None:
@@ -46,13 +50,13 @@ class Gerenciador(object):
                         jogadorDaSala.usuario,
                         jogadorDaSala.posicao,
                         jogadorDaSala.dono)
-            self._jogo = Jogo(clientes, jogadoresDoJogo)
+            self._jogo = Jogo(self, clientes, jogadoresDoJogo)
 
             self._jogo.inicia()
-            self._estado = Estado.jogando
+            del self._sala
 
     def finalizaTurno(self, cliente):
-        if self._estado == Estado.jogando:
+        if self._jogo != None:
             usuario = self._jogadores[cliente]
             self._jogo.finalizaTurno(usuario)
 
@@ -81,3 +85,7 @@ class Gerenciador(object):
             elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
                 cartasTerritorio = mensagem.params['cartasTerritorios']
                 self._jogo.trocaCartasTerritorio(usuario, cartasTerritorio)
+                
+    def jogoTerminou(self, idJogo):
+        del self._jogo
+        self._sala = Sala()

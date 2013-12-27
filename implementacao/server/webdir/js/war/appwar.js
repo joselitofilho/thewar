@@ -255,6 +255,8 @@ function processarMsg_entrou_no_jogo(msgParams) {
 }
 
 function processarMsg_saiu_do_jogo(msgParams) {
+    this.tocarSom(this, "saindo.wav");
+    
     var posicaoJogador = Number(msgParams.posicao) + 1;
     var divJogador = document.getElementById("jogador" + posicaoJogador);
     divJogador.innerHTML = "-";
@@ -852,6 +854,8 @@ function appwar_alterarTituloDaPagina(str) {
 function tocarSom(el, soundfile) {
     var el = $('#audioPlayer').get(0);
     var volume = $('#audioSlider').slider('value') / 100.0;
+    
+    console.log("Volume: " + volume);
 
     //if (el.mp3) {
     //    if(el.mp3.paused) el.mp3.play();

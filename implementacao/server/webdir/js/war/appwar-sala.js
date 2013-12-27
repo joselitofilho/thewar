@@ -2,6 +2,8 @@
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
 function processarMsg_lista_sala(msgParams) {
+    this.tocarSom(this, "entrou.wav");
+    
     var listaJogadores = msgParams.listaJogadores;
     for (i=0; i < listaJogadores.length; i++) {
         if (listaJogadores[i] != null) {
@@ -30,6 +32,8 @@ function processarMsg_entrou_na_sala(msgParams) {
 }
 
 function processarMsg_saiu_da_sala(msgParams) {
+    this.tocarSom(this, "saindo.wav");
+    
     var posicaoJogador = Number(msgParams.jogadorDaSala.posicao) + 1;
     sala_limpaPosicao(posicaoJogador);
     
