@@ -512,11 +512,16 @@ class Jogo(object):
                                             if len(jogadorDefesa.territorios) == 0:
                                                 jogador.jogadoresDestruidos.append(jogadorDefesa.posicao)
                                                 jogador.cartasTerritorio.extend(jogadorDefesa.cartasTerritorio)
+                                                
                                                 # Envia as cartas atualizadas para o cliente.
                                                 jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, 
                                                     jogador.cartasTerritorio), default=lambda o: o.__dict__)
                                                 print "# " + jsonMsg
                                                 self._clientes[jogador.posicao].sendMessage(jsonMsg)
+                                                
+                                                # Envia para todos que o jogador foi destruido.
+                                                self.enviaMsgParaTodos(TipoMensagem.jogador_destruido,
+                                                    JogadorDestruido(jogadorDefesa))
 
                                             self._jogadorDaVezConquistouTerritorio = True
                                             turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio

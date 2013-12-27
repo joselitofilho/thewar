@@ -23,6 +23,7 @@ class TipoMensagem:
     carrega_jogo = "CarregaJogo"
     carrega_jogo_olheiro = "CarregaJogoOlheiro"
     altera_posicao_na_sala = "AlteraPosicaoNaSala"
+    jogador_destruido = "JogadorDestruido"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -151,3 +152,7 @@ class ColocarTropaNaTrocaDeCartasTerritorios(object):
     def __init__(self, posicaoJogador, territorios):
         self.posicaoJogador = posicaoJogador;
         self.territorios = territorios
+        
+class JogadorDestruido(object):
+    def __init__(self, jogador):
+        self.jogador = jogador

@@ -183,7 +183,7 @@ function processarMsg_atacar_comDados(msgParams) {
         _territorios.focaNosTerritorios(codigoTerritorios);
     }
 
-    this.tocarSom(this, "jogarDados.mp3");
+    this.tocarSom(this, "jogarDados.wav");
     
     // Iniciar animacao de jogar os dados...
     jogarDados(dadosAtaque.length, dadosDefesa.length, msgParams);
@@ -706,7 +706,7 @@ function jogarDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
             if (qtdDadosDefesa >= 3) $('#dd3').css('visibility', 'visible');
             
             _animarDadosReferencia = setInterval(animarDados, 50);
-            setTimeout(function() { pararAnimacaoDosDados(msgParams); }, 1500);
+            setTimeout(function() { pararAnimacaoDosDados(msgParams); }, 2000);
         }
     } catch(ex) {
         console.log("Error in fnTimer:\n" + ex);
