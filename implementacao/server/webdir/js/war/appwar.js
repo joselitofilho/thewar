@@ -351,6 +351,10 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
 function processarMsg_turno_trocar_cartas(msgParams) {
     $('#info_turno_texto').html('Trocar cartas');
     appwar_alteraIconeAcaoTurno(TipoAcaoTurno.trocar_cartas);
+    
+    if (msgParams.obrigatorio && (_posicaoJogador == msgParams.posicaoJogador)) {
+        appwar_abrePainelCartasTerritorios();
+    }
 }
 
 function processarMsg_turno_atacar(msgParams) {
