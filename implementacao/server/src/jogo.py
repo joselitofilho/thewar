@@ -60,7 +60,10 @@ class Jogo(object):
             self._clientes[posicaoJogador].sendMessage(jsonMsg)
 
     def faseI_DefinirQuemComeca(self):
-        self._cabecaDaFila = random.randrange(len(self._jogadores))
+        numeroAleatorio = random.randint(0, len(self._jogadores)-1)
+        numeroAleatorio = random.randint(0, len(self._jogadores)-1)
+        numeroAleatorio = random.randint(0, len(self._jogadores)-1)
+        self._cabecaDaFila = numeroAleatorio
         self._indiceOrdemJogadores = self._cabecaDaFila
         self._posicaoJogadorDaVez = self._ordemJogadores[self._cabecaDaFila]
         

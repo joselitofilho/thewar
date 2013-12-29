@@ -126,12 +126,15 @@ function processarMsg_atacar(msgParams) {
         }, 1000);
     }
 
+    var qtdDadosAtaqueVenceu = 0;
     for (i = 0; i < dadosAtaque.length; i++) {
         if (i < dadosDefesa.length) {
             if (dadosAtaque[i] <= dadosDefesa[i])
                 $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
-            else
+            else {
+                ++qtdDadosAtaqueVenceu;
                 $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
+            }
         } else
             $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
     }
@@ -140,11 +143,15 @@ function processarMsg_atacar(msgParams) {
         if (i < dadosAtaque.length) {
             if (dadosDefesa[i] < dadosAtaque[i])
                 $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
-            else
-                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');    
+            else {
+                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
+            }
         } else
             $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
     }
+
+    if (qtdDadosAtaqueVenceu >= 1) this.tocarSom(this, 'ganhouNosDados.mp3');
+    else this.tocarSom(this, 'perdeuNosDados.mp3');
     
     if (msgParams.conquistouTerritorio) {
         this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
@@ -169,6 +176,9 @@ function processarMsg_atacar(msgParams) {
 }
 
 function processarMsg_atacar_comDados(msgParams) {
+    //this.tocarSom(this, "jogarDados.wav");
+    this.tocarSom(this, "batalha" + (Math.floor(Math.random()*4)+1) + ".wav");
+
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
 
@@ -182,8 +192,6 @@ function processarMsg_atacar_comDados(msgParams) {
         _territorios.pintarGruposTerritorios();
         _territorios.focaNosTerritorios(codigoTerritorios);
     }
-
-    this.tocarSom(this, "jogarDados.wav");
     
     // Iniciar animacao de jogar os dados...
     jogarDados(dadosAtaque.length, dadosDefesa.length, msgParams);
@@ -391,6 +399,7 @@ function processarMsg_turno_mover(msgParams) {
 }
 
 function processarMsg_turno_jogo_terminou(msgParams) {
+    this.tocarSom(this, 'venceuJogo.wav');
     alert(msgParams.ganhador + ' venceu o jogo!');
 }
 
@@ -856,6 +865,8 @@ function appwar_alterarTituloDaPagina(str) {
 function tocarSom(el, soundfile) {
     var el = $('#audioPlayer').get(0);
     var volume = $('#audioSlider').slider('value') / 100.0;
+
+    console.log('Tocando som: ' + soundfile);
 
     //if (el.mp3) {
     //    if(el.mp3.paused) el.mp3.play();

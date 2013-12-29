@@ -2,14 +2,14 @@
     position: absolute;
     top: 100px;
     left: 50%;
-    margin-left: -340px;
-    width: 680px;
+    margin-left: -350px;
+    width: 700px;
     visibility: hidden;
     z-index: 9001;
 }
 
 #sala .form-signin {
-    max-width: 680px;
+    max-width: 700px;
 }
 
 #sala ul {

@@ -2,7 +2,7 @@
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
 function processarMsg_lista_sala(msgParams) {
-    this.tocarSom(this, "entrou.wav");
+    this.tocarSom(this, "entrou.mp3");
     
     var listaJogadores = msgParams.listaJogadores;
     for (i=0; i < listaJogadores.length; i++) {
@@ -47,6 +47,8 @@ function processarMsg_saiu_da_sala(msgParams) {
 }
 
 function processarMsg_altera_posicao_na_sala(msgParams) {
+    this.tocarSom(this, "entrou.mp3");
+
     var posicaoAntigaJogador = Number(msgParams.posicaoAntiga) + 1;
     sala_limpaPosicao(posicaoAntigaJogador);
     

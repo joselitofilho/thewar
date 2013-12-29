@@ -6,6 +6,8 @@ function ct_texto_onkeypress(event) {
 }
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
+    this.tocarSom(this, 'mensagem.mp3');
+
     var texto = msgParams.usuario + ": " + msgParams.texto + "\n";
     $('#ct_mensagens').append(texto);
     

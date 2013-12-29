@@ -132,13 +132,26 @@
                                 onkeypress="return ct_texto_onkeypress(event);" />
                             <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
                         </div>
-                        
-                        <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">
-                            <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
-                        </button>
-                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                            <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
-                        </button>
+
+                        <div id="acoes_botoes">
+                            <ul>
+                                <li>
+                                    <button class="btn btn-default" onclick="atacar();">
+                                        <img width="40" src="imagens/tanque.png" alt="Atacar" />
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                                        <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">
+                                        <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
                         
                         <div id="acoes_turno">
                             <div class="ac_icones">
