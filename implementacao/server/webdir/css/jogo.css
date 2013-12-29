@@ -67,6 +67,32 @@
     z-index: 998;
 }
 
+#barra_tempo {
+    position: absolute;
+    top: 450px;
+    width: 180px;
+    color: #FFF;
+    z-index: 999;
+}
+
+.barra_de_progresso {
+    float: left;
+    width: 100px;
+    height: 25px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0px 10px 5px 5px;
+    vertical-align: top;
+}
+
+#barra {
+    height: 25px;
+    background-color: #5eb95e;
+    width:0;
+}
+
 #controles {
     position: absolute;
     top: 500px;

@@ -25,3 +25,30 @@ function jogo_enviaMsgChatDoJogo() {
         _libwebsocket.enviarObjJson(msg);
     }
 }
+
+
+/* Barra de progresso */
+function jogo_iniciaBarraDeProgresso() {
+    var tempoTotal = 1.0*60.0;
+    var valor = 0.0;
+    loopTempoRestante = setInterval(function() {
+        var barra = $('#barra');
+        valor += 100.0/tempoTotal;
+        barra.width(valor + '%');
+        if (valor > 85) barra.css('background-color','#dd514c');
+        else if (valor > 50) barra.css('background-color','#faa732');
+        
+        var tempo = tempoTotal - (tempoTotal*valor / 100.0);
+        if (tempo > 60)
+            $('#tempo_restante').html(Math.round(tempo / 60) + ' min');
+        else 
+            $('#tempo_restante').html(Math.round(tempo) + ' seg');
+    }, 1000);
+
+    setTimeout(function(){
+        clearInterval(loopTempoRestante);
+        $('#barra').width('100%');
+        $('#barra').css('background-color','#dd514c');
+        $('#tempo_restante').html('0 seg');
+    }, tempoTotal * 1000);
+}

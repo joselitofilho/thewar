@@ -313,6 +313,9 @@ function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
     appwar_alteraInfoTurnoJogador(msgParams.vezDoJogador);
+    
+    jogo_iniciaBarraDeProgresso();
+    
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         processarMsg_turno_distribuir_tropas_globais(msgParams);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {

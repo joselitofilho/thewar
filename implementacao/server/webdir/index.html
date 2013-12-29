@@ -12,6 +12,9 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!---->
 
+        <!--Here is the css file you are using for your project UI included from CDN (content delivery network)-->
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
         <!-- Audio Player -->
         <link href="css/audioPlayer.css" rel="stylesheet">
         <!---->
@@ -65,7 +68,7 @@
                     <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(5);"></div>
                 </div>
             </div>
-            
+
             <div class="pct_controles">
                 <div class="pct_botoes">
                     <button class="btn btn-default" onclick="appwar_trocaCartasTerritorios();">Trocar cartas</button>
@@ -116,6 +119,13 @@
                 <!--<div id="btnIniciarPartida" onclick="iniciarPartida();"></div>-->
 
                 <div id="mapa"></div>
+
+                <div id="barra_tempo">
+                    <div class="barra_de_progresso">
+                        <div id="barra"></div>
+                    </div>
+                    <div id="tempo_restante"></div>
+                </div>
 
                 <div id="controles" style="visibility: hidden;">
                     <div id="info_turno_fundo_esquerda">
@@ -223,6 +233,9 @@
         <!-- Bootstrap -->
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
         <!---->
+
+        <!--Here is jQuery UI added from CDN-->
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
         <!-- AudioPlayer -->
         <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
