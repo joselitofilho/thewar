@@ -63,8 +63,8 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 
 /* Funções gerais */
 function sala_limpaPosicao(posicao) {
-    $("#jogador" + posicao).html("-");
-    $("#sala_jogador" + posicao).html("-");
+    $("#jogador" + posicao).html("");
+    $("#sala_jogador" + posicao).html("");
 }
 
 function sala_preencheJogador(posicao, usuario) {

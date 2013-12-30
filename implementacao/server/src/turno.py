@@ -1,7 +1,10 @@
+import time
+
 from tipoAcaoTurno import *
 from timeout import *
 
 class Turno(object):
+    TIMEOUT = (2*60) + 4
 
     def __init__(self):
         self.numero = 1
@@ -11,6 +14,8 @@ class Turno(object):
         self.gruposTerritorio = []
 
         self.reiniciaVariaveisExtras()
+
+        self.loopTimeout = None
    
     def reiniciaVariaveisExtras(self):
         self.reiniciaVariaveisExtrasGruposTerritorios()
@@ -29,12 +34,26 @@ class Turno(object):
         self.territorioConquistado = None
 
     def iniciaTimeout(self, funcTimeout):
-        self.loopTimeout = Timeout(60, funcTimeout)
+        if self.loopTimeout != None:
+            self.paraTimeout()
+
+        self.loopTimeout = Timeout(self.TIMEOUT, funcTimeout)
         self.loopTimeout.start()
     
     def paraTimeout(self):
-        self.loopTimeout.stop()
-        del self.loopTimeout
+        try:
+            self.loopTimeout.para()
+            del self.loopTimeout
+        except:
+            print "Thread foi morta com excecao: ", self.loopTimeout == None
+
+        self.loopTimeout = None
+
+    @property
+    def tempoRestante(self):
+        if self.loopTimeout != None:
+            return self.TIMEOUT - self.loopTimeout.tempo
+        return self.TIMEOUT
 
     def __del__(self):
         self.paraTimeout()

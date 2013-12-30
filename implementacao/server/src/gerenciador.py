@@ -90,5 +90,14 @@ class Gerenciador(object):
                 self._jogo.msgChat(usuario, texto)
                 
     def jogoTerminou(self, idJogo):
-        del self._jogo
+        if self._jogo != None:
+            self._jogo.fecha()
+            del self._jogo
+            self._jogo = None
         self._sala = Sala()
+
+    def fecha(self):
+        if self._jogo != None:
+            self._jogo.fecha()
+            del self._jogo
+            self._jogo = None

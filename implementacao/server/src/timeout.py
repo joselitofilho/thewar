@@ -10,12 +10,19 @@ class Timeout(threading.Thread):
         self.loop = True
     
     def run(self):
+        self.tempo = 0
+        self.loop = True
         while (self.tempo < self.tempoMaximo and self.loop):
             time.sleep(1)
             self.tempo += 1
+            print self.tempo
         
-        if self.tempo == self.tempoMaximo and self.func != None:
+        if self.tempo == self.tempoMaximo and self.func != None and self.loop:
             self.func()
 
-    def stop(self):
+    def para(self):
         self.loop = False
+        raise Exception("ThreadTimeout: Forcando a parada da thread...")
+
+    def __del__(self):
+        self.para()

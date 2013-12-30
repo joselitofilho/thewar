@@ -12,8 +12,8 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!---->
 
-        <!--Here is the css file you are using for your project UI included from CDN (content delivery network)-->
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
 
         <!-- Audio Player -->
         <link href="css/audioPlayer.css" rel="stylesheet">
@@ -105,12 +105,30 @@
             <div id="jogo">
                 <div id="menu_jogadores">
                     <ul>
-                        <li><a id="jogador1" class="cor_vermelha" href="javascript:void(0)">-</a></li> 
-                        <li><a id="jogador2" class="cor_azul" href="javascript:void(0)">-</a></li>
-                        <li><a id="jogador3" class="cor_verde" href="javascript:void(0)">-</a></li>
-                        <li><a id="jogador4" class="cor_preto" href="javascript:void(0)">-</a></li>
-                        <li><a id="jogador5" class="cor_branco" href="javascript:void(0)">-</a></li>
-                        <li><a id="jogador6" class="cor_amarelo" href="javascript:void(0)">-</a></li>
+                        <li class="cor_vermelha">
+                            <a id="jogador1" class="cor_vermelha" href="javascript:void(0)"></a>
+                            <div id="qtdTerritorio0">0</div>
+                        </li>
+                        <li class="cor_azul">
+                            <a id="jogador2" class="cor_azul" href="javascript:void(0)"></a>
+                            <div id="qtdTerritorio1">0</div>
+                        </li>
+                        <li class="cor_verde">
+                            <a id="jogador3" class="cor_verde" href="javascript:void(0)"></a>
+                            <div id="qtdTerritorio2">0</div>
+                        </li>
+                        <li class="cor_preto">
+                            <a id="jogador4" class="cor_preto" href="javascript:void(0)"></a>
+                            <div id="qtdTerritorio3">0</div>
+                        </li>
+                        <li class="cor_branco">
+                            <a id="jogador5" class="cor_branco" href="javascript:void(0)"></a>
+                            <div id="qtdTerritorio4">0</div>
+                        </li>
+                        <li class="cor_amarelo">
+                            <a id="jogador6" class="cor_amarelo" href="javascript:void(0)"></a>
+                            <div id="qtdTerritorio5">0</div>
+                        </li>
                     </ul>
                 </div>
                 
@@ -234,8 +252,8 @@
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
         <!---->
 
-        <!--Here is jQuery UI added from CDN-->
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <!--Here is jQuery UI added from CDN
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
 
         <!-- AudioPlayer -->
         <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
@@ -306,6 +324,7 @@
         <!-- Do sistema -->
         <script type="text/javascript" src="js/libs/namespace.js"></script>
         <script type="text/javascript" src="js/websocket/websocket.js"></script>
+        <script type="text/javascript" src="js/cookie.js"></script>
         <script type="text/javascript" src="js/mensagens.js"></script>
 
         <script type="text/javascript" src="js/label.js"></script>

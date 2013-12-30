@@ -74,8 +74,8 @@ Label.prototype.alteraQuantiadeDeTropas = function(qtd) {
 
 Label.prototype.alteraPosicaoJogador = function(posicaoJogador) {
     this.posicaoJogador = posicaoJogador;
-    if (posicaoJogador == 4) {
-        this.corTexto = '#000';
+    if (posicaoJogador == 4 || posicaoJogador == 5) {
+        this.corTexto = '#444';
     } else {
         this.corTexto = '#FFF';
     }

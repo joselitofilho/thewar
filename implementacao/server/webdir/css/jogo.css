@@ -69,7 +69,7 @@
 
 #barra_tempo {
     position: absolute;
-    top: 450px;
+    top: 478px;
     width: 180px;
     color: #FFF;
     z-index: 999;
@@ -78,7 +78,7 @@
 .barra_de_progresso {
     float: left;
     width: 100px;
-    height: 25px;
+    height: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     overflow: hidden;
@@ -160,9 +160,9 @@
 
 #menu_jogadores {
     position: absolute;
-    width: 200px;
+    width: 1024px;
     z-index: 999;
-    left: 45px;
+    visibility: hidden;
 }
 
 #menu_jogadores ul {
@@ -174,13 +174,24 @@
 
 #menu_jogadores ul li {
     display: inline;
+    width: 150px;
+    display: inline-block;
+    border-radius: 0 0 4px 4px;
+    font-size: 16px;
 }
 
 #menu_jogadores ul li a {
-    width: 30px;
+    float: left;
+    margin-left: 5px;
+}
+
+#menu_jogadores ul li div {
+    float: right;
+    width: 20px;
     display: inline-block;
-    border-radius: 0 0 4px 4px;
-    font-family: 'PT Sans', sans-serif;
+    border-radius: 4px;
+    background-color: #FFF;
+    color: #444;
 }
 
 #info_quantidade_de_tropas {

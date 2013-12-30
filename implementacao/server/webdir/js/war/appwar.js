@@ -12,6 +12,8 @@ _jaPodeAtacar = true;
 
 _territorioConquistado = null;
 
+_territoriosAtacanteAposConquistar = null;
+
 _territorioAlvoMover = null;
 _territorioMovimento = null;
 _jaPodeMover = true;
@@ -47,23 +49,13 @@ function processarMsg_registrar(msgParams) {
 }
 
 function processarMsg_entrar(msgParams) {
-    if (msgParams.status != 1) {
+    if (msgParams.status == 1) {
+        var cookie = new gpscheck.web.Cookie();
+        cookie.cria("usuario", $('#inputUsuario').val());
+        cookie.cria("senha", $('#inputSenha').val());
+    } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estao corretos e tente novamente.');
-    } 
-}
-
-function processarMsg_jogo_fase_I(msgParams) {
-    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
-        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
-        _territorios.iniciaLabelDosTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
-    
-    $('#sala').css('visibility', 'hidden');
-    $('#btnIniciarPartida').css('visibility', 'hidden');
-    $('#controles').css('visibility', 'visible');
-    $('#quantidade_de_tropas').css('visibility', 'visible');
-
-    appwar_alteraInfoTurnoJogador(msgParams.jogadorQueComeca);
 }
 
 function processarMsg_carta_objetivo(msgParams) {
@@ -92,7 +84,9 @@ function processarMsg_atacar(msgParams) {
     var diferencaDeQuantidade = 0;
 
     var territorioDaDefesa = msgParams.territorioDaDefesa;
-    var territoriosDoAtaque = msgParams.territoriosDoAtaque;i
+    var territoriosDoAtaque = msgParams.territoriosDoAtaque;
+
+    _territoriosAtacanteAposConquistar = territoriosDoAtaque;
 
     var labelTerritorioDefesa = _labelTerritorios[territorioDaDefesa.codigo];
     diferencaDeQuantidade = Number(labelTerritorioDefesa.texto) - territorioDaDefesa.quantidadeDeTropas;
@@ -100,6 +94,7 @@ function processarMsg_atacar(msgParams) {
         labelTerritorioDefesa.perdeuTropas(diferencaDeQuantidade);
     labelTerritorioDefesa.alteraQuantiadeDeTropas("" + territorioDaDefesa.quantidadeDeTropas);
     
+    // Desconta os exércitos que foram perdidos no ataque, se houver perda.
     var temTerritorioInvalido = false;
     var fazSentidoMoverAposConquistar = false;
     for (i = 0; i < territoriosDoAtaque.length; i++) {
@@ -113,6 +108,7 @@ function processarMsg_atacar(msgParams) {
         if (territoriosDoAtaque[i].quantidadeDeTropas > 1) fazSentidoMoverAposConquistar = true;
     }
 
+    // Usabilidade...
     if (msgParams.conquistouTerritorio) {
         labelTerritorioDefesa.explosao();
         if (!fazSentidoMoverAposConquistar) {
@@ -126,6 +122,7 @@ function processarMsg_atacar(msgParams) {
         }, 1000);
     }
 
+    // Usabilidade: Dados do ataque.
     var qtdDadosAtaqueVenceu = 0;
     for (i = 0; i < dadosAtaque.length; i++) {
         if (i < dadosDefesa.length) {
@@ -139,6 +136,7 @@ function processarMsg_atacar(msgParams) {
             $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
     }
     
+    // Usabilidade: Dados da defesa.
     for (i = 0; i < dadosDefesa.length; i++) {
         if (i < dadosAtaque.length) {
             if (dadosDefesa[i] < dadosAtaque[i])
@@ -149,15 +147,19 @@ function processarMsg_atacar(msgParams) {
         } else
             $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
     }
-
+    
+    // Usabilidade: Resultado dos dados.
     if (qtdDadosAtaqueVenceu >= 1) this.tocarSom(this, 'ganhouNosDados.mp3');
     else this.tocarSom(this, 'perdeuNosDados.mp3');
     
+    // Computando ações após conquista de territorio. 
     if (msgParams.conquistouTerritorio) {
         this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
 
         _territorioAlvoAtaque = null;
-        _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogador);
+        _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogadorAtaque);
+        jogo_aumentaQuantidadeDeTerritorioDoJogador(msgParams.posicaoJogadorAtaque);
+        jogo_diminuiQuantidadeDeTerritorioDoJogador(msgParams.posicaoJogadorDefesa);
 
         if (!fazSentidoMoverAposConquistar) {
             finalizarTurno();
@@ -266,47 +268,9 @@ function processarMsg_saiu_do_jogo(msgParams) {
     this.tocarSom(this, "saindo.wav");
     
     var posicaoJogador = Number(msgParams.posicao) + 1;
-    var divJogador = document.getElementById("jogador" + posicaoJogador);
-    divJogador.innerHTML = "-";
+    $("#jogador" + posicaoJogador).html("");
 
     // TODO: Exibir algum aviso de que o jogador foi embora....
-}
-
-function processarMsg_carrega_jogo(msgParams) {
-    processarMsg_lista_sala(msgParams);
-
-    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
-        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
-        _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
-    }
-    
-    $('#controles').css('visibility', 'visible');
-    $('#quantidade_de_tropas').css('visibility', 'visible');
-
-    processarMsg_carta_objetivo(msgParams);
-    processarMsg_cartas_territorios(msgParams.cartasTerritorio);
-
-    _posicaoJogadorDaVez = msgParams.jogadorDaVez;
-    appwar_alteraInfoTurnoJogador(msgParams.jogadorDaVez);
-
-    $('#bloqueador_tela').css('visibility', 'hidden');
-}
-
-function processarMsg_carrega_jogo_olheiro(msgParams) {
-    processarMsg_lista_sala(msgParams);
-
-    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
-        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
-        _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
-    }
-    
-    $('#controles').css('visibility', 'visible');
-    $('#quantidade_de_tropas').css('visibility', 'visible');
-
-    _posicaoJogadorDaVez = msgParams.jogadorDaVez;
-    appwar_alteraInfoTurnoJogador(msgParams.jogadorDaVez);
-
-    $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
 function processarMsg_turno(msgParams) {
@@ -314,7 +278,8 @@ function processarMsg_turno(msgParams) {
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
     appwar_alteraInfoTurnoJogador(msgParams.vezDoJogador);
     
-    jogo_iniciaBarraDeProgresso();
+    var tempoTotal = Number(msgParams.tempoRestante);
+    jogo_iniciaBarraDeProgresso(tempoTotal);
     
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         processarMsg_turno_distribuir_tropas_globais(msgParams);
@@ -372,6 +337,7 @@ function processarMsg_turno_trocar_cartas(msgParams) {
 
 function processarMsg_turno_atacar(msgParams) {
     this.tocarSom(this, 'atacar.wav');
+    appwar_alteraQuantidadeDeTropas(0);
 
     _territorioConquistado = null;
     $('#info_turno_texto').html('Atacar');
@@ -416,7 +382,17 @@ function processarMsg_erro() {
 ////////////////////////////////////////////////////////////////////////////////
 
 function posAberturaSocket(valor) {
+    var cookie = new gpscheck.web.Cookie();
+    var usuarioCookie = cookie.le("usuario");
+    var senhaCookie = cookie.le("senha");
+    
+    if (usuarioCookie != null && senhaCookie != null) {
+        $('#inputUsuario').val(usuarioCookie);
+        $('#inputSenha').val(senhaCookie);
+    }
     $('#painelRegistrarOuEntrar').css('visibility', 'visible');
+    // TODO: Ver isso melhor depois...
+    //appwar_entrar();
 }
 
 function posRecebimentoMensagemServidor(valor) {
@@ -662,6 +638,14 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 }
             }
         } else if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
+            /*if (_territoriosAtacanteAposConquistar.indexOf(nomeDoTerritorio) > -1) {
+                var moverMsg = comunicacao_mover(_posicaoJogador, nomeDoTerritorio, 
+                    _territorioConquistado, 1);
+                _libwebsocket.enviarObjJson(moverMsg);
+                _jaPodeMover = false;
+            } else {
+                finalizarTurno();
+            }*/
             if (_territorioConquistado == nomeDoTerritorio) {
                 finalizarTurno();
             } else {
@@ -670,6 +654,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _libwebsocket.enviarObjJson(moverMsg);
                 _jaPodeMover = false;
             }
+
         } else if (_turno.tipoAcao == TipoAcaoTurno.mover) {
             if (!_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 if (nomeDoTerritorio == _territorioAlvoMover) {

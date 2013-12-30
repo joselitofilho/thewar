@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import signal
 import sys
 import socket
 
@@ -123,6 +124,12 @@ class BroadcastServerFactory(WebSocketServerFactory):
         self.unregister(socket)
         del self.clientesConectados[usuario]
 
+_gerenciador = None
+
+def signal_handler(signal, frame):
+    if _gerenciador != None:
+        _gerenciador.fecha()
+
 if __name__ == '__main__':
 
     if len(sys.argv) > 1 and sys.argv[1] == 'debug':
@@ -130,7 +137,6 @@ if __name__ == '__main__':
         debug = True
     else:
         debug = False
-
         
     ServerFactory = BroadcastServerFactory
     factory = ServerFactory("ws://localhost:8080",
@@ -151,3 +157,5 @@ if __name__ == '__main__':
     print 'Servido web iniciado na porta 9092.'
 
     reactor.run()
+    
+    signal.signal(signal.SIGINT, signal_handler)
