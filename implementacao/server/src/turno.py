@@ -52,8 +52,8 @@ class Turno(object):
     @property
     def tempoRestante(self):
         if self.loopTimeout != None:
-            return self.TIMEOUT - self.loopTimeout.tempo
-        return self.TIMEOUT
+            return self.TIMEOUT - self.loopTimeout.tempo - 4
+        return self.TIMEOUT - 4
 
     def __del__(self):
         self.paraTimeout()

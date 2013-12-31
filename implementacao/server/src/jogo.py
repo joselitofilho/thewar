@@ -144,7 +144,8 @@ class Jogo(object):
         # Qual a acao que ele deve fazer...
         tipoAcaoDoTurno = turno.tipoAcao
 
-        tempoRestante = turno.tempoRestante;
+        tempoRestante = turno.tempoRestante
+        valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
         
         jogador = self.jogadores[jogadorDaVez]
 
@@ -154,30 +155,30 @@ class Jogo(object):
             if turno.quantidadeDeTropas == 0:
                 turno.quantidadeDeTropas = math.floor(len(jogador.territorios) / 2);
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, 
+                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca, 
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             turno.grupoTerritorioAtual = turno.gruposTerritorio.pop(0)
             if turno.quantidadeDeTropas == 0:
                 turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
             acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante,
+                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
                     turno.quantidadeDeTropas, turno.grupoTerritorioAtual)
         elif tipoAcaoDoTurno == TipoAcaoTurno.trocar_cartas:
             acao = AcaoTrocarCartas(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante,
+                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
                     (len(jogador.cartasTerritorio) >= 5))
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, 
+                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
             acao = AcaoJogoTerminou(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, 
+                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
                     jogador.objetivo, jogador.usuario)
         else:
             acao = AcaoTurno(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante)
+                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca)
 
         return acao
  
@@ -753,10 +754,9 @@ class Jogo(object):
             jogador = self.jogadores[self.posicaoJogadorDaVez]
             cartaTerritorio = self.pegaUmaCartaTerritorioDoBaralho()
             jogador.adicionaCartaTerritorio(cartaTerritorio)
-            
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)
-            print "# " + jsonMsg
-            self.clientes[self.posicaoJogadorDaVez].sendMessage(jsonMsg)
+           
+            self.enviaMsgParaCliente(TipoMensagem.cartas_territorio, 
+                    jogador.cartasTerritorio, self.clientes[self.posicaoJogadorDaVez])
 
             self.jogadorDaVezConquistouTerritorio = False
 

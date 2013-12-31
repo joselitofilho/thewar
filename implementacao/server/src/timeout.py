@@ -15,7 +15,6 @@ class Timeout(threading.Thread):
         while (self.tempo < self.tempoMaximo and self.loop):
             time.sleep(1)
             self.tempo += 1
-            print self.tempo
         
         if self.tempo == self.tempoMaximo and self.func != None and self.loop:
             self.func()

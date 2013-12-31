@@ -10,6 +10,28 @@
     z-index: 9001;
 }
 
+.pct_controles {
+    position: fixed;
+    left:0;
+    bottom:0;
+    display: block;
+    height: 58px;
+    width: 100%;
+    color: #FFF;
+    z-index: 9002;
+}
+
+.pct_botoes {
+    background-color: #0a0a0a;
+    padding: 13px 16px 20px 42px;
+}
+
+#pct_valorDaTroca {
+    float: right;
+    padding-top: 3px;
+    font-size: 20px;
+}
+
 #cartasTerritorios {
     position: relative;
     max-width: 770px;
@@ -115,19 +137,3 @@
 .carta_territorio_Vladivostok_selecionado { background-position: -6300px -200px; }
 .carta_territorio_Coringa { background-position: -6450px 0px; }
 .carta_territorio_Coringa_selecionado { background-position: -6450px -200px; }
-
-.pct_controles {
-    position: fixed;
-    left:0;
-    bottom:0;
-    display: block;
-    height: 58px;
-    width: 100%;
-    color: #FFF;
-    z-index: 9002;
-}
-
-.pct_botoes {
-    background-color: #0a0a0a;
-    padding: 14px 16px 20px 42px;
-}

@@ -277,6 +277,7 @@ function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
     appwar_alteraInfoTurnoJogador(msgParams.vezDoJogador);
+    $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
     
     var tempoTotal = Number(msgParams.tempoRestante);
     jogo_iniciaBarraDeProgresso(tempoTotal);

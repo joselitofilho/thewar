@@ -72,6 +72,7 @@
             <div class="pct_controles">
                 <div class="pct_botoes">
                     <button class="btn btn-default" onclick="appwar_trocaCartasTerritorios();">Trocar cartas</button>
+                    <span id="pct_valorDaTroca">Valor da troca: 4</span>
                 </div>
             </div>
             
@@ -212,7 +213,9 @@
                     </div>
  
                     <div id="info_turno_fundo_direita">
-                        <div id="btnFinalizarTurno" onclick="finalizarTurno();"></div>
+                        <div id="btnFinalizarTurno" onclick="finalizarTurno();">
+                            <div>Não trocar</div>
+                        </div>
                     </div>
                 </div>
                 

@@ -142,8 +142,17 @@
     position: relative;
     width: 80px;
     height: 80px;
-    background: url('../imagens/proximo_80x80.png') no-repeat;
+    background: url('../imagens/btnVerde80x80.png') no-repeat;
     cursor: pointer;
+    color: #FFF;
+    margin-right: 5px;
+}
+
+#btnFinalizarTurno div {
+    position: relative;
+    text-align: center;
+    height: 50px;
+    width: 50px;
 }
 
 #geral {
