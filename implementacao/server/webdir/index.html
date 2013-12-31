@@ -133,11 +133,20 @@
                     </ul>
                 </div>
                 
-                <!--<div id="info_quantidade_de_tropas">Tropas restante:<br><span id="quantidade_de_tropas">0</span></div>-->
-
-                <!--<div id="btnIniciarPartida" onclick="iniciarPartida();"></div>-->
-
                 <div id="mapa"></div>
+                
+                <section>
+                    <span class="audioSliderTooltip"></span>
+                    <div id="audioSlider"></div>
+                    <span class="audioPlayerVolume"></span>
+                    <audio id="audioPlayer" autoplay></audio>
+                </section>
+
+                <div id="info_turno">
+                    <div id="it_titulo">Distribuir tropas</div>
+                    <div id="it_sub_titulo">Globais</div>
+                    <div id="it_info">Tropas restantes: </div>
+                </div>
 
                 <div id="barra_tempo">
                     <div class="barra_de_progresso">
@@ -147,101 +156,57 @@
                 </div>
 
                 <div id="controles" style="visibility: hidden;">
-                    <div id="info_turno_fundo_esquerda">
-                        <div id="info_turno_jogador"></div>
-                        <div id="info_turno_texto"></div>
+                    <div id="chat_do_jogo">
+                        <textarea id="ct_mensagens" class="form-control" readonly></textarea>
+                        <input id="ct_texto" type="text" 
+                            class="form-control" 
+                            placeholder="Digite sua mensagem aqui."
+                            onkeypress="return ct_texto_onkeypress(event);" />
+                        <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
                     </div>
 
-                    <div id="info_turno_meio">
-                        <div id="chat_do_jogo">
-                            <textarea id="ct_mensagens" class="form-control" readonly></textarea>
-                            <input id="ct_texto" type="text" 
-                                class="form-control" 
-                                placeholder="Digite sua mensagem aqui."
-                                onkeypress="return ct_texto_onkeypress(event);" />
-                            <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
-                        </div>
-
-                        <div id="acoes_botoes">
-                            <ul>
-                                <li>
-                                    <button class="btn btn-default" onclick="atacar();">
-                                        <img width="40" src="imagens/tanque.png" alt="Atacar" />
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                                        <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">
-                                        <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                        
-                        <div id="acoes_turno">
-                            <div class="ac_icones">
-                                <ul>
-                                    <li><a id="ac_1" class="ac_icon ac_1_cinza" href="javascript:void(0)"></a></li> 
-                                    <li><a id="ac_2" class="ac_icon ac_2_cinza" 
-                                        href="javascript:void(0)"
-                                        onclick="appwar_abrePainelCartasTerritorios();"></a></li>
-                                    <li><a id="ac_3" class="ac_icon ac_3_cinza" 
-                                        href="javascript:void(0)" 
-                                        onclick="atacar();"></a></li>
-                                    <li><a id="ac_4" class="ac_icon ac_4_cinza" href="javascript:void(0)"></a></li>
-                                </ul>
-                            </div>
-                            <div id="ac_info"></div>
-                        </div>
-                        
-                        <div id="dados">
-                            <div id="dadosAtaque">
-                                <div id="da1" class="dado dado_ataque"></div>
-                                <div id="da2" class="dado dado_ataque"></div>
-                                <div id="da3" class="dado dado_ataque"></div>
-                            </div>
-                            <div id="dadosDefesa">
-                                <div id="dd1" class="dado dado_defesa"></div>
-                                <div id="dd2" class="dado dado_defesa"></div>
-                                <div id="dd3" class="dado dado_defesa"></div>
-                            </div>
-                        </div>
+                    <div id="acoes_botoes">
+                        <ul>
+                            <li>
+                                <button class="btn btn-default" onclick="atacar();">
+                                    <img width="40" src="imagens/tanque.png" alt="Atacar" />
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                                    <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">
+                                    <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
+                                </button>
+                            </li>
+                        </ul>
                     </div>
- 
-                    <div id="info_turno_fundo_direita">
-                        <div id="btnFinalizarTurno" onclick="finalizarTurno();">
-                            <div>Não trocar</div>
+                    
+                    <div id="btnFinalizarTurno" onclick="finalizarTurno();">
+                        <div>Feito</div>
+                    </div>
+                    
+                    <div id="dados">
+                        <div id="dadosAtaque">
+                            <div id="da1" class="dado dado_ataque"></div>
+                            <div id="da2" class="dado dado_ataque"></div>
+                            <div id="da3" class="dado dado_ataque"></div>
+                        </div>
+                        <div id="dadosDefesa">
+                            <div id="dd1" class="dado dado_defesa"></div>
+                            <div id="dd2" class="dado dado_defesa"></div>
+                            <div id="dd3" class="dado dado_defesa"></div>
                         </div>
                     </div>
                 </div>
-                
-                <!--<div id="acoes_turno">
-                    <div class="ac_titulo">Distribuir tropas</div>
-                    <div class="ac_icones">
-                        <ul>
-                            <li><a id="ac_1" class="ac_icon" href="javascript:void(0)"></a></li> 
-                            <li><a id="ac_2" class="ac_icon" href="javascript:void(0)"></a></li>
-                            <li><a id="ac_3" class="ac_icon" href="javascript:void(0)"></a></li>
-                            <li><a id="ac_4" class="ac_icon" href="javascript:void(0)"></a></li>
-                        </ul>
-                    </div>
-                </div>-->
             </div>
         </div>
 
         <div id="bloqueador_tela"></div>
         <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
-
-        <section>
-            <span class="audioSliderTooltip"></span>
-            <div id="audioSlider"></div>
-            <span class="audioPlayerVolume"></span>
-            <audio id="audioPlayer" autoplay></audio>
-        </section>
 
         <!-- Google Maps -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>

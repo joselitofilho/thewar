@@ -158,7 +158,10 @@ class Jogo(object):
                     numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca, 
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
-            turno.grupoTerritorioAtual = turno.gruposTerritorio.pop(0)
+            turno.grupoTerritorioAtual = None
+            for grupo in turno.gruposTerritorio:
+                turno.grupoTerritorioAtual = grupo
+                break
             if turno.quantidadeDeTropas == 0:
                 turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
             acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, 
@@ -234,6 +237,11 @@ class Jogo(object):
                 self.gerenciador.jogoTerminou(self.id)
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and turno.quantidadeDeTropas == 0:
+            try:
+                turno.gruposTerritorio.remove(turno.grupoTerritorioAtual)
+            except:
+                print "WARN: Nao tem grupo territorio para revemor"
+
             if len(turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
                     turno.tipoAcao = TipoAcaoTurno.jogo_terminou
@@ -312,7 +320,13 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             if turno.quantidadeDeTropas == 0:
+                try:
+                    turno.gruposTerritorio.remove(turno.grupoTerritorioAtual)
+                except:
+                    print "WARN: Nao tem grupo territorio para revemor"
+
                 jogador = self.jogadores[self.posicaoJogadorDaVez]
+
                 if len(turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
                         turno.tipoAcao = TipoAcaoTurno.trocar_cartas

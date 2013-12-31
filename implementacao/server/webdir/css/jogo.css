@@ -1,17 +1,62 @@
-#acoes_turno {
-    position: relative;
-    max-width: 192px;
-    float: right;
+#info_turno {
+    position: absolute;
+    top: 295px;
+    width: 150px;
+    height: 200px;
+    color: #FFF;
+    text-align: center;
     z-index: 999;
+    visibility: hidden;
 }
 
-#ac_info {
-    color: #FFF;
-    height: 40px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 18px;
+#it_titulo {
+    position: relative;
+    top: 18px;
+    font-size: 17px;
 }
+
+#it_sub_titulo {
+    position: relative;
+    top: 28px;
+    font-size: 14px;
+    visibility: hidden;
+}
+
+#it_info {
+    position: relative;
+    top: 95px;
+    font-size: 20px;
+    visibility: hidden;
+}
+
+.info_turno_tropas1 { background: url('../imagens/acoes_sprite.png') 0px 0px no-repeat; }
+.info_turno_tropas2 { background: url('../imagens/acoes_sprite.png') -150px 0px no-repeat; }
+.info_turno_tropas3 { background: url('../imagens/acoes_sprite.png') -300px 0px no-repeat; }
+.info_turno_tropas4 { background: url('../imagens/acoes_sprite.png') -450px 0px no-repeat; }
+.info_turno_tropas5 { background: url('../imagens/acoes_sprite.png') -600px 0px no-repeat; }
+.info_turno_tropas6 { background: url('../imagens/acoes_sprite.png') -750px 0px no-repeat; }
+
+.info_turno_atacar1 { background: url('../imagens/acoes_sprite.png') 0px -200px no-repeat; }
+.info_turno_atacar2 { background: url('../imagens/acoes_sprite.png') -150px -200px no-repeat; }
+.info_turno_atacar3 { background: url('../imagens/acoes_sprite.png') -300px -200px no-repeat; }
+.info_turno_atacar4 { background: url('../imagens/acoes_sprite.png') -450px -200px no-repeat; }
+.info_turno_atacar5 { background: url('../imagens/acoes_sprite.png') -600px -200px no-repeat; }
+.info_turno_atacar6 { background: url('../imagens/acoes_sprite.png') -750px -200px no-repeat; }
+
+.info_turno_mover1 { background: url('../imagens/acoes_sprite.png') 0px -400px no-repeat; }
+.info_turno_mover2 { background: url('../imagens/acoes_sprite.png') -150px -400px no-repeat; }
+.info_turno_mover3 { background: url('../imagens/acoes_sprite.png') -300px -400px no-repeat; }
+.info_turno_mover4 { background: url('../imagens/acoes_sprite.png') -450px -400px no-repeat; }
+.info_turno_mover5 { background: url('../imagens/acoes_sprite.png') -600px -400px no-repeat; }
+.info_turno_mover6 { background: url('../imagens/acoes_sprite.png') -750px -400px no-repeat; }
+
+.info_turno_trocar1 { background: url('../imagens/acoes_sprite.png') 0px -600px no-repeat; }
+.info_turno_trocar2 { background: url('../imagens/acoes_sprite.png') -150px -600px no-repeat; }
+.info_turno_trocar3 { background: url('../imagens/acoes_sprite.png') -300px -600px no-repeat; }
+.info_turno_trocar4 { background: url('../imagens/acoes_sprite.png') -450px -600px no-repeat; }
+.info_turno_trocar5 { background: url('../imagens/acoes_sprite.png') -600px -600px no-repeat; }
+.info_turno_trocar6 { background: url('../imagens/acoes_sprite.png') -750px -600px no-repeat; }
+
 
 #acoes_botoes {
     float: left;
@@ -32,33 +77,6 @@
     display: inline-block;
 }
 
-#acoes_turno ul {
-    padding:0px;
-    margin:0px;
-    list-style:none;
-    text-align: center;
-}
-
-#acoes_turno ul li {
-    display: inline;
-}
-
-#acoes_turno ul li a {
-    width: 45px;
-    height: 45px;
-    display: inline-block;
-}
-
-.ac_1 { background: url('../imagens/acoes_sprite.png') 0px 0px no-repeat; }
-.ac_2 { background: url('../imagens/acoes_sprite.png') -45px 0px no-repeat; }
-.ac_3 { background: url('../imagens/acoes_sprite.png') -90px 0px no-repeat; }
-.ac_4 { background: url('../imagens/acoes_sprite.png') -135px 0px no-repeat; }
-
-.ac_1_cinza { background: url('../imagens/acoes_sprite.png') 0px -45px no-repeat; }
-.ac_2_cinza { background: url('../imagens/acoes_sprite.png') -45px -45px no-repeat; }
-.ac_3_cinza { background: url('../imagens/acoes_sprite.png') -90px -45px no-repeat; }
-.ac_4_cinza { background: url('../imagens/acoes_sprite.png') -135px -45px no-repeat; }
-
 #mapa {
     position: relative;
     float: left;
@@ -69,15 +87,17 @@
 
 #barra_tempo {
     position: absolute;
-    top: 478px;
-    width: 180px;
+    top: 475px;
+    left: 50%;
+    width: 290px;
+    margin-left: -129px;
     color: #FFF;
     z-index: 999;
 }
 
 .barra_de_progresso {
     float: left;
-    width: 100px;
+    width: 240px;
     height: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -95,64 +115,49 @@
 
 #controles {
     position: absolute;
-    top: 500px;
+    top: 497px;
     z-index: 999;
     width: 1024px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background: url('../imagens/muro.jpg');
     cursor: pointer;
 }
 
-#info_turno_fundo_esquerda {
-    float: left;
-    background: url('../imagens/circulo_cinza_esquerda.png') no-repeat;
-    width: 156px;
-    height: 156px;
-}
-
-#info_turno_jogador {
-    position: relative;
-    top: 40px;
-    left: 25px;
-    background: url('../imagens/soldado_sprite.png') no-repeat;
-    background-position: 0px 0px;
-    width: 60px;
-    height: 64px;
-}
-
-#info_turno_texto {
-    position: relative;
-    top: 45px;
-    width: 110px;
-    height: 40px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-#info_turno_meio {
-    float: left;
-    width: 768px;
-}
-
-#info_turno_fundo_direita {
+#dados {
     float: right;
-    right:0;
+}
+
+.dado {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url('../imagens/dados.png') no-repeat;
+    margin: 2px 2px;
+}
+
+.dado_ataque {
+    background-position: 0px 0px;
+}
+
+.dado_defesa {
+    background-position: 0px -40px;
 }
 
 #btnFinalizarTurno {
     position: relative;
+    float: right;
     width: 80px;
     height: 80px;
     background: url('../imagens/btnVerde80x80.png') no-repeat;
     cursor: pointer;
-    color: #FFF;
+    color: #000;
+    font-size: 20px;
     margin-right: 5px;
 }
 
 #btnFinalizarTurno div {
     position: relative;
     text-align: center;
-    height: 50px;
-    width: 50px;
+    top: 26px;
 }
 
 #geral {
@@ -203,44 +208,6 @@
     color: #444;
 }
 
-#info_quantidade_de_tropas {
-    position: absolute;
-    left: 490px;
-    width: 110px;
-    height: 50px;
-    text-align: center;
-    display: inline-block;
-    border-radius: 0 0 10px 10px;
-    color: #FFF;
-    background-color: rgba(0, 0, 0, 0.4);
-    /*visibility: hidden;*/
-    z-index: 999;
-}
-
-#info_quantidade_de_tropas span {
-    font-size: 20px;
-}
-
-#dados {
-    float: right;
-}
-
-.dado {
-    float: left;
-    width: 40px;
-    height: 40px;
-    background: url('../imagens/dados.png') no-repeat;
-    margin: 2px 2px;
-}
-
-.dado_ataque {
-    background-position: 0px 0px;
-}
-
-.dado_defesa {
-    background-position: 0px -40px;
-}
-
 #chat_do_jogo {
     float: left;
 }
@@ -258,6 +225,6 @@
 
 #chat_do_jogo input {
     display: inline;
-    width: 309px;
+    width: 311px;
     cursor: text;
 }

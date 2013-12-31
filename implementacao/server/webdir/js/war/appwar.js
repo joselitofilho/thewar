@@ -273,106 +273,6 @@ function processarMsg_saiu_do_jogo(msgParams) {
     // TODO: Exibir algum aviso de que o jogador foi embora....
 }
 
-function processarMsg_turno(msgParams) {
-    _turno = msgParams;
-    _posicaoJogadorDaVez = msgParams.vezDoJogador;
-    appwar_alteraInfoTurnoJogador(msgParams.vezDoJogador);
-    $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
-    
-    var tempoTotal = Number(msgParams.tempoRestante);
-    jogo_iniciaBarraDeProgresso(tempoTotal);
-    
-    if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
-        processarMsg_turno_distribuir_tropas_globais(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
-        processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.trocar_cartas) {
-        processarMsg_turno_trocar_cartas(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
-        processarMsg_turno_distribuir_tropas_globais(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
-        processarMsg_turno_atacar(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
-        processarMsg_turno_mover(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.jogo_terminou) {
-        processarMsg_turno_jogo_terminou(msgParams);
-    }
-}
-
-function processarMsg_turno_distribuir_tropas_globais(msgParams) {
-    if (_posicaoJogador == _posicaoJogadorDaVez) {
-        this.tocarSom(this, "buzina.mp3");
-        appwar_mudarCursor('colocar_tropa');
-    } else {
-        appwar_mudarCursor('');
-    }
-
-    $('#info_turno_texto').html('Distribuir tropas globais');
-    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.distribuir_tropas_globais);
-    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
-    
-    _territorios.pintarGruposTerritorios();
-    _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
-}
-
-function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
-    var strGrupoTerritorio = msgParams.grupoTerritorio;
-    if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
-    else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
-    $('#info_turno_texto').html('Distribuir tropas na ' + strGrupoTerritorio);
-    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.distribuir_tropas_grupo_territorio);
-    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
-    
-    _territorios.pintarGruposTerritorios();
-    _territorios.manterFocoNoGrupo(msgParams.grupoTerritorio);
-}
-
-function processarMsg_turno_trocar_cartas(msgParams) {
-    $('#info_turno_texto').html('Trocar cartas');
-    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.trocar_cartas);
-    
-    if (msgParams.obrigatorio && (_posicaoJogador == msgParams.posicaoJogador)) {
-        appwar_abrePainelCartasTerritorios();
-    }
-}
-
-function processarMsg_turno_atacar(msgParams) {
-    this.tocarSom(this, 'atacar.wav');
-    appwar_alteraQuantidadeDeTropas(0);
-
-    _territorioConquistado = null;
-    $('#info_turno_texto').html('Atacar');
-    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.atacar);
-    _territorios.pintarGruposTerritorios();
-    
-    if (_posicaoJogador == msgParams.vezDoJogador) {
-        appwar_mudarCursor('alvo');
-        _territorios.escureceTodosOsTerritoriosDoJogador(msgParams.vezDoJogador);
-    } else {
-        appwar_mudarCursor('');
-    }
-}
-
-function processarMsg_turno_mover(msgParams) {
-    this.tocarSom(this, 'mover.wav');
-    
-    $('#info_turno_texto').html('Mover');
-    appwar_alteraIconeAcaoTurno(TipoAcaoTurno.mover);
-    _territorios.pintarGruposTerritorios();
-    
-    if (_posicaoJogador == msgParams.vezDoJogador) {
-        appwar_mudarCursor('mover_para_dentro');
-        _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
-    } else {
-        appwar_mudarCursor('');
-    }
-}
-
-function processarMsg_turno_jogo_terminou(msgParams) {
-    this.tocarSom(this, 'venceuJogo.wav');
-    alert(msgParams.ganhador + ' venceu o jogo!');
-}
-
 function processarMsg_erro() {
     _jaPodeAtacar = true;
     _jaPodeMover = true;
@@ -513,7 +413,7 @@ function appwar_fechaPainelCartasTerritorios() {
 
 function appwar_alteraQuantidadeDeTropas(valor) {
     $('#quantidade_de_tropas').html(valor);
-    $('#ac_info').html('Tropas restantes: ' + valor);
+    $('#it_info').html(valor);
 }
 
 function selecionarCartaTerritorio(num) {
@@ -551,30 +451,6 @@ function appwar_iniciaCartasTerritorios() {
 
     for (i=1; i<=5; i++) {
         $('#cartaTerritorio' + i).attr('class','carta_territorio carta_territorio_vazia');
-    }
-}
-
-function appwar_alteraInfoTurnoJogador(posicaoJogador) {
-    var divInfoTurnoJogador = $('#info_turno_jogador');
-    switch (posicaoJogador) {
-        case 0:
-            divInfoTurnoJogador.css('background-position', '0px 0px');
-            break;
-        case 1:
-            divInfoTurnoJogador.css('background-position', '-60px 0px');
-            break;
-        case 2:
-            divInfoTurnoJogador.css('background-position', '-120px 0px');
-            break;
-        case 3:
-            divInfoTurnoJogador.css('background-position', '-180px 0px');
-            break;
-        case 4:
-            divInfoTurnoJogador.css('background-position', '-240px 0px');
-            break;
-        case 5:
-            divInfoTurnoJogador.css('background-position', '-300px 0px');
-            break;
     }
 }
 
@@ -759,36 +635,6 @@ function appwar_registrar() {
 
 function appwar_recarregarPagina() {
     location.reload();
-}
-
-function appwar_alteraTodosOsIconesParaCinza() {
-    $('#ac_1').removeClass('ac_1');
-    $('#ac_2').removeClass('ac_2');
-    $('#ac_3').removeClass('ac_3');
-    $('#ac_4').removeClass('ac_4');
-    $('#ac_1').addClass('ac_1_cinza');
-    $('#ac_2').addClass('ac_2_cinza');
-    $('#ac_3').addClass('ac_3_cinza');
-    $('#ac_4').addClass('ac_4_cinza');
-}
-
-function appwar_alteraIconeAcaoTurno(acao) {
-    appwar_alteraTodosOsIconesParaCinza();
-    if (acao == TipoAcaoTurno.distribuir_tropas_globais ||
-        acao == TipoAcaoTurno.distribuir_tropas_grupo_territorio ||
-        acao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
-        $('#ac_1').removeClass('ac_1_cinza');
-        $('#ac_1').addClass('ac_1');
-    } else if (acao == TipoAcaoTurno.trocar_cartas) {
-        $('#ac_2').removeClass('ac_2_cinza');
-        $('#ac_2').addClass('ac_2');
-    } else if (acao == TipoAcaoTurno.atacar) {
-        $('#ac_3').removeClass('ac_3_cinza');
-        $('#ac_3').addClass('ac_3');
-    } else if (acao == TipoAcaoTurno.mover) {
-        $('#ac_4').removeClass('ac_4_cinza');
-        $('#ac_4').addClass('ac_4');
-    }
 }
 
 function iniciarControleDeAudio() {
