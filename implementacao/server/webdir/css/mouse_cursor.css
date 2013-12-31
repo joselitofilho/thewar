@@ -4,6 +4,9 @@
 .mouse_alvo,
 .mouse_alvo * {cursor: url('../imagens/mouse/alvo.png') 16 16, pointer;}
 
+.mouse_trocar_cartas,
+.mouse_trocar_cartas * {cursor: url('../imagens/mouse/trocar_cartas.png') 31 27, pointer;}
+
 .mouse_atacar,
 .mouse_atacar * {cursor: url('../imagens/mouse/atacar.png'), pointer;}
 

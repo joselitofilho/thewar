@@ -87,6 +87,7 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
         appwar_mudarCursor('colocar_tropa');
     } else {
         appwar_mudarCursor('');
+        this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
     
     appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
@@ -97,8 +98,7 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
 
 function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
-        // TODO: Ver qual o som...
-        // this.tocarSom(this, "buzina.mp3");
+        this.tocarSom(this, "turnoDistribuirTropa.mp3");
         appwar_mudarCursor('colocar_tropa');
     } else {
         appwar_mudarCursor('');
@@ -111,7 +111,14 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
 }
 
 function processarMsg_turno_trocar_cartas(msgParams) {
-    if (msgParams.obrigatorio && (_posicaoJogador == msgParams.posicaoJogador)) {
+    this.tocarSom(this, "turnoTrocarCarta.wav");
+    
+    if (_posicaoJogador == _posicaoJogadorDaVez) 
+        appwar_mudarCursor('trocar_cartas');
+    else 
+        appwar_mudarCursor('');
+    
+    if (msgParams.obrigatorio && (_posicaoJogador == msgParams.vezDoJogador)) {
         appwar_abrePainelCartasTerritorios();
     }
 }

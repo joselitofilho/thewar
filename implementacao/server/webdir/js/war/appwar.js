@@ -682,6 +682,8 @@ function appwar_mudarCursor(tipo) {
         $('body').attr('class', 'mouse_colocar_tropa');
     }  else if (tipo == 'alvo') {
         $('body').attr('class', 'mouse_alvo');
+    } else if (tipo == 'trocar_cartas') {
+        $('body').attr('class', 'mouse_trocar_cartas');
     }  else if (tipo == 'atacar') {
         $('body').attr('class', 'mouse_atacar');
     } else if (tipo == 'mover_para_fora') {

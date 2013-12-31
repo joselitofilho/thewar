@@ -28,8 +28,8 @@
 
 #pct_valorDaTroca {
     float: right;
-    padding-top: 3px;
     font-size: 20px;
+    margin: 3px 42px 0px 0px;
 }
 
 #cartasTerritorios {

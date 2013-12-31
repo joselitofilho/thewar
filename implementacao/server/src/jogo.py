@@ -36,6 +36,8 @@ class Jogo(object):
         self.jogadorDaVezConquistouTerritorio = False
 
         self.numeroDaTroca = 1
+        
+        self.obrigatorioPassarAVez = False
 
     def inicia(self):
         self.iniciaFaseI()
@@ -238,9 +240,9 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and turno.quantidadeDeTropas == 0:
             try:
-                turno.gruposTerritorio.remove(turno.grupoTerritorioAtual)
+                turno.gruposTerritorio.pop(0)
             except:
-                print "WARN: Nao tem grupo territorio para revemor"
+                print "WARN: Nao tem grupo territorio para remover."
 
             if len(turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
@@ -321,9 +323,9 @@ class Jogo(object):
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             if turno.quantidadeDeTropas == 0:
                 try:
-                    turno.gruposTerritorio.remove(turno.grupoTerritorioAtual)
+                    turno.gruposTerritorio.pop(0)
                 except:
-                    print "WARN: Nao tem grupo territorio para revemor"
+                    print "WARN: Nao tem grupo territorio para remover."
 
                 jogador = self.jogadores[self.posicaoJogadorDaVez]
 
@@ -353,13 +355,18 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
             jogador = self.jogadores[self.posicaoJogadorDaVez]
-            if len(jogador.cartasTerritorio) < 5:
-                turno.tipoAcao = TipoAcaoTurno.atacar
+            print "Obrigatorio passar a vez?", self.obrigatorioPassarAVez
+            if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
+                if self.obrigatorioPassarAVez:
+                    turno.tipoAcao = TipoAcaoTurno.mover
+                else:
+                    turno.tipoAcao = TipoAcaoTurno.atacar
                 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
                 acaoDoTurno = self.criaAcaoDoTurno(turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
+                self.obrigatorioPassarAVez = False
 
         elif turno.tipoAcao == TipoAcaoTurno.atacar:
             turno.tipoAcao = TipoAcaoTurno.mover
@@ -418,6 +425,7 @@ class Jogo(object):
     
     def finalizaTurnoPorTimeout(self):
         self.turno.reiniciaVariaveisExtras()
+        self.obrigatorioPassarAVez = True
 
         if self.turno.numero == 1:
             self.finalizaTurno_1()
