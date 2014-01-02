@@ -76,7 +76,8 @@ function processarMsg_cartas_territorios(msgParams) {
 
 function jogo_processaMsg_jogador_destruido(msgParams) {
     this.tocarSom(this, "jogadorDestruido.mp3");
-    alert(msgParams.usuario + ' foi destruído.');
+    _painelObjetivo.abreEspecifico(Number(msgParams.jogador.objetivo) + 1,
+            msgParams.jogador.usuario + ' foi destruído.');
 }
 
 function processarMsg_turno(msgParams) {
@@ -178,7 +179,8 @@ function processarMsg_turno_mover(msgParams) {
 
 function processarMsg_turno_jogo_terminou(msgParams) {
     this.tocarSom(this, 'venceuJogo.wav');
-    alert(msgParams.ganhador + ' venceu o jogo!');
+    _painelObjetivo.abreEspecifico(Number(msgParams.objetivo) + 1, 
+            msgParams.ganhador + ' venceu o jogo!');
 }
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
@@ -253,12 +255,12 @@ function jogo_alteraQuantidadeDeTerritoriosPorJogador(territorios, posicao) {
 
 function jogo_diminuiQuantidadeDeTerritorioDoJogador(posicao) {
     var valor = Number($('#qtdTerritorio' + posicao).html()) - 1;
-    if (valor > 0) $('#qtdTerritorio' + posicao).html(valor);
+    if (valor >= 0) $('#qtdTerritorio' + posicao).html(valor);
 }
 
 function jogo_aumentaQuantidadeDeTerritorioDoJogador(posicao) {
     var valor = Number($('#qtdTerritorio' + posicao).html()) + 1;
-    if (valor < 42) $('#qtdTerritorio' + posicao).html(valor);
+    if (valor <= 42) $('#qtdTerritorio' + posicao).html(valor);
 }
 
 /* Chat */

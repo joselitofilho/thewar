@@ -2,6 +2,8 @@
 // http://soundbible.com/tags-war.html
 //
 
+_painelObjetivo = null;
+
 _posicaoJogador = -1;
 _turno = null;
 _posicaoJogadorDaVez = -1;
@@ -59,9 +61,8 @@ function processarMsg_entrar(msgParams) {
 }
 
 function processarMsg_carta_objetivo(msgParams) {
-    $('#cartaObjetivo').attr('class', 'carta_objetivo carta_objetivo_' + (Number(msgParams.objetivo)+1));
-    
-    appwar_abrePainelObjetivo();
+    _painelObjetivo = new gpscheck.war.PainelObjetivo(Number(msgParams.objetivo) + 1);
+    _painelObjetivo.abre();
 }
 
 function processarMsg_colocar_tropa(msgParams) {
@@ -382,16 +383,6 @@ function atacar() {
             _libwebsocket.enviarObjJson(atacarMsg);
         }
     }
-}
-
-function appwar_abrePainelObjetivo() {
-    $('#painel_objetivo').css('visibility', 'visible');
-    $('#po_fundo').css('visibility', 'visible');
-}
-
-function appwar_fechaPainelObjetivo() {
-    $('#painel_objetivo').css('visibility', 'hidden');
-    $('#po_fundo').css('visibility', 'hidden');
 }
 
 function appwar_abrePainelCartasTerritorios() {
@@ -733,11 +724,11 @@ function iniciarApp() {
     var divMapa = document.getElementById("mapa");
     mapa = new gpscheck.mapa.Mapa();
     mapa.inicia(divMapa, 10.0, 10.0);
+    //this.tocarSomDeFundo(divMapa);
+
     _territorios = new gpscheck.mapa.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
-    
-    //this.tocarSomDeFundo(divMapa);
-    
+        
     iniciarControleDeAudio();
 }
 

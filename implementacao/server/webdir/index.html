@@ -50,7 +50,9 @@
             <div id="alerta_texto"></div>
         </div>
 
-        <div id="painel_objetivo" onclick="appwar_fechaPainelObjetivo();">
+        <div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
+            <span id="po_titulo">Carta objetivo</span>
+
             <div class="po_content">
                 <div id="cartaObjetivo" class="carta_objetivo"></div>
             </div>
@@ -173,7 +175,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button class="btn btn-default" onclick="appwar_abrePainelObjetivo();">
+                                <button class="btn btn-default" onclick="_painelObjetivo.abre();">
                                     <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
                                 </button>
                             </li>
@@ -298,6 +300,7 @@
         <script type="text/javascript" src="js/war/mapa.js"></script>
         <script type="text/javascript" src="js/war/util.js"></script>
         <script type="text/javascript" src="js/war/territorios.js"></script>
+        <script type="text/javascript" src="js/war/painelObjetivo.js"></script>
         <script type="text/javascript" src="js/war/appwar.js"></script>
         <script type="text/javascript" src="js/war/appwar-sala.js"></script>
         <script type="text/javascript" src="js/war/jogo.js"></script>

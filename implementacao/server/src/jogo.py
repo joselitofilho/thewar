@@ -155,7 +155,7 @@ class Jogo(object):
         # Preencher os dados da acao
         if tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_globais:
             if turno.quantidadeDeTropas == 0:
-                turno.quantidadeDeTropas = math.floor(len(jogador.territorios) / 2);
+                turno.quantidadeDeTropas = math.ceil(len(jogador.territorios) / 2.0);
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, 
                     numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca, 
                     turno.quantidadeDeTropas)
@@ -425,7 +425,10 @@ class Jogo(object):
     
     def finalizaTurnoPorTimeout(self):
         self.turno.reiniciaVariaveisExtras()
-        self.obrigatorioPassarAVez = True
+        if self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
+            self.obrigatorioPassarAVez = True
+        else:
+            self.obrigatorioPassarAVez = False
 
         if self.turno.numero == 1:
             self.finalizaTurno_1()
