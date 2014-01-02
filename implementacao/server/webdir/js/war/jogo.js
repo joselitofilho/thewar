@@ -10,6 +10,8 @@ function processarMsg_jogo_fase_I(msgParams) {
     $('#menu_jogadores').css('visibility', 'visible');
     $('#controles').css('visibility', 'visible');
     $('#info_turno').css('visibility', 'visible');
+    $('#btnFinalizarTurno').css('visibility', 'visible');
+    $('#barra_tempo').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
 }
 
@@ -24,6 +26,8 @@ function processarMsg_carrega_jogo(msgParams) {
     
     $('#menu_jogadores').css('visibility', 'visible');
     $('#controles').css('visibility', 'visible');
+    $('#btnFinalizarTurno').css('visibility', 'visible');
+    $('#barra_tempo').css('visibility', 'visible');
     $('#info_turno').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
 
@@ -46,12 +50,28 @@ function processarMsg_carrega_jogo_olheiro(msgParams) {
     
     $('#menu_jogadores').css('visibility', 'visible');
     $('#controles').css('visibility', 'visible');
+    $('#btnFinalizarTurno').css('visibility', 'visible');
+    $('#barra_tempo').css('visibility', 'visible');
     $('#info_turno').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
 
     _posicaoJogadorDaVez = msgParams.jogadorDaVez;
 
     $('#bloqueador_tela').css('visibility', 'hidden');
+}
+
+function processarMsg_cartas_territorios(msgParams) {
+    if (msgParams.length > 0) {
+        this.tocarSom(this, "ganhouCarta.mp3");
+        jogo_animacaoGanhouCartaTerritorio();
+    }
+
+    appwar_iniciaCartasTerritorios();
+
+    for (i=0; i<msgParams.length; i++) {
+        var cartaTerritorio = msgParams[i];
+        $('#cartaTerritorio' + (i+1)).attr('class','carta_territorio carta_territorio_' + cartaTerritorio.codigoTerritorio);
+    }
 }
 
 function processarMsg_turno(msgParams) {
@@ -305,4 +325,19 @@ function jogo_finalizaBarraDeProgresso() {
     $('#barra').width('100%');
     $('#barra').css('background-color','#dd514c');
     jogo_alteraTempoRestante(0);
+}
+
+function jogo_animacaoGanhouCartaTerritorio() {
+    $('#ganhou_carta').css('margin-top', '-100px');
+    $('#ganhou_carta').css('opacity', '1.0');
+    $('#ganhou_carta').css('visibility', 'visible');
+    $('#ganhou_carta').animate({
+        'margin-top': '132px'
+    }, 1000, function() {
+        $(this).animate({
+            opacity: 0.0
+        }, 1000, function() {
+            $('#ganhou_carta').css('visibility', 'hidden');
+        });
+    });
 }

@@ -80,11 +80,6 @@
         </div>
         
         <div id="geral">
-
-            <!--<div id="topo" class="well well-sm">
-                <div id="idJogador"></div>
-            </div>-->
-            
             <div id="sala">
                 <div class="form-signin">
                     <h2 class="form-signin-heading">Escolha sua cor</h2>
@@ -155,7 +150,7 @@
                     <div id="tempo_restante"></div>
                 </div>
 
-                <div id="controles" style="visibility: hidden;">
+                <div id="controles">
                     <div id="chat_do_jogo">
                         <textarea id="ct_mensagens" class="form-control" readonly></textarea>
                         <input id="ct_texto" type="text" 
@@ -184,11 +179,7 @@
                             </li>
                         </ul>
                     </div>
-                    
-                    <div id="btnFinalizarTurno" onclick="finalizarTurno();">
-                        <div>Feito</div>
-                    </div>
-                    
+                     
                     <div id="dados">
                         <div id="dadosAtaque">
                             <div id="da1" class="dado dado_ataque"></div>
@@ -203,7 +194,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+            
+            <div id="btnFinalizarTurno" onclick="finalizarTurno();">
+                <div>Feito</div>
+            </div>
+
+            <div id="ganhou_carta"></div>
+        </div> <!-- div: jogo -->
 
         <div id="bloqueador_tela"></div>
         <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>

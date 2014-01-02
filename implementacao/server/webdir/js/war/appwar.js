@@ -65,7 +65,7 @@ function processarMsg_carta_objetivo(msgParams) {
 }
 
 function processarMsg_colocar_tropa(msgParams) {
-    this.tocarSom(this, 'colocarTropa.mp3');
+    this.tocarSom(this, 'colocarTropa.wav');
     _territorios.piscar(msgParams.territorio.codigo);
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     
@@ -223,15 +223,6 @@ function processarMsg_mover(msgParams) {
         _posicaoJogador == _posicaoJogadorDaVez &&
         _turno.tipoAcao != TipoAcaoTurno.mover_apos_conquistar_territorio) {
         territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
-    }
-}
-
-function processarMsg_cartas_territorios(msgParams) {
-    appwar_iniciaCartasTerritorios();
-
-    for (i=0; i<msgParams.length; i++) {
-        var cartaTerritorio = msgParams[i];
-        $('#cartaTerritorio' + (i+1)).attr('class','carta_territorio carta_territorio_' + cartaTerritorio.codigoTerritorio);
     }
 }
 

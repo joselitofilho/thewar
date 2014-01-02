@@ -66,7 +66,7 @@
 
 #acoes_botoes {
     float: left;
-    margin-left: 7px;
+    margin-left: 4px;
 }
 
 #acoes_botoes ul {
@@ -93,11 +93,11 @@
 
 #barra_tempo {
     position: absolute;
-    top: 475px;
-    left: 50%;
+    top: 463px;
+    left: 471px;
     width: 290px;
-    margin-left: -129px;
     color: #FFF;
+    visibility: hidden;
     z-index: 999;
 }
 
@@ -121,14 +121,19 @@
 
 #controles {
     position: absolute;
-    top: 497px;
-    z-index: 999;
-    width: 1024px;
+    top: 485px;
+    right: 0;
     background: url('../imagens/muro.jpg');
     cursor: pointer;
+    visibility: hidden;
+    z-index: 999;
 }
 
-#dados { float: right; }
+#dados { 
+    position: relative;
+    float: left;
+    margin-left: 4px;
+}
 #dadosAtaque { float: left; }
 #dadosDefesa { float: right; }
 
@@ -148,15 +153,17 @@
 }
 
 #btnFinalizarTurno {
-    position: relative;
-    float: right;
+    position: absolute;
+    top: 560px;
+    left: 10px;
     width: 80px;
     height: 80px;
     background: url('../imagens/btnVerde80x80.png') no-repeat;
     cursor: pointer;
     color: #000;
     font-size: 20px;
-    margin-right: 5px;
+    visibility: hidden;
+    z-index: 999;
 }
 
 #btnFinalizarTurno div {
@@ -220,7 +227,7 @@
 #chat_do_jogo textarea {
     display: block;
     resize: none;
-    width: 380px;
+    width: 400px;
     height: 120px;
     border: 0;
     background-color: #FFF;
@@ -230,6 +237,20 @@
 
 #chat_do_jogo input {
     display: inline;
-    width: 311px;
+    width: 329px;
     cursor: text;
+}
+
+#ganhou_carta {
+    position: absolute;
+    width: 150px;
+    height: 200px;
+    background: url("../../imagens/cartasTerritorios_sprite.png") no-repeat;
+    top: 50%;
+    left: 50%;
+    margin-left: -75px;
+    margin-top: -100px;
+    opacity: 0.0;
+    visibility: hidden;
+    z-index: 999;
 }
