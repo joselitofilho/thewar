@@ -328,6 +328,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_carrega_jogo_olheiro(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_jogo) {
         jogo_processaMsg_msg_chat_jogo(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.jogador_destruido) {
+        jogo_processaMsg_jogador_destruido(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }

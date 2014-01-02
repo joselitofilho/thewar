@@ -74,6 +74,11 @@ function processarMsg_cartas_territorios(msgParams) {
     }
 }
 
+function jogo_processaMsg_jogador_destruido(msgParams) {
+    this.tocarSom(this, "jogadorDestruido.mp3");
+    alert(msgParams.usuario + ' foi destruído.');
+}
+
 function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _posicaoJogadorDaVez = msgParams.vezDoJogador;
@@ -333,10 +338,10 @@ function jogo_animacaoGanhouCartaTerritorio() {
     $('#ganhou_carta').css('visibility', 'visible');
     $('#ganhou_carta').animate({
         'margin-top': '132px'
-    }, 1000, function() {
+    }, 600, function() {
         $(this).animate({
             opacity: 0.0
-        }, 1000, function() {
+        }, 600, function() {
             $('#ganhou_carta').css('visibility', 'hidden');
         });
     });

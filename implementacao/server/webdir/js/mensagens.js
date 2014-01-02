@@ -21,7 +21,7 @@ var TipoMensagem = {
     carrega_jogo: "CarregaJogo",
     carrega_jogo_olheiro: "CarregaJogoOlheiro",
     altera_posicao_na_sala: "AlteraPosicaoNaSala",
-    msg_chat_jogo: "MsgChatJogo"
+    msg_chat_jogo: "MsgChatJogo",
     jogador_destruido: "JogadorDestruido"
 };
 

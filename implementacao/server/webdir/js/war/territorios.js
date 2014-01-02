@@ -591,6 +591,14 @@ gpscheck.mapa.Territorios = function(mapa) {
                 _markerTerritorios[territorio.codigo] = marker;
                 _labelTerritorios[territorio.codigo] = label;
 
+                google.maps.event.addListener(marker, 'mousemove', function(event) {
+                    territorioMouseMove(event, _labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                });
+
+                google.maps.event.addListener(marker, 'mouseout', function() {
+                    territorioMouseOut(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                });
+
                 google.maps.event.addListener(marker, 'click', function(event) {
                     territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
                 });
