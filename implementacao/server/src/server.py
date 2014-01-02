@@ -56,11 +56,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 params = {}
                 usuario = mensagem.params['usuario']
                 senha = mensagem.params['senha']
-                if _banco.usuarioExiste(usuario):
-                    params["status"] = 0
-                elif len(usuario) > 0 and len(senha) > 0:
-                    _banco.registraUsuario(usuario, senha)
-                    params["status"] = 1
+                if len(usuario) > 0 and len(senha) > 0:
+                    if _banco.usuarioExiste(usuario):
+                        params["status"] = 0
+                    else:
+                        _banco.registraUsuario(usuario, senha)
+                        params["status"] = 1
                 else:
                     params["status"] = 2
                     

@@ -75,9 +75,13 @@ function processarMsg_cartas_territorios(msgParams) {
 }
 
 function jogo_processaMsg_jogador_destruido(msgParams) {
-    this.tocarSom(this, "jogadorDestruido.mp3");
-    _painelObjetivo.abreEspecifico(Number(msgParams.jogador.objetivo) + 1,
-            msgParams.jogador.usuario + ' foi destruído.');
+    setTimeout(function() {
+        this.tocarSom(this, "jogadorDestruido.mp3");
+        var usuario = msgParams.jogador.usuario;
+        if (msgParams.jogador.posicao == _posicaoJogador) usuario = 'Você';
+        _painelObjetivo.abreEspecifico(Number(msgParams.jogador.objetivo) + 1,
+            usuario + ' foi destruído.');
+    }, 2000);
 }
 
 function processarMsg_turno(msgParams) {
