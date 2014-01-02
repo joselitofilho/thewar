@@ -151,7 +151,7 @@ if __name__ == '__main__':
     factory.setProtocolOptions(allowHixie76 = True)
     listenWS(factory)
 
-    _gerenciador = gerenciador.Gerenciador(factory)
+    _gerenciador = gerenciador.Gerenciador()
     _banco = banco.Banco()
 
     webdir = File("./webdir")
