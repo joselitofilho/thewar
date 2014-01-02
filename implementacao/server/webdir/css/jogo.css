@@ -1,12 +1,18 @@
 #info_turno {
     position: absolute;
-    top: 295px;
+    top: 285px;
+    left: 25px;
     width: 150px;
     height: 200px;
     color: #FFF;
     text-align: center;
     z-index: 999;
     visibility: hidden;
+    -webkit-transform: rotate(10deg);  /* Chrome, Safari 3.1+ */
+    -moz-transform: rotate(10deg);  /* Firefox 3.5-15 */
+    -ms-transform: rotate(10deg);  /* IE 9 */
+    -o-transform: rotate(10deg);  /* Opera 10.50-12.00 */
+    transform: rotate(10deg);  /* Firefox 16+, IE 10+, Opera 12.10+ */
 }
 
 #it_titulo {
