@@ -2,28 +2,21 @@
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
 function processarMsg_lista_sala(msgParams) {
+    var listaJogadores = msgParams.listaJogadores;
+    
     if (typeof msgParams.extra != 'undefined') {
         var extra = msgParams.extra;
         if (extra.entrou_ou_saiu == 1) {
-            entrouNaSala(msgParams.sala, extra.jogador);
+            entrouNaSala(msgParams.sala, extra.jogador, listaJogadores);
         } else {
-            //saiuDaSala(msgParams.sala, extra.jogador);
+            saiuDaSala(msgParams.sala, extra.jogador, listaJogadores);
         }
     }
-    
-    var listaJogadores = msgParams.listaJogadores;
-    for (i=0; i < listaJogadores.length; i++) {
-        if (listaJogadores[i] != null) {
-            var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
-            var usuario = listaJogadores[i].usuario;
-            sala_preencheJogador(posicaoJogador, usuario);
-        }
-    }
-    
+ 
     _quantidadeDeJogadoreNaSala = listaJogadores.length;
 }
 
-function entrouNaSala(sala, jogadorDaSala) {
+function entrouNaSala(sala, jogadorDaSala, listaJogadores) {
     this.tocarSom(this, "entrou.mp3");
 
     if (_posicaoJogador == -1) {
@@ -38,23 +31,33 @@ function entrouNaSala(sala, jogadorDaSala) {
     $('#bloqueador_tela').css('visibility', 'hidden');
     
     $('#sala').css('visibility', 'visible');
+
+    for (i=0; i < listaJogadores.length; i++) {
+        if (listaJogadores[i] != null) {
+            var posicaoJogador = Number(listaJogadores[i].posicao) + 1;
+            var usuario = listaJogadores[i].usuario;
+            sala_preencheJogador(posicaoJogador, usuario);
+        }
+    }
 }
 
-function processarMsg_saiu_da_sala(msgParams) {
+function saiuDaSala(sala, jogadorDaSala, listaJogadores) {
     this.tocarSom(this, "saindo.wav");
     
-    var posicaoJogador = Number(msgParams.jogadorDaSala.posicao) + 1;
+    var posicaoJogador = Number(jogadorDaSala.posicao) + 1;
     sala_limpaPosicao(posicaoJogador);
     
-    var usuario = msgParams.novoDono.usuario;
-    var novoDonoPosicao = Number(msgParams.novoDono.posicao) + 1;
-    sala_preencheJogador(novoDonoPosicao, usuario);
-    
-    // TODO: Pegar o id da sala na mensagem.
-    var sala = 1;
-    
-    if (_posicaoJogador == msgParams.novoDono.posicao) {
-        $('#btnIniciarPartida' + sala).css('visibility', ((msgParams.novoDono.dono) ? 'visible' : 'hidden'));
+    for (i=0; i < listaJogadores.length; i++) {
+        if (listaJogadores[i] != null) {
+            var jog = listaJogadores[i];
+            var posicaoJogador = Number(jog.posicao) + 1;
+            var usuario = jog.usuario;
+            sala_preencheJogador(posicaoJogador, usuario);
+
+            if (jog.dono && _posicaoJogador == jog.posicao) {
+                $('#btnIniciarPartida' + sala).css('visibility', 'visible');
+            }
+        }
     }
 }
 

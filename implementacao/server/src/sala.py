@@ -52,13 +52,13 @@ class Sala(object):
             
             if jogador.dono:
                 self.verificaDono();
-            
-            novoDono = None
-            if self.dono != None:
-                novoDono = self.jogadores[self.dono]
-                novoDono.dono = True
-            saiuDaSalaMsg = SaiuDaSala(jogador, novoDono)
-            self.enviaMsgParaTodos(TipoMensagem.saiu_da_sala, saiuDaSalaMsg)
+
+            extra = {
+                "entrou_ou_saiu": 0,
+                "jogador": jogador
+            }
+            listaSalaMsg = ListaSala(self.id, self.jogadores.values(), extra)
+            self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
             
     def alteraPosicao(self, usuario, novaPosicao):
         try:
@@ -89,6 +89,7 @@ class Sala(object):
             self.dono = None
             for pos in self.jogadores.keys():
                 self.dono = pos
+                self.jogadores[pos].dono = True
                 break
                     
     def defineProximaPosicao(self):

@@ -5,7 +5,6 @@ class TipoMensagem:
     registrar = "Registrar"
     erro = "Erro"
     lista_sala = "ListaSala"
-    saiu_da_sala = "SaiuDaSala"
     iniciar_partida = "IniciarPartida"
     jogo_fase_I = "JogoFaseI"
     carta_objetivo = "CartaObjetivo"
@@ -40,11 +39,6 @@ class ListaSala(object):
         self.listaJogadores = listaJogadores
         self.extra = extra
 
-class SaiuDaSala(object):
-    def __init__(self, jogadorDaSala, novoDono = None):
-        self.jogadorDaSala = jogadorDaSala
-        self.novoDono = novoDono
-        
 class AlteraPosicaoNaSala(object):
     def __init__(self, jogadorDaSala, posicaoAntiga):
         self.jogadorDaSala = jogadorDaSala

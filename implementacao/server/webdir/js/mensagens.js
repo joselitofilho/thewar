@@ -3,7 +3,6 @@ var TipoMensagem = {
     registrar: "Registrar",
     erro: "Erro",
     lista_sala: "ListaSala",
-    saiu_da_sala: "SaiuDaSala",
     iniciar_partida: "IniciarPartida",
     jogo_fase_I: "JogoFaseI",
     carta_objetivo: "CartaObjetivo",
