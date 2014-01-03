@@ -36,11 +36,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     # print "# ", jsonMsg
                     # self.sendMessage(jsonMsg)
                     
+                    # TODO: Se for o mesmo socket, nao eh necessario desconectar o jogagdor.
                     self.factory.desconectaUsuario(usuario)
             
                 if len(usuario) > 0 and _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha']):
                     self.factory.clienteConectou(self, usuario)
-                    _gerenciador.clienteConectou(self, usuario)
+                    _gerenciador.entra(self, usuario)
                     
                     params["status"] = 1
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
@@ -105,7 +106,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
     def unregister(self, client):
         if client in self.clients:
             print "unregistered client " + client.peerstr
-            _gerenciador.clienteDesconectou(client)
+            _gerenciador.sai(client)
             self.clients.remove(client)
 
     def broadcast(self, msg):

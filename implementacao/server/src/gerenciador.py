@@ -10,7 +10,7 @@ class Gerenciador(object):
         self.jogo = None
         self.jogadores = {}
 
-    def clienteConectou(self, cliente, usuario):
+    def entra(self, cliente, usuario):
         self.jogadores[cliente] = usuario
         
         if self.jogo == None:
@@ -18,17 +18,20 @@ class Gerenciador(object):
         else:
             self.jogo.adiciona(cliente, usuario)
 
-    def clienteDesconectou(self, cliente):
-        usuario = self.jogadores[cliente]
-        if self.jogo == None:
-            self.sala.remove(usuario)
-        else:
-            self.jogo.remove(usuario)
+    def sai(self, cliente):
+        try:
+            usuario = self.jogadores[cliente]
+            if self.jogo == None:
+                self.sala.remove(usuario)
+            else:
+                self.jogo.remove(usuario)
             
-            if not self.jogo.temJogadorOnLine():
-                self.jogoTerminou(self.jogo.id)
+                if not self.jogo.temJogadorOnLine():
+                    self.jogoTerminou(self.jogo.id)
         
-        del self.jogadores[cliente]
+            del self.jogadores[cliente]
+        except:
+            print "[ERROR]", "Nao foi possivel desconectar o cliente", cliente 
 
     def iniciaPartida(self):
         if len(self.sala.jogadores) >= 3 and self.jogo == None:
