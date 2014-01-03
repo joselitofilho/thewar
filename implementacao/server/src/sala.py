@@ -3,12 +3,13 @@ from mensagens import *
 
 class Sala(object):
     def __init__(self):
+        self.id = 1
         self.proximaPosicao = 0
         self.jogadores = {}
         self.dono = None
         self.clientes = {} #[posicao] = socket
     
-        print "Sala criada."
+        print "Sala[" + str(self.id) + "] criada."
     
     def salaEstaCheia(self):
         return len(self.jogadores) == 6;
@@ -26,14 +27,12 @@ class Sala(object):
 
             self.defineProximaPosicao()
 
-        # Apenas para o jogador que acabou de entrar na sala, indicamos se ele eh o dono da sala.
-        entrouNaSalaMsg = EntrouNaSala(jogador)
-        jsonMsg = json.dumps(Mensagem(TipoMensagem.entrou_na_sala, entrouNaSalaMsg), default=lambda o: o.__dict__)
-        print "# ", jsonMsg
-        cliente.sendMessage(jsonMsg)
-
         if jogador != None:
-            listaSalaMsg = ListaSala(self.jogadores.values())
+            extra = {
+                "entrou_ou_saiu": 1,
+                "jogador": jogador
+            }
+            listaSalaMsg = ListaSala(self.id, self.jogadores.values(), extra)
             self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
 
     def remove(self, usuario):

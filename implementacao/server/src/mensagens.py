@@ -4,7 +4,6 @@ class TipoMensagem:
     entrar = "Entrar"
     registrar = "Registrar"
     erro = "Erro"
-    entrou_na_sala = "EntrouNaSala"
     lista_sala = "ListaSala"
     saiu_da_sala = "SaiuDaSala"
     iniciar_partida = "IniciarPartida"
@@ -35,13 +34,11 @@ class Mensagem(object):
     def fromJson(self, jsonMsg):
         self.__dict__ = json.loads(jsonMsg)
 
-class EntrouNaSala(object):
-    def __init__(self, jogadorDaSala):
-        self.jogadorDaSala = jogadorDaSala
-
 class ListaSala(object):
-    def __init__(self, listaJogadores):
+    def __init__(self, sala, listaJogadores, extra):
+        self.sala = sala
         self.listaJogadores = listaJogadores
+        self.extra = extra
 
 class SaiuDaSala(object):
     def __init__(self, jogadorDaSala, novoDono = None):

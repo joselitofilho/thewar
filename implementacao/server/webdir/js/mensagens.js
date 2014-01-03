@@ -2,7 +2,6 @@ var TipoMensagem = {
     entrar: "Entrar",
     registrar: "Registrar",
     erro: "Erro",
-    entrou_na_sala: "EntrouNaSala",
     lista_sala: "ListaSala",
     saiu_da_sala: "SaiuDaSala",
     iniciar_partida: "IniciarPartida",

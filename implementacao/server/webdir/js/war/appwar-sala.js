@@ -2,7 +2,14 @@
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
 function processarMsg_lista_sala(msgParams) {
-    this.tocarSom(this, "entrou.mp3");
+    if (typeof msgParams.extra != 'undefined') {
+        var extra = msgParams.extra;
+        if (extra.entrou_ou_saiu == 1) {
+            entrouNaSala(msgParams.sala, extra.jogador);
+        } else {
+            //saiuDaSala(msgParams.sala, extra.jogador);
+        }
+    }
     
     var listaJogadores = msgParams.listaJogadores;
     for (i=0; i < listaJogadores.length; i++) {
@@ -16,15 +23,17 @@ function processarMsg_lista_sala(msgParams) {
     _quantidadeDeJogadoreNaSala = listaJogadores.length;
 }
 
-function processarMsg_entrou_na_sala(msgParams) {
-    var jogadorDaSala = msgParams.jogadorDaSala;
-    _posicaoJogador = Number(jogadorDaSala.posicao);
+function entrouNaSala(sala, jogadorDaSala) {
+    this.tocarSom(this, "entrou.mp3");
 
-    appwar_alterarTituloDaPagina(jogadorDaSala.usuario);
-
-    if (typeof jogadorDaSala.dono != 'undefined') {
-        $('#btnIniciarPartida').css('visibility', ((jogadorDaSala.dono) ? 'visible' : 'hidden'));
+    if (_posicaoJogador == -1) {
+        _posicaoJogador = Number(jogadorDaSala.posicao);
+        appwar_alterarTituloDaPagina(jogadorDaSala.usuario);
+        if (typeof jogadorDaSala.dono != 'undefined') {
+            $('#btnIniciarPartida' + sala).css('visibility', ((jogadorDaSala.dono) ? 'visible' : 'hidden'));
+        }
     }
+    
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#bloqueador_tela').css('visibility', 'hidden');
     
@@ -41,8 +50,11 @@ function processarMsg_saiu_da_sala(msgParams) {
     var novoDonoPosicao = Number(msgParams.novoDono.posicao) + 1;
     sala_preencheJogador(novoDonoPosicao, usuario);
     
+    // TODO: Pegar o id da sala na mensagem.
+    var sala = 1;
+    
     if (_posicaoJogador == msgParams.novoDono.posicao) {
-        $('#btnIniciarPartida').css('visibility', ((msgParams.novoDono.dono) ? 'visible' : 'hidden'));
+        $('#btnIniciarPartida' + sala).css('visibility', ((msgParams.novoDono.dono) ? 'visible' : 'hidden'));
     }
 }
 
@@ -64,15 +76,15 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 /* Funções gerais */
 function sala_limpaPosicao(posicao) {
     $("#jogador" + posicao).html("");
-    $("#sala_jogador" + posicao).html("");
+    $("#sala1_jogador" + posicao).html("");
 }
 
 function sala_preencheJogador(posicao, usuario) {
     $("#jogador" + posicao).html(usuario);
-    $("#sala_jogador" + posicao).html(usuario);
+    $("#sala1_jogador" + posicao).html(usuario);
 }
 
-function appwar_alteraPosicaoSala(posicao) {
+function appwar_alteraPosicaoSala(sala, posicao) {
     msg = comunicacao_alteraPosicaoNaSala(posicao);
     _libwebsocket.enviarObjJson(msg);
 }
