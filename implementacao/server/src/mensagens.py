@@ -3,7 +3,9 @@ import json
 class TipoMensagem:
     entrar = "Entrar"
     registrar = "Registrar"
+    lobby = "Lobby"
     erro = "Erro"
+    criar_sala = "CriarSala"
     lista_sala = "ListaSala"
     iniciar_partida = "IniciarPartida"
     jogo_fase_I = "JogoFaseI"
@@ -33,6 +35,11 @@ class Mensagem(object):
     def fromJson(self, jsonMsg):
         self.__dict__ = json.loads(jsonMsg)
 
+class Lobby(object):
+    def __init__(self, salas, usuarios):
+        self.salas = salas
+        self.usuarios = usuarios
+
 class ListaSala(object):
     def __init__(self, sala, listaJogadores, extra):
         self.sala = sala
@@ -40,7 +47,8 @@ class ListaSala(object):
         self.extra = extra
 
 class AlteraPosicaoNaSala(object):
-    def __init__(self, jogadorDaSala, posicaoAntiga):
+    def __init__(self, sala, jogadorDaSala, posicaoAntiga):
+        self.sala = sala
         self.jogadorDaSala = jogadorDaSala
         self.posicaoAntiga = posicaoAntiga
 

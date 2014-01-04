@@ -4,9 +4,11 @@ from jogador import *
 from sala import *
 from jogo import *
 
-class Gerenciador(object):
-    def __init__(self):
-        self.sala = Sala()
+class GerenciadorSala(object):
+    def __init__(self, nome, gerenciadorPrincipal):
+        self.id = nome
+        self.gerenciadorPrincipal = gerenciadorPrincipal
+        self.sala = Sala(nome, self)
         self.jogo = None
         self.jogadores = {}
 
@@ -36,15 +38,16 @@ class Gerenciador(object):
     def iniciaPartida(self):
         if len(self.sala.jogadores) >= 3 and self.jogo == None:
             jogadoresDaSala = self.sala.jogadores
-            clientes = self.sala.clientes.copy()
 
             jogadoresDoJogo = {}
-            for k, v in clientes.iteritems():
+            clientes = {}
+            for k, v in jogadoresDaSala.iteritems():
                 jogadorDaSala = jogadoresDaSala[k]
                 jogadoresDoJogo[k] = JogadorDoJogo(
                         jogadorDaSala.usuario,
                         jogadorDaSala.posicao,
                         jogadorDaSala.dono)
+                clientes[jogadorDaSala.posicao] = self.socketDoUsuario(jogadorDaSala.usuario)
             self.jogo = Jogo(self, clientes, jogadoresDoJogo)
 
             self.jogo.inicia()
@@ -55,13 +58,14 @@ class Gerenciador(object):
             usuario = self.jogadores[cliente]
             self.jogo.finalizaTurno(usuario)
 
-    def requisicao(self, cliente, mensagem):
-        usuario = self.jogadores[cliente]
-        
+    def requisicao(self, cliente, usuario, mensagem):
         if self.sala != None and self.jogo == None:
             if mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
-                novaPosicao = mensagem.params['novaPosicao']
-                self.sala.alteraPosicao(usuario, novaPosicao)
+                if cliente in self.jogadores.keys():
+                    novaPosicao = mensagem.params['novaPosicao']
+                    self.sala.alteraPosicao(cliente, usuario, novaPosicao)
+                else:
+                    self.entra(cliente, usuario)
                 
         elif self.jogo != None:
             if mensagem.tipo == TipoMensagem.colocar_tropa:
@@ -89,10 +93,109 @@ class Gerenciador(object):
             self.jogo.fecha()
             del self.jogo
             self.jogo = None
-        self.sala = Sala()
+        self.sala = Sala(self.id, self)
 
     def fecha(self):
         if self.jogo != None:
             self.jogo.fecha()
             del self.jogo
             self.jogo = None
+
+    def socketDoUsuario(self, usuario):
+        for k, v in self.jogadores.iteritems():
+            if v == usuario:
+                return k
+        return None
+            
+    def enviaMsgParaTodos(self, tipo, params):
+        self.gerenciadorPrincipal.enviaMsgParaTodos(tipo, params)
+
+class GerenciadorPrincipal(object):
+    def __init__(self):
+        self.jogadores = {}
+        self.salas = {}
+        self.usuarioPorSala = {}
+        
+        self.salas["1"] = GerenciadorSala("1", self)
+        self.salas["2"] = GerenciadorSala("2", self)
+
+    def clienteConectou(self, cliente, usuario):
+        self.jogadores[cliente] = usuario
+
+        if usuario in self.usuarioPorSala.keys():
+            gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+            gerenciadorSala.entra(cliente, usuario)
+        else:
+            # TODO: Enviar a lista de salas para o cliente.
+            self.enviaMsgParaCliente(TipoMensagem.lobby, 
+                Lobby(None, self.jogadores.values()), cliente)
+
+        
+        # TODO: Enviar mensagem para todos que o cliente entrou.
+        
+    def clienteDesconectou(self, cliente):
+        for gerenciadorSala in self.salas.values():
+            gerenciadorSala.sai(cliente)
+
+        del self.jogadores[cliente]
+    
+    def interpretaMensagem(self, cliente, mensagem):
+        usuario = self.jogadores[cliente]
+        
+        if mensagem.tipo == TipoMensagem.criar_sala:
+            self.criaSala(cliente, usuario, mensagem)
+        elif mensagem.tipo == TipoMensagem.iniciar_partida:
+            gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+            gerenciadorSala.iniciaPartida()
+        elif mensagem.tipo == TipoMensagem.finalizar_turno:
+            gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+            gerenciadorSala.finalizaTurno(cliente)
+        elif (mensagem.tipo == TipoMensagem.colocar_tropa or 
+            mensagem.tipo == TipoMensagem.atacar or 
+            mensagem.tipo == TipoMensagem.mover or
+            mensagem.tipo == TipoMensagem.trocar_cartas_territorio or
+            mensagem.tipo == TipoMensagem.msg_chat_jogo):
+            gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+            gerenciadorSala.requisicao(cliente, usuario, mensagem)
+        elif mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
+            idSala = mensagem.params['sala']
+            gerenciadorSala = self.salas[idSala]
+            
+            # Usuario esta em uma sala.
+            if usuario in self.usuarioPorSala.keys():
+                idSalaAtual = self.usuarioPorSala[usuario]
+                if idSalaAtual != idSala:
+                    gerenciadorSalaAtual = self.salas[idSalaAtual]
+                    gerenciadorSalaAtual.sai(cliente)
+                    
+            gerenciadorSala.requisicao(cliente, usuario, mensagem)
+            self.usuarioPorSala[usuario] = idSala
+
+
+    def criaSala(self, cliente, usuario, mensagem):
+        nomeDaSala = mensagem.params['nome']
+        
+        # TODO: Verificar se sala  ja nao esta criada
+        if nomeDaSala not in self.salas.keys():
+            # TODO: Validar nome
+
+            # TODO: Criar uma instancia de GerenciadorSala
+            gerenciadorSala = GerenciadorSala(nomeDaSala, self)
+            gerenciadorSala.entra(cliente, usuario)
+            self.salas[nomeDaSala] = gerenciadorSala
+            self.usuarioPorSala[usuario] = nomeDaSala
+
+    def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
+        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+        print "[INFO][GerenciadorPrincipal] Enviando: " + jsonMsg
+        cliente.sendMessage(jsonMsg)
+
+    def enviaMsgParaTodos(self, tipoMensagem, params):
+        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+        for socket in self.jogadores.keys():
+            socket.sendMessage(jsonMsg)
+        print "[INFO][GerenciadorPrincipal] Broadcast: ", jsonMsg
+
+    def fecha(self):
+        for gerenciadorSala in self.salas.values():
+            gerenciadorSala.fecha()

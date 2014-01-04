@@ -1,6 +1,6 @@
 #sala {
     position: absolute;
-    top: 100px;
+    top: 10px;
     left: 50%;
     margin-left: -350px;
     width: 700px;
@@ -8,8 +8,24 @@
     z-index: 9001;
 }
 
+#sala_content {
+    position: absolute;
+    border: 1px solid gray;
+    width: 700px;
+    height: 350px;
+    overflow: hidden;
+}
+
+#btnCriarSala {
+    margin-bottom: 10px;
+}
+
 #sala .form-signin {
     max-width: 700px;
+}
+
+#sala h3 {
+    margin-top: 0px;
 }
 
 #sala ul {
@@ -39,11 +55,11 @@
 }
 
 #sala .sala_posicoes {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
-#btnIniciarPartida {
+.btnIniciarPartida {
     visibility: hidden;
 }
 

@@ -4,7 +4,9 @@
 
 _painelObjetivo = null;
 
+_usuario = null;
 _posicaoJogador = -1;
+_salaDoJogador = null;
 _turno = null;
 _posicaoJogadorDaVez = -1;
 
@@ -24,7 +26,7 @@ _animarDadosReferencia = null;
 
 _cartasTerritoriosSelecionadas = [];
 
-_quantidadeDeJogadoreNaSala = 0;
+_quantidadeDeJogadoresNaSala = 0;
 
 function exibirAlerta(tipo, msg) {
     $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
@@ -55,6 +57,15 @@ function processarMsg_entrar(msgParams) {
         var cookie = new gpscheck.web.Cookie();
         cookie.cria("usuario", $('#inputUsuario').val());
         cookie.cria("senha", $('#inputSenha').val());
+
+        this.tocarSom(this, "entrou.mp3");
+        appwar_alterarTituloDaPagina(msgParams.usuario);
+        _usuario = msgParams.usuario;
+
+        $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+        $('#bloqueador_tela').css('visibility', 'hidden');
+
+        $('#sala').css('visibility', 'visible');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estao corretos e tente novamente.');
     }
@@ -297,10 +308,6 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_entrar(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.lista_sala) {
         processarMsg_lista_sala(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.entrou_na_sala) {
-        processarMsg_entrou_na_sala(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.saiu_da_sala) {
-        processarMsg_saiu_da_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.altera_posicao_na_sala) {
         processarMsg_altera_posicao_na_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.jogo_fase_I) {
@@ -343,7 +350,7 @@ function posFechamentoSocket(valor) {
 }
 
 function iniciarPartida() {
-    if (_quantidadeDeJogadoreNaSala >= 3) {
+    if (_quantidadeDeJogadoresNaSala >= 3) {
         iniciarPartidaMsg = comunicacao_iniciarPartida();
         _libwebsocket.enviarObjJson(iniciarPartidaMsg);
     } else {

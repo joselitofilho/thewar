@@ -2,12 +2,12 @@ from jogador import *
 from mensagens import *
 
 class Sala(object):
-    def __init__(self):
-        self.id = 1
+    def __init__(self, nome, gerenciadorSala):
+        self.id = nome
+        self.gerenciadorSala = gerenciadorSala
         self.proximaPosicao = 0
         self.jogadores = {}
         self.dono = None
-        self.clientes = {} #[posicao] = socket
     
         print "Sala[" + str(self.id) + "] criada."
     
@@ -23,7 +23,6 @@ class Sala(object):
        
             jogador = JogadorDaSala(usuario, posicao, (self.dono == posicao))
             self.jogadores[posicao] = jogador
-            self.clientes[posicao] = cliente
 
             self.defineProximaPosicao()
 
@@ -44,9 +43,7 @@ class Sala(object):
 
         if posicao > -1:
             jogador = self.jogadores[posicao]
-            
             del self.jogadores[posicao]
-            del self.clientes[posicao]
             
             self.defineProximaPosicao()
             
@@ -60,7 +57,7 @@ class Sala(object):
             listaSalaMsg = ListaSala(self.id, self.jogadores.values(), extra)
             self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
             
-    def alteraPosicao(self, usuario, novaPosicao):
+    def alteraPosicao(self, cliente, usuario, novaPosicao):
         try:
             if 0 <= novaPosicao <= 5 and novaPosicao not in self.jogadores.keys():
                 posicaoAtual = -1
@@ -71,14 +68,15 @@ class Sala(object):
                         self.jogadores[novaPosicao] = self.jogadores[k]
                         del self.jogadores[k]
                         
-                        self.clientes[novaPosicao] = self.clientes[k]
-                        del self.clientes[k]
-                        
-                        msg = AlteraPosicaoNaSala(self.jogadores[novaPosicao], k)
+                        msg = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], k)
                         self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, msg)
                         
                         self.defineProximaPosicao()
                         break
+
+                # Usuario entrando na sala.
+                if posicaoAtual == -1:
+                    self.adiciona(cliente, usuario)
         except:
             print "Unexpected error:", sys.exc_info()[0]
 
@@ -103,12 +101,7 @@ class Sala(object):
         return self.jogadoresDaSala
 
     def enviaMsgParaTodos(self, tipo, msg):
-        jsonMsg = json.dumps(Mensagem(tipo, msg), default=lambda o: o.__dict__)
-        for socket in self.clientes.values():
-            if socket != None:
-                socket.sendMessage(jsonMsg)
-        print "# ", jsonMsg
+        self.gerenciadorSala.enviaMsgParaTodos(tipo, msg)
 
     def __del__(self):
         del self.jogadores
-        del self.clientes

@@ -6,7 +6,9 @@ function processarMsg_jogo_fase_I(msgParams) {
     }
     
     $('#sala').css('visibility', 'hidden');
-    $('#btnIniciarPartida').css('visibility', 'hidden');
+    $('.form-signin').children().each(function(i, elemento) {
+        $(elemento).css('visibility', 'hidden')
+    });
     $('#menu_jogadores').css('visibility', 'visible');
     $('#controles').css('visibility', 'visible');
     $('#info_turno').css('visibility', 'visible');
@@ -24,6 +26,7 @@ function processarMsg_carrega_jogo(msgParams) {
         jogo_alteraQuantidadeDeTerritoriosPorJogador(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
     
+    $('#sala').css('visibility', 'hidden');
     $('#menu_jogadores').css('visibility', 'visible');
     $('#controles').css('visibility', 'visible');
     $('#btnFinalizarTurno').css('visibility', 'visible');

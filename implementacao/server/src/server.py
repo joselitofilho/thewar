@@ -28,6 +28,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 params = {}
                 
                 usuario = mensagem.params['usuario']
+                params["usuario"] = usuario
                 if self.factory.usuarioEstaConectado(usuario):
                     params["status"] = 2
                     # TODO: Enviar mensagem para o outro socket do usuario uma 
@@ -41,12 +42,13 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             
                 if len(usuario) > 0 and _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha']):
                     self.factory.clienteConectou(self, usuario)
-                    _gerenciador.entra(self, usuario)
-                    
+
                     params["status"] = 1
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
                     print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
+                    
+                    _gerenciadorPrincipal.clienteConectou(self, usuario)
                 else:
                     params["status"] = 0
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
@@ -69,17 +71,11 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.registrar, params), default=lambda o: o.__dict__)
                 print "# ", jsonMsg
                 self.sendMessage(jsonMsg)
-            elif mensagem.tipo == TipoMensagem.iniciar_partida:
-                _gerenciador.iniciaPartida()
-            elif mensagem.tipo == TipoMensagem.finalizar_turno:
-                _gerenciador.finalizaTurno(self)
-            elif (mensagem.tipo == TipoMensagem.colocar_tropa or 
-                mensagem.tipo == TipoMensagem.atacar or 
-                mensagem.tipo == TipoMensagem.mover or
-                mensagem.tipo == TipoMensagem.trocar_cartas_territorio or
-                mensagem.tipo == TipoMensagem.altera_posicao_na_sala or
-                mensagem.tipo == TipoMensagem.msg_chat_jogo):
-                _gerenciador.requisicao(self, mensagem)
+            else:
+                #try:
+                _gerenciadorPrincipal.interpretaMensagem(self, mensagem)
+                #except:
+                #    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
@@ -106,7 +102,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
     def unregister(self, client):
         if client in self.clients:
             print "unregistered client " + client.peerstr
-            _gerenciador.sai(client)
+            _gerenciadorPrincipal.clienteDesconectou(client)
             self.clients.remove(client)
 
     def broadcast(self, msg):
@@ -128,11 +124,11 @@ class BroadcastServerFactory(WebSocketServerFactory):
         self.unregister(socket)
         del self.clientesConectados[usuario]
 
-_gerenciador = None
+_gerenciadorPrincipal = None
 
 def signal_handler(signal, frame):
-    if _gerenciador != None:
-        _gerenciador.fecha()
+    if _gerenciadorPrincipal != None:
+        _gerenciadorPrincipal.fecha()
 
 if __name__ == '__main__':
 
@@ -152,7 +148,7 @@ if __name__ == '__main__':
     factory.setProtocolOptions(allowHixie76 = True)
     listenWS(factory)
 
-    _gerenciador = gerenciador.Gerenciador()
+    _gerenciadorPrincipal = gerenciador.GerenciadorPrincipal()
     _banco = banco.Banco()
 
     webdir = File("./webdir")

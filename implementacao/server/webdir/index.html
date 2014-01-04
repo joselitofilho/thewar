@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>JogoWar</title>
         
         <link rel="icon" type="image/png" href="imagens/ico.png" />
@@ -10,6 +10,10 @@
 
         <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!---->
+
+        <!-- Perfect scrollbar -->
+        <link href="perfect-scrollbar-0.4.6/src/perfect-scrollbar.css" rel="stylesheet">
         <!---->
 
         <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
@@ -28,6 +32,24 @@
         <link href="css/war/cartas_objetivos.css" rel="stylesheet">
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
 
+        <!-- jQuery -->
+        <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!---->
+        
+        <!-- Perfect scrollbar -->
+        <script src="perfect-scrollbar-0.4.6/src/jquery.mousewheel.js"></script>
+        <script src="perfect-scrollbar-0.4.6/src/perfect-scrollbar.js"></script>
+        <!---->
+
+        <script>
+            $(document).ready(function ($) {
+                $('#sala_content').perfectScrollbar({
+                    wheelSpeed: 20,
+                    wheelPropagation: false
+                });
+            });
+        </script>
     </head>
     <body>
         <!-- Registrar / Entrar -->
@@ -81,24 +103,45 @@
             <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
         </div>
         
-        <div id="geral">
-            <div id="sala">
+        <div id="sala">
+            <button id="btnCriarSala" class="btn btn-default" onclick="_sala.cria();">Criar sala</button>
+
+            <div id="sala_content">
                 <div class="form-signin">
-                    <h2 class="form-signin-heading">Escolha sua cor</h2>
+                    <h3 class="form-signin-heading"><span>#1</span>&nbsp;Escolha sua cor</h3>
                     <div class="sala_posicoes">
                         <ul>
-                            <li><a id="sala_jogador1" class="jogador_sala_vermelho" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala(0);"></a></li> 
-                            <li><a id="sala_jogador2" class="jogador_sala_azul" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala(1);"></a></li>
-                            <li><a id="sala_jogador3" class="jogador_sala_verde" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala(2);"></a></li>
-                            <li><a id="sala_jogador4" class="jogador_sala_preto" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala(3);"></a></li>
-                            <li><a id="sala_jogador5" class="jogador_sala_branco" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala(4);"></a></li>
-                            <li><a id="sala_jogador6" class="jogador_sala_amarelo" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala(5);"></a></li>
+                            <li><a id="sala1_jogador1" class="jogador_sala_vermelho" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('1', 0);"></a></li> 
+                            <li><a id="sala1_jogador2" class="jogador_sala_azul" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('1', 1);"></a></li>
+                            <li><a id="sala1_jogador3" class="jogador_sala_verde" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('1', 2);"></a></li>
+                            <li><a id="sala1_jogador4" class="jogador_sala_preto" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('1', 3);"></a></li>
+                            <li><a id="sala1_jogador5" class="jogador_sala_branco" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('1', 4);"></a></li>
+                            <li><a id="sala1_jogador6" class="jogador_sala_amarelo" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('1', 5);"></a></li>
                         </ul>
                     </div>
                     
-                    <button id="btnIniciarPartida" class="btn btn-default" onclick="iniciarPartida();">Iniciar partida</button>
+                    <button id="btnSairDaSala1" class="btn btn-default" onclick="_sala.sai();">Sair da sala</button>
+                    <button id="btnIniciarPartida1" class="btn btn-default btnIniciarPartida" onclick="iniciarPartida();">Iniciar partida</button>
                 </div>
-            </div>
+                <div class="form-signin">
+                    <h3 class="form-signin-heading"><span>#2</span>&nbsp;Escolha sua cor</h3>
+                    <div class="sala_posicoes">
+                        <ul>
+                            <li><a id="sala2_jogador1" class="jogador_sala_vermelho" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('2', 0);"></a></li> 
+                            <li><a id="sala2_jogador2" class="jogador_sala_azul" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('2', 1);"></a></li>
+                            <li><a id="sala2_jogador3" class="jogador_sala_verde" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('2', 2);"></a></li>
+                            <li><a id="sala2_jogador4" class="jogador_sala_preto" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('2', 3);"></a></li>
+                            <li><a id="sala2_jogador5" class="jogador_sala_branco" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('2', 4);"></a></li>
+                            <li><a id="sala2_jogador6" class="jogador_sala_amarelo" href="javascript:void(0)" onclick="appwar_alteraPosicaoSala('2', 5);"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <button id="btnSairDaSala2" class="btn btn-default" onclick="_sala.sai();">Sair da sala</button>
+                    <button id="btnIniciarPartida2" class="btn btn-default btnIniciarPartida" onclick="iniciarPartida();">Iniciar partida</button>
+                </div>
+            </div> <!-- sala_content -->
+        </div>
+        <div id="geral">
             
             <div id="jogo">
                 <div id="menu_jogadores">
@@ -212,12 +255,18 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
         <!---->
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://code.jquery.com/jquery.js"></script>
+        <!-- jQuery -->
+        <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <!---->
         
         <!-- Bootstrap -->
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <!---->
+
+        <!-- Perfect scrollbar -->
+        <script src="perfect-scrollbar-0.4.6/src/jquery.mousewheel.js"></script>
+        <script src="perfect-scrollbar-0.4.6/src/perfect-scrollbar.js"></script>
         <!---->
 
         <!--Here is jQuery UI added from CDN

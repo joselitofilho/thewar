@@ -61,9 +61,10 @@ function comunicacao_trocar_cartas_territorio(posicaoJogador, cartasTerritorios)
     });
 }
 
-function comunicacao_alteraPosicaoNaSala(posicao) {
+function comunicacao_alteraPosicaoNaSala(sala, posicao) {
     return new Mensagem(TipoMensagem.altera_posicao_na_sala,
     {
+        sala: sala,
         novaPosicao: posicao
     });
 }
