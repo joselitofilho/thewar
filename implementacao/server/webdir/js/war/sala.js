@@ -1,3 +1,24 @@
+var jogos = jogos || {};
+jogos.war = jogos.war || {};
+
+jogos.war.Sala = function() {
+    
+    this.limpaPosicao = function(sala, posicao) {
+        $("#jogador" + (posicao+1)).html("");
+        $("#sala" + sala + "_jogador" + (posicao+1)).html("");
+    };
+
+    this.preencheJogador = function(sala, posicao, usuario) {
+        $("#jogador" + (posicao+1)).html(usuario);
+        $("#sala" + sala + "_jogador" + (posicao+1)).html(usuario);
+    };
+
+    this.sai = function() {
+        msg = comunicacao_sairDaSala();
+        _libwebsocket.enviarObjJson(msg);
+    };
+};
+
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
@@ -20,7 +41,7 @@ function processarMsg_info_sala(msgParams) {
 
     if (listaJogadores.length == 0) {
         for (i=0; i<6; i++) {
-            sala_limpaPosicao(sala, i);
+            _sala.limpaPosicao(sala, i);
         }
     }
 
@@ -29,7 +50,7 @@ function processarMsg_info_sala(msgParams) {
             var jog = listaJogadores[i];
             var posicaoJogador = Number(jog.posicao);
             var usuario = jog.usuario;
-            sala_preencheJogador(sala, posicaoJogador, usuario);
+            _sala.preencheJogador(sala, posicaoJogador, usuario);
 
             if (jog.dono && _usuario == usuario && estado == 'sala_criada') {
                 $('#btnIniciarPartida' + sala).css('visibility', 'visible');
@@ -54,7 +75,7 @@ function entrouNaSala(sala, jogadorDaSala) {
 function saiuDaSala(sala, jogadorDaSala) {
     this.tocarSom(this, "saindo.wav");
     
-    sala_limpaPosicao(sala, Number(jogadorDaSala.posicao));
+    _sala.limpaPosicao(sala, Number(jogadorDaSala.posicao));
 
     if (_usuario == jogadorDaSala.usuario) {
         _posicaoJogador = -1;
@@ -67,11 +88,11 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
     this.tocarSom(this, "entrou.mp3");
 
     var posicaoAntigaJogador = Number(msgParams.posicaoAntiga);
-    sala_limpaPosicao(msgParams.sala, posicaoAntigaJogador);
+    _sala.limpaPosicao(msgParams.sala, posicaoAntigaJogador);
     
     var usuario = msgParams.jogadorDaSala.usuario;
     var novaPosicaoJogador = Number(msgParams.jogadorDaSala.posicao);
-    sala_preencheJogador(msgParams.sala, novaPosicaoJogador, usuario);
+    _sala.preencheJogador(msgParams.sala, novaPosicaoJogador, usuario);
     
     if (_posicaoJogador == msgParams.posicaoAntiga) {
         _posicaoJogador = Number(msgParams.jogadorDaSala.posicao);
@@ -89,23 +110,13 @@ function processarMsg_lobby(msgParams) {
                 var jog = jogadores[i];
                 var posicaoJogador = Number(jog.posicao);
                 var usuario = jog.usuario;
-                sala_preencheJogador(sala, posicaoJogador, usuario);
+                _sala.preencheJogador(sala, posicaoJogador, usuario);
             }
         }
     }
 }
 
 /* Funções gerais */
-function sala_limpaPosicao(sala, posicao) {
-    $("#jogador" + (posicao+1)).html("");
-    $("#sala" + sala + "_jogador" + (posicao+1)).html("");
-}
-
-function sala_preencheJogador(sala, posicao, usuario) {
-    $("#jogador" + (posicao+1)).html(usuario);
-    $("#sala" + sala + "_jogador" + (posicao+1)).html(usuario);
-}
-
 function appwar_alteraPosicaoSala(sala, posicao) {
     msg = comunicacao_alteraPosicaoNaSala(sala, posicao);
     _libwebsocket.enviarObjJson(msg);

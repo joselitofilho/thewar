@@ -1,5 +1,5 @@
-var gpscheck = gpscheck || {};
-gpscheck.mapa = gpscheck.mapa || {};
+var jogos = jogos || {};
+jogos.war = jogos.war || {};
 
 var _labelTerritorios = {};
 var _markerTerritorios = {};
@@ -7,7 +7,7 @@ var _poligonosTerritorios = {};
 
 var _piscarLoopFunc = {};
 
-gpscheck.mapa.Territorios = function(mapa) {
+jogos.war.Territorios = function(mapa) {
 
     var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
     var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";

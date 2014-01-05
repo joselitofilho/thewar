@@ -4,6 +4,7 @@ var TipoMensagem = {
     lobby: "Lobby",
     erro: "Erro",
     info_sala: "InfoSala",
+    sair_da_sala: "SairDaSala",
     iniciar_partida: "IniciarPartida",
     jogo_fase_I: "JogoFaseI",
     carta_objetivo: "CartaObjetivo",

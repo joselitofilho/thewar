@@ -207,6 +207,12 @@ class GerenciadorPrincipal(object):
                     
             gerenciadorSala.requisicao(cliente, usuario, mensagem)
             self.usuarioPorSala[usuario] = idSala
+        elif mensagem.tipo == TipoMensagem.sair_da_sala:
+            if usuario in self.usuarioPorSala.keys():
+                gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+                gerenciadorSala.sai(cliente)
+
+                self.usuarioPorSala.pop(usuario)
 
 
     def criaSala(self, cliente, usuario, mensagem):

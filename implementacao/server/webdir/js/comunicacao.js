@@ -17,6 +17,10 @@ function comunicacao_registrar(usuario, senha) {
     });
 }
 
+function comunicacao_sairDaSala() {
+    return new Mensagem(TipoMensagem.sair_da_sala, null);
+}
+
 function comunicacao_iniciarPartida() {
     return new Mensagem(TipoMensagem.iniciar_partida, null);
 }

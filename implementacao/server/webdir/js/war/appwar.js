@@ -28,6 +28,8 @@ _cartasTerritoriosSelecionadas = [];
 
 _quantidadeDeJogadoresNaSala = 0;
 
+_sala = null;
+
 function exibirAlerta(tipo, msg) {
     $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
     $('#alerta').addClass(tipo);
@@ -733,10 +735,12 @@ function iniciarApp() {
     mapa.inicia(divMapa, 10.0, 10.0);
     //this.tocarSomDeFundo(divMapa);
 
-    _territorios = new gpscheck.mapa.Territorios(_mapaGoogle);
+    _territorios = new jogos.war.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
         
     iniciarControleDeAudio();
+
+    _sala = new jogos.war.Sala();
 }
 
 (function(){
