@@ -10,10 +10,11 @@
 
 #sala_content {
     position: absolute;
-    border: 1px solid gray;
+    border: 3px solid gray;
     width: 700px;
     height: 350px;
     overflow: hidden;
+    border-radius: 5px;
 }
 
 #btnCriarSala {

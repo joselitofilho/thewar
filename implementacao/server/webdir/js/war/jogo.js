@@ -1,10 +1,4 @@
-function processarMsg_jogo_fase_I(msgParams) {
-    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
-        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
-        _territorios.iniciaLabelDosTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
-        jogo_alteraQuantidadeDeTerritoriosPorJogador(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
-    }
-    
+function jogo_preparaElementosHtml() {
     $('#sala').css('visibility', 'hidden');
     $('.form-signin').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden')
@@ -15,6 +9,17 @@ function processarMsg_jogo_fase_I(msgParams) {
     $('#btnFinalizarTurno').css('visibility', 'visible');
     $('#barra_tempo').css('visibility', 'visible');
     $('#quantidade_de_tropas').css('visibility', 'visible');
+    $('#bloqueador_tela').css('visibility', 'hidden');
+}
+
+function processarMsg_jogo_fase_I(msgParams) {
+    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
+        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
+        _territorios.iniciaLabelDosTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+        jogo_alteraQuantidadeDeTerritoriosPorJogador(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+    }
+   
+    jogo_preparaElementosHtml();
 }
 
 function processarMsg_carrega_jogo(msgParams) {
@@ -26,13 +31,7 @@ function processarMsg_carrega_jogo(msgParams) {
         jogo_alteraQuantidadeDeTerritoriosPorJogador(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
     
-    $('#sala').css('visibility', 'hidden');
-    $('#menu_jogadores').css('visibility', 'visible');
-    $('#controles').css('visibility', 'visible');
-    $('#btnFinalizarTurno').css('visibility', 'visible');
-    $('#barra_tempo').css('visibility', 'visible');
-    $('#info_turno').css('visibility', 'visible');
-    $('#quantidade_de_tropas').css('visibility', 'visible');
+    jogo_preparaElementosHtml();
 
     processarMsg_carta_objetivo(msgParams);
     processarMsg_cartas_territorios(msgParams.cartasTerritorio);
@@ -51,12 +50,7 @@ function processarMsg_carrega_jogo_olheiro(msgParams) {
         jogo_alteraQuantidadeDeTerritoriosPorJogador(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
     }
     
-    $('#menu_jogadores').css('visibility', 'visible');
-    $('#controles').css('visibility', 'visible');
-    $('#btnFinalizarTurno').css('visibility', 'visible');
-    $('#barra_tempo').css('visibility', 'visible');
-    $('#info_turno').css('visibility', 'visible');
-    $('#quantidade_de_tropas').css('visibility', 'visible');
+    jogo_preparaElementosHtml();
 
     _posicaoJogadorDaVez = msgParams.jogadorDaVez;
 

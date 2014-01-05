@@ -63,11 +63,24 @@ function processarMsg_entrar(msgParams) {
         _usuario = msgParams.usuario;
 
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
-        $('#bloqueador_tela').css('visibility', 'hidden');
-
         $('#sala').css('visibility', 'visible');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estao corretos e tente novamente.');
+    }
+}
+
+function processarMsg_lobby(msgParams) {
+    for (iSala = 0; iSala < msgParams.salas.length; iSala++) { 
+        var sala = msgParams.salas[iSala].sala
+        var jogadores =  msgParams.salas[iSala].jogadores;
+        for (i=0; i < jogadores.length; i++) {
+            if (jogadores[i] != null) {
+                var jog = jogadores[i];
+                var posicaoJogador = Number(jog.posicao);
+                var usuario = jog.usuario;
+                sala_preencheJogador(sala, posicaoJogador, usuario);
+            }
+        }
     }
 }
 
@@ -306,6 +319,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_registrar(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.entrar) {
         processarMsg_entrar(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.lobby) {
+        processarMsg_lobby(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.lista_sala) {
         processarMsg_lista_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.altera_posicao_na_sala) {

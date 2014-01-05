@@ -4,19 +4,27 @@ from jogador import *
 from sala import *
 from jogo import *
 
+class EstadoDaSala:
+    sala_criada = "sala_criada"
+    jogo_em_andamento = "jogo_em_andamento"
+
+
 class GerenciadorSala(object):
     def __init__(self, nome, gerenciadorPrincipal):
         self.id = nome
         self.gerenciadorPrincipal = gerenciadorPrincipal
         self.sala = Sala(nome, self)
+        self.jogadoresDaSala = []
         self.jogo = None
         self.jogadores = {}
+        self.estado = EstadoDaSala.sala_criada
 
     def entra(self, cliente, usuario):
         self.jogadores[cliente] = usuario
         
         if self.jogo == None:
             self.sala.adiciona(cliente, usuario)
+            self.jogadoresDaSala = self.sala.jogadores.values()
         else:
             self.jogo.adiciona(cliente, usuario)
 
@@ -51,7 +59,10 @@ class GerenciadorSala(object):
             self.jogo = Jogo(self, clientes, jogadoresDoJogo)
 
             self.jogo.inicia()
+            self.estado = EstadoDaSala.jogo_em_andamento
+
             del self.sala
+            self.sala = None
 
     def finalizaTurno(self, cliente):
         if self.jogo != None:
@@ -59,14 +70,13 @@ class GerenciadorSala(object):
             self.jogo.finalizaTurno(usuario)
 
     def requisicao(self, cliente, usuario, mensagem):
-        if self.sala != None and self.jogo == None:
-            if mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
-                if cliente in self.jogadores.keys():
-                    novaPosicao = mensagem.params['novaPosicao']
-                    self.sala.alteraPosicao(cliente, usuario, novaPosicao)
-                else:
-                    self.entra(cliente, usuario)
-                
+        if mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
+            if self.estaDentro(usuario):
+                novaPosicao = mensagem.params['novaPosicao']
+                self.sala.alteraPosicao(cliente, usuario, novaPosicao)
+            else:
+                self.entra(cliente, usuario)
+            
         elif self.jogo != None:
             if mensagem.tipo == TipoMensagem.colocar_tropa:
                 territorio = mensagem.params['territorio']
@@ -94,12 +104,19 @@ class GerenciadorSala(object):
             del self.jogo
             self.jogo = None
         self.sala = Sala(self.id, self)
+        self.jogadoresDaSala = []
 
     def fecha(self):
         if self.jogo != None:
             self.jogo.fecha()
             del self.jogo
             self.jogo = None
+
+    def estaDentro(self, usuario):
+        for jog in self.jogadoresDaSala:
+            if jog.usuario == usuario:
+                return True
+        return False
 
     def socketDoUsuario(self, usuario):
         for k, v in self.jogadores.iteritems():
@@ -127,17 +144,30 @@ class GerenciadorPrincipal(object):
             gerenciadorSala.entra(cliente, usuario)
         else:
             # TODO: Enviar a lista de salas para o cliente.
+            infoSalas = []
+            for gerenciadorSala in self.salas.values():
+                info = {
+                    "sala": gerenciadorSala.id,
+                    "jogadores": gerenciadorSala.jogadoresDaSala,
+                    "estado": gerenciadorSala.estado
+                }
+                infoSalas.append(info)
             self.enviaMsgParaCliente(TipoMensagem.lobby, 
-                Lobby(None, self.jogadores.values()), cliente)
+                Lobby(infoSalas, self.jogadores.values()), cliente)
 
         
         # TODO: Enviar mensagem para todos que o cliente entrou.
         
     def clienteDesconectou(self, cliente):
-        for gerenciadorSala in self.salas.values():
-            gerenciadorSala.sai(cliente)
+        try:
+            for gerenciadorSala in self.salas.values():
+                gerenciadorSala.sai(cliente)
 
-        del self.jogadores[cliente]
+            usuario = self.jogadores[cliente]
+            del self.usuarioPorSala[usuario]
+            del self.jogadores[cliente]
+        except:
+            print "[ERRO][GerenciadorPrincipal] clienteDesconectou falhou."
     
     def interpretaMensagem(self, cliente, mensagem):
         usuario = self.jogadores[cliente]

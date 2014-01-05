@@ -99,7 +99,7 @@ class Sala(object):
 
     def lista(self):
         return self.jogadoresDaSala
-
+    
     def enviaMsgParaTodos(self, tipo, msg):
         self.gerenciadorSala.enviaMsgParaTodos(tipo, msg)
 

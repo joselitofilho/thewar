@@ -1,6 +1,7 @@
 var TipoMensagem = {
     entrar: "Entrar",
     registrar: "Registrar",
+    lobby: "Lobby",
     erro: "Erro",
     lista_sala: "ListaSala",
     iniciar_partida: "IniciarPartida",
