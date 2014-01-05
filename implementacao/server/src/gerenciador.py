@@ -54,6 +54,10 @@ class GerenciadorSala(object):
             self.jogo.inicia()
             self.estado = EstadoDaSala.jogo_em_andamento
 
+            infoSalaMsg = InfoSala(self.sala.id, 
+                    self.estado, self.sala.jogadores.values(), None)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+
             del self.sala
             self.sala = None
 
@@ -98,6 +102,10 @@ class GerenciadorSala(object):
             self.jogo = None
         self.sala = Sala(self.id, self)
         self.estado = EstadoDaSala.sala_criada
+        
+        infoSalaMsg = InfoSala(self.sala.id, 
+            self.estado, self.sala.jogadores.values(), None)
+        self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
         if self.jogo != None:

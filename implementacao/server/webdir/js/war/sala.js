@@ -6,7 +6,7 @@ function processarMsg_info_sala(msgParams) {
     var sala = msgParams.sala;
     var estado = msgParams.estado;
     
-    if (typeof msgParams.extra != 'undefined') {
+    if (typeof msgParams.extra != 'undefined' && msgParams.extra != null) {
         var extra = msgParams.extra;
         if (extra.entrou_ou_saiu == 1) {
             entrouNaSala(msgParams.sala, extra.jogador);
@@ -17,6 +17,13 @@ function processarMsg_info_sala(msgParams) {
  
     $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
     $('#btnEntrarNaSala' + sala).html((estado == 'sala_criada') ? 'Entrar' : 'Assistir');
+
+    if (listaJogadores.length == 0) {
+        for (i=0; i<6; i++) {
+            sala_limpaPosicao(sala, i);
+        }
+    }
+
     for (i=0; i < listaJogadores.length; i++) {
         if (listaJogadores[i] != null) {
             var jog = listaJogadores[i];
@@ -24,9 +31,8 @@ function processarMsg_info_sala(msgParams) {
             var usuario = jog.usuario;
             sala_preencheJogador(sala, posicaoJogador, usuario);
 
-            if (jog.dono && _usuario == usuario) {
+            if (jog.dono && _usuario == usuario && estado == 'sala_criada') {
                 $('#btnIniciarPartida' + sala).css('visibility', 'visible');
-                console.log('Novo dono['+usuario+'] na sala['+sala+']');
             }
         }
     }

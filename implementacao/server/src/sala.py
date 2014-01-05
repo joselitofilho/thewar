@@ -35,10 +35,10 @@ class Sala(object):
                 "entrou_ou_saiu": 1,
                 "jogador": jogador
             }
-            listaSalaMsg = InfoSala(self.id, 
+            infoSalaMsg = InfoSala(self.id, 
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, listaSalaMsg)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def remove(self, usuario):
         posicao = -1
@@ -60,10 +60,10 @@ class Sala(object):
                 "entrou_ou_saiu": 0,
                 "jogador": jogador
             }
-            listaSalaMsg = InfoSala(self.id,
+            infoSalaMsg = InfoSala(self.id,
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, listaSalaMsg)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
             
     def alteraPosicao(self, cliente, usuario, novaPosicao):
         try:
