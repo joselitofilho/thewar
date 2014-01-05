@@ -14,7 +14,6 @@ class GerenciadorSala(object):
         self.id = nome
         self.gerenciadorPrincipal = gerenciadorPrincipal
         self.sala = Sala(nome, self)
-        self.jogadoresDaSala = []
         self.jogo = None
         self.jogadores = {}
         self.estado = EstadoDaSala.sala_criada
@@ -24,7 +23,6 @@ class GerenciadorSala(object):
         
         if self.jogo == None:
             self.sala.adiciona(cliente, usuario)
-            self.jogadoresDaSala = self.sala.jogadores.values()
         else:
             self.jogo.adiciona(cliente, usuario)
 
@@ -104,7 +102,6 @@ class GerenciadorSala(object):
             del self.jogo
             self.jogo = None
         self.sala = Sala(self.id, self)
-        self.jogadoresDaSala = []
 
     def fecha(self):
         if self.jogo != None:
@@ -113,9 +110,10 @@ class GerenciadorSala(object):
             self.jogo = None
 
     def estaDentro(self, usuario):
-        for jog in self.jogadoresDaSala:
-            if jog.usuario == usuario:
-                return True
+        if self.sala != None:
+            for jog in self.sala.jogadores.values():
+                if jog.usuario == usuario:
+                    return True
         return False
 
     def socketDoUsuario(self, usuario):
@@ -126,6 +124,12 @@ class GerenciadorSala(object):
             
     def enviaMsgParaTodos(self, tipo, params):
         self.gerenciadorPrincipal.enviaMsgParaTodos(tipo, params)
+
+    @property
+    def jogadoresDaSala(self):
+        if self.sala != None:
+            return self.sala.jogadores.values()
+        return []
 
 class GerenciadorPrincipal(object):
     def __init__(self):
@@ -160,12 +164,11 @@ class GerenciadorPrincipal(object):
         
     def clienteDesconectou(self, cliente):
         try:
-            for gerenciadorSala in self.salas.values():
-                gerenciadorSala.sai(cliente)
-
             usuario = self.jogadores[cliente]
-            del self.usuarioPorSala[usuario]
-            del self.jogadores[cliente]
+            gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+            gerenciadorSala.sai(cliente)
+            self.usuarioPorSala.pop(usuario)
+            self.jogadores.pop(cliente)
         except:
             print "[ERRO][GerenciadorPrincipal] clienteDesconectou falhou."
     

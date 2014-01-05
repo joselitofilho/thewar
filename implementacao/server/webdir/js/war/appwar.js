@@ -69,21 +69,6 @@ function processarMsg_entrar(msgParams) {
     }
 }
 
-function processarMsg_lobby(msgParams) {
-    for (iSala = 0; iSala < msgParams.salas.length; iSala++) { 
-        var sala = msgParams.salas[iSala].sala
-        var jogadores =  msgParams.salas[iSala].jogadores;
-        for (i=0; i < jogadores.length; i++) {
-            if (jogadores[i] != null) {
-                var jog = jogadores[i];
-                var posicaoJogador = Number(jog.posicao);
-                var usuario = jog.usuario;
-                sala_preencheJogador(sala, posicaoJogador, usuario);
-            }
-        }
-    }
-}
-
 function processarMsg_carta_objetivo(msgParams) {
     _painelObjetivo = new gpscheck.war.PainelObjetivo(Number(msgParams.objetivo) + 1);
     _painelObjetivo.abre();

@@ -43,7 +43,7 @@ class Sala(object):
 
         if posicao > -1:
             jogador = self.jogadores[posicao]
-            del self.jogadores[posicao]
+            self.jogadores.pop(posicao)
             
             self.defineProximaPosicao()
             
@@ -66,7 +66,7 @@ class Sala(object):
                         posicaoAtual = k
                         v.posicao = novaPosicao
                         self.jogadores[novaPosicao] = self.jogadores[k]
-                        del self.jogadores[k]
+                        self.jogadores.pop(k)
                         
                         msg = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], k)
                         self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, msg)

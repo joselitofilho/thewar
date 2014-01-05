@@ -39,6 +39,7 @@ function entrouNaSala(sala, jogadorDaSala) {
     if (_usuario == jogadorDaSala.usuario) {
         _salaDoJogador = sala;
         _posicaoJogador = Number(jogadorDaSala.posicao);
+        $('#sc_bloqueador' + sala).css('visibility', 'hidden');
     }
 }
 
@@ -50,6 +51,7 @@ function saiuDaSala(sala, jogadorDaSala) {
     if (_usuario == jogadorDaSala.usuario) {
         _posicaoJogador = -1;
         _salaDoJogador = null;
+        $('#sc_bloqueador' + sala).css('visibility', 'visible');
     }    
 }
 
@@ -65,6 +67,23 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
     
     if (_posicaoJogador == msgParams.posicaoAntiga) {
         _posicaoJogador = Number(msgParams.jogadorDaSala.posicao);
+    }
+}
+
+function processarMsg_lobby(msgParams) {
+    for (iSala = 0; iSala < msgParams.salas.length; iSala++) { 
+        var sala = msgParams.salas[iSala].sala
+        var jogadores =  msgParams.salas[iSala].jogadores;
+        var estado = msgParams.salas[iSala].estado;
+        $('#btnEntrarNaSala' + sala).html((estado == 'sala_criada') ? 'Entrar' : 'Assistir');
+        for (i=0; i < jogadores.length; i++) {
+            if (jogadores[i] != null) {
+                var jog = jogadores[i];
+                var posicaoJogador = Number(jog.posicao);
+                var usuario = jog.usuario;
+                sala_preencheJogador(sala, posicaoJogador, usuario);
+            }
+        }
     }
 }
 
