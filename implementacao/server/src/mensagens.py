@@ -6,7 +6,7 @@ class TipoMensagem:
     lobby = "Lobby"
     erro = "Erro"
     criar_sala = "CriarSala"
-    lista_sala = "ListaSala"
+    info_sala = "InfoSala"
     iniciar_partida = "IniciarPartida"
     jogo_fase_I = "JogoFaseI"
     carta_objetivo = "CartaObjetivo"
@@ -40,10 +40,11 @@ class Lobby(object):
         self.salas = salas
         self.usuarios = usuarios
 
-class ListaSala(object):
-    def __init__(self, sala, listaJogadores, extra):
+class InfoSala(object):
+    def __init__(self, sala, estado, jogadoresDaSala, extra):
         self.sala = sala
-        self.listaJogadores = listaJogadores
+        self.estado = estado
+        self.jogadores = jogadoresDaSala
         self.extra = extra
 
 class AlteraPosicaoNaSala(object):

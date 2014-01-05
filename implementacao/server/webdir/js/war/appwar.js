@@ -306,8 +306,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_entrar(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.lobby) {
         processarMsg_lobby(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.lista_sala) {
-        processarMsg_lista_sala(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.info_sala) {
+        processarMsg_info_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.altera_posicao_na_sala) {
         processarMsg_altera_posicao_na_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.jogo_fase_I) {

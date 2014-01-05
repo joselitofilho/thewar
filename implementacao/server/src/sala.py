@@ -1,6 +1,10 @@
 from jogador import *
 from mensagens import *
 
+class EstadoDaSala:
+    sala_criada = "sala_criada"
+    jogo_em_andamento = "jogo_em_andamento"
+
 class Sala(object):
     def __init__(self, nome, gerenciadorSala):
         self.id = nome
@@ -31,8 +35,10 @@ class Sala(object):
                 "entrou_ou_saiu": 1,
                 "jogador": jogador
             }
-            listaSalaMsg = ListaSala(self.id, self.jogadores.values(), extra)
-            self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
+            listaSalaMsg = InfoSala(self.id, 
+                    EstadoDaSala.sala_criada,
+                    self.jogadores.values(), extra)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, listaSalaMsg)
 
     def remove(self, usuario):
         posicao = -1
@@ -54,8 +60,10 @@ class Sala(object):
                 "entrou_ou_saiu": 0,
                 "jogador": jogador
             }
-            listaSalaMsg = ListaSala(self.id, self.jogadores.values(), extra)
-            self.enviaMsgParaTodos(TipoMensagem.lista_sala, listaSalaMsg)
+            listaSalaMsg = InfoSala(self.id,
+                    EstadoDaSala.sala_criada,
+                    self.jogadores.values(), extra)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, listaSalaMsg)
             
     def alteraPosicao(self, cliente, usuario, novaPosicao):
         try:

@@ -23,7 +23,7 @@ function processarMsg_jogo_fase_I(msgParams) {
 }
 
 function processarMsg_carrega_jogo(msgParams) {
-    processarMsg_lista_sala(msgParams);
+    processarMsg_info_sala(msgParams);
 
     for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
         var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
@@ -42,7 +42,7 @@ function processarMsg_carrega_jogo(msgParams) {
 }
 
 function processarMsg_carrega_jogo_olheiro(msgParams) {
-    processarMsg_lista_sala(msgParams);
+    processarMsg_info_sala(msgParams);
 
     for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
         var territorioDosJogadores = msgParams.territoriosDosJogadores[i];

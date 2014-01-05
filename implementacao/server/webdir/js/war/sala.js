@@ -1,9 +1,10 @@
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
-function processarMsg_lista_sala(msgParams) {
-    var listaJogadores = msgParams.listaJogadores;
+function processarMsg_info_sala(msgParams) {
+    var listaJogadores = msgParams.jogadores;
     var sala = msgParams.sala;
+    var estado = msgParams.estado;
     
     if (typeof msgParams.extra != 'undefined') {
         var extra = msgParams.extra;
@@ -15,6 +16,7 @@ function processarMsg_lista_sala(msgParams) {
     }
  
     $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
+    $('#btnEntrarNaSala' + sala).html((estado == 'sala_criada') ? 'Entrar' : 'Assistir');
     for (i=0; i < listaJogadores.length; i++) {
         if (listaJogadores[i] != null) {
             var jog = listaJogadores[i];

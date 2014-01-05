@@ -4,11 +4,6 @@ from jogador import *
 from sala import *
 from jogo import *
 
-class EstadoDaSala:
-    sala_criada = "sala_criada"
-    jogo_em_andamento = "jogo_em_andamento"
-
-
 class GerenciadorSala(object):
     def __init__(self, nome, gerenciadorPrincipal):
         self.id = nome
@@ -102,6 +97,7 @@ class GerenciadorSala(object):
             del self.jogo
             self.jogo = None
         self.sala = Sala(self.id, self)
+        self.estado = EstadoDaSala.sala_criada
 
     def fecha(self):
         if self.jogo != None:
