@@ -17,6 +17,13 @@ function comunicacao_registrar(usuario, senha) {
     });
 }
 
+function comunicacao_criarSala(id) {
+    return new Mensagem(TipoMensagem.criar_sala,
+    {
+        sala: id
+    });
+}
+
 function comunicacao_sairDaSala() {
     return new Mensagem(TipoMensagem.sair_da_sala, null);
 }

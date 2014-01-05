@@ -41,6 +41,10 @@ class Lobby(object):
         self.salas = salas
         self.usuarios = usuarios
 
+class CriarSala(object):
+    def __init__(self, sala):
+        self.sala = sala
+
 class InfoSala(object):
     def __init__(self, sala, estado, jogadoresDaSala, extra):
         self.sala = sala

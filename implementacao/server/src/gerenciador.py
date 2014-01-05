@@ -151,7 +151,7 @@ class GerenciadorPrincipal(object):
             gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
             gerenciadorSala.entra(cliente, usuario)
         else:
-            # TODO: Enviar a lista de salas para o cliente.
+            # Envia a lista de salas para o cliente.
             infoSalas = []
             for gerenciadorSala in self.salas.values():
                 info = {
@@ -216,13 +216,13 @@ class GerenciadorPrincipal(object):
 
 
     def criaSala(self, cliente, usuario, mensagem):
-        nomeDaSala = mensagem.params['nome']
+        nomeDaSala = mensagem.params['sala']
         
-        # TODO: Verificar se sala  ja nao esta criada
-        if nomeDaSala not in self.salas.keys():
-            # TODO: Validar nome
+        # TODO: Validar nome.
+        if nomeDaSala not in self.salas.keys() and len(nomeDaSala) > 0:
+            self.enviaMsgParaTodos(TipoMensagem.criar_sala,
+                CriarSala(nomeDaSala))
 
-            # TODO: Criar uma instancia de GerenciadorSala
             gerenciadorSala = GerenciadorSala(nomeDaSala, self)
             gerenciadorSala.entra(cliente, usuario)
             self.salas[nomeDaSala] = gerenciadorSala

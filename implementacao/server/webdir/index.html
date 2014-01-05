@@ -104,7 +104,10 @@
         </div>
         
         <div id="sala">
-            <button id="btnCriarSala" class="btn btn-default" onclick="_sala.cria();">Criar sala</button>
+            <input id="sala_nomeParaCriar" type="text" 
+                class="form-control" 
+                placeholder="Digite o nome da sala." />
+            <button id="btnCriarSala" class="btn btn-default" onclick="_sala.cria($('#sala_nomeParaCriar').val());">Criar sala</button>
 
             <div id="sala_content">
                 <div class="form-signin">

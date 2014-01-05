@@ -3,6 +3,11 @@ jogos.war = jogos.war || {};
 
 jogos.war.Sala = function() {
     
+    this.cria = function(id) {
+        msg = comunicacao_criarSala(id);
+        _libwebsocket.enviarObjJson(msg);
+    };
+
     this.limpaPosicao = function(sala, posicao) {
         $("#jogador" + (posicao+1)).html("");
         $("#sala" + sala + "_jogador" + (posicao+1)).html("");
