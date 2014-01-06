@@ -91,7 +91,7 @@ class CarregaJogo(object):
     def __init__(self, posicao, territoriosDosJogadores, listaJogadores, objetivo, cartasTerritorio):
         self.jogadorDaVez = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
-        self.listaJogadores = listaJogadores
+        self.jogadores = listaJogadores
         self.objetivo = objetivo;
         self.cartasTerritorio = cartasTerritorio
 
@@ -99,7 +99,7 @@ class CarregaJogoOlheiro(object):
     def __init__(self, posicao, territoriosDosJogadores, listaJogadores):
         self.jogadorDaVez = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
-        self.listaJogadores = listaJogadores
+        self.jogadores = listaJogadores
 
 class AcaoTurno(object):
     def __init__(self, tipoAcao, 

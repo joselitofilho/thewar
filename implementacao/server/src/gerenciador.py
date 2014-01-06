@@ -12,12 +12,14 @@ class GerenciadorSala(object):
         self.jogo = None
         self.jogadores = {}
         self.estado = EstadoDaSala.sala_criada
+        self.jogadoresDaSala = []
 
     def entra(self, cliente, usuario):
         self.jogadores[cliente] = usuario
         
         if self.jogo == None:
             self.sala.adiciona(cliente, usuario)
+            self.jogadoresDaSala = self.sala.jogadores.values()
         else:
             self.jogo.adiciona(cliente, usuario)
 
@@ -26,6 +28,7 @@ class GerenciadorSala(object):
             usuario = self.jogadores[cliente]
             if self.jogo == None:
                 self.sala.remove(usuario)
+                self.jogadoresDaSala = self.sala.jogadores.values()
                 
                 if self.sala.vazia():
                     self.gerenciadorPrincipal.fechaSala(self.id)
@@ -41,12 +44,12 @@ class GerenciadorSala(object):
 
     def iniciaPartida(self):
         if len(self.sala.jogadores) >= 3 and self.jogo == None:
-            jogadoresDaSala = self.sala.jogadores
+            tempJogadoresDaSala = self.sala.jogadores
 
             jogadoresDoJogo = {}
             clientes = {}
-            for k, v in jogadoresDaSala.iteritems():
-                jogadorDaSala = jogadoresDaSala[k]
+            for k, v in tempJogadoresDaSala.iteritems():
+                jogadorDaSala = tempJogadoresDaSala[k]
                 jogadoresDoJogo[k] = JogadorDoJogo(
                         jogadorDaSala.usuario,
                         jogadorDaSala.posicao,
@@ -131,12 +134,6 @@ class GerenciadorSala(object):
             
     def enviaMsgParaTodos(self, tipo, params):
         self.gerenciadorPrincipal.enviaMsgParaTodos(tipo, params)
-
-    @property
-    def jogadoresDaSala(self):
-        if self.sala != None:
-            return self.sala.jogadores.values()
-        return []
 
 class GerenciadorPrincipal(object):
     def __init__(self):

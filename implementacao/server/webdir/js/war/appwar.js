@@ -727,6 +727,11 @@ function tocarSomDeFundo(el) {
     }
 }
 
+function appwar_abrirRegras() {
+    var win=window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
+    win.focus();
+}
+
 function iniciarApp() {
     _libwebsocket = new gpscheck.comunicacao.GPSWebSocket(8080);
     _libwebsocket.FOnOpen(posAberturaSocket);

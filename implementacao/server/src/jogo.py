@@ -155,7 +155,11 @@ class Jogo(object):
         # Preencher os dados da acao
         if tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_globais:
             if turno.quantidadeDeTropas == 0:
-                turno.quantidadeDeTropas = math.ceil(len(jogador.territorios) / 2.0);
+                qtd = len(jogador.territorios) / 2
+                if qtd > 3:
+                    turno.quantidadeDeTropas = qtd
+                else:
+                    turno.quantidadeDeTropas = 3
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, 
                     numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca, 
                     turno.quantidadeDeTropas)

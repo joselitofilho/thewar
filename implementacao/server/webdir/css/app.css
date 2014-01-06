@@ -116,3 +116,9 @@ html, body {
     z-index: 9001;
 }
 
+.btn_regras {
+    position: absolute;
+    top: 44px;
+    left: 1126px;
+    z-index: 9001;
+}

@@ -149,6 +149,10 @@ function processarMsg_lobby(msgParams) {
                 var posicaoJogador = Number(jog.posicao);
                 var usuario = jog.usuario;
                 _sala.preencheJogador(sala, posicaoJogador, usuario);
+
+                if (usuario == _usuario && estado == 'jogo_em_andamento') {
+                    $('#btnEntrarNaSala' + sala).html('Reentrar');
+                }
             }
         }
     }
@@ -157,15 +161,15 @@ function processarMsg_lobby(msgParams) {
 function processarMsg_criar_sala(msgParams) {
     _sala.adicionaElementoHtml(msgParams.sala);
     if (_salaDoJogador == null) {
-        $('#sala_content').scrollTop($('#sala_content').prop('scrollHeight'));
-        $('#sala_content').perfectScrollbar('update');
+        //$('#sala_content').scrollTop($('#sala_content').prop('scrollHeight'));
+        //$('#sala_content').perfectScrollbar('update');
     }
 }
 
 function processarMsg_fechar_sala(msgParams) {
     _sala.removeElementoHtml(msgParams.sala);
-    $('#sala_content').scrollTop(0);
-    $('#sala_content').perfectScrollbar('update');
+    //$('#sala_content').scrollTop(0);
+    //$('#sala_content').perfectScrollbar('update');
 }
 
 /* Funções gerais */
