@@ -26,6 +26,9 @@ class GerenciadorSala(object):
             usuario = self.jogadores[cliente]
             if self.jogo == None:
                 self.sala.remove(usuario)
+                
+                if self.sala.vazia():
+                    self.gerenciadorPrincipal.fechaSala(self.id)
             else:
                 self.jogo.remove(usuario)
             
@@ -167,14 +170,15 @@ class GerenciadorPrincipal(object):
         # TODO: Enviar mensagem para todos que o cliente entrou.
         
     def clienteDesconectou(self, cliente):
+        usuario = self.jogadores[cliente]
         try:
-            usuario = self.jogadores[cliente]
             gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
             gerenciadorSala.sai(cliente)
-            self.usuarioPorSala.pop(usuario)
-            self.jogadores.pop(cliente)
+            del self.usuarioPorSala[usuario]
         except:
-            print "[ERRO][GerenciadorPrincipal] clienteDesconectou falhou."
+            print "[ERRO][GerenciadorPrincipal] Erro ao tentar desconectar o usuario["+usuario+"] da sala."
+            print "\tProvavelmente ele nao esteja em nenhuma."
+        del self.jogadores[cliente]
     
     def interpretaMensagem(self, cliente, mensagem):
         usuario = self.jogadores[cliente]
@@ -216,17 +220,30 @@ class GerenciadorPrincipal(object):
 
 
     def criaSala(self, cliente, usuario, mensagem):
-        nomeDaSala = mensagem.params['sala']
+        idSala = mensagem.params['sala']
         
         # TODO: Validar nome.
-        if nomeDaSala not in self.salas.keys() and len(nomeDaSala) > 0:
-            self.enviaMsgParaTodos(TipoMensagem.criar_sala,
-                CriarSala(nomeDaSala))
+        if idSala not in self.salas.keys() and len(idSala) > 0:
+            # Usuario esta em uma sala.
+            if usuario in self.usuarioPorSala.keys():
+                idSalaAtual = self.usuarioPorSala[usuario]
+                if idSalaAtual != idSala:
+                    gerenciadorSalaAtual = self.salas[idSalaAtual]
+                    gerenciadorSalaAtual.sai(cliente)
 
-            gerenciadorSala = GerenciadorSala(nomeDaSala, self)
+            self.enviaMsgParaTodos(TipoMensagem.criar_sala,
+                CriarSala(idSala))
+
+            gerenciadorSala = GerenciadorSala(idSala, self)
             gerenciadorSala.entra(cliente, usuario)
-            self.salas[nomeDaSala] = gerenciadorSala
-            self.usuarioPorSala[usuario] = nomeDaSala
+            self.salas[idSala] = gerenciadorSala
+            self.usuarioPorSala[usuario] = idSala
+    
+    def fechaSala(self, idSala):
+        if idSala != '1' and idSala != '2':
+            self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
+                FecharSala(idSala))
+            del self.salas[idSala]
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)

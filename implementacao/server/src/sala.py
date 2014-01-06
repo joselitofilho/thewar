@@ -104,9 +104,9 @@ class Sala(object):
             if proximaPosicao not in self.jogadores.keys():
                 self.proximaPosicao = proximaPosicao
                 break
-
-    def lista(self):
-        return self.jogadoresDaSala
+        
+    def vazia(self):
+        return len(self.jogadores) == 0
     
     def enviaMsgParaTodos(self, tipo, msg):
         self.gerenciadorSala.enviaMsgParaTodos(tipo, msg)

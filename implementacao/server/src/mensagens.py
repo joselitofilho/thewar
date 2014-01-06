@@ -8,6 +8,7 @@ class TipoMensagem:
     criar_sala = "CriarSala"
     info_sala = "InfoSala"
     sair_da_sala = "SairDaSala"
+    fechar_sala = "FecharSala"
     iniciar_partida = "IniciarPartida"
     jogo_fase_I = "JogoFaseI"
     carta_objetivo = "CartaObjetivo"
@@ -51,6 +52,10 @@ class InfoSala(object):
         self.estado = estado
         self.jogadores = jogadoresDaSala
         self.extra = extra
+        
+class FecharSala(object):
+    def __init__(self, sala):
+        self.sala = sala
 
 class AlteraPosicaoNaSala(object):
     def __init__(self, sala, jogadorDaSala, posicaoAntiga):

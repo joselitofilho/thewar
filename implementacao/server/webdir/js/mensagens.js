@@ -6,6 +6,7 @@ var TipoMensagem = {
     criar_sala: "CriarSala",
     info_sala: "InfoSala",
     sair_da_sala: "SairDaSala",
+    fechar_sala: "FecharSala",
     iniciar_partida: "IniciarPartida",
     jogo_fase_I: "JogoFaseI",
     carta_objetivo: "CartaObjetivo",
