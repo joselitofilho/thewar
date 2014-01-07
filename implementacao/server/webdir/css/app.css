@@ -62,6 +62,13 @@ html, body {
     padding: 7px 9px;
 }
 
+#geral {
+	min-height:100%;
+	position:relative;
+	max-width: 1024px;
+	left: 50%;
+	margin-left: -512px;
+}
 
 #idJogador {
     float: left;
@@ -118,7 +125,7 @@ html, body {
 
 .btn_regras {
     position: absolute;
-    top: 44px;
-    left: 1126px;
+    top: 10px;
+    left: 165px;
     z-index: 9001;
 }

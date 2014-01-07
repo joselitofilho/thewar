@@ -37,6 +37,8 @@ class GerenciadorSala(object):
             
                 if not self.jogo.temJogadorOnLine():
                     self.jogoTerminou(self.jogo.id)
+                    
+                self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
         
             del self.jogadores[cliente]
         except:
@@ -106,6 +108,8 @@ class GerenciadorSala(object):
             self.jogo.fecha()
             del self.jogo
             self.jogo = None
+
+        self.jogadoresDaSala = []
         self.sala = Sala(self.id, self)
         self.estado = EstadoDaSala.sala_criada
         
@@ -151,18 +155,7 @@ class GerenciadorPrincipal(object):
             gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
             gerenciadorSala.entra(cliente, usuario)
         else:
-            # Envia a lista de salas para o cliente.
-            infoSalas = []
-            for gerenciadorSala in self.salas.values():
-                info = {
-                    "sala": gerenciadorSala.id,
-                    "jogadores": gerenciadorSala.jogadoresDaSala,
-                    "estado": gerenciadorSala.estado
-                }
-                infoSalas.append(info)
-            self.enviaMsgParaCliente(TipoMensagem.lobby, 
-                Lobby(infoSalas, self.jogadores.values()), cliente)
-
+            self.enviaMsgLobbyParaCliente(cliente)
         
         # TODO: Enviar mensagem para todos que o cliente entrou.
         
@@ -241,6 +234,19 @@ class GerenciadorPrincipal(object):
             self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
                 FecharSala(idSala))
             del self.salas[idSala]
+            
+    def enviaMsgLobbyParaCliente(self, cliente):
+        # Envia a lista de salas para o cliente.
+        infoSalas = []
+        for gerenciadorSala in self.salas.values():
+            info = {
+                "sala": gerenciadorSala.id,
+                "jogadores": gerenciadorSala.jogadoresDaSala,
+                "estado": gerenciadorSala.estado
+            }
+            infoSalas.append(info)
+        self.enviaMsgParaCliente(TipoMensagem.lobby, 
+            Lobby(infoSalas, self.jogadores.values()), cliente)
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)

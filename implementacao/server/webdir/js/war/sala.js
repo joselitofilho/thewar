@@ -137,6 +137,14 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 }
 
 function processarMsg_lobby(msgParams) {
+    $('#jogo').css('visibility', 'hidden');
+    $('#sala').css('visibility', 'visible');
+    $('.form-signin').children().each(function(i, elemento) {
+        $(elemento).css('visibility', 'visible')
+    });
+    $('#bloqueador_tela').css('visibility', 'visible');
+    document.getElementById('geral').style.cursor='auto';
+    
     for (iSala = 0; iSala < msgParams.salas.length; iSala++) { 
         var sala = msgParams.salas[iSala].sala
         var jogadores =  msgParams.salas[iSala].jogadores;

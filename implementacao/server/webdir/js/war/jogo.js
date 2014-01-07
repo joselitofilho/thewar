@@ -3,13 +3,8 @@ function jogo_preparaElementosHtml() {
     $('.form-signin').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden')
     });
-    $('#menu_jogadores').css('visibility', 'visible');
-    $('#controles').css('visibility', 'visible');
-    $('#info_turno').css('visibility', 'visible');
-    $('#btnFinalizarTurno').css('visibility', 'visible');
-    $('#barra_tempo').css('visibility', 'visible');
-    $('#quantidade_de_tropas').css('visibility', 'visible');
     $('#bloqueador_tela').css('visibility', 'hidden');
+    $('#jogo').css('visibility', 'visible');
 }
 
 function processarMsg_jogo_fase_I(msgParams) {
@@ -37,11 +32,9 @@ function processarMsg_carrega_jogo(msgParams) {
     processarMsg_cartas_territorios(msgParams.cartasTerritorio);
 
     _posicaoJogadorDaVez = msgParams.jogadorDaVez;
-
-    $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
-function processarMsg_carrega_jogo_olheiro(msgParams) {
+function processarMsg_carrega_jogo_olheiro(msgParams) {    
     processarMsg_info_sala(msgParams);
 
     for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
@@ -53,8 +46,6 @@ function processarMsg_carrega_jogo_olheiro(msgParams) {
     jogo_preparaElementosHtml();
 
     _posicaoJogadorDaVez = msgParams.jogadorDaVez;
-
-    $('#bloqueador_tela').css('visibility', 'hidden');
 }
 
 function processarMsg_cartas_territorios(msgParams) {
@@ -348,4 +339,9 @@ function jogo_animacaoGanhouCartaTerritorio() {
             $('#ganhou_carta').css('visibility', 'hidden');
         });
     });
+}
+
+function jogo_sair() {
+    msg = comunicacao_sairDaSala();
+    _libwebsocket.enviarObjJson(msg);
 }

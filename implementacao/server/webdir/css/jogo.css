@@ -1,3 +1,8 @@
+#jogo {
+	overflow: hidden;
+	visibility: hidden;
+}
+
 #info_turno {
     position: absolute;
     top: 285px;
@@ -7,7 +12,6 @@
     color: #FFF;
     text-align: center;
     z-index: 999;
-    visibility: hidden;
     -webkit-transform: rotate(10deg);  /* Chrome, Safari 3.1+ */
     -moz-transform: rotate(10deg);  /* Firefox 3.5-15 */
     -ms-transform: rotate(10deg);  /* IE 9 */
@@ -97,7 +101,6 @@
     left: 471px;
     width: 290px;
     color: #FFF;
-    visibility: hidden;
     z-index: 999;
 }
 
@@ -125,7 +128,6 @@
     right: 0;
     background: url('../imagens/muro.jpg');
     cursor: pointer;
-    visibility: hidden;
     z-index: 999;
 }
 
@@ -162,7 +164,6 @@
     cursor: pointer;
     color: #000;
     font-size: 20px;
-    visibility: hidden;
     z-index: 999;
 }
 
@@ -172,23 +173,10 @@
     top: 26px;
 }
 
-#geral {
-	min-height:100%;
-	position:relative;
-	max-width: 1024px;
-	left: 50%;
-	margin-left: -512px;
-}
- 
-#jogo {
-	overflow:hidden;
-}
-
 #menu_jogadores {
     position: absolute;
     width: 1024px;
     z-index: 999;
-    visibility: hidden;
 }
 
 #menu_jogadores ul {
@@ -253,4 +241,15 @@
     opacity: 0.0;
     visibility: hidden;
     z-index: 999;
+}
+
+#jogo_sair {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: url('../imagens/sair.png');
+    z-index: 999;
+    cursor: pointer;
 }
