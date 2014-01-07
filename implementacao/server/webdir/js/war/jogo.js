@@ -289,13 +289,17 @@ function jogo_iniciaBarraDeProgresso(tempoTotal) {
     $('#barra').css('background-color','#5eb95e');
     jogo_alteraTempoRestante(tempoTotal);
 
-    var valor = (100.0 / minutosTotal) * (minutosTotal - tempoTotal);
+    var inc = 100.0/minutosTotal;
+    var valor = inc * (minutosTotal - tempoTotal);
     var tempo = tempoTotal;
     _loopTempoRestante = setInterval(function() {
         var barra = $('#barra');
-        valor += 100.0/minutosTotal;
+        valor += inc;
         barra.width(valor + '%');
-        if (valor > 85) barra.css('background-color','#dd514c');
+        if (valor > 85) {
+            barra.css('background-color','#dd514c');
+            tocarSom(this, "alarme.mp3");
+        }
         else if (valor > 50) barra.css('background-color','#faa732');
         
         tempo -= 1.0;
