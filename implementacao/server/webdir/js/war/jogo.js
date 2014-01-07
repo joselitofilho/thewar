@@ -349,3 +349,11 @@ function jogo_sair() {
     msg = comunicacao_sairDaSala();
     _libwebsocket.enviarObjJson(msg);
 }
+
+function jogo_removeElementosHtml() {
+    $('#jogo').css('visibility', 'hidden');
+    $('#it_sub_titulo').css('visibility', 'hidden');
+    $('#it_info').css('visibility', 'hidden');
+    clearInterval(_loopTempoRestante);
+    clearTimeout(_timeoutTempoRestante);   
+}

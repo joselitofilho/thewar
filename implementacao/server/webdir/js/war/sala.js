@@ -137,7 +137,7 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 }
 
 function processarMsg_lobby(msgParams) {
-    $('#jogo').css('visibility', 'hidden');
+    jogo_removeElementosHtml();
     $('#sala').css('visibility', 'visible');
     $('.form-signin').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'visible')
@@ -151,6 +151,7 @@ function processarMsg_lobby(msgParams) {
         var estado = msgParams.salas[iSala].estado;
         _sala.adicionaElementoHtml(sala);
         $('#btnEntrarNaSala' + sala).html((estado == 'sala_criada') ? 'Entrar' : 'Assistir');
+        $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
         for (i=0; i < jogadores.length; i++) {
             if (jogadores[i] != null) {
                 var jog = jogadores[i];
@@ -160,6 +161,10 @@ function processarMsg_lobby(msgParams) {
 
                 if (usuario == _usuario && estado == 'jogo_em_andamento') {
                     $('#btnEntrarNaSala' + sala).html('Reentrar');
+                }
+                
+                if (jog.dono && _usuario == usuario && estado == 'sala_criada') {
+                    $('#btnIniciarPartida' + sala).css('visibility', 'visible');
                 }
             }
         }
