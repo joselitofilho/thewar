@@ -4,6 +4,7 @@ jogos.war = jogos.war || {};
 jogos.war.Sala = function() {
     
     this.cria = function(id) {
+        if (id == "") alert('Digite um nome para sua sala.');
         msg = comunicacao_criarSala(id);
         _libwebsocket.enviarObjJson(msg);
     };
@@ -53,6 +54,12 @@ jogos.war.Sala = function() {
     
     this.removeElementoHtml = function(id) {
         $('#sala_' + id).remove();
+    };
+    
+    this.limpaListaSala = function() {
+        $('#sala_content .form-signin').children().each(function(i, elemento) {
+            $(elemento).parent().remove();
+        });
     };
 };
 
@@ -144,7 +151,7 @@ function processarMsg_lobby(msgParams) {
     $('#sala .form-signin').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'visible');
     });
-    $('#sala_content').empty();
+    _sala.limpaListaSala();
     $('#bloqueador_tela').css('visibility', 'visible');
     document.getElementById('geral').style.cursor='auto';
     
