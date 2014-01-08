@@ -1,7 +1,7 @@
 function jogo_preparaElementosHtml() {
     $('#sala').css('visibility', 'hidden');
-    $('.form-signin').children().each(function(i, elemento) {
-        $(elemento).css('visibility', 'hidden')
+    $('#sala .form-signin').children().each(function(i, elemento) {
+        $(elemento).css('visibility', 'hidden');
     });
     $('#bloqueador_tela').css('visibility', 'hidden');
     $('#jogo').css('visibility', 'visible');
@@ -303,6 +303,7 @@ function processarMsg_entrou_no_jogo(msgParams) {
     if (posicaoJogador > -1) {
         if (_posicaoJogador == -1) {
             $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+            $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
             _posicaoJogador = posicaoJogador;
             appwar_alterarTituloDaPagina(usuario);
             
@@ -616,6 +617,8 @@ function jogo_sair() {
 }
 
 function jogo_removeElementosHtml() {
+    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+    $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#jogo').css('visibility', 'hidden');
     $('#it_sub_titulo').css('visibility', 'hidden');
     $('#it_info').css('visibility', 'hidden');

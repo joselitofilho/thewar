@@ -138,10 +138,13 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 
 function processarMsg_lobby(msgParams) {
     jogo_removeElementosHtml();
+    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+    $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#sala').css('visibility', 'visible');
-    $('.form-signin').children().each(function(i, elemento) {
-        $(elemento).css('visibility', 'visible')
+    $('#sala .form-signin').children().each(function(i, elemento) {
+        $(elemento).css('visibility', 'visible');
     });
+    $('#sala_content').empty();
     $('#bloqueador_tela').css('visibility', 'visible');
     document.getElementById('geral').style.cursor='auto';
     
