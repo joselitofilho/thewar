@@ -207,6 +207,8 @@ class GerenciadorPrincipal(object):
                 gerenciadorSala.sai(cliente)
 
                 self.usuarioPorSala.pop(usuario)
+            else:
+                self.enviaMsgLobbyParaCliente(cliente)
 
 
     def criaSala(self, cliente, usuario, mensagem):
