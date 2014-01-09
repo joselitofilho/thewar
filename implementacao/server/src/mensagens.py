@@ -146,12 +146,12 @@ class ColocarTropa(object):
         self.quantidadeDeTropasRestante = quantidadeDeTropasRestante
         
 class Atacar(object):
-    def __init__(self, posicaoJogadorAtaque, posicaoJogadorDefesa, 
+    def __init__(self, jogadorAtaque, jogadorDefesa, 
             dadosDefesa, dadosAtaque, 
             territorioDaDefesa, territoriosDoAtaque, 
             conquistouTerritorio):
-        self.posicaoJogadorAtaque = posicaoJogadorAtaque
-        self.posicaoJogadorDefesa = posicaoJogadorDefesa
+        self.jogadorAtaque = jogadorAtaque
+        self.jogadorDefesa = jogadorDefesa
         self.dadosDefesa = dadosDefesa
         self.dadosAtaque = dadosAtaque
         self.territorioDaDefesa = territorioDaDefesa

@@ -1,4 +1,4 @@
-var _logJogo = new jogowar.war.LogJogo($('#ct_mensagens'));
+var _chatJogo = new jogowar.war.ChatJogo($('#ct_mensagens'));
 
 function jogo_preparaElementosHtml() {
     $('#sala').css('visibility', 'hidden');
@@ -80,6 +80,12 @@ function jogo_iniciaAnimacaoBatalha(msgParams) {
 }
 
 function jogo_efetuaAtaque(msgParams) {
+    _chatJogo.ataque(
+        msgParams.jogadorAtaque.usuario,
+        msgParams.territoriosDoAtaque,
+        msgParams.jogadorDefesa.usuario,
+        msgParams.territorioDaDefesa);
+
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
 
@@ -159,9 +165,9 @@ function jogo_efetuaAtaque(msgParams) {
         this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
 
         _territorioAlvoAtaque = null;
-        _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.posicaoJogadorAtaque);
-        jogo_aumentaQuantidadeDeTerritorioDoJogador(msgParams.posicaoJogadorAtaque);
-        jogo_diminuiQuantidadeDeTerritorioDoJogador(msgParams.posicaoJogadorDefesa);
+        _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.jogadorAtaque.posicao);
+        jogo_aumentaQuantidadeDeTerritorioDoJogador(msgParams.jogadorAtaque.posicao);
+        jogo_diminuiQuantidadeDeTerritorioDoJogador(msgParams.jogadorDefesa.posicao);
 
         if (!fazSentidoMoverAposConquistar) {
             finalizarTurno();
@@ -251,12 +257,11 @@ function processarMsg_colocar_tropa(msgParams) {
         finalizarTurno();
     }
 
-    _logJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
+    _chatJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
 }
 
 function processarMsg_atacar(msgParams) {
-
-    if (msgParams.posicaoJogadorDefesa == _posicaoJogador) {
+    if (msgParams.jogadorDefesa.usuario == _usuario) {
         this.tocarSom(this, "ohno.mp3");
         var me = this;
         setTimeout(function() {
@@ -448,13 +453,8 @@ function processarMsg_turno_jogo_terminou(msgParams) {
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
     this.tocarSom(this, 'mensagem.mp3');
 
-    var texto = msgParams.usuario + ": " + msgParams.texto + "\n";
-    $('#ct_mensagens').append(texto);
-    
-    var mensagens = $('#ct_mensagens');
-    mensagens.scrollTop(
-        mensagens[0].scrollHeight - mensagens.height()
-    );
+    var texto = msgParams.usuario + ": " + msgParams.texto;
+    _chatJogo.escreve(texto);
 }
 
 /* Informações dos turnos */

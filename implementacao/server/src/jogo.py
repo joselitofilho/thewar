@@ -625,8 +625,18 @@ class Jogo(object):
                                         self.defesaVenceu(i, territoriosDoAtaque, jogador)
                         
                             self.enviaMsgParaTodos(TipoMensagem.atacar, 
-                                Atacar(posicaoJogador, jogadorDefesa.posicao, dadosDefesa, dadosAtaque, 
-                                    territorioDaDefesa, territoriosDoAtaque, conquistouTerritorio))
+                                Atacar(
+                                    {
+                                        "posicao": posicaoJogador,
+                                        "usuario": self.jogadores[posicaoJogador].usuario
+                                    },
+                                    {
+                                        "posicao": jogadorDefesa.posicao,
+                                        "usuario": jogadorDefesa.usuario
+                                    },
+                                    dadosDefesa, dadosAtaque, 
+                                    territorioDaDefesa, territoriosDoAtaque, 
+                                    conquistouTerritorio))
                     else:
                         temErro = True
                 
