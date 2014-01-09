@@ -139,8 +139,9 @@ class AcaoJogoTerminou(AcaoTurno):
         self.ganhador = usuario
 
 class ColocarTropa(object):
-    def __init__(self, posicaoJogador, territorio, quantidadeDeTropasRestante):
-        self.posicaoJogador = posicaoJogador
+    def __init__(self, jogador, quantidade, territorio, quantidadeDeTropasRestante):
+        self.jogador = jogador
+        self.quantidade = quantidade
         self.territorio = territorio
         self.quantidadeDeTropasRestante = quantidadeDeTropasRestante
         
@@ -169,8 +170,8 @@ class Territorios(object):
         self.territorios = territorios
         
 class ColocarTropaNaTrocaDeCartasTerritorios(object):
-    def __init__(self, posicaoJogador, territorios):
-        self.posicaoJogador = posicaoJogador;
+    def __init__(self, jogador, territorios):
+        self.jogador = jogador;
         self.territorios = territorios
         
 class JogadorDestruido(object):

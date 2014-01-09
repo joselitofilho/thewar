@@ -463,7 +463,10 @@ class Jogo(object):
                     quantidadeTotalRestante = turno.quantidadeDeTropas
     
                     self.enviaMsgParaTodos(TipoMensagem.colocar_tropa, 
-                        ColocarTropa(self.posicaoJogadorDaVez, territorio, quantidadeTotalRestante))
+                        ColocarTropa(self.jogadores[self.posicaoJogadorDaVez].usuario,
+                            quantidade,
+                            territorio, 
+                            quantidadeTotalRestante))
                     erro = False
             elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
                 if quantidade <= turno.quantidadeDeTropas and \
@@ -476,7 +479,10 @@ class Jogo(object):
                     quantidadeTotalRestante = turno.quantidadeDeTropas
     
                     self.enviaMsgParaTodos(TipoMensagem.colocar_tropa, 
-                        ColocarTropa(self.posicaoJogadorDaVez, territorio, quantidadeTotalRestante))
+                        ColocarTropa(self.jogadores[self.posicaoJogadorDaVez].usuario,
+                            quantidade,
+                            territorio, 
+                            quantidadeTotalRestante))
                     erro = False
 
     def colocaTropaNaTrocaDeCartasTerritorios(self, posicaoJogador, cartasParaTroca):
@@ -490,7 +496,8 @@ class Jogo(object):
                 territoriosBeneficiados.append(territorio);
                 
         self.enviaMsgParaTodos(TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios, 
-            ColocarTropaNaTrocaDeCartasTerritorios(posicaoJogador, territoriosBeneficiados))
+            ColocarTropaNaTrocaDeCartasTerritorios(self.jogadores[posicaoJogador].usuario, 
+                territoriosBeneficiados))
     
     def ataca(self, usuario, dosTerritorios, paraOTerritorio):
         turno = self.turno

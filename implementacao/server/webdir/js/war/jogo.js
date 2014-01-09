@@ -1,4 +1,4 @@
-_logJogo = new jogowar.war.LogJogo($('#ct_mensagens'));
+var _logJogo = new jogowar.war.LogJogo($('#ct_mensagens'));
 
 function jogo_preparaElementosHtml() {
     $('#sala').css('visibility', 'hidden');
@@ -247,13 +247,11 @@ function processarMsg_colocar_tropa(msgParams) {
     appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropasRestante);
     
     if ((msgParams.quantidadeDeTropasRestante == 0) && 
-        (msgParams.posicaoJogador == _posicaoJogador)) {
+        (msgParams.jogador == _usuario)) {
         finalizarTurno();
     }
 
-    // TODO: Calcular quantas tropas foram colocadas.
-    // TODO: Colocar o nome do jogador.
-    _logJogo.colocaTropa(msgParams.posicaoJogador, msgParams.territorio.codigo, 1);
+    _logJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
 }
 
 function processarMsg_atacar(msgParams) {
