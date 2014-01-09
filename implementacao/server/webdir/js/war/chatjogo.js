@@ -23,8 +23,11 @@ jogowar.war.ChatJogo = function(area) {
     this.ataque = function(jogadorAtaque, territoriosDoAtaque,
             jogadorDefesa, territorioDaDefesa) {
         var territoriosDoAtaqueTexto = territoriosDoAtaque[0].codigo;
-        for (i = 1; i < territoriosDoAtaque.length; i++) 
+        for (i = 1; i < territoriosDoAtaque.length - 1; i++) 
             territoriosDoAtaqueTexto += ', ' + territoriosDoAtaque[i].codigo;
+        
+        if (territoriosDoAtaque.length > 1)
+            territoriosDoAtaqueTexto += ' e ' + territoriosDoAtaque[territoriosDoAtaque.length-1].codigo;
 
         var texto  = 'Servidor: ' +
             jogadorAtaque + ' atacou ' +
