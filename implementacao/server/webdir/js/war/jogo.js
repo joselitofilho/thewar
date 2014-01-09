@@ -1,3 +1,5 @@
+_logJogo = new jogowar.war.LogJogo($('#ct_mensagens'));
+
 function jogo_preparaElementosHtml() {
     $('#sala').css('visibility', 'hidden');
     $('#sala .form-signin').children().each(function(i, elemento) {
@@ -248,6 +250,10 @@ function processarMsg_colocar_tropa(msgParams) {
         (msgParams.posicaoJogador == _posicaoJogador)) {
         finalizarTurno();
     }
+
+    // TODO: Calcular quantas tropas foram colocadas.
+    // TODO: Colocar o nome do jogador.
+    _logJogo.colocaTropa(msgParams.posicaoJogador, msgParams.territorio.codigo, 1);
 }
 
 function processarMsg_atacar(msgParams) {
