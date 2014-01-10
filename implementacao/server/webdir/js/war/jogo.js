@@ -246,7 +246,12 @@ function processarMsg_carta_objetivo(msgParams) {
 }
 
 function processarMsg_colocar_tropa(msgParams) {
+    _chatJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
+
     this.tocarSom(this, 'colocarTropa.wav');
+    
+    _territorios.pintarGruposTerritorios();
+    _territorios.focaNosTerritorios([msgParams.territorio.codigo]);
     _territorios.piscar(msgParams.territorio.codigo);
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     
@@ -256,8 +261,6 @@ function processarMsg_colocar_tropa(msgParams) {
         (msgParams.jogador == _usuario)) {
         finalizarTurno();
     }
-
-    _chatJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
 }
 
 function processarMsg_atacar(msgParams) {
