@@ -614,9 +614,25 @@ jogos.war.Territorios = function(mapa) {
             });
     };
     
-    this.zeraLabels = function() {
+    this.fecha = function() {
+        var _labelTerritorios = {};
+        var _markerTerritorios = {};
+        var _poligonosTerritorios = {};
+    
         $.each(_labelTerritorios, function(i, label) {
             label.alteraQuantiadeDeTropas(0);
+            label.setMap(null);
         });
+        _labelTerritorios = {};
+        
+        $.each(_markerTerritorios, function(i, marker) {
+            marker.setMap(null);
+        });
+        _markerTerritorios = {};
+        
+        $.each(_poligonosTerritorios, function(i, poligono) {
+            poligono.setMap(null);
+        });
+        _poligonosTerritorios = {};
     };
 };

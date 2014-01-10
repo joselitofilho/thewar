@@ -194,6 +194,7 @@ function jogo_efetuaAtaque(msgParams) {
 }
 
 function processarMsg_jogo_fase_I(msgParams) {
+    _territorios.limpa();    
     for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
         var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
         _territorios.iniciaLabelDosTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
@@ -328,7 +329,7 @@ function processarMsg_entrou_no_jogo(msgParams) {
     var usuario = msgParams.usuario;
 
     if (posicaoJogador > -1) {
-        _chatJogo.entrouNoJogo(usuario, (posicaoJogador == 7));
+        if (usuario != _usuario) _chatJogo.entrouNoJogo(usuario, (posicaoJogador == 7));
         
         if (_posicaoJogador == -1) {
             $('#painelRegistrarOuEntrar').css('visibility', 'hidden');

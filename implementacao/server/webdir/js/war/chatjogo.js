@@ -10,7 +10,7 @@ jogowar.war.ChatJogo = function(area) {
     };
     
     this.limpa = function() {
-        area.val("");
+        area.text('');
     };
 
     this.colocaTropa = function(usuario, territorio, quantidade) {
