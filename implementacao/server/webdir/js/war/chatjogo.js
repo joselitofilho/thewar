@@ -44,4 +44,20 @@ jogowar.war.ChatJogo = function(area) {
         texto += '.';
         this.escreve(texto);
     };
+    
+    this.moveu = function(jogador, doTerritorio, paraOTerritorio, quantidade) {
+        var texto = 'Servidor: ';
+        texto += jogador + ' moveu ' + quantidade;
+        if (quantidade > 1) texto += ' exércitos';
+        else texto += ' exército';
+        texto += ' do território ' + doTerritorio;
+        texto += ' para o território ' + paraOTerritorio + '.';
+        this.escreve(texto);
+    };
+    
+    this.conquistouTerritorio = function(jogador, territorio) {
+        var texto = 'Servidor: ';
+        texto += jogador + ' conquistou o território ' + territorio;
+        this.escreve(texto);
+    };
 };

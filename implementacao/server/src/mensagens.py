@@ -159,10 +159,11 @@ class Atacar(object):
         self.conquistouTerritorio = conquistouTerritorio
 
 class Mover(object):
-    def __init__(self, posicaoJogador, doTerritorioObj, paraOTerritorioObj):
-        self.posicaoJogador = posicaoJogador
+    def __init__(self, jogador, doTerritorioObj, paraOTerritorioObj, quantidade):
+        self.jogador = jogador
         self.doTerritorioObj = doTerritorioObj
         self.paraOTerritorioObj = paraOTerritorioObj
+        self.quantidade = quantidade
 
 class Territorios(object):
     def __init__(self, posicaoJogador, territorios):

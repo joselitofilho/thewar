@@ -162,6 +162,10 @@ function jogo_efetuaAtaque(msgParams) {
     
     // Computando ações após conquista de territorio. 
     if (msgParams.conquistouTerritorio) {
+        _chatJogo.conquistouTerritorio(
+            msgParams.jogadorAtaque.usuario,
+            msgParams.territorioDaDefesa.codigo);
+    
         this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
 
         _territorioAlvoAtaque = null;
@@ -250,8 +254,10 @@ function processarMsg_colocar_tropa(msgParams) {
 
     this.tocarSom(this, 'colocarTropa.wav');
     
-    _territorios.pintarGruposTerritorios();
-    _territorios.focaNosTerritorios([msgParams.territorio.codigo]);
+    if (msgParams.jogador != _usuario) {
+        _territorios.pintarGruposTerritorios();
+        _territorios.focaNosTerritorios([msgParams.territorio.codigo]);
+    }
     _territorios.piscar(msgParams.territorio.codigo);
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     
@@ -275,6 +281,11 @@ function processarMsg_atacar(msgParams) {
 }
 
 function processarMsg_mover(msgParams) {
+    _chatJogo.moveu(msgParams.jogador, 
+        msgParams.doTerritorioObj.codigo, 
+        msgParams.paraOTerritorioObj.codigo,
+        msgParams.quantidade);
+
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         appwar_mudarCursor('mover_para_fora');
     }
