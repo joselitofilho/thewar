@@ -328,6 +328,8 @@ function processarMsg_entrou_no_jogo(msgParams) {
     var usuario = msgParams.usuario;
 
     if (posicaoJogador > -1) {
+        _chatJogo.entrouNoJogo(usuario, (posicaoJogador == 7));
+        
         if (_posicaoJogador == -1) {
             $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
             $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
@@ -351,8 +353,8 @@ function processarMsg_saiu_do_jogo(msgParams) {
     
     var posicaoJogador = Number(msgParams.posicao) + 1;
     $("#jogador" + posicaoJogador).html("");
-
-    // TODO: Exibir algum aviso de que o jogador foi embora....
+    
+    _chatJogo.saiuDoJogo(msgParams.usuario, (posicaoJogador == 7));
 }
 
 function jogo_processaMsg_jogador_destruido(msgParams) {

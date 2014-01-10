@@ -64,4 +64,18 @@ jogowar.war.ChatJogo = function(area) {
         texto += jogador + ' conquistou o território ' + territorio + '.';
         this.escreve(texto);
     };
+    
+    this.entrouNoJogo = function(jogador, olheiro) {
+        var texto = 'Servidor: ';
+        if (olheiro) texto += jogador + ' está assintindo a partida.';
+        else texto += jogador + ' voltou para o jogo.';
+        this.escreve(texto);
+    };
+    
+    this.saiuDoJogo = function(jogador, olheiro) {
+        var texto = 'Servidor: ';
+        if (olheiro) texto += jogador + ' não está mais assistindo a partida.';
+        else texto += jogador + ' saiu do jogo.';
+        this.escreve(texto);
+    };
 };
