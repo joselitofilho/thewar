@@ -1,12 +1,16 @@
 var _chatJogo = new jogowar.war.ChatJogo($('#ct_mensagens'));
 
 function jogo_preparaElementosHtml() {
+    _chatJogo.limpa();
     $('#sala').css('visibility', 'hidden');
     $('#sala .form-signin').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
     $('#bloqueador_tela').css('visibility', 'hidden');
     $('#jogo').css('visibility', 'visible');
+    $('#dados .dado').children().each(function(i, elemento) {
+        $(elemento).css('visibility', 'hidden');
+    });
 }
 
 function animarDados() {

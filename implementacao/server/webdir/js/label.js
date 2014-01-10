@@ -69,6 +69,7 @@ Label.prototype.draw = function() {
 
 Label.prototype.alteraQuantiadeDeTropas = function(qtd) {
     this.texto = qtd;
+    this.span_.innerHTML = '';
     this.span_.innerHTML = this.texto;
 };
 

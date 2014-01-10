@@ -8,6 +8,10 @@ jogowar.war.ChatJogo = function(area) {
             area[0].scrollHeight - area.height()
         );
     };
+    
+    this.limpa = function() {
+        area.val("");
+    };
 
     this.colocaTropa = function(usuario, territorio, quantidade) {
         var texto = 'Servidor: ' + 
@@ -57,7 +61,7 @@ jogowar.war.ChatJogo = function(area) {
     
     this.conquistouTerritorio = function(jogador, territorio) {
         var texto = 'Servidor: ';
-        texto += jogador + ' conquistou o território ' + territorio;
+        texto += jogador + ' conquistou o território ' + territorio + '.';
         this.escreve(texto);
     };
 };

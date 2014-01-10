@@ -612,20 +612,11 @@ jogos.war.Territorios = function(mapa) {
             function() {
                 utilTerritorio_polygonFadeout(codigoTerritorio, _poligonosTerritorios[codigoTerritorio], 500) 
             });
-
-        /*_piscarLoopFunc[codigoTerritorio] = setInterval(function() {
-            utilTerritorio_polygonFadein(codigoTerritorio, _poligonosTerritorios[codigoTerritorio],
-            500,
-            function() {
-                utilTerritorio_polygonFadeout(codigoTerritorio, _poligonosTerritorios[codigoTerritorio], 500) 
-            });
-        }, 1000);
-        setTimeout(function() {
-            if (_piscarLoopFunc[codigoTerritorio] != null) {
-                clearInterval(_piscarLoopFunc[codigoTerritorio]);
-                _piscarLoopFunc[codigoTerritorio] = null;
-                delete _piscarLoopFunc[codigoTerritorio];
-            }
-        }, 3000);*/
+    };
+    
+    this.zeraLabels = function() {
+        $.each(_labelTerritorios, function(i, label) {
+            label.alteraQuantiadeDeTropas(0);
+        });
     };
 };
