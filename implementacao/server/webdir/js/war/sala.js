@@ -2,20 +2,35 @@ var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
 jogos.war.Sala = function() {
+    this.nomeValido = function(id) {
+        if (id == "") return false;
+        if (id.indexOf('#') != -1 || 
+            id.indexOf('/') != -1 || 
+            id.indexOf('\\') != -1 ||
+            id.indexOf(' ') != -1) return false;
+        return true;
+    };
     
     this.cria = function(id) {
-        if (id == "") alert('Digite um nome para sua sala.');
-        msg = comunicacao_criarSala(id);
-        _libwebsocket.enviarObjJson(msg);
+        id = id.trim();
+        if (!this.nomeValido(id))
+            alert('Digite um nome adequando para sua sala. Não pode conter os caracteres:\n' +
+                '[#, /, \\, espaço]');
+        else {
+            msg = comunicacao_criarSala(id);
+            _libwebsocket.enviarObjJson(msg);
+        }
     };
 
     this.limpaPosicao = function(sala, posicao) {
-        $("#jogador" + (posicao+1)).html("");
+        if (sala == _salaDoJogador)
+            $("#jogador" + (posicao+1)).html("");
         $("#sala" + sala + "_jogador" + (posicao+1)).html("");
     };
 
     this.preencheJogador = function(sala, posicao, usuario) {
-        $("#jogador" + (posicao+1)).html(usuario);
+        if (sala == _salaDoJogador)
+            $("#jogador" + (posicao+1)).html(usuario);
         $("#sala" + sala + "_jogador" + (posicao+1)).html(usuario);
     };
 
@@ -184,8 +199,9 @@ function processarMsg_lobby(msgParams) {
 function processarMsg_criar_sala(msgParams) {
     _sala.adicionaElementoHtml(msgParams.sala);
     if (_salaDoJogador == null) {
-        //$('#sala_content').scrollTop($('#sala_content').prop('scrollHeight'));
-        //$('#sala_content').perfectScrollbar('update');
+        $('#sala_nomeParaCriar').val('');
+        $('#sala_content').scrollTop($('#sala_content').prop('scrollHeight'));
+        $('#sala_content').perfectScrollbar('update');
     }
 }
 

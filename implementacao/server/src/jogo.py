@@ -90,6 +90,7 @@ class Jogo(object):
             incremento.append(8)
             incremento.append(8)
             incremento.append(9)
+            incremento.append(9)
         else:
             for i in range(quantidadeDeJogadores):
                 incremento.append(42 / quantidadeDeJogadores)
