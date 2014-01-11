@@ -359,7 +359,7 @@ function processarMsg_saiu_do_jogo(msgParams) {
     
     if (posicaoJogador == _posicaoJogador) {
         _territorios.limpa();
-        appwar_limparVariaveis();
+        //appwar_limparVariaveis();
     }
 }
 

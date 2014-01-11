@@ -1,0 +1,34 @@
+Região 1 - Cariri:
+    
+    + Territorio 1
+        "Barro", "Milagres", "Mauriti", "Abaiara", "Brejo Santo", "Jati", "Penaforte"
+        
+    + Territorio 2
+        "Aurora", "Caririacu", "Granjeiro", "Farias Brito", "Altaneira" // NOTE: Caririaçu
+        
+    + Território 3
+        "Santana do Cariri", "Crato", "Nova Olinda", "Juazeiro do Norte", "Barbalha", "Missao Velha", "Jardim", "Porteiras"
+    
+    + Território 4
+        "Araripe", "Salitre", "Campos Sales", "Assare", "Potengi"
+        
+        
+    
+Região 2 - Sertão dos Inhamuns:
+    + Território 1:
+        "Aiuaba"
+    + Território 2:
+        "Parambu"
+    + Território 3:
+        "Arneiroz", "Catarina", "Saboeiro"
+    + Território 4:
+        "Taua"
+        
+    
+    
+    
+    
+???
+    - Umari
+    - Lavras da Mangabeira
+    - Várzea Alegre

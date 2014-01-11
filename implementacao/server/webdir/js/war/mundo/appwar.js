@@ -33,7 +33,6 @@ _sala = null;
 function appwar_limparVariaveis() {
     _posicaoJogador = -1;
     _salaDoJogador = null;
-    _turno = null;
     _posicaoJogadorDaVez = -1;
 
     _territorioAlvoAtaque = null;
@@ -514,7 +513,7 @@ function iniciarApp() {
 
     var divMapa = document.getElementById("mapa");
     mapa = new jogowar.mapa.Mapa();
-    mapa.inicia(divMapa, 10.0, 10.0);
+    mapa.inicia(divMapa, 10.0, 10.0, 2);
     //this.tocarSomDeFundo(divMapa);
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);
