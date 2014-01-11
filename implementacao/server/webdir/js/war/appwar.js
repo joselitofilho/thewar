@@ -513,7 +513,7 @@ function iniciarApp() {
     _libwebsocket.iniciar();
 
     var divMapa = document.getElementById("mapa");
-    mapa = new gpscheck.mapa.Mapa();
+    mapa = new jogowar.mapa.Mapa();
     mapa.inicia(divMapa, 10.0, 10.0);
     //this.tocarSomDeFundo(divMapa);
 

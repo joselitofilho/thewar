@@ -1,14 +1,14 @@
-var gpscheck = gpscheck || {};
-gpscheck.mapa = gpscheck.mapa || {};
+var jogowar = gpscheck || {};
+jogowar.mapa = gpscheck.mapa || {};
 
-gpscheck.mapa.Mapa = function() {
+jogowar.mapa.Mapa = function() {
 
     _mapaGoogle = null;
 
-    this.inicia = function(mapaDiv, lat, lng) {
+    this.inicia = function(mapaDiv, lat, lng, zoom) {
         var mapOptions = {
             center: new google.maps.LatLng(lat, lng),
-            zoom: 2,
+            zoom: zoom,
             zoomControl: false,
             mapTypeId: google.maps.MapTypeId.SATELLITE,
             disableDoubleClickZoom: true,
