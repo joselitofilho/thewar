@@ -30,6 +30,33 @@ _quantidadeDeJogadoresNaSala = 0;
 
 _sala = null;
 
+function appwar_limparVariaveis() {
+    _posicaoJogador = -1;
+    _salaDoJogador = null;
+    _turno = null;
+    _posicaoJogadorDaVez = -1;
+
+    _territorioAlvoAtaque = null;
+    _territoriosAtacante = [];
+    _jaPodeAtacar = true;
+
+    _territorioConquistado = null;
+
+    _territoriosAtacanteAposConquistar = null;
+
+    _territorioAlvoMover = null;
+    _territorioMovimento = null;
+    _jaPodeMover = true;
+
+    _animarDadosReferencia = null;
+
+    _cartasTerritoriosSelecionadas = [];
+
+    _quantidadeDeJogadoresNaSala = 0;
+
+    _sala = null;
+}
+
 function exibirAlerta(tipo, msg) {
     $('#alerta').removeClass('alert-info alert-success alert-warning alert-danger');
     $('#alerta').addClass(tipo);

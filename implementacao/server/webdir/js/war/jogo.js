@@ -356,6 +356,11 @@ function processarMsg_saiu_do_jogo(msgParams) {
     $("#jogador" + posicaoJogador).html("");
     
     _chatJogo.saiuDoJogo(msgParams.usuario, (posicaoJogador == 7));
+    
+    if (posicaoJogador == _posicaoJogador) {
+        _territorios.limpa();
+        appwar_limparVariaveis();
+    }
 }
 
 function jogo_processaMsg_jogador_destruido(msgParams) {
