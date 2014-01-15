@@ -357,7 +357,7 @@ function processarMsg_saiu_do_jogo(msgParams) {
     
     _chatJogo.saiuDoJogo(msgParams.usuario, (posicaoJogador == 7));
     
-    if (posicaoJogador == _posicaoJogador) {
+    if (msgParams.usuario == _usuario) {
         _territorios.limpa();
         //appwar_limparVariaveis();
     }

@@ -86,7 +86,6 @@ function processarMsg_entrar(msgParams) {
         cookie.cria("usuario", $('#inputUsuario').val());
         var senha = CryptoJS.SHA3($('#inputSenha').val());
         senha = senha.toString(CryptoJS.enc.Base64);
-        cookie.cria("senha", senha);
 
         this.tocarSom(this, "entrou.mp3");
         appwar_alterarTituloDaPagina(msgParams.usuario);
@@ -111,15 +110,11 @@ function processarMsg_erro() {
 function posAberturaSocket(valor) {
     var cookie = new gpscheck.web.Cookie();
     var usuarioCookie = cookie.le("usuario");
-    var senhaCookie = cookie.le("senha");
     
-    if (usuarioCookie != null && senhaCookie != null) {
+    if (usuarioCookie != null) {
         $('#inputUsuario').val(usuarioCookie);
-        $('#inputSenha').val(senhaCookie);
     }
     $('#painelRegistrarOuEntrar').css('visibility', 'visible');
-    // TODO: Ver isso melhor depois...
-    //appwar_entrar();
 }
 
 function posRecebimentoMensagemServidor(valor) {

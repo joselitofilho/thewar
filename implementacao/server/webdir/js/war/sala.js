@@ -160,6 +160,7 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 
 function processarMsg_lobby(msgParams) {
     jogo_removeElementosHtml();
+
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#sala').css('visibility', 'visible');
