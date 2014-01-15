@@ -29,4 +29,4 @@ def lerTerritorios(territorio):
     print linhas
         
         
-lerTerritorios("Ararenda")
+lerTerritorios("Boa Viagem")

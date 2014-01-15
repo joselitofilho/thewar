@@ -11,8 +11,8 @@ jogos.war.Territorios = function(mapa) {
 
     var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
     var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
-    var COR_BORDA_AMERICA_DO_SUL = "#222";//"#003300";
-    var COR_PREENCHIMENTO_AMERICA_DO_SUL = "#008000";
+    var COR_BORDA_SUL = "#222";//"#003300";
+    var COR_PREENCHIMENTO_SUL = "#008000";
     var COR_BORDA_ASIA = "#222";//"#CC6600";
     var COR_PREENCHIMENTO_ASIA = "#FFCC33";
     var COR_BORDA_EUROPA = "#222";//"#000099";
@@ -168,7 +168,7 @@ jogos.war.Territorios = function(mapa) {
 	this.carregaGruposTerritorio = function() {
 	    var grupos = {};
 	    
-	    grupos["Asia"] = [
+	    /*grupos["Asia"] = [
             coordenada_aral,
             coordenada_china,
             coordenada_dudinka,
@@ -181,19 +181,19 @@ jogos.war.Territorios = function(mapa) {
             coordenada_tchita,
             coordenada_vietna,
             coordenada_vladivostok
+        ];*/
+	    grupos["SertaoDosInhamuns"] = [
+            coordenada_aiuaba,
+            coordenada_parambu,
+            coordenada_catarina,
+            coordenada_taua,
+            coordenada_crateus,
+            coordenada_independencia,
+            coordenada_madalena,
+            coordenada_senador_pompeu,
+            coordenada_poranga
         ];
-	    grupos["AmericaDoNorte"] = [
-            coordenada_alaska,
-            coordenada_california,
-            coordenada_groelandia,
-            coordenada_labrador,
-            coordenada_mackenzie,
-            coordenada_mexico,
-            coordenada_nova_york,
-            coordenada_ottawa,
-            coordenada_vancouver
-        ];
-	    grupos["Europa"] = [
+	    /*grupos["Europa"] = [
             coordenada_alemanha,
             coordenada_inglaterra,
             coordenada_islandia,
@@ -201,27 +201,27 @@ jogos.war.Territorios = function(mapa) {
             coordenada_polonia,
             coordenada_portugal,
             coordenada_suecia
-        ];
-	    grupos["Africa"] = [
+        ];*/
+	    /*grupos["Africa"] = [
             coordenada_africa_do_sul,
             coordenada_argelia,
             coordenada_congo,
             coordenada_egito,
             coordenada_madagascar,
             coordenada_sudao
+        ];*/
+	    grupos["Sul"] = [
+            coordenada_barro, 
+            coordenada_farias_brito,
+            coordenada_juazeiro_do_norte,
+            coordenada_chapada_do_araripe
         ];
-	    grupos["AmericaDoSul"] = [
-            coordenada_argentina, 
-            coordenada_brasil,
-            coordenada_chile,
-            coordenada_colombia
-        ];
-	    grupos["Oceania"] = [
+	    /*grupos["Oceania"] = [
             coordenada_australia,
             coordenada_borneo,
             coordenada_nova_guine,
             coordenada_sumatra
-        ];
+        ];*/
 	    
 	    return grupos;
 	};
@@ -262,19 +262,12 @@ jogos.war.Territorios = function(mapa) {
         territorioClick = territorioClick_;
         
         this.iniciaPontesEntreTerritorios();
+        
+        grupos = this.carregaGruposTerritorio();
     
-        // America do Norte.
-/*        this.iniciaGrupoTerritorio([
-            coordenada_alaska,
-            coordenada_california,
-            coordenada_groelandia,
-            coordenada_labrador,
-            coordenada_mackenzie,
-            coordenada_mexico,
-            coordenada_nova_york,
-            coordenada_ottawa,
-            coordenada_vancouver
-        ], COR_BORDA_AMERICA_DO_NORTE, COR_PREENCHIMENTO_AMERICA_DO_NORTE);*/
+        // Sertão dos Inhamuns.
+        this.iniciaGrupoTerritorio(grupos["SertaoDosInhamuns"],
+            COR_BORDA_AMERICA_DO_NORTE, COR_PREENCHIMENTO_AMERICA_DO_NORTE);
         
         // Africa.
 /*        this.iniciaGrupoTerritorio([
@@ -286,13 +279,9 @@ jogos.war.Territorios = function(mapa) {
             coordenada_sudao
         ], COR_BORDA_AFRICA, COR_PREENCHIMENTO_AFRICA);*/
         
-        // America do Sul.
-        this.iniciaGrupoTerritorio([
-            coordenada_barro, 
-            coordenada_farias_brito,
-            coordenada_juazeiro_do_norte,
-            coordenada_chapada_do_araripe
-        ], COR_BORDA_AMERICA_DO_SUL, COR_PREENCHIMENTO_AMERICA_DO_SUL);
+        // Sul.
+        this.iniciaGrupoTerritorio(grupos["Sul"], 
+            COR_BORDA_SUL, COR_PREENCHIMENTO_SUL);
         
         // Oceania.
 /*        this.iniciaGrupoTerritorio([
@@ -377,8 +366,8 @@ jogos.war.Territorios = function(mapa) {
         $.each(grupos["AmericaDoSul"], function(i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
                 fillOpacity: "0.5", 
-                fillColor: COR_PREENCHIMENTO_AMERICA_DO_SUL, 
-                strokeColor: COR_BORDA_AMERICA_DO_SUL});
+                fillColor: COR_PREENCHIMENTO_SUL, 
+                strokeColor: COR_BORDA_SUL});
         });
         
         $.each(grupos["Oceania"], function(i, pais) {

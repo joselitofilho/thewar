@@ -173,18 +173,18 @@ territorios = {
         "centro": "0.0, 0.0",
         "concatenar": False
     },
-    "Catunda": {
-        "ordem": ["Catunda", "Tamboril"],
+    "Madalena": {
+        "ordem": ["Madalena"],
+        "centro": "0.0, 0.0",
+        "concatenar": False
+    },
+    "Senador Pompeu": {
+        "ordem": ["Mombaca", "Senador Pompeu"],
         "centro": "0.0, 0.0",
         "concatenar": True
     },
-    "Nova Russas": {
-        "ordem": ["Nova Russas", "Ararenda", "Ipaporanga"],
-        "centro": "0.0, 0.0",
-        "concatenar": True
-    },
-    "Ipueras": {
-        "ordem": ["Ipueras", "Poranga"],
+    "Poranga": {
+        "ordem": ["Ararenda", "Ipaporanga", "Poranga"],
         "centro": "0.0, 0.0",
         "concatenar": True
     },

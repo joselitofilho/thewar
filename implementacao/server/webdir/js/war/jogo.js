@@ -237,7 +237,7 @@ function processarMsg_carrega_jogo_olheiro(msgParams) {
 
 function processarMsg_cartas_territorios(msgParams) {
     if (msgParams.length > 0) {
-        this.tocarSom(this, "ganhouCarta.mp3");
+        this.tocarSom(this, "ganhouCarta.wav");
         jogo_animacaoGanhouCartaTerritorio();
     }
 
@@ -430,7 +430,7 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
 }
 
 function processarMsg_turno_trocar_cartas(msgParams) {
-    this.tocarSom(this, "turnoTrocarCarta.wav");
+    this.tocarSom(this, "turnoTrocarCarta.mp3");
     
     if (_posicaoJogador == _posicaoJogadorDaVez) 
         appwar_mudarCursor('trocar_cartas');
