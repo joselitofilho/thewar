@@ -84,7 +84,9 @@ function processarMsg_entrar(msgParams) {
     if (msgParams.status == 1) {
         var cookie = new gpscheck.web.Cookie();
         cookie.cria("usuario", $('#inputUsuario').val());
-        cookie.cria("senha", $('#inputSenha').val());
+        var senha = CryptoJS.SHA3($('#inputSenha').val());
+        senha = senha.toString(CryptoJS.enc.Base64);
+        cookie.cria("senha", senha);
 
         this.tocarSom(this, "entrou.mp3");
         appwar_alterarTituloDaPagina(msgParams.usuario);
@@ -393,12 +395,16 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
 }
 
 function appwar_entrar() {
-    var entrarMsg = comunicacao_entrar($('#inputUsuario').val(), $('#inputSenha').val());
+    var senha = CryptoJS.SHA3($('#inputSenha').val());
+    senha = senha.toString(CryptoJS.enc.Base64);
+    var entrarMsg = comunicacao_entrar($('#inputUsuario').val(), senha);
     _libwebsocket.enviarObjJson(entrarMsg);
 }
 
 function appwar_registrar() {
-    var registrarMsg = comunicacao_registrar($('#inputUsuario').val(), $('#inputSenha').val());
+    var senha = CryptoJS.SHA3($('#inputSenha').val());
+    senha = senha.toString(CryptoJS.enc.Base64);
+    var registrarMsg = comunicacao_registrar($('#inputUsuario').val(), senha);
     _libwebsocket.enviarObjJson(registrarMsg);
 }
 
