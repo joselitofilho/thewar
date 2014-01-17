@@ -59,11 +59,13 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 params = {}
                 usuario = mensagem.params['usuario']
                 senha = mensagem.params['senha']
-                if len(usuario) > 0 and len(senha) > 0:
+                email = mensagem.params['email']
+                # TODO: Validar email.
+                if len(usuario) > 0 and len(senha) > 0 and len(email) > 0:
                     if _banco.usuarioExiste(usuario):
                         params["status"] = 0
                     else:
-                        _banco.registraUsuario(usuario, senha)
+                        _banco.registraUsuario(usuario, senha, email)
                         params["status"] = 1
                 else:
                     params["status"] = 2

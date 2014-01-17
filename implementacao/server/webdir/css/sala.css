@@ -3,29 +3,45 @@
     left: 50%;
     margin-left: -640px;
     width: 1280px;
-    height: 959px;
-    background: url('../imagens/bg_sala.jpg') no-repeat;
+    height: 800px;
+    background: url('../imagens/lobby/bg_fundo.jpg') no-repeat;
     visibility: hidden;
     z-index: 9001;
 }
 
 #sala_content {
     position: absolute;
-    border: 3px solid gray;
-    width: 700px;
-    height: 585px;
-    overflow: hidden;
-    border-radius: 5px;
-    margin-top: 50px;
-    margin-left: 50px;
+    border: 0;
+    width: 832px;
+    max-height: 485px;
+    overflow: auto;
+    margin-top: 163px;
+    margin-left: 38px;
+    overflow-x: none;
 }
+
+#sala_menu {
+    
+}
+
+#sala_nomeParaCriar {
+    position: absolute;
+    margin-top: 66px;
+    width: 200px;
+}
+
+::-webkit-scrollbar { background: url('../imagens/lobby/bg_scroll.png'); }
+::-webkit-scrollbar-thumb { background: url('../imagens/lobby/scroll.png'); }
+::-webkit-scrollbar-button:increment { background: url('../imagens/lobby/seta_baixo_scroll.png') no-repeat; }
+::-webkit-scrollbar-button:decrement { background: url('../imagens/lobby/seta_cima_scroll.png') no-repeat; }
 
 #btnCriarSala {
     margin-bottom: 10px;
 }
 
 #sala .form-signin {
-    max-width: 1280px;
+    max-width: 817px;
+    margin: 0;
 }
 
 #sala h3 {
@@ -96,8 +112,8 @@
     float: left;
     margin-top: -214px;
     margin-left: -30px;
-    width: 681px;
-    height: 245px;
+    width: 817px;
+    height: 241px;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
 }

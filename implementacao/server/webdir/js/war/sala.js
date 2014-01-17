@@ -202,7 +202,6 @@ function processarMsg_criar_sala(msgParams) {
     if (_salaDoJogador == null) {
         $('#sala_nomeParaCriar').val('');
         $('#sala_content').scrollTop($('#sala_content').prop('scrollHeight'));
-        $('#sala_content').perfectScrollbar('update');
     }
 }
 

@@ -76,7 +76,9 @@ function processarMsg_registrar(msgParams) {
     if (msgParams.status == 1) {
         exibirAlerta('alert-success', 'Registrado com sucesso.');
     } else if (msgParams.status == 0) {
-        exibirAlerta('alert-info', 'Voce ja esta registrado.');
+        exibirAlerta('alert-info', 'Você já está registrado.');
+    } else {
+        exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     }
 }
 
@@ -94,7 +96,7 @@ function processarMsg_entrar(msgParams) {
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
         $('#sala').css('visibility', 'visible');
     } else {
-        exibirAlerta('alert-danger', 'Verifique se seus dados estao corretos e tente novamente.');
+        exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     }
 }
 
@@ -389,6 +391,48 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
     }
 }
 
+function appwar_exibirPainelEntrar() {
+    var html = "<input id=\"inputUsuario\" type=\"text\"";
+    html += "class=\"input-block-level\"";
+    html += "placeholder=\"Usu&aacute;rio\" />";
+    
+    html += "<input id=\"inputSenha\" type=\"password\"";
+    html += "class=\"input-block-level\"";
+    html += "placeholder=\"Senha\" />";
+    
+    html += "<button class=\"btn btn-large btn-default\" onclick=\"appwar_entrar();\">Entrar</button>";
+    
+    $('#pre_content').html(html);
+    $('#abaEntrar').attr('class', 'active');
+    $('#abaRegistrar').attr('class', '');
+}
+
+function appwar_exibirPainelRegistrar() {
+    var html = "<input id=\"inputUsuario\" type=\"text\"";
+    html += "class=\"input-block-level\"";
+    html += "placeholder=\"Usu&aacute;rio\" />";
+    
+    html += "<input id=\"inputSenha\" type=\"password\"";
+    html += "class=\"input-block-level\"";
+    html += "placeholder=\"Senha\" />";
+    
+    html += "<input id=\"inputEmail\" type=\"text\"";
+    html += "class=\"input-block-level\"";
+    html += "placeholder=\"Email\" />";
+    
+    html += "<button class=\"btn btn-large btn-default\" onclick=\"appwar_registrar();\">Registrar</button>";
+    
+    $('#pre_content').html(html);
+    $('#abaEntrar').attr('class', '');
+    $('#abaRegistrar').attr('class', 'active');
+}
+
+function emailValido(email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if( !emailReg.test(email)) return false;
+    else return true;
+}
+
 function appwar_entrar() {
     var senha = CryptoJS.SHA3($('#inputSenha').val());
     senha = senha.toString(CryptoJS.enc.Base64);
@@ -397,10 +441,17 @@ function appwar_entrar() {
 }
 
 function appwar_registrar() {
-    var senha = CryptoJS.SHA3($('#inputSenha').val());
-    senha = senha.toString(CryptoJS.enc.Base64);
-    var registrarMsg = comunicacao_registrar($('#inputUsuario').val(), senha);
-    _libwebsocket.enviarObjJson(registrarMsg);
+    var usuario = $('#inputUsuario').val();
+    var senha = $('#inputSenha').val();
+    var email = $('#inputEmail').val();
+    if (usuario.length == 0 || senha.length == 0 || email.length == 0 || !emailValido(email)) {
+        exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
+    } else {
+        senha = CryptoJS.SHA3(senha);
+        senha = senha.toString(CryptoJS.enc.Base64);
+        var registrarMsg = comunicacao_registrar(usuario, senha, email);
+        _libwebsocket.enviarObjJson(registrarMsg);
+    }
 }
 
 function appwar_recarregarPagina() {

@@ -8,11 +8,11 @@ class Banco(object):
     def __init__(self):
         self.conn = sqlite3.connect("war.db")
         
-    def registraUsuario(self, usuario, senha):
+    def registraUsuario(self, usuario, senha, email):
         try:
             cursor = self.conn.cursor()
-            sql = "INSERT INTO Usuarios(nome, senha) VALUES(?,?)"
-            cursor.execute(sql, (usuario, senha))
+            sql = "INSERT INTO Usuarios(nome, senha, email) VALUES(?,?,?)"
+            cursor.execute(sql, (usuario, senha, email))
             self.conn.commit()
         
         except sqlite3.Error, e:

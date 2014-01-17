@@ -12,10 +12,6 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!---->
 
-        <!-- Perfect scrollbar -->
-        <link href="perfect-scrollbar-0.4.6/src/perfect-scrollbar.css" rel="stylesheet">
-        <!---->
-
         <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
 
@@ -36,36 +32,26 @@
         <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <!---->
-        
-        <!-- Perfect scrollbar -->
-        <script src="perfect-scrollbar-0.4.6/src/jquery.mousewheel.js"></script>
-        <script src="perfect-scrollbar-0.4.6/src/perfect-scrollbar.js"></script>
-        <!---->
-
-        <script>
-            $(document).ready(function ($) {
-                $('#sala_content').perfectScrollbar({
-                    wheelSpeed: 20,
-                    wheelPropagation: false,
-                    useKeyboard: true,
-                    suppressScrollX: true
-                });
-            });
-        </script>
     </head>
     <body>
         <!-- Registrar / Entrar -->
         <div id="painelRegistrarOuEntrar">
             <div class="form-signin">
                 <h2 class="form-signin-heading">Bem-vindo</h2>
-                <input id="inputUsuario" type="text" 
-                    class="input-block-level" 
-                    placeholder="Usu&aacute;rio" />
-                <input id="inputSenha" type="password" 
-                    class="input-block-level" 
-                    placeholder="Senha" />
-                <button class="btn btn-large btn-default" onclick="appwar_registrar();">Registrar</button>
-                <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+                <ul class="nav nav-tabs">
+                    <li id="abaEntrar" class="active"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
+                    <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
+                </ul>
+                <br/>
+                <div id="pre_content">
+                    <input id="inputUsuario" type="text" 
+                        class="input-block-level" 
+                        placeholder="Usu&aacute;rio" />
+                    <input id="inputSenha" type="password" 
+                        class="input-block-level" 
+                        placeholder="Senha" />
+                    <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+                </div>
             </div>
         </div>
         <!---->
@@ -241,11 +227,6 @@
         
         <!-- Bootstrap -->
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-        <!---->
-
-        <!-- Perfect scrollbar -->
-        <script src="perfect-scrollbar-0.4.6/src/jquery.mousewheel.js"></script>
-        <script src="perfect-scrollbar-0.4.6/src/perfect-scrollbar.js"></script>
         <!---->
 
         <!--Here is jQuery UI added from CDN

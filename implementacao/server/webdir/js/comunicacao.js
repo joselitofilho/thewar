@@ -9,11 +9,12 @@ function comunicacao_entrar(usuario, senha) {
     });
 }
 
-function comunicacao_registrar(usuario, senha) {
+function comunicacao_registrar(usuario, senha, email) {
     return new Mensagem(TipoMensagem.registrar,
     {
         usuario: usuario,
-        senha: senha
+        senha: senha,
+        email: email
     });
 }
 

@@ -223,10 +223,12 @@ class Jogo(object):
             if len(jogador.gruposTerritorio()) > 0:
                 turno.gruposTerritorio = list(jogador.gruposTerritorio())
                 turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
+                
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
+                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             else:
-                if self.temUmVencedor():
-                    turno.tipoAcao = TipoAcaoTurno.jogo_terminou
-                else:
+                if not self.temUmVencedor():
                     self.passaParaProximoJogador()
 
                     if self.todosJogaram():
@@ -236,9 +238,9 @@ class Jogo(object):
                         turno.numero = 1
                         turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
-            self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
-            self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+                    self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
+                    acaoDoTurno = self.criaAcaoDoTurno(turno)
+                    self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor():
                 self.gerenciador.jogoTerminou(self.id)
