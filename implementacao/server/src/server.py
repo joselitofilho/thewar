@@ -29,21 +29,22 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 
                 usuario = mensagem.params['usuario']
                 params["usuario"] = usuario
-                if self.factory.usuarioEstaConectado(usuario):
-                    params["status"] = 2
-                    # TODO: Enviar mensagem para o outro socket do usuario uma 
-                    # mensagem com o motivo da sua desconexao.
-                    # jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
-                    # print "# ", jsonMsg
-                    # self.sendMessage(jsonMsg)
-                    
-                    # TODO: Se for o mesmo socket, nao eh necessario desconectar o jogagdor.
-                    self.factory.desconectaUsuario(usuario)
             
                 if len(usuario) > 0 and _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha']):
+                    if self.factory.usuarioEstaConectado(usuario):
+                        params["status"] = 2
+                        # TODO: Enviar mensagem para o outro socket do usuario uma 
+                        # mensagem com o motivo da sua desconexao.
+                        # jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
+                        # print "# ", jsonMsg
+                        # self.sendMessage(jsonMsg)
+                    
+                        # TODO: Se for o mesmo socket, nao eh necessario desconectar o jogagdor.
+                        self.factory.desconectaUsuario(usuario)
+                    
+                    params["status"] = 1
                     self.factory.clienteConectou(self, usuario)
 
-                    params["status"] = 1
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
                     print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
