@@ -10,7 +10,7 @@ function jogo_preparaElementosHtml() {
     $('#geral').css('visibility', 'visible');
     $('#jogo').css('visibility', 'visible');
     $('#dados .dado').each(function(i, elemento) {
-        $(elemento).css('visibility', 'hidden');
+        $(elemento).css('visibility', 'visible');
     });
 }
 
@@ -648,6 +648,9 @@ function jogo_sair() {
 }
 
 function jogo_removeElementosHtml() {
+    $('#dados .dado').each(function(i, elemento) {
+        $(elemento).css('visibility', 'hidden');
+    });
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#geral').css('visibility', 'hidden');
