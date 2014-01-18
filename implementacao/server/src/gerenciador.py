@@ -108,7 +108,9 @@ class GerenciadorSala(object):
             self.jogo.fecha()
             del self.jogo
             self.jogo = None
-
+      
+        self.gerenciadorPrincipal.jogoTerminou(self.id)
+        
         self.jogadoresDaSala = []
         self.sala = Sala(self.id, self)
         self.estado = EstadoDaSala.sala_criada
@@ -210,7 +212,6 @@ class GerenciadorPrincipal(object):
             else:
                 self.enviaMsgLobbyParaCliente(cliente)
 
-
     def criaSala(self, cliente, usuario, mensagem):
         idSala = mensagem.params['sala']
         
@@ -237,6 +238,15 @@ class GerenciadorPrincipal(object):
                 FecharSala(idSala))
             del self.salas[idSala]
             
+    def jogoTerminou(self, idJogo):
+        removerUsuarios = []
+        for usuario in self.usuarioPorSala.keys():
+            if self.usuarioPorSala[usuario] == idJogo:
+                removerUsuarios.append(usuario)
+        for u in removerUsuarios:
+            self.usuarioPorSala.pop(u)
+        del removerUsuarios
+
     def enviaMsgLobbyParaCliente(self, cliente):
         # Envia a lista de salas para o cliente.
         infoSalas = []

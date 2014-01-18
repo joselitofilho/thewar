@@ -7,8 +7,9 @@ function jogo_preparaElementosHtml() {
         $(elemento).css('visibility', 'hidden');
     });
     $('#bloqueador_tela').css('visibility', 'hidden');
+    $('#geral').css('visibility', 'visible');
     $('#jogo').css('visibility', 'visible');
-    $('#dados .dado').children().each(function(i, elemento) {
+    $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
 }
@@ -649,6 +650,7 @@ function jogo_sair() {
 function jogo_removeElementosHtml() {
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
+    $('#geral').css('visibility', 'hidden');
     $('#jogo').css('visibility', 'hidden');
     $('#it_sub_titulo').css('visibility', 'hidden');
     $('#it_info').css('visibility', 'hidden');
