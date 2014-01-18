@@ -8,6 +8,8 @@ var _poligonosTerritorios = {};
 var _piscarLoopFunc = {};
 
 jogos.war.Territorios = function(mapa) {
+    
+    var MENOR_OPACIDADE = "0.2";
 
     var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
     var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
@@ -341,7 +343,7 @@ jogos.war.Territorios = function(mapa) {
 	    function(i, nomeDoGrupo) {
 	        if (nomeDoGrupo != grupoTerritorio) {
 	            $.each(grupos[nomeDoGrupo], function(i, pais) {
-	                _poligonosTerritorios[pais.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
+	                _poligonosTerritorios[pais.nome].setOptions({fillOpacity: MENOR_OPACIDADE});
 	            });
 	        }
 	    });
@@ -400,7 +402,7 @@ jogos.war.Territorios = function(mapa) {
 	    var territorios = this.carregaTerritorios();
 	    $.each(territorios, function(i, territorio) {
 	        if (posicaoJogador != _labelTerritorios[territorio.nome].posicaoJogador) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE});
 	        }
 	    });
 	};
@@ -409,7 +411,7 @@ jogos.war.Territorios = function(mapa) {
 	    var territorios = this.carregaTerritorios();
 	    $.each(territorios, function(i, territorio) {
 	        if (posicaoJogador == _labelTerritorios[territorio.nome].posicaoJogador) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE});
 	        }
 	    });
 	};
@@ -431,7 +433,7 @@ jogos.war.Territorios = function(mapa) {
 	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
 	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador ||
 	                me.quantidadeDeTropaDoTerritorio(territorio.nome) == 1) {
-    	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
+    	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE});
     	    }
 	    });
 	};
@@ -440,7 +442,7 @@ jogos.war.Territorios = function(mapa) {
 	    var territorios = this.carregaTerritorios();
 	    $.each(territorios, function(i, territorio) {
 	        if (territoriosParaFoco.indexOf(territorio.nome) == -1) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "0.5", fillColor: "#222", strokeColor: "#222"});
+	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE});
 	        } else {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
 	        }

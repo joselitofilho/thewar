@@ -4,7 +4,7 @@
 }
 
 html, body {
-    height: 100%;
+    height: 0;
     margin: 0;
     padding: 0;
     font-family: 'PT Sans', sans-serif;
@@ -29,10 +29,11 @@ html, body {
 
 #painelRegistrarOuEntrar {
     position: absolute;
-    top: 100px;
+    top: 50%;
+    margin-top: -170px;
     left: 50%;
     margin-left: -150px;
-    visibility: hidden;
+    visibility: visible;
     z-index: 9001;
 }
 
@@ -96,7 +97,7 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    visibility: visible;
+    visibility: hidden;
     z-index: 9000;
 }
 
@@ -121,12 +122,5 @@ html, body {
     margin-left: -64px;
     cursor: pointer;
     visibility: hidden;
-    z-index: 9001;
-}
-
-.btn_regras {
-    position: absolute;
-    top: 10px;
-    left: 165px;
     z-index: 9001;
 }

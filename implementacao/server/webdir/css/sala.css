@@ -1,27 +1,59 @@
 #sala {
     position: absolute;
-    left: 50%;
-    margin-left: -640px;
     width: 1280px;
     height: 800px;
     background: url('../imagens/lobby/bg_fundo.jpg') no-repeat;
     visibility: hidden;
-    z-index: 9001;
 }
 
 #sala_content {
     position: absolute;
     border: 0;
     width: 832px;
-    max-height: 485px;
+    max-height: 436px;
     overflow: auto;
-    margin-top: 163px;
+    margin-top: 144px;
     margin-left: 38px;
     overflow-x: none;
 }
 
-#sala_menu {
-    
+#sala .topo {
+    height: 50px;
+    padding: 10px;
+}
+
+#sala .menu {
+    float: left;
+}
+
+#sala .btn_criar_sala {
+    width: 116px;
+    height: 30px;
+    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -71px no-repeat;
+    border: 0;
+
+}
+
+#sala .btn_criar_sala:hover {
+    width: 116px;
+    height: 30px;
+    background: url('../imagens/lobby/btn_sala_sprite.png') -116px -71px no-repeat;
+    border: 0;
+
+}
+
+#sala .btn_regras {
+    width: 116px;
+    height: 30px;
+    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -36px no-repeat;
+    border: 0;
+}
+
+#sala .btn_regras:hover {
+    width: 116px;
+    height: 30px;
+    background: url('../imagens/lobby/btn_sala_sprite.png') -116px -36px no-repeat;
+    border: 0;
 }
 
 #sala_nomeParaCriar {
@@ -30,10 +62,10 @@
     width: 200px;
 }
 
-::-webkit-scrollbar { background: url('../imagens/lobby/bg_scroll.png'); }
+/*::-webkit-scrollbar { background: url('../imagens/lobby/bg_scroll.png'); }
 ::-webkit-scrollbar-thumb { background: url('../imagens/lobby/scroll.png'); }
 ::-webkit-scrollbar-button:increment { background: url('../imagens/lobby/seta_baixo_scroll.png') no-repeat; }
-::-webkit-scrollbar-button:decrement { background: url('../imagens/lobby/seta_cima_scroll.png') no-repeat; }
+::-webkit-scrollbar-button:decrement { background: url('../imagens/lobby/seta_cima_scroll.png') no-repeat; }*/
 
 #btnCriarSala {
     margin-bottom: 10px;

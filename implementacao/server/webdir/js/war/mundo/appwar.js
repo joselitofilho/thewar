@@ -95,6 +95,7 @@ function processarMsg_entrar(msgParams) {
 
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
         $('#sala').css('visibility', 'visible');
+	$('html,body').css('overflow','scroll');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     }

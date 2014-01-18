@@ -168,7 +168,6 @@ function processarMsg_lobby(msgParams) {
         $(elemento).css('visibility', 'visible');
     });
     _sala.limpaListaSala();
-    $('#bloqueador_tela').css('visibility', 'visible');
     document.getElementById('geral').style.cursor='auto';
     
     for (iSala = 0; iSala < msgParams.salas.length; iSala++) { 
