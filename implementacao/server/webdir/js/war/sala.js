@@ -40,22 +40,22 @@ jogos.war.Sala = function() {
     };
 
     this.criaElementoHtml = function(id) {
-        var html = "<div id=\"sala_"+id+"\" class=\"form-signin\">";
-        html += "<h3 class=\"form-signin-heading\"><span>#"+id+"</span>&nbsp;-&nbsp;Escolha sua cor</h3>";
+        var html = "<div id=\"sala_"+id+"\" class=\"box\">";
+        html += "<h3 class=\"box-heading\"><span>#"+id+"</span></h3>";
         html += "<div class=\"sala_posicoes\">";
         html += "<ul>";
-        html += "<li><a id=\"sala"+id+"_jogador1\" class=\"jogador_sala_vermelho\" href=\"javascript:void(0)\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 0);\"></a></li>";
-        html += "<li><a id=\"sala"+id+"_jogador2\" class=\"jogador_sala_azul\" href=\"javascript:void(0)\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 1);\"></a></li>";
-        html += "<li><a id=\"sala"+id+"_jogador3\" class=\"jogador_sala_verde\" href=\"javascript:void(0)\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 2);\"></a></li>";
-        html += "<li><a id=\"sala"+id+"_jogador4\" class=\"jogador_sala_preto\" href=\"javascript:void(0)\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 3);\"></a></li>";
-        html += "<li><a id=\"sala"+id+"_jogador5\" class=\"jogador_sala_branco\" href=\"javascript:void(0)\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 4);\"></a></li>";
-        html += "<li><a id=\"sala"+id+"_jogador6\" class=\"jogador_sala_amarelo\" href=\"javascript:void(0)\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 5);\"></a></li>";
+        html += "<li><div class=\"jogador_sala_vermelho\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 0);\"></div><span id=\"sala"+id+"_jogador1\"></span></li>";
+        html += "<li><div class=\"jogador_sala_azul\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 1);\"></div><span id=\"sala"+id+"_jogador2\"></span></li>";
+        html += "<li><div class=\"jogador_sala_verde\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 2);\"></div><span id=\"sala"+id+"_jogador3\"></span></li>";
+        html += "<li><div class=\"jogador_sala_preto\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 3);\"></div><span id=\"sala"+id+"_jogador4\"></span></li>";
+        html += "<li><div class=\"jogador_sala_branco\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 4);\"></div><span id=\"sala"+id+"_jogador5\"></span></li>";
+        html += "<li><div class=\"jogador_sala_amarelo\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 5);\"></div><span id=\"sala"+id+"_jogador6\"></span></li>";
         html += "</ul>";
         html += "</div>";
-        html += "<button id=\"btnSairDaSala"+id+"\" class=\"btn btn-default\" onclick=\"_sala.sai();\">Sair da sala</button>";
-        html += "<button id=\"btnIniciarPartida"+id+"\" class=\"btn btn-default btnIniciarPartida\" onclick=\"iniciarPartida();\">Iniciar partida</button>";
+        html += "<button id=\"btnSairDaSala"+id+"\" class=\"btn_sair\" onclick=\"_sala.sai();\"></button>";
+        html += "<button id=\"btnIniciarPartida"+id+"\" class=\"btn_iniciar_partida\" onclick=\"iniciarPartida();\"></button>";
         html += "<div id=\"sc_bloqueador"+id+"\" class=\"sc_bloqueador\">";
-        html += "<button id=\"btnEntrarNaSala"+id+"\" class=\"btn btn-default btnEntrarNaSala\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 0);\">Entrar</button>";
+        html += "<button id=\"btnEntrarNaSala"+id+"\" class=\"btn_entrar\" onclick=\"appwar_alteraPosicaoSala(\'"+id+"\', 0);\"></button>";
         html += "</div>";
         html += "</div>";
 
@@ -75,6 +75,18 @@ jogos.war.Sala = function() {
         $('#sala_content .form-signin').children().each(function(i, elemento) {
             $(elemento).parent().remove();
         });
+    };
+    
+    this.alteraBtnEntrar = function(acao, sala) {
+        $('#btnEntrarNaSala' + sala).attr('class', 'btn_' + acao);
+    };
+    
+    this.abreBoxCriarSala = function() {
+        $('#sala_boxCriarSala').css('visibility', 'visible');
+    };
+    
+    this.fechaBoxCriarSala = function() {
+        $('#sala_boxCriarSala').css('visibility', 'hidden');
     };
 };
 
@@ -96,7 +108,7 @@ function processarMsg_info_sala(msgParams) {
     }
  
     $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
-    $('#btnEntrarNaSala' + sala).html((estado == 'sala_criada') ? 'Entrar' : 'Assistir');
+    _sala.alteraBtnEntrar((estado == 'sala_criada') ? 'entrar' : 'assistir', sala);
 
     if (listaJogadores.length == 0) {
         for (i=0; i<6; i++) {
@@ -128,6 +140,7 @@ function entrouNaSala(sala, jogadorDaSala) {
         _salaDoJogador = sala;
         _posicaoJogador = Number(jogadorDaSala.posicao);
         $('#sc_bloqueador' + sala).css('visibility', 'hidden');
+        $('#btnSairDaSala' + sala).css('visibility', 'visible');
     }
 }
 
@@ -140,6 +153,7 @@ function saiuDaSala(sala, jogadorDaSala) {
         _posicaoJogador = -1;
         _salaDoJogador = null;
         $('#sc_bloqueador' + sala).css('visibility', 'visible');
+        $('#btnSairDaSala' + sala).css('visibility', 'hidden');
     }    
 }
 
@@ -175,7 +189,7 @@ function processarMsg_lobby(msgParams) {
         var jogadores =  msgParams.salas[iSala].jogadores;
         var estado = msgParams.salas[iSala].estado;
         _sala.adicionaElementoHtml(sala);
-        $('#btnEntrarNaSala' + sala).html((estado == 'sala_criada') ? 'Entrar' : 'Assistir');
+        _sala.alteraBtnEntrar((estado == 'sala_criada') ? 'entrar' : 'assistir', sala);
         $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
         for (i=0; i < jogadores.length; i++) {
             if (jogadores[i] != null) {
@@ -185,7 +199,7 @@ function processarMsg_lobby(msgParams) {
                 _sala.preencheJogador(sala, posicaoJogador, usuario);
 
                 if (usuario == _usuario && estado == 'jogo_em_andamento') {
-                    $('#btnEntrarNaSala' + sala).html('Reentrar');
+                    _sala.alteraBtnEntrar('reentrar', sala);
                 }
                 
                 if (jog.dono && _usuario == usuario && estado == 'sala_criada') {

@@ -95,7 +95,7 @@ function processarMsg_entrar(msgParams) {
 
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
         $('#sala').css('visibility', 'visible');
-	$('html,body').css('overflow','scroll');
+	$('html,body').css('overflow','auto');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     }
@@ -556,27 +556,3 @@ function appwar_abrirRegras() {
     var win=window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
     win.focus();
 }
-
-function iniciarApp() {
-    _libwebsocket = new gpscheck.comunicacao.GPSWebSocket(8080);
-    _libwebsocket.FOnOpen(posAberturaSocket);
-    _libwebsocket.FOnMessage(posRecebimentoMensagemServidor);
-    _libwebsocket.FOnClose(posFechamentoSocket);
-    _libwebsocket.iniciar();
-
-    var divMapa = document.getElementById("mapa");
-    mapa = new jogowar.mapa.Mapa();
-    mapa.inicia(divMapa, 10.0, 10.0, 2);
-    //this.tocarSomDeFundo(divMapa);
-
-    _territorios = new jogos.war.Territorios(_mapaGoogle);
-    _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
-        
-    iniciarControleDeAudio();
-
-    _sala = new jogos.war.Sala();
-}
-
-(function(){
-    iniciarApp();
-})();

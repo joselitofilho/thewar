@@ -7,29 +7,8 @@ var _poligonosTerritorios = {};
 
 var _piscarLoopFunc = {};
 
-jogos.war.Territorios = function(mapa) {
-    
-    var MENOR_OPACIDADE = "0.5";
-
-    var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
-    var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
-    var COR_BORDA_AMERICA_DO_SUL = "#222";//"#003300";
-    var COR_PREENCHIMENTO_AMERICA_DO_SUL = "#008000";
-    var COR_BORDA_ASIA = "#222";//"#CC6600";
-    var COR_PREENCHIMENTO_ASIA = "#FFCC33";
-    var COR_BORDA_EUROPA = "#222";//"#000099";
-    var COR_PREENCHIMENTO_EUROPA = "#66FFFF";
-    var COR_BORDA_AFRICA = "#222";//"#330033";
-    var COR_PREENCHIMENTO_AFRICA = "#FF99FF";
-    var COR_BORDA_OCEANIA = "#222";//"#660000";
-    var COR_PREENCHIMENTO_OCEANIA = "#FF6666";
-    
-    territorioClick = null;
-    territorioMouseMove = null;
-    territorioMouseOut = null;
-    fronteiras = {};
-
-	this.carregaTerritorios = function() {
+jogos.war.TerritoriosJS = function() {
+    this.carrega = function() {
 		var territorios = {};
 
 		territorios["AfricaDoSul"] = coordenada_africa_do_sul;
@@ -77,8 +56,34 @@ jogos.war.Territorios = function(mapa) {
 
 		return territorios;
 	};
+};
+
+jogos.war.Territorios = function(mapa) {
+    
+    var MENOR_OPACIDADE = "0.5";
+
+    var COR_BORDA_AMERICA_DO_NORTE = "#222";//"#666600";
+    var COR_PREENCHIMENTO_AMERICA_DO_NORTE = "#FFFF00";
+    var COR_BORDA_AMERICA_DO_SUL = "#222";//"#003300";
+    var COR_PREENCHIMENTO_AMERICA_DO_SUL = "#008000";
+    var COR_BORDA_ASIA = "#222";//"#CC6600";
+    var COR_PREENCHIMENTO_ASIA = "#FFCC33";
+    var COR_BORDA_EUROPA = "#222";//"#000099";
+    var COR_PREENCHIMENTO_EUROPA = "#66FFFF";
+    var COR_BORDA_AFRICA = "#222";//"#330033";
+    var COR_PREENCHIMENTO_AFRICA = "#FF99FF";
+    var COR_BORDA_OCEANIA = "#222";//"#660000";
+    var COR_PREENCHIMENTO_OCEANIA = "#FF6666";
+    
+    territoriosJS = null;
+    territorios = {};
+    
+    territorioClick = null;
+    territorioMouseMove = null;
+    territorioMouseOut = null;
+    fronteiras = {};
 	
-	this.iniciaMapaDasFronteiras = function() {
+	this.iniciaFronteiras = function() {
 	    fronteiras["Argentina"] = ["Brasil", "Chile"];
         fronteiras["Brasil"] = ["Argentina", "Chile", "Colombia", "Argelia"];
         fronteiras["Chile"] = ["Argentina", "Brasil", "Colombia"];
@@ -128,14 +133,6 @@ jogos.war.Territorios = function(mapa) {
         fronteiras["Sumatra"] = ["India", "Australia"];
 	}
 	
-	this.desenhaFronteira = function(caminho) {
-	    new google.maps.Polyline({
-            path: caminho,
-            strokeColor: "#FFF", strokeOpacity: 1, strokeWeight: 3,
-            map: mapa
-        });
-	};
-	
 	this.iniciaPontesEntreTerritorios = function() {
 	    var coords = [
 	        [new google.maps.LatLng(19.311143,85.781250),new google.maps.LatLng(5.965754,95.273438)],
@@ -161,9 +158,12 @@ jogos.war.Territorios = function(mapa) {
 	        [new google.maps.LatLng(33.431441,133.066406),new google.maps.LatLng(28.613459,121.992188)]
 	    ];
         
-        var me = this;
         $.each(coords, function(i, coord) {
-            me.desenhaFronteira(coord);    
+            new google.maps.Polyline({
+                path: coord,
+                strokeColor: "#FFF", strokeOpacity: 1, strokeWeight: 3,
+                map: mapa
+            });
         });
 	};
 	
@@ -326,7 +326,10 @@ jogos.war.Territorios = function(mapa) {
     };
     
     this.inicia = function(territorioClick_, territorioMouseMove_, territorioMouseOut_) {
-        this.iniciaMapaDasFronteiras();
+        this.territoriosJS = new jogos.war.TerritoriosJS();
+        this.territorios = this.territoriosJS.carrega();
+        
+        this.iniciaFronteiras();
         territorioMouseMove = territorioMouseMove_;
         territorioMouseOut = territorioMouseOut_;
         territorioClick = territorioClick_;
@@ -399,8 +402,7 @@ jogos.war.Territorios = function(mapa) {
 	};
 	
 	this.escureceTodosOsTerritoriosExcetoDoJogador = function(posicaoJogador) {
-	    var territorios = this.carregaTerritorios();
-	    $.each(territorios, function(i, territorio) {
+	    $.each(this.territorios, function(i, territorio) {
 	        if (posicaoJogador != _labelTerritorios[territorio.nome].posicaoJogador) {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
 	        }
@@ -408,8 +410,7 @@ jogos.war.Territorios = function(mapa) {
 	};
 	
 	this.escureceTodosOsTerritoriosDoJogador = function(posicaoJogador) {
-	    var territorios = this.carregaTerritorios();
-	    $.each(territorios, function(i, territorio) {
+	    $.each(this.territorios, function(i, territorio) {
 	        if (posicaoJogador == _labelTerritorios[territorio.nome].posicaoJogador) {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
 	        }
@@ -426,8 +427,7 @@ jogos.war.Territorios = function(mapa) {
 	
 	this.focaNoTerritorioAlvoEAdjacentesDoJogador = function(nomeDoTerritorio, posicaoJogador) {
     	var me = this;
-	    var territorios = this.carregaTerritorios();
-	    $.each(territorios, function(i, territorio) {
+	    $.each(this.territorios, function(i, territorio) {
 	        if (territorio.nome == nomeDoTerritorio) {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
 	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
@@ -439,8 +439,7 @@ jogos.war.Territorios = function(mapa) {
 	};
 	
 	this.focaNosTerritorios = function (territoriosParaFoco) {
-	    var territorios = this.carregaTerritorios();
-	    $.each(territorios, function(i, territorio) {
+	    $.each(this.territorios, function(i, territorio) {
 	        if (territoriosParaFoco.indexOf(territorio.nome) == -1) {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
 	        } else {
@@ -515,8 +514,6 @@ jogos.war.Territorios = function(mapa) {
 	};
 
 	this.atualizaTerritorios = function(territorios, posicaoJogador) {
-		var territorioJs = this.carregaTerritorios();
-        
         var corDeFundo = this.corDeFundoDaPosicao(posicaoJogador);
 
         var circulo = {
@@ -527,10 +524,11 @@ jogos.war.Territorios = function(mapa) {
             strokeColor: "#000000",
             strokeWeight: 2
         };
-
+        
+        var me = this;
 		$.each(territorios, function(i, territorio) {
-			if (territorioJs[territorio.codigo]) {
-				var posicao = territorioJs[territorio.codigo].centro;
+			if (me.territorios[territorio.codigo]) {
+				var posicao = me.territorios[territorio.codigo].centro;
 		        var marker = new google.maps.Marker({
 		            position: posicao,
 		            map: mapa,

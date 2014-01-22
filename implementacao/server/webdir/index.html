@@ -29,6 +29,32 @@
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
     </head>
     <body>
+        <div id="fb-root"></div>
+        <script src="http://connect.facebook.net/pt_BR/all.js"></script>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '449500988484457',
+                    status     : true,
+                    cookie     : true,
+                    xfbml      : true
+                });
+                
+                /*FB.Event.subscribe('auth.authResponseChange', function(response) {
+                    if (response.status === 'connected') {
+                        console.log('Logged in');
+                    } else {
+                        FB.login();
+                    }
+                });*/
+                FB.Event.subscribe('auth.login', function(response) {
+                    alert('login');
+                 });
+            };
+
+            
+        </script>
+    
         <!-- Registrar / Entrar -->
         <div id="painelRegistrarOuEntrar">
             <div class="form-signin">
@@ -46,6 +72,7 @@
                         class="input-block-level" 
                         placeholder="Senha" />
                     <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+                    <!--<fb:login-button></fb:login-button>-->
                 </div>
             </div>
         </div>
@@ -89,20 +116,24 @@
         <div id="sala">
             <div class="topo">
                 <div class="menu">
-                    <button class="btn_criar_sala" onclick="_sala.cria($('#sala_nomeParaCriar').val());"></button>
+                    <button class="btn_criar_sala" onclick="_sala.abreBoxCriarSala();"></button>
                     <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
                 </div>
                 <div class="st_jogador"></div>
             </div>
-            <input id="sala_nomeParaCriar" type="text" 
-                class="form-control" 
-                placeholder="Digite o nome da sala." />
-
             <div id="sala_content">
                 <!--
                  NOTE: As salas são geradas dinâmicamentes.
                 -->
             </div> <!-- sala_content -->
+            <div id="sala_boxCriarSala">
+                <button class="btn_fechar" onclick="_sala.fechaBoxCriarSala();"></button>
+                <input id="sala_nomeParaCriar" type="text" 
+                    class="form-control" 
+                    placeholder="Digite o nome da sala." />
+                    
+                <button class="btn_criar" onclick="_sala.cria($('#sala_nomeParaCriar').val());"></button>
+            </div>
         </div>
         <div id="geral">
             
@@ -231,7 +262,7 @@
         <!--Here is jQuery UI added from CDN
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
 
-	<!-- Shortcut -->
+	    <!-- Shortcut -->
         <script type="text/javascript" src="js/shortcut.js"></script>
         <!---->
 
@@ -321,27 +352,8 @@
         <script type="text/javascript" src="js/war/chatjogo.js"></script>
         <script type="text/javascript" src="js/war/jogo.js"></script>
         <script type="text/javascript" src="js/war/sala.js"></script>
-        <script type="text/javascript" src="js/war/mundo/appwar.js"></script>
+        <script type="text/javascript" src="js/war/appwar.js"></script>
+        <script type="text/javascript" src="js/war/mundo/main.js"></script>
         <!---->
-
-<!--        <div id="fb-root"></div>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '449500988484457',
-                    status     : true,
-                    cookie     : true,
-                    xfbml      : true
-                });
-            };
-
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "https://connect.facebook.net/pt_BR/all.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>-->
     </body>
 </html>

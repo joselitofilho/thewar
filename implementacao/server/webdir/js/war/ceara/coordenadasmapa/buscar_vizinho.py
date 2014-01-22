@@ -23,10 +23,10 @@ def lerTerritorios(territorio):
     linhas = []
     for c in coord.split(' '):
         for i in range(len(linhasDoArquivo)):
-            if c in linhasDoArquivo[i] and i not in linhas:
-                linhas.append(i)
+            if c in linhasDoArquivo[i] and i+1 not in linhas:
+                linhas.append(i+1)
                 
     print linhas
         
         
-lerTerritorios("Boa Viagem")
+lerTerritorios("Pereiro")

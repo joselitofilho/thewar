@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import xml.dom.minidom
+import os.path
 
 ################################################################################
 
@@ -125,120 +126,292 @@ territorios = {
     "Barro": {
         "ordem": ["Barro","Milagres","Mauriti","Abaiara","Brejo Santo","Jati","Penaforte"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     "Farias Brito": {
         "ordem": ["Aurora", "Caririacu", "Granjeiro", "Farias Brito", "Altaneira"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     "Juazeiro do Norte": {
         "ordem": ["Santana do Cariri", "Crato", "Nova Olinda", "Juazeiro do Norte", "Barbalha", "Missao Velha", "Jardim", "Porteiras"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     "Chapada do Araripe": {
         "ordem": ["Araripe", "Salitre", "Campos Sales", "Assare", "Potengi"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     #Regiao 2 - Sertao dos Inhamuns
     "Aiuaba": {
         "ordem": ["Aiuaba"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": False,
+        "sobrescreverSeExistir": True
     },
     "Parambu": {
         "ordem": ["Parambu"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": False,
+        "sobrescreverSeExistir": True
     },
     "Catarina": {
         "ordem": ["Arneiroz", "Catarina", "Saboeiro"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     "Taua": {
         "ordem": ["Taua"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": False,
+        "sobrescreverSeExistir": True
     },
     "Crateus": {
         "ordem": ["Crateus", "Novo Oriente", "Quiterianopolis"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     "Independencia": {
         "ordem": ["Independencia"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": False,
+        "sobrescreverSeExistir": True
     },
-    "Madalena": {
-        "ordem": ["Madalena"],
+    "Catunda": {
+        "ordem": ["Catunda"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": False,
+        "sobrescreverSeExistir": True
     },
     "Senador Pompeu": {
         "ordem": ["Mombaca", "Senador Pompeu"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
     "Poranga": {
         "ordem": ["Ararenda", "Ipaporanga", "Poranga"],
         "centro": "0.0, 0.0",
-        "concatenar": True
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
-    # Regiao 3
-    "": {
-        "ordem": [],
+    # Regiao 3 - Noroeste
+    "Croata": {
+        "ordem": ["Sao Benedito", "Graca", "Carnaubal", "Guaraciaba do Norte", "Croata", "Ipueras"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
-    # Regiao 4
-    "": {
-        "ordem": [],
+    "Ibiapina": {
+        "ordem": ["Ibiapina", "Ubajara"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
-    # Regiao 5
-    "": {
-        "ordem": [],
+    "Uruoca": {
+        "ordem": ["Uruoca", "Moraujo"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
-    # Regiao 6
-    "": {
-        "ordem": [],
+    "Miraima": {
+        "ordem": ["Santana do Acarau", "Miraima"],
         "centro": "0.0, 0.0",
-        "concatenar": False
+        "concatenar": True,
+        "sobrescreverSeExistir": True
     },
+    "Sobral": {
+        "ordem": ["Forquilha","Sobral", "Coreau", "Alcantaras", "Meruoca", "Massape"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Carire": {
+        "ordem": ["Carire", "Groairas"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Reriutaba": {
+        "ordem": ["Reriutaba"],
+        "centro": "0.0, 0.0",
+        "concatenar": False,
+        "sobrescreverSeExistir": True
+    },
+    "Varjota": {
+        "ordem": ["Varjota", "Pires Ferreira"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Ipu": {
+        "ordem": ["Ipu"],
+        "centro": "0.0, 0.0",
+        "concatenar": False,
+        "sobrescreverSeExistir": True
+    },
+    "Tejucuoca": {
+        "ordem": ["Tejucuoca"],
+        "centro": "0.0, 0.0",
+        "concatenar": False,
+        "sobrescreverSeExistir": True
+    },
+    "Caucaia": {
+        "ordem": ["Itapipoca", "Trairi", "Paraipaba", "Paracuru", "Sao Goncalo do Amarante", "Caucaia"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Uruburetama": {
+        "ordem": ["Itapaje", "Uruburetama", "Tururu", "Umirim", "Sao Luiz do Curu"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    # Regiao 4 - Norte
+    "Granja": {
+        "ordem": ["Granja", "Martinopoli"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Camocim": {
+        "ordem": ["Chaval", "Barroquinha", "Camocim"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Jericoacoara": {
+        "ordem": ["Jericoacoara", "Cruz", "Bela Cruz"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Acarau": {
+        "ordem": ["Acarau", "Itarema"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    # Regiao 5 - Sertão Central
+    "Pentecoste": {
+        "ordem": ["Pentecoste", "Apuiares", "General Sampaio"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Paramoti": {
+        "ordem": ["Paramoti"],
+        "centro": "0.0, 0.0",
+        "concatenar": False,
+        "sobrescreverSeExistir": True
+    },
+    "Itatira": {
+        "ordem": ["Itatira", "Madalena"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Choro": {
+        "ordem": ["Choro"],
+        "centro": "0.0, 0.0",
+        "concatenar": False,
+        "sobrescreverSeExistir": True
+    },
+    "Guaramiranga": {
+        "ordem": ["Palmacia", "Pacoti", "Redencao", "Guaramiranga", "Mulungu", "Baturite"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Itapiuna": {
+        "ordem": ["Aratuba", "Capistrano", "Itapiuna"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Quixada": {
+        "ordem": ["Banabuiu", "Quixada", "Ibaretama"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    # Regiao 6 - Leste
+    "Jaguaribe": {
+        "ordem": ["Oros", "Pedrinhas", "Jaguaribe", "Jaguaribara"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Iracema": {
+        "ordem": ["Alto Santo", "Iracema", "Potiretama", "Pereiro", "Erere"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Beberibe": {
+        "ordem": ["Palhano", "Beberibe", "Fortim"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Aracati": {
+        "ordem": ["Jaguaruana", "Itaicaba", "Aracati", "Icapui"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    },
+    "Quixere": {
+        "ordem": ["Quixere"],
+        "centro": "0.0, 0.0",
+        "concatenar": False,
+        "sobrescreverSeExistir": True
+    },
+    "Morada Nova": {
+        "ordem": ["Ibicuitinga", "Morada Nova"],
+        "centro": "0.0, 0.0",
+        "concatenar": True,
+        "sobrescreverSeExistir": True
+    }
 }
 
 for terriotrioAlvo in territorios.keys():
     if len(terriotrioAlvo) > 0:
         print "|", terriotrioAlvo
-        centro = territorios[terriotrioAlvo]["centro"]
+        sobrescreverSeExistir = territorios[terriotrioAlvo]["sobrescreverSeExistir"]
         
+        nome_arquivo = terriotrioAlvo.lower().replace(' ', '-') + ".js"
+        if not os.path.exists(nome_arquivo) or (os.path.exists(nome_arquivo) and sobrescreverSeExistir):
+            centro = territorios[terriotrioAlvo]["centro"]
         
-        # Parte 1
-        ordem = territorios[terriotrioAlvo]["ordem"]
-        poligonos = lerTerritorios(ordem)
+            # Parte 1
+            ordem = territorios[terriotrioAlvo]["ordem"]
+            poligonos = lerTerritorios(ordem)
 
-        # Parte 2
-        coords = poligonos[ordem[0]]
-        
-        if territorios[terriotrioAlvo]["concatenar"]:
-            for i in range(1, len(poligonos)):
-                print "|----", ordem[i]
-                coords = str(concatenar(coords, poligonos[ordem[i]])).strip()
-            #####
-            saida = ""
-            for c in coords.split(' '):
-                saida += c + '\n'
-            arquivo_saida = open("saida/saida"+terriotrioAlvo+".txt", "w")
-            arquivo_saida.write(saida)
-            arquivo_saida.close()
-        ###
+            # Parte 2
+            coords = poligonos[ordem[0]]
+            
+            if territorios[terriotrioAlvo]["concatenar"]:
+                for i in range(1, len(poligonos)):
+                    print "|----", ordem[i]
+                    coords = str(concatenar(coords, poligonos[ordem[i]])).strip()
+                #####
+                saida = ""
+                for c in coords.split(' '):
+                    saida += c + '\n'
+                arquivo_saida = open("saida/saida"+terriotrioAlvo+".txt", "w")
+                arquivo_saida.write(saida)
+                arquivo_saida.close()
+            ###
 
-        # Parte 3
-        gerarArquivoJs(coords, terriotrioAlvo, centro)
+            # Parte 3
+            gerarArquivoJs(coords, terriotrioAlvo, centro)
+        else:
+            print "|---- Nao foi gerado."

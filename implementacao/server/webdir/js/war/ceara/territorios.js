@@ -168,20 +168,20 @@ jogos.war.Territorios = function(mapa) {
 	this.carregaGruposTerritorio = function() {
 	    var grupos = {};
 	    
-	    /*grupos["Asia"] = [
-            coordenada_aral,
-            coordenada_china,
-            coordenada_dudinka,
-            coordenada_india,
-            coordenada_japao,
-            coordenada_mongolia,
-            coordenada_omsk,
-            coordenada_oriente_medio,
-            coordenada_siberia,
-            coordenada_tchita,
-            coordenada_vietna,
-            coordenada_vladivostok
-        ];*/
+	    grupos["Noroeste"] = [
+            coordenada_croata,
+            coordenada_ibiapina,
+            coordenada_uruoca,
+            coordenada_miraima,
+            coordenada_sobral,
+            coordenada_carire,
+            coordenada_reriutaba,
+            coordenada_varjota,
+            coordenada_ipu,
+            coordenada_tejucuoca,
+            coordenada_caucaia,
+            coordenada_uruburetama,
+        ];
 	    grupos["SertaoDosInhamuns"] = [
             coordenada_aiuaba,
             coordenada_parambu,
@@ -189,39 +189,39 @@ jogos.war.Territorios = function(mapa) {
             coordenada_taua,
             coordenada_crateus,
             coordenada_independencia,
-            coordenada_madalena,
+            coordenada_catunda,
             coordenada_senador_pompeu,
             coordenada_poranga
         ];
-	    /*grupos["Europa"] = [
-            coordenada_alemanha,
-            coordenada_inglaterra,
-            coordenada_islandia,
-            coordenada_moscou,
-            coordenada_polonia,
-            coordenada_portugal,
-            coordenada_suecia
-        ];*/
-	    /*grupos["Africa"] = [
-            coordenada_africa_do_sul,
-            coordenada_argelia,
-            coordenada_congo,
-            coordenada_egito,
-            coordenada_madagascar,
-            coordenada_sudao
-        ];*/
+	    grupos["SertaoCentral"] = [
+            coordenada_pentecoste,
+            coordenada_paramoti,
+            coordenada_itatira,
+            coordenada_choro,
+            coordenada_guaramiranga,
+            coordenada_itapiuna,
+            coordenada_quixada,
+        ];
+	    grupos["LitoralLeste"] = [
+            coordenada_jaguaribe,
+            coordenada_iracema,
+            coordenada_beberibe,
+            coordenada_aracati,
+            coordenada_quixere,
+            coordenada_morada_nova,
+        ];
 	    grupos["Sul"] = [
             coordenada_barro, 
             coordenada_farias_brito,
             coordenada_juazeiro_do_norte,
             coordenada_chapada_do_araripe
         ];
-	    /*grupos["Oceania"] = [
-            coordenada_australia,
-            coordenada_borneo,
-            coordenada_nova_guine,
-            coordenada_sumatra
-        ];*/
+	    grupos["Norte"] = [
+            coordenada_granja,
+            coordenada_camocim,
+            coordenada_jericoacoara,
+            coordenada_acarau,
+        ];
 	    
 	    return grupos;
 	};
@@ -265,58 +265,23 @@ jogos.war.Territorios = function(mapa) {
         
         grupos = this.carregaGruposTerritorio();
     
-        // Sertão dos Inhamuns.
         this.iniciaGrupoTerritorio(grupos["SertaoDosInhamuns"],
             COR_BORDA_AMERICA_DO_NORTE, COR_PREENCHIMENTO_AMERICA_DO_NORTE);
+
+        this.iniciaGrupoTerritorio(grupos["LitoralLeste"], 
+            COR_BORDA_AFRICA, COR_PREENCHIMENTO_AFRICA);
         
-        // Africa.
-/*        this.iniciaGrupoTerritorio([
-            coordenada_africa_do_sul,
-            coordenada_argelia,
-            coordenada_congo,
-            coordenada_egito,
-            coordenada_madagascar,
-            coordenada_sudao
-        ], COR_BORDA_AFRICA, COR_PREENCHIMENTO_AFRICA);*/
-        
-        // Sul.
         this.iniciaGrupoTerritorio(grupos["Sul"], 
             COR_BORDA_SUL, COR_PREENCHIMENTO_SUL);
         
-        // Oceania.
-/*        this.iniciaGrupoTerritorio([
-            coordenada_australia,
-            coordenada_borneo,
-            coordenada_nova_guine,
-            coordenada_sumatra
-        ], COR_BORDA_OCEANIA, COR_PREENCHIMENTO_OCEANIA);*/
+        this.iniciaGrupoTerritorio(grupos["Norte"],
+            COR_BORDA_OCEANIA, COR_PREENCHIMENTO_OCEANIA);
         
-        // Europa.
-/*        this.iniciaGrupoTerritorio([
-            coordenada_alemanha,
-            coordenada_inglaterra,
-            coordenada_islandia,
-            coordenada_moscou,
-            coordenada_polonia,
-            coordenada_portugal,
-            coordenada_suecia
-        ], COR_BORDA_EUROPA, COR_PREENCHIMENTO_EUROPA);*/
+        this.iniciaGrupoTerritorio(grupos["SertaoCentral"], 
+            COR_BORDA_EUROPA, COR_PREENCHIMENTO_EUROPA);
         
-        // Asia
-/*        this.iniciaGrupoTerritorio([
-            coordenada_aral,
-            coordenada_china,
-            coordenada_dudinka,
-            coordenada_india,
-            coordenada_japao,
-            coordenada_mongolia,
-            coordenada_omsk,
-            coordenada_oriente_medio,
-            coordenada_siberia,
-            coordenada_tchita,
-            coordenada_vietna,
-            coordenada_vladivostok
-        ], COR_BORDA_ASIA, COR_PREENCHIMENTO_ASIA);*/
+        this.iniciaGrupoTerritorio(grupos["Noroeste"], 
+            COR_BORDA_ASIA, COR_PREENCHIMENTO_ASIA);
     };
     
     this.manterFocoNoGrupo = function(grupoTerritorio) {

@@ -12,10 +12,6 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!---->
 
-        <!-- Perfect scrollbar -->
-        <link href="perfect-scrollbar-0.4.6/src/perfect-scrollbar.css" rel="stylesheet">
-        <!---->
-
         <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
 
@@ -31,41 +27,26 @@
         <link href="css/jogo.css" rel="stylesheet">
         <link href="css/war/cartas_objetivos.css" rel="stylesheet">
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
-
-        <!-- jQuery -->
-        <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <!---->
-        
-        <!-- Perfect scrollbar -->
-        <script src="perfect-scrollbar-0.4.6/src/jquery.mousewheel.js"></script>
-        <script src="perfect-scrollbar-0.4.6/src/perfect-scrollbar.js"></script>
-        <!---->
-
-        <script>
-            $(document).ready(function ($) {
-                $('#sala_content').perfectScrollbar({
-                    wheelSpeed: 20,
-                    wheelPropagation: false,
-                    useKeyboard: true,
-                    suppressScrollX: true
-                });
-            });
-        </script>
     </head>
     <body>
         <!-- Registrar / Entrar -->
         <div id="painelRegistrarOuEntrar">
             <div class="form-signin">
                 <h2 class="form-signin-heading">Bem-vindo</h2>
-                <input id="inputUsuario" type="text" 
-                    class="input-block-level" 
-                    placeholder="Usu&aacute;rio" />
-                <input id="inputSenha" type="password" 
-                    class="input-block-level" 
-                    placeholder="Senha" />
-                <button class="btn btn-large btn-default" onclick="appwar_registrar();">Registrar</button>
-                <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+                <ul class="nav nav-tabs">
+                    <li id="abaEntrar" class="active"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
+                    <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
+                </ul>
+                <br/>
+                <div id="pre_content">
+                    <input id="inputUsuario" type="text" 
+                        class="input-block-level" 
+                        placeholder="Usu&aacute;rio" />
+                    <input id="inputSenha" type="password" 
+                        class="input-block-level" 
+                        placeholder="Senha" />
+                    <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+                </div>
             </div>
         </div>
         <!---->
@@ -106,10 +87,16 @@
         </div>
         
         <div id="sala">
+            <div class="topo">
+                <div class="menu">
+                    <button class="btn_criar_sala" onclick="_sala.cria($('#sala_nomeParaCriar').val());"></button>
+                    <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
+                </div>
+                <div class="st_jogador"></div>
+            </div>
             <input id="sala_nomeParaCriar" type="text" 
                 class="form-control" 
                 placeholder="Digite o nome da sala." />
-            <button id="btnCriarSala" class="btn btn-default" onclick="_sala.cria($('#sala_nomeParaCriar').val());">Criar sala</button>
 
             <div id="sala_content">
                 <!--
@@ -228,8 +215,6 @@
         <div id="bloqueador_tela"></div>
         <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
 
-        <button class="btn btn-large btn-default btn_regras" onclick="appwar_abrirRegras();">Como jogar</button>
-
         <!-- Google Maps -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
         <!---->
@@ -243,17 +228,21 @@
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
         <!---->
 
-        <!-- Perfect scrollbar -->
-        <script src="perfect-scrollbar-0.4.6/src/jquery.mousewheel.js"></script>
-        <script src="perfect-scrollbar-0.4.6/src/perfect-scrollbar.js"></script>
-        <!---->
-
         <!--Here is jQuery UI added from CDN
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+
+	    <!-- Shortcut -->
+        <script type="text/javascript" src="js/shortcut.js"></script>
+        <!---->
 
         <!-- AudioPlayer -->
         <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
+        <!---->
+        
+        <!-- Crypto-js -->
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
         <!---->
 
         <!-- Coordenada dos mapas -->
@@ -264,16 +253,57 @@
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/chapada-do-araripe.js"></script>
         <!---->
 
-        <!-- Sertao dos Unhamuns -->
+        <!-- Sertao dos Inhamuns -->
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/aiuaba.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/parambu.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/catarina.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/taua.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/crateus.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/independencia.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/madalena.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/catunda.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/senador-pompeu.js"></script>
         <script type="text/javascript" src="js/war/ceara/coordenadasmapa/poranga.js"></script>
+        <!---->
+        
+        <!-- Noroeste -->
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/croata.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/ibiapina.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/uruoca.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/miraima.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/sobral.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/carire.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/reriutaba.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/varjota.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/ipu.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/tejucuoca.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/caucaia.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/uruburetama.js"></script>
+        <!---->
+        
+        <!-- Norte -->
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/granja.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/camocim.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/jericoacoara.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/acarau.js"></script>
+        <!---->
+        
+        <!-- Sertão Central -->
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/pentecoste.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/paramoti.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/itatira.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/choro.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/guaramiranga.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/itapiuna.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/quixada.js"></script>
+        <!---->
+        
+        <!-- Litoral Leste -->
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/jaguaribe.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/iracema.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/beberibe.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/aracati.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/quixere.js"></script>
+        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/morada-nova.js"></script>
         <!---->
 
         <!-- Do sistema -->
@@ -291,7 +321,8 @@
         <script type="text/javascript" src="js/war/chatjogo.js"></script>
         <script type="text/javascript" src="js/war/jogo.js"></script>
         <script type="text/javascript" src="js/war/sala.js"></script>
-        <script type="text/javascript" src="js/war/ceara/appwar.js"></script>
+        <script type="text/javascript" src="js/war/appwar.js"></script>
+        <script type="text/javascript" src="js/war/ceara/main.js"></script>
         <!---->
     </body>
 </html>

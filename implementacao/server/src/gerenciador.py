@@ -208,7 +208,10 @@ class GerenciadorPrincipal(object):
                 gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
                 gerenciadorSala.sai(cliente)
 
-                self.usuarioPorSala.pop(usuario)
+                try:
+                    self.usuarioPorSala.pop(usuario)
+                except:
+                    print "[DEBUG] Erro ao tentar retirar o jogador [" + usuario + "] da relacao usuario por sala."
             else:
                 self.enviaMsgLobbyParaCliente(cliente)
 
