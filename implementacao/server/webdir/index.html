@@ -18,6 +18,10 @@
         <!-- Audio Player -->
         <link href="css/audioPlayer.css" rel="stylesheet">
         <!---->
+        
+        <!-- Slider -->
+        <link href="slider/slider.css" rel="stylesheet">
+        <!---->
 
         <link href="css/app.css" rel="stylesheet">
         <link href="css/mouse_cursor.css" rel="stylesheet">
@@ -233,6 +237,24 @@
                     </div>
                 </div><!-- div: controles -->
                 
+                <div id="slider-mover-tropas">
+                    <div class="controle">
+                        <div class="btn-min" onclick="_sliderMoverTropas.minimo();"></div>
+                        <div class="valores">
+                            <div id="smt_itemEsquerda" class="item item-esquerda" 
+                                unselectable="on" onclick="_sliderMoverTropas.esquerda();"></div>
+                            <div id="smt_itemAtivo" unselectable="on" class="item item-ativo"></div>
+                            <div id="smt_itemDireita" class="item item-direita" 
+                                unselectable="on" onclick="_sliderMoverTropas.direita();"></div>
+                        </div>
+                        <div class="btn-max" onclick="_sliderMoverTropas.maximo();"></div>
+                    </div>
+                    <div class="botoes">
+                        <div class="btn-cancelar" onclick="jogo_cancelaMoverTropas();"></div>
+                        <div class="btn-mover" onclick="jogo_moveTropas();"></div>
+                    </div>
+                </div>
+                
                 <div id="btnFinalizarTurno" onclick="finalizarTurno();">
                     <div>Feito</div>
                 </div>
@@ -343,6 +365,7 @@
         <script type="text/javascript" src="js/cookie.js"></script>
         <script type="text/javascript" src="js/mensagens.js"></script>
         <script type="text/javascript" src="js/label.js"></script>
+        <script type="text/javascript" src="slider/slider.js"></script>
         <script type="text/javascript" src="js/comunicacao.js"></script>
         <script type="text/javascript" src="js/mapa.js"></script>
         

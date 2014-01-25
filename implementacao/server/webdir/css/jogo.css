@@ -229,6 +229,14 @@
     cursor: text;
 }
 
+#slider-mover-tropas {
+    position: absolute;
+    z-index: 999;
+    visibility: hidden;
+    top: 510px;
+    left: 240px;
+}
+
 #ganhou_carta {
     position: absolute;
     width: 150px;

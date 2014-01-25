@@ -1,0 +1,74 @@
+#slider-mover-tropas {
+    cursor: pointer;
+    width: 205px;
+    height: 69px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 9px;
+}
+
+#slider-mover-tropas .btn-min {
+    float: left;
+    width: 37px;
+    height: 37px;
+    background: url('slider-btn-min.png') no-repeat;
+    margin-right: -4px;
+}
+#slider-mover-tropas .btn-min:hover {background: url('slider-btn-min-hover.png') no-repeat;}
+#slider-mover-tropas .btn-max {
+    float: left;
+    width: 37px;
+    height: 37px;
+    background: url('slider-btn-max.png') no-repeat;
+    margin-left: -4px;
+}
+#slider-mover-tropas .btn-max:hover {background: url('slider-btn-max-hover.png') no-repeat;}
+
+#slider-mover-tropas .valores {
+    position: relative;
+    float: left;
+    width: 139px;
+    height: 45px;
+    background: url('fundo-slider.png') no-repeat;
+    z-index: 1;
+}
+#slider-mover-tropas .item {
+    float: left;
+    color: #A67E60;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 6px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+#slider-mover-tropas .item-esquerda {
+    width: 44px;
+    padding-left: 8px;
+}
+#slider-mover-tropas .item-ativo {
+    width: 52px;
+    color: #E9BD9B;
+}
+#slider-mover-tropas .item-direita {
+    width: 35px;
+}
+
+#slider-mover-tropas .botoes {
+    width: 213px;
+}
+
+#slider-mover-tropas .botoes div {
+    width: 76px; height: 24px;
+}
+#slider-mover-tropas .btn-cancelar {float:left;background: url('slider-btn-cancelar.png') no-repeat;}
+#slider-mover-tropas .btn-cancelar:hover {background: url('slider-btn-cancelar-hover.png') no-repeat;}
+#slider-mover-tropas .btn-mover {float:right;background: url('slider-btn-mover.png') no-repeat;padding-right:8px;}
+#slider-mover-tropas .btn-mover:hover {background: url('slider-btn-mover-hover.png') no-repeat;}
