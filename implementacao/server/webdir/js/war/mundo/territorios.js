@@ -341,12 +341,13 @@ jogos.war.Territorios = function(mapa) {
     
     this.manterFocoNoGrupo = function(grupoTerritorio) {
 	    var grupos = this.carregaGruposTerritorio();
+	    var me = this;
 	    
 	    $.each(["AmericaDoNorte", "AmericaDoSul", "Oceania", "Europa", "Asia", "Africa"],
 	    function(i, nomeDoGrupo) {
 	        if (nomeDoGrupo != grupoTerritorio) {
 	            $.each(grupos[nomeDoGrupo], function(i, pais) {
-	                _poligonosTerritorios[pais.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+	                me.escureceTerritorio(pais.nome);
 	            });
 	        }
 	    });
@@ -401,18 +402,24 @@ jogos.war.Territorios = function(mapa) {
         });
 	};
 	
+	this.escureceTerritorio = function(codigoTerritorio) {
+	    _poligonosTerritorios[codigoTerritorio].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+	};
+	
 	this.escureceTodosOsTerritoriosExcetoDoJogador = function(posicaoJogador) {
+	    var me = this;
 	    $.each(this.territorios, function(i, territorio) {
 	        if (posicaoJogador != _labelTerritorios[territorio.nome].posicaoJogador) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+	            me.escureceTerritorio(territorio.nome);
 	        }
 	    });
 	};
 	
 	this.escureceTodosOsTerritoriosDoJogador = function(posicaoJogador) {
+    	var me = this;
 	    $.each(this.territorios, function(i, territorio) {
 	        if (posicaoJogador == _labelTerritorios[territorio.nome].posicaoJogador) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+	            me.escureceTerritorio(territorio.nome);
 	        }
 	    });
 	};
@@ -433,15 +440,16 @@ jogos.war.Territorios = function(mapa) {
 	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
 	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador ||
 	                me.quantidadeDeTropaDoTerritorio(territorio.nome) == 1) {
-    	        _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+                me.escureceTerritorio(territorio.nome);
     	    }
 	    });
 	};
 	
 	this.focaNosTerritorios = function (territoriosParaFoco) {
+	    var me = this;
 	    $.each(this.territorios, function(i, territorio) {
 	        if (territoriosParaFoco.indexOf(territorio.nome) == -1) {
-	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+	            me.escureceTerritorio(territorio.nome);
 	        } else {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
 	        }

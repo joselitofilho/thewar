@@ -363,7 +363,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     this.tocarSom(this, 'vamosLa.wav');
                 }
                 
-                if (_territorioAlvoMover != null) {
+                if (_territorioAlvoMover != null && _territorioMovimento != null) {
                     _sliderMoverTropas.inicia(1, _territorios.quantidadeDeTropaDoTerritorio(_territorioMovimento)-1);
                 } else {
                     _sliderMoverTropas.fechar();

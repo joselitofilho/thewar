@@ -301,10 +301,6 @@ function processarMsg_mover(msgParams) {
         msgParams.paraOTerritorioObj.codigo,
         msgParams.quantidade);
 
-    if (_posicaoJogador == _posicaoJogadorDaVez) {
-        appwar_mudarCursor('mover_para_fora');
-    }
-    
     this.tocarSom(this, 'positivo_' + (Math.floor(Math.random()*4)+1) + '.wav');
 
     var doTerritorio = msgParams.doTerritorioObj;
@@ -322,7 +318,11 @@ function processarMsg_mover(msgParams) {
 
     if (_posicaoJogador == _posicaoJogadorDaVez &&
         _turno.tipoAcao != TipoAcaoTurno.mover_apos_conquistar_territorio) {
-        territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
+        _territorios.pintarGruposTerritorios();
+        _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
+        _territorioAlvoMover = null;
+        _territorioMovimento = null;
+        appwar_mudarCursor('mover_para_dentro');
     }
 }
 
@@ -656,7 +656,7 @@ function jogo_moveTropas() {
     if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
         var moverMsg = comunicacao_moverAposConquistarTerritorio(qtd);
         _libwebsocket.enviarObjJson(moverMsg);
-    } else {
+    } else if (_turno.tipoAcao == TipoAcaoTurno.mover) {
         var moverMsg = comunicacao_mover(_posicaoJogador, 
             _territorioMovimento,
             _territorioAlvoMover, qtd);
@@ -669,6 +669,12 @@ function jogo_moveTropas() {
 function jogo_cancelaMoverTropas() {
     if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
         finalizarTurno();
+    } else if (_turno.tipoAcao == TipoAcaoTurno.mover) {
+        _territorios.pintarGruposTerritorios();
+        _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
+        _territorioAlvoMover = null;
+        _territorioMovimento = null;
+        appwar_mudarCursor('mover_para_dentro');
     }
     _sliderMoverTropas.fechar();
 }
