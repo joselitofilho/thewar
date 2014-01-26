@@ -611,16 +611,18 @@ class Jogo(object):
                                                     JogadorDestruido(jogadorDefesa))
 
                                             self.jogadorDaVezConquistouTerritorio = True
-                                            turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
                                             turno.tropasParaMoverAposAtaque = 0
                                             turno.territoriosDoAtaqueDaConquista = []
                                             for t in territoriosDoAtaque:
                                                 if t.QuantidadeDeTropas > 1:
                                                     turno.territoriosDoAtaqueDaConquista.append(t.Codigo)
-                                                    turno.tropasParaMoverAposAtaque += t.QuantidadeDeTropas
+                                                    turno.tropasParaMoverAposAtaque += t.QuantidadeDeTropas-1
                                                     if turno.tropasParaMoverAposAtaque > 2:
                                                         turno.tropasParaMoverAposAtaque = 2
                                             turno.territorioConquistado = territorioDaDefesa.Codigo
+                                            
+                                            if turno.tropasParaMoverAposAtaque > 0:
+                                                turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
                                             break
 
                                     else:

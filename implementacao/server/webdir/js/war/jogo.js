@@ -131,7 +131,9 @@ function jogo_efetuaAtaque(msgParams) {
         labelTerritorioDefesa.explosao();
         if (!fazSentidoMoverAposConquistar) {
             setTimeout(function() {
-                territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
+                _territorios.pintarGruposTerritorios();
+                _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
+                appwar_mudarCursor('alvo');
             }, 1000);
         }
     } else if (temTerritorioInvalido) {
@@ -183,9 +185,7 @@ function jogo_efetuaAtaque(msgParams) {
         jogo_aumentaQuantidadeDeTerritorioDoJogador(msgParams.jogadorAtaque.posicao);
         jogo_diminuiQuantidadeDeTerritorioDoJogador(msgParams.jogadorDefesa.posicao);
 
-        if (!fazSentidoMoverAposConquistar) {
-            finalizarTurno();
-        } else {
+        if (fazSentidoMoverAposConquistar) {
             _turno = {};
             _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;
             _territorioConquistado = msgParams.territorioDaDefesa.codigo;
@@ -320,8 +320,7 @@ function processarMsg_mover(msgParams) {
 
     _jaPodeMover = true;
 
-    if (doTerritorio.quantidadeDeTropas == 1 && 
-        _posicaoJogador == _posicaoJogadorDaVez &&
+    if (_posicaoJogador == _posicaoJogadorDaVez &&
         _turno.tipoAcao != TipoAcaoTurno.mover_apos_conquistar_territorio) {
         territorioClickFunc(_posicaoJogador, paraOTerritorio.codigo);
     }
