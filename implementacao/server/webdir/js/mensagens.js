@@ -14,6 +14,7 @@ var TipoMensagem = {
     colocar_tropa: "ColocarTropa",
     atacar: "Atacar",
     mover: "Mover",
+    moverAposConquistarTerritorio: "MoverAposConquistarTerritorio",
     cartas_territorios: "CartasTerritorio",
     trocar_cartas_territorio: "TrocarCartasTerritorio",
     turno: "Turno",

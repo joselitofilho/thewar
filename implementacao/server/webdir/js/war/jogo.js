@@ -1,8 +1,6 @@
 var _chatJogo = new jogowar.war.ChatJogo($('#ct_mensagens'));
 var _sliderMoverTropas = new jogos.war.Slider($('#slider-mover-tropas'));
 
-var _territoriosMovimentoSlider = null;
-
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
     $('#sala').css('visibility', 'hidden');
@@ -103,7 +101,6 @@ function jogo_efetuaAtaque(msgParams) {
     var territoriosDoAtaque = msgParams.territoriosDoAtaque;
     var quantidadeDeTropasDosTerritoriosDoAtaque = 0;
 
-    _territoriosMovimentoSlider = [];
     _territoriosAtacanteAposConquistar = territoriosDoAtaque;
 
     var labelTerritorioDefesa = _labelTerritorios[territorioDaDefesa.codigo];
@@ -125,7 +122,6 @@ function jogo_efetuaAtaque(msgParams) {
         if (territoriosDoAtaque[i].quantidadeDeTropas == 1) temTerritorioInvalido = true;
         if (territoriosDoAtaque[i].quantidadeDeTropas > 1) {
             fazSentidoMoverAposConquistar = true;
-            _territoriosMovimentoSlider.push(territoriosDoAtaque[i]);
             quantidadeDeTropasDosTerritoriosDoAtaque += territoriosDoAtaque[i].quantidadeDeTropas-1;
         }
     }
@@ -657,28 +653,14 @@ function jogo_animacaoGanhouCartaTerritorio() {
 
 function jogo_moveTropas() {
     _jaPodeMover = false;
-    var qtdTotal = _sliderMoverTropas.quantidade();
-    
+    var qtd = _sliderMoverTropas.quantidade();
     if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
-        for (i=0; i<_territoriosMovimentoSlider.length; i++) {
-            if (qtdTotal > 0) {
-                var tropasNoTerritorio = _territoriosMovimentoSlider[i].quantidadeDeTropas;
-                if (tropasNoTerritorio > 1) {
-                    var qtd = Math.max(0, qtdTotal - (tropasNoTerritorio-1));
-                    if (qtd > 0) {
-                        var moverMsg = comunicacao_mover(_posicaoJogador, 
-                            _territoriosMovimentoSlider[i].codigo,
-                            _territorioConquistado, qtd);
-                        _libwebsocket.enviarObjJson(moverMsg);
-                        qtdTotal -= qtd;
-                    }
-                }
-            }
-        }
+        var moverMsg = comunicacao_moverAposConquistarTerritorio(qtd);
+        _libwebsocket.enviarObjJson(moverMsg);
     } else {
         var moverMsg = comunicacao_mover(_posicaoJogador, 
             _territorioMovimento,
-            _territorioAlvoMover, qtdTotal);
+            _territorioAlvoMover, qtd);
         _libwebsocket.enviarObjJson(moverMsg);
     }
     

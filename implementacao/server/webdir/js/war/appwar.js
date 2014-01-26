@@ -353,7 +353,6 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                            _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoMover)) {
                     _territorioMovimento = nomeDoTerritorio;
                     _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
-                    _sliderMoverTropas.inicia(1, _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio));
                 } else {
                     _territorios.pintarGruposTerritorios();
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
@@ -362,6 +361,12 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorioMovimento = null;
                     appwar_mudarCursor('mover_para_fora');
                     this.tocarSom(this, 'vamosLa.wav');
+                }
+                
+                if (_territorioAlvoMover != null) {
+                    _sliderMoverTropas.inicia(1, _territorios.quantidadeDeTropaDoTerritorio(_territorioMovimento)-1);
+                } else {
+                    _sliderMoverTropas.fechar();
                 }
             }
         } else {

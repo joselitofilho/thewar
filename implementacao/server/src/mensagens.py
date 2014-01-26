@@ -17,6 +17,7 @@ class TipoMensagem:
     colocar_tropa = "ColocarTropa"
     atacar = "Atacar"
     mover = "Mover"
+    moverAposConquistarTerritorio = "MoverAposConquistarTerritorio"
     cartas_territorio = "CartasTerritorio"
     trocar_cartas_territorio = "TrocarCartasTerritorio"
     colocar_tropa_na_troca_de_cartas_territorios = "ColocarTropaNaTrocaDeCartasTerritorios"

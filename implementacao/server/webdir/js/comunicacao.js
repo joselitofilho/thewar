@@ -65,6 +65,13 @@ function comunicacao_mover(posicaoJogador, doTerritorio, paraOTerritorio, quanti
     }); 
 }
 
+function comunicacao_moverAposConquistarTerritorio(quantidade) {
+    return new Mensagem(TipoMensagem.moverAposConquistarTerritorio,
+    {
+        quantidade: quantidade
+    }); 
+}
+
 function comunicacao_trocar_cartas_territorio(posicaoJogador, cartasTerritorios) {
     return new Mensagem(TipoMensagem.trocar_cartas_territorio,
     {

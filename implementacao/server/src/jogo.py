@@ -249,7 +249,7 @@ class Jogo(object):
             try:
                 turno.gruposTerritorio.pop(0)
             except:
-                print "WARN: Nao tem grupo territorio para remover."
+                print "[WARN] Nao tem grupo territorio para remover."
 
             if len(turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
@@ -626,7 +626,7 @@ class Jogo(object):
                                     else:
                                         # Defesa venceu.
                                         self.defesaVenceu(i, territoriosDoAtaque, jogador)
-                        
+                            
                             self.enviaMsgParaTodos(TipoMensagem.atacar, 
                                 Atacar(
                                     {
@@ -719,6 +719,28 @@ class Jogo(object):
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
                     print "# " + jsonMsg
                     socket.sendMessage(jsonMsg)
+                    
+    def moveAposConquistarTerritorio(self, usuario, quantidade):
+        turno = self.turno
+        posicaoJogador = self.posicaoJogadorDaVez
+        jogador = self.jogadores[posicaoJogador]
+        socket = self.clientes[posicaoJogador]
+        
+        if jogador.usuario == usuario and turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
+            paraOTerritorio = turno.territorioConquistado
+            for codigo in turno.territoriosDoAtaqueDaConquista:
+                terr = jogador.seuTerritorio(codigo)
+                if quantidade > 0:
+                    doTerritorio = terr.Codigo
+                    qtdTropasQuePodemSerMovidas = terr.QuantidadeDeTropas-1
+                    if quantidade > qtdTropasQuePodemSerMovidas:
+                        print usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas
+                        self.move(usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas)
+                        quantidade -= qtdTropasQuePodemSerMovidas
+                    else:
+                        print usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas   
+                        self.move(usuario, doTerritorio, paraOTerritorio, quantidade)
+                        break
     
     def trocaCartasTerritorio(self, usuario, cartasTerritorio):
         turno = self.turno

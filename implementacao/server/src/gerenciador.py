@@ -96,6 +96,9 @@ class GerenciadorSala(object):
                 paraOTerritorio = mensagem.params['paraOTerritorio']
                 quantidade = mensagem.params['quantidade']
                 self.jogo.move(usuario, doTerritorio, paraOTerritorio, quantidade)
+            elif mensagem.tipo == TipoMensagem.moverAposConquistarTerritorio:
+                quantidade = mensagem.params['quantidade']
+                self.jogo.moveAposConquistarTerritorio(usuario, quantidade)
             elif mensagem.tipo == TipoMensagem.trocar_cartas_territorio:
                 cartasTerritorio = mensagem.params['cartasTerritorios']
                 self.jogo.trocaCartasTerritorio(usuario, cartasTerritorio)
@@ -186,6 +189,7 @@ class GerenciadorPrincipal(object):
         elif (mensagem.tipo == TipoMensagem.colocar_tropa or 
             mensagem.tipo == TipoMensagem.atacar or 
             mensagem.tipo == TipoMensagem.mover or
+            mensagem.tipo == TipoMensagem.moverAposConquistarTerritorio or
             mensagem.tipo == TipoMensagem.trocar_cartas_territorio or
             mensagem.tipo == TipoMensagem.msg_chat_jogo):
             gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
