@@ -704,15 +704,11 @@ class Jogo(object):
                         jogador.removeTropasNoTerritorio(doTerritorioObj.Codigo, quantidade)
                         jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.Codigo, quantidade)
                         
-                        turno.tropasParaMoverAposAtaque -= 1
+                        turno.tropasParaMoverAposAtaque -= quantidade
                         self.enviaMsgParaTodos(TipoMensagem.mover, 
                             Mover(self.jogadores[posicaoJogador].usuario, 
                                 doTerritorioObj, paraOTerritorioObj,
                                 quantidade))
-                        
-                        # Se nao tiver mais tropas para mover, finaliza o turno.
-                        if turno.tropasParaMoverAposAtaque == 0:
-                            self.finalizaTurno_moverAposConquistarTerritorio()
                     else:
                         jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
                         print "# " + jsonMsg
@@ -743,6 +739,8 @@ class Jogo(object):
                         print usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas   
                         self.move(usuario, doTerritorio, paraOTerritorio, quantidade)
                         break
+                        
+            self.finalizaTurno_moverAposConquistarTerritorio()
     
     def trocaCartasTerritorio(self, usuario, cartasTerritorio):
         turno = self.turno

@@ -663,7 +663,7 @@ function jogo_moveTropas() {
         _libwebsocket.enviarObjJson(moverMsg);
     }
     
-    jogo_cancelaMoverTropas();
+    _sliderMoverTropas.fechar();
 }
 
 function jogo_cancelaMoverTropas() {
