@@ -196,6 +196,8 @@ function jogo_efetuaAtaque(msgParams) {
                     quantidadeDeTropasDosTerritoriosDoAtaque = 2;
                 }
                 _sliderMoverTropas.inicia(0, quantidadeDeTropasDosTerritoriosDoAtaque);
+                var posicao = _territorios.posicaoHTML(_territorioConquistado);
+                _sliderMoverTropas.alteraPosicionamentoNoHTML(posicao);
             }
         }
     }
@@ -685,6 +687,7 @@ function jogo_sair() {
 }
 
 function jogo_removeElementosHtml() {
+    appwar_mudarCursor('');
     $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });

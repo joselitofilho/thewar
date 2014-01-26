@@ -117,3 +117,11 @@ Label.prototype.explosao = function() {
         clearInterval(explosaoLoop);
     }, 2700);
 };
+
+Label.prototype.posicaoHTML = function() {
+    // TODO: Talvez um algoritmo melhor...
+    var offset = $(this.span_).offset();
+    offset.top -= 32;
+    offset.left += 32;
+    return offset;
+};

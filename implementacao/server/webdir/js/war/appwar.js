@@ -188,6 +188,7 @@ function iniciarPartida() {
 function finalizarTurno() {
     finalizarPartidaMsg = comunicacao_finalizarTurno();
     _libwebsocket.enviarObjJson(finalizarPartidaMsg);
+    _sliderMoverTropas.fechar();
 }
 
 function atacar() {
@@ -365,6 +366,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 
                 if (_territorioAlvoMover != null && _territorioMovimento != null) {
                     _sliderMoverTropas.inicia(1, _territorios.quantidadeDeTropaDoTerritorio(_territorioMovimento)-1);
+                    var posicao = _territorios.posicaoHTML(_territorioAlvoMover);
+                    _sliderMoverTropas.alteraPosicionamentoNoHTML(posicao);
                 } else {
                     _sliderMoverTropas.fechar();
                 }

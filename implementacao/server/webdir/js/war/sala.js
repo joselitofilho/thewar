@@ -72,7 +72,7 @@ jogos.war.Sala = function() {
     };
     
     this.limpaListaSala = function() {
-        $('#sala_content .form-signin').children().each(function(i, elemento) {
+        $('#sala_content .box').children().each(function(i, elemento) {
             $(elemento).parent().remove();
         });
     };

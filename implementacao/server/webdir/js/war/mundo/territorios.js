@@ -597,4 +597,8 @@ jogos.war.Territorios = function(mapa) {
         });
         _poligonosTerritorios = {};
     };
+    
+    this.posicaoHTML = function(nomeDoTerritorio) {
+        return _labelTerritorios[nomeDoTerritorio].posicaoHTML();
+    };
 };

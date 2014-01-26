@@ -75,4 +75,8 @@ jogos.war.Slider = function(divSlider) {
     this.fechar = function() {
         divSlider.css('visibility', 'hidden');
     };
+    
+    this.alteraPosicionamentoNoHTML = function(posicao) {
+        divSlider.offset({ top: posicao.top, left: posicao.left });
+    };
 };
