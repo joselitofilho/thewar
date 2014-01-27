@@ -403,7 +403,23 @@ jogos.war.Territorios = function(mapa) {
 	};
 	
 	this.escureceTerritorio = function(codigoTerritorio) {
-	    _poligonosTerritorios[codigoTerritorio].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: "#222", strokeColor: "#222"});
+	    var corDeFundo = _poligonosTerritorios[codigoTerritorio].fillColor;
+	    var libCor = new jogos.Cor();
+	  
+	    corDeFundo = corDeFundo.replace("#","");
+	    var rgb = parseInt(corDeFundo, 16);
+        var red   = (rgb >> 16) & 0xFF;
+        var green = (rgb >> 8) & 0xFF;
+        var blue  = rgb & 0xFF;
+	    
+	    var inc = parseInt("66", 16);
+	    
+	    red = libCor.subtrai(red, inc);
+	    green = libCor.subtrai(green, inc);
+	    blue = libCor.subtrai(blue, inc);
+	    
+	    var novaCor = libCor.rgbParaHex(red, green, blue);
+	    _poligonosTerritorios[codigoTerritorio].setOptions({fillOpacity: MENOR_OPACIDADE, fillColor: novaCor});
 	};
 	
 	this.escureceTodosOsTerritoriosExcetoDoJogador = function(posicaoJogador) {
