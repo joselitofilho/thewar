@@ -43,10 +43,10 @@ class Turno(object):
     def paraTimeout(self):
         try:
             self.loopTimeout.para()
-            del self.loopTimeout
         except:
-            print "Thread foi morta com excecao: ", self.loopTimeout == None
+            print "Thread foi morta com excecao!"
 
+        del self.loopTimeout
         self.loopTimeout = None
 
     @property

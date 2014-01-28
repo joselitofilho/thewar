@@ -747,6 +747,8 @@ class Jogo(object):
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
         socket = self.clientes[posicaoJogador]
+        
+        print "[trocaCartasTerritorio] ", cartasTerritorio
 
         if turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
             jogador.usuario == usuario and \

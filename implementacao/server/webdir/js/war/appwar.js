@@ -259,6 +259,7 @@ function selecionarCartaTerritorio(num) {
 }
 
 function appwar_trocaCartasTerritorios() {
+    console.log("Tentando identificar problema com a carta coringa: " + _cartasTerritoriosSelecionadas);
     if (_cartasTerritoriosSelecionadas.length == 3) {
         var msg = comunicacao_trocar_cartas_territorio(_posicaoJogador, _cartasTerritoriosSelecionadas);
         _libwebsocket.enviarObjJson(msg);
