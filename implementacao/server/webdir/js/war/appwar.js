@@ -544,3 +544,10 @@ function appwar_abrirRegras() {
     var win=window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
     win.focus();
 }
+
+function inputSenha_onkeypress(event) {
+    if (event.keyCode == 13) {
+        appwar_entrar();
+    }
+    return true;
+}
