@@ -324,6 +324,7 @@ function processarMsg_mover(msgParams) {
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
         _territorioAlvoMover = null;
         _territorioMovimento = null;
+        //appwar_mudarCursor('mover_para_dentro');
         appwar_mudarCursor('mover_para_dentro');
     }
 }
@@ -474,7 +475,8 @@ function processarMsg_turno_mover(msgParams) {
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
-        appwar_mudarCursor('mover_para_dentro');
+        //appwar_mudarCursor('mover_para_dentro');
+        appwar_mudarCursor('mover_para_fora');
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
     } else {
         appwar_mudarCursor('');

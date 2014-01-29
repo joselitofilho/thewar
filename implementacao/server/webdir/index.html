@@ -74,7 +74,8 @@
                         placeholder="Usu&aacute;rio" />
                     <input id="inputSenha" type="password" 
                         class="input-block-level" 
-                        placeholder="Senha" />
+                        placeholder="Senha"
+                        onkeypress="return inputSenha_onkeypress(event);" />
                     <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
                     <!--<fb:login-button></fb:login-button>-->
                 </div>
