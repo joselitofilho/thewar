@@ -693,6 +693,12 @@ function jogo_removeElementosHtml() {
     $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
+    $('#menu_jogadores li div').each(function(i, elemento) {
+        $(elemento).html('0');
+    });
+    $('#menu_jogadores li a').each(function(i, elemento) {
+        $(elemento).html('');
+    });
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#slider-mover-tropas').css('visibility', 'hidden');
