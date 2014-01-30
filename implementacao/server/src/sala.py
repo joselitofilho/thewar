@@ -6,7 +6,7 @@ class EstadoDaSala:
     jogo_em_andamento = "jogo_em_andamento"
 
 class Sala(object):
-    def __init__(self, nome, gerenciadorSala):
+    def __init__(self, nome, gerenciadorSala = None):
         self.id = nome
         self.gerenciadorSala = gerenciadorSala
         self.proximaPosicao = 0
@@ -18,7 +18,7 @@ class Sala(object):
     def salaEstaCheia(self):
         return len(self.jogadores) == 6;
 
-    def adiciona(self, cliente, usuario):
+    def adiciona(self, usuario):
         jogador = None
 
         if not self.salaEstaCheia():
@@ -39,6 +39,9 @@ class Sala(object):
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
             self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+            return Mensagem(TipoMensagem.info_sala, infoSalaMsg)
+
+        return None
 
     def remove(self, usuario):
         posicao = -1
@@ -109,7 +112,8 @@ class Sala(object):
         return len(self.jogadores) == 0
     
     def enviaMsgParaTodos(self, tipo, msg):
-        self.gerenciadorSala.enviaMsgParaTodos(tipo, msg)
+        if self.gerenciadorSala != None:
+            self.gerenciadorSala.enviaMsgParaTodos(tipo, msg)
 
     def __del__(self):
         del self.jogadores

@@ -18,7 +18,7 @@ class GerenciadorSala(object):
         self.jogadores[cliente] = usuario
         
         if self.jogo == None:
-            self.sala.adiciona(cliente, usuario)
+            self.sala.adiciona(usuario)
             self.jogadoresDaSala = self.sala.jogadores.values()
         else:
             self.jogo.adiciona(cliente, usuario)

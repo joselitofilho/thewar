@@ -3,6 +3,7 @@ Install in python:
   - apt-get install easy_install
   - easy_install simplejson
   - easy_install autobahn-0.5.14-py2.7.egg
+  - easy_install discover
 
 
 Ferramenta para edição de mapas:
