@@ -67,6 +67,9 @@ class Sala(object):
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
             self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+            return infoSalaMsg
+
+        return None
             
     def alteraPosicao(self, cliente, usuario, novaPosicao):
         try:
