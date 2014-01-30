@@ -39,7 +39,7 @@ class Sala(object):
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
             self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
-            return Mensagem(TipoMensagem.info_sala, infoSalaMsg)
+            return infoSalaMsg
 
         return None
 
