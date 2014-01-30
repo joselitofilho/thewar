@@ -699,6 +699,9 @@ function jogo_removeElementosHtml() {
     $('#menu_jogadores li a').each(function(i, elemento) {
         $(elemento).html('');
     });
+    $('.carta_territorio').each(function(i, elemento) {
+        $(elemento).attr('class','carta_territorio carta_territorio_vazia');
+    });
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#slider-mover-tropas').css('visibility', 'hidden');
