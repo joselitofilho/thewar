@@ -1,10 +1,11 @@
 Install in python:
   - apt-get install python-dev
-  - apt-get install easy_install
+  - apt-get install python-setuptools
   - easy_install simplejson
   - easy_install autobahn-0.5.14-py2.7.egg
   - easy_install discover
   - easy_install coverage
+  - apt-get install sqlite3
 
 
 Ferramenta para edição de mapas:
