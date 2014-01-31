@@ -116,14 +116,16 @@ class GerenciadorSala(object):
             self.jogo = None
       
         self.gerenciadorPrincipal.jogoTerminou(self.id)
-        
+       
         self.jogadoresDaSala = []
-        self.sala = Sala(self.id, self)
-        self.estado = EstadoDaSala.sala_criada
+
+        if self.id == "1" or self.id == "2": 
+            self.sala = Sala(self.id, self)
+            self.estado = EstadoDaSala.sala_criada
         
-        infoSalaMsg = InfoSala(self.sala.id, 
-            self.estado, self.sala.jogadores.values(), None)
-        self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+            infoSalaMsg = InfoSala(self.sala.id, 
+                self.estado, self.sala.jogadores.values(), None)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
         if self.jogo != None:
