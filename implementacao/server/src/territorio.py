@@ -132,23 +132,7 @@ class FronteiraTerritorio(object):
         return territorio2 in FronteiraTerritorio.Fronteiras[territorio1]
 
 class Territorio(object):
-    codigo = None
-    quantidadeDeTropas = None
     
     def __init__(self, codigo):
         self.codigo = codigo
         self.quantidadeDeTropas = 1
-
-    @property
-    def Codigo(self):
-        return self.codigo
-    @Codigo.setter
-    def Codigo(self, codigo):
-        self.codigo = codigo
-
-    @property
-    def QuantidadeDeTropas(self):
-        return self.quantidadeDeTropas
-    @QuantidadeDeTropas.setter
-    def QuantidadeDeTropas(self, quantidadeDeTropas):
-        self.quantidadeDeTropas = quantidadeDeTropas

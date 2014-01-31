@@ -521,7 +521,7 @@ class Jogo(object):
                         if v.temTerritorio(paraOTerritorio):
                             jogadorDefesa = v
                             territorioDaDefesa = jogadorDefesa.seuTerritorio(paraOTerritorio)
-                            quantidadeDadosDefesa = territorioDaDefesa.QuantidadeDeTropas
+                            quantidadeDadosDefesa = territorioDaDefesa.quantidadeDeTropas
                             if quantidadeDadosDefesa > 3:
                                 quantidadeDadosDefesa = 3
                             break
@@ -540,15 +540,15 @@ class Jogo(object):
                         quantidadeDadosAtaque = 0
                         for t in dosTerritorios:
                             territorioObj = jogador.seuTerritorio(t)
-                            if (territorioObj.QuantidadeDeTropas > 1 and 
+                            if (territorioObj.quantidadeDeTropas > 1 and 
                                 FronteiraTerritorio.TemFronteira(
-                                    territorioDaDefesa.Codigo, territorioObj.Codigo)):
+                                    territorioDaDefesa.codigo, territorioObj.codigo)):
                                 territoriosDoAtaque.append(territorioObj)
                                 
-                                if territorioObj.QuantidadeDeTropas > 3:
-                                    quantidadeDadosAtaque += territorioObj.QuantidadeDeTropas
-                                elif territorioObj.QuantidadeDeTropas > 1:
-                                    quantidadeDadosAtaque += territorioObj.QuantidadeDeTropas - 1
+                                if territorioObj.quantidadeDeTropas > 3:
+                                    quantidadeDadosAtaque += territorioObj.quantidadeDeTropas
+                                elif territorioObj.quantidadeDeTropas > 1:
+                                    quantidadeDadosAtaque += territorioObj.quantidadeDeTropas - 1
                                 else:
                                     temErro = True
                             else:
@@ -575,20 +575,20 @@ class Jogo(object):
                                     if dadosAtaque[i] > dadosDefesa[i]:
                                         # Ataque venceu.
                                         territorioDaDefesa = jogadorDefesa.removeTropasNoTerritorio(
-                                                territorioDaDefesa.Codigo, 1)
+                                                territorioDaDefesa.codigo, 1)
 
                                         # Verifica se o territorio foi conquistado.
-                                        if territorioDaDefesa.QuantidadeDeTropas == 0:
+                                        if territorioDaDefesa.quantidadeDeTropas == 0:
                                             jogadorDefesa.territorios.remove(territorioDaDefesa)
                                             jogador.territorios.append(territorioDaDefesa)
 
                                             # Movendo uma tropa para o territorio conquistado.
                                             territorioDaDefesa = jogador.adicionaTropasNoTerritorio(
-                                                    territorioDaDefesa.Codigo, 1)
+                                                    territorioDaDefesa.codigo, 1)
 
                                             for t in territoriosDoAtaque:
-                                                if t.QuantidadeDeTropas > 1:
-                                                    jogador.removeTropasNoTerritorio(t.Codigo, 1)
+                                                if t.quantidadeDeTropas > 1:
+                                                    jogador.removeTropasNoTerritorio(t.codigo, 1)
                                                     break
                                             ######
 
@@ -614,12 +614,12 @@ class Jogo(object):
                                             turno.tropasParaMoverAposAtaque = 0
                                             turno.territoriosDoAtaqueDaConquista = []
                                             for t in territoriosDoAtaque:
-                                                if t.QuantidadeDeTropas > 1:
-                                                    turno.territoriosDoAtaqueDaConquista.append(t.Codigo)
-                                                    turno.tropasParaMoverAposAtaque += t.QuantidadeDeTropas-1
+                                                if t.quantidadeDeTropas > 1:
+                                                    turno.territoriosDoAtaqueDaConquista.append(t.codigo)
+                                                    turno.tropasParaMoverAposAtaque += t.quantidadeDeTropas-1
                                                     if turno.tropasParaMoverAposAtaque > 2:
                                                         turno.tropasParaMoverAposAtaque = 2
-                                            turno.territorioConquistado = territorioDaDefesa.Codigo
+                                            turno.territorioConquistado = territorioDaDefesa.codigo
                                             
                                             if turno.tropasParaMoverAposAtaque > 0:
                                                 turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
@@ -653,9 +653,9 @@ class Jogo(object):
     def defesaVenceu(self, i, territoriosDoAtaque, jogador):
         pos = i
         while pos >= 0:
-            if pos < len(territoriosDoAtaque) and territoriosDoAtaque[pos].QuantidadeDeTropas > 1:
+            if pos < len(territoriosDoAtaque) and territoriosDoAtaque[pos].quantidadeDeTropas > 1:
                 territoriosDoAtaque[pos] = jogador.removeTropasNoTerritorio(
-                    territoriosDoAtaque[pos].Codigo,
+                    territoriosDoAtaque[pos].codigo,
                     1)
                 break
             pos -= 1
@@ -673,9 +673,9 @@ class Jogo(object):
                     doTerritorioObj = jogador.seuTerritorio(doTerritorio)
                     paraOTerritorioObj = jogador.seuTerritorio(paraOTerritorio)
                     
-                    if doTerritorioObj.QuantidadeDeTropas > quantidade:
-                        jogador.removeTropasNoTerritorio(doTerritorioObj.Codigo, quantidade)
-                        jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.Codigo, quantidade)
+                    if doTerritorioObj.quantidadeDeTropas > quantidade:
+                        jogador.removeTropasNoTerritorio(doTerritorioObj.codigo, quantidade)
+                        jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.codigo, quantidade)
                         
                         self.enviaMsgParaTodos(TipoMensagem.mover, 
                             Mover(self.jogadores[posicaoJogador].usuario, 
@@ -700,9 +700,9 @@ class Jogo(object):
                     doTerritorioObj = jogador.seuTerritorio(doTerritorio)
                     paraOTerritorioObj = jogador.seuTerritorio(paraOTerritorio)
                     
-                    if doTerritorioObj.QuantidadeDeTropas > quantidade:
-                        jogador.removeTropasNoTerritorio(doTerritorioObj.Codigo, quantidade)
-                        jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.Codigo, quantidade)
+                    if doTerritorioObj.quantidadeDeTropas > quantidade:
+                        jogador.removeTropasNoTerritorio(doTerritorioObj.codigo, quantidade)
+                        jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.codigo, quantidade)
                         
                         turno.tropasParaMoverAposAtaque -= quantidade
                         self.enviaMsgParaTodos(TipoMensagem.mover, 
@@ -729,8 +729,8 @@ class Jogo(object):
             for codigo in turno.territoriosDoAtaqueDaConquista:
                 terr = jogador.seuTerritorio(codigo)
                 if quantidade > 0:
-                    doTerritorio = terr.Codigo
-                    qtdTropasQuePodemSerMovidas = terr.QuantidadeDeTropas-1
+                    doTerritorio = terr.codigo
+                    qtdTropasQuePodemSerMovidas = terr.quantidadeDeTropas-1
                     if quantidade > qtdTropasQuePodemSerMovidas:
                         print usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas
                         self.move(usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas)

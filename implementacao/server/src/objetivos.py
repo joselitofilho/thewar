@@ -108,7 +108,7 @@ class Objetivo07(Objetivo):
         qtd = 0
         if len(jogador.territorios) >= 18:
             for t in jogador.territorios:
-                if t.QuantidadeDeTropas >= 2:
+                if t.quantidadeDeTropas >= 2:
                     qtd = qtd + 1
         return qtd >= 18
 

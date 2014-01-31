@@ -98,7 +98,7 @@ class JogadorDoJogo(object):
                 break
         
         if territorio != None:
-            territorio.QuantidadeDeTropas += quantidade
+            territorio.quantidadeDeTropas += quantidade
 
         return territorio
     
@@ -110,7 +110,7 @@ class JogadorDoJogo(object):
                 break
         
         if territorio != None:
-            territorio.QuantidadeDeTropas -= quantidade
+            territorio.quantidadeDeTropas -= quantidade
 
         return territorio
         
@@ -220,7 +220,7 @@ class Jogador(object):
                 break
         
         if territorio != None:
-            territorio.QuantidadeDeTropas += quantidade
+            territorio.quantidadeDeTropas += quantidade
 
         return territorio
     
@@ -232,7 +232,7 @@ class Jogador(object):
                 break
         
         if territorio != None:
-            territorio.QuantidadeDeTropas -= quantidade
+            territorio.quantidadeDeTropas -= quantidade
 
         return territorio
         
