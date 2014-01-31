@@ -310,14 +310,12 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
                 _territorioAlvoAtaque = null;
                 _territoriosAtacante = [];
-                appwar_mudarCursor('alvo');
             }
             else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();
                 _territorioAlvoAtaque = nomeDoTerritorio;
                 _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                 _territoriosAtacante = [];
-                appwar_mudarCursor('atacar');
                 this.tocarSom(this, 'alvo.mp3');
             }
             else if (_territorioAlvoAtaque != null) {
@@ -341,14 +339,12 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
                     _territorioAlvoMover = null;
                     _territorioMovimento = null;
-                    appwar_mudarCursor('mover_para_dentro');
                     _sliderMoverTropas.fechar();
                 } else if (_territorioAlvoMover == null) {
                     _territorios.pintarGruposTerritorios();
                     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
                     _territorioAlvoMover = nomeDoTerritorio;
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
-                    appwar_mudarCursor('mover_para_fora');
                     this.tocarSom(this, 'vamosLa.wav');
                 } else if (_territorioMovimento == null && 
                            _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1 &&
@@ -361,7 +357,6 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorioAlvoMover = nomeDoTerritorio;
                     _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                     _territorioMovimento = null;
-                    appwar_mudarCursor('mover_para_fora');
                     this.tocarSom(this, 'vamosLa.wav');
                 }
                 
@@ -485,24 +480,6 @@ function iniciarControleDeAudio() {
                 audioSliderTooltip.fadeOut('fast');
             }
     });
-}
-
-function appwar_mudarCursor(tipo) {
-    if (tipo == 'colocar_tropa') {
-        $('body').attr('class', 'mouse_colocar_tropa');
-    }  else if (tipo == 'alvo') {
-        $('body').attr('class', 'mouse_alvo');
-    } else if (tipo == 'trocar_cartas') {
-        $('body').attr('class', 'mouse_trocar_cartas');
-    }  else if (tipo == 'atacar') {
-        $('body').attr('class', 'mouse_atacar');
-    } else if (tipo == 'mover_para_fora') {
-        $('body').attr('class', 'mouse_mover_tropas_para_fora');
-    } else if (tipo == 'mover_para_dentro') {
-        $('body').attr('class', 'mouse_mover_tropas_para_dentro');
-    } else {
-        $('body').attr('class', '');
-    } 
 }
 
 function appwar_alterarTituloDaPagina(str) {

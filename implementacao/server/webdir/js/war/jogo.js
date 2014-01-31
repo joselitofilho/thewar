@@ -133,7 +133,6 @@ function jogo_efetuaAtaque(msgParams) {
             setTimeout(function() {
                 _territorios.pintarGruposTerritorios();
                 _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
-                appwar_mudarCursor('alvo');
             }, 1000);
         }
     } else if (temTerritorioInvalido) {
@@ -191,7 +190,6 @@ function jogo_efetuaAtaque(msgParams) {
             _territorioConquistado = msgParams.territorioDaDefesa.codigo;
         
             if (_posicaoJogador == _posicaoJogadorDaVez) {
-                appwar_mudarCursor('mover_para_fora');
                 if (quantidadeDeTropasDosTerritoriosDoAtaque > 2) {
                     quantidadeDeTropasDosTerritoriosDoAtaque = 2;
                 }
@@ -324,8 +322,6 @@ function processarMsg_mover(msgParams) {
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
         _territorioAlvoMover = null;
         _territorioMovimento = null;
-        //appwar_mudarCursor('mover_para_dentro');
-        appwar_mudarCursor('mover_para_dentro');
     }
 }
 
@@ -415,9 +411,7 @@ function processarMsg_turno(msgParams) {
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         this.tocarSom(this, "buzina.mp3");
-        appwar_mudarCursor('colocar_tropa');
     } else {
-        appwar_mudarCursor('');
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
     
@@ -430,9 +424,6 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
 function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
-        appwar_mudarCursor('colocar_tropa');
-    } else {
-        appwar_mudarCursor('');
     }
     
     appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
@@ -443,11 +434,6 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
 
 function processarMsg_turno_trocar_cartas(msgParams) {
     this.tocarSom(this, "turnoTrocarCarta.mp3");
-    
-    if (_posicaoJogador == _posicaoJogadorDaVez) 
-        appwar_mudarCursor('trocar_cartas');
-    else 
-        appwar_mudarCursor('');
     
     if (msgParams.obrigatorio && (_posicaoJogador == msgParams.vezDoJogador)) {
         appwar_abrePainelCartasTerritorios();
@@ -462,10 +448,7 @@ function processarMsg_turno_atacar(msgParams) {
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
-        appwar_mudarCursor('alvo');
         _territorios.escureceTodosOsTerritoriosDoJogador(msgParams.vezDoJogador);
-    } else {
-        appwar_mudarCursor('');
     }
 }
 
@@ -475,11 +458,7 @@ function processarMsg_turno_mover(msgParams) {
     _territorios.pintarGruposTerritorios();
     
     if (_posicaoJogador == msgParams.vezDoJogador) {
-        //appwar_mudarCursor('mover_para_dentro');
-        appwar_mudarCursor('mover_para_fora');
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
-    } else {
-        appwar_mudarCursor('');
     }
 }
 
@@ -678,7 +657,6 @@ function jogo_cancelaMoverTropas() {
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
         _territorioAlvoMover = null;
         _territorioMovimento = null;
-        appwar_mudarCursor('mover_para_dentro');
     }
     _sliderMoverTropas.fechar();
 }
@@ -689,7 +667,6 @@ function jogo_sair() {
 }
 
 function jogo_removeElementosHtml() {
-    appwar_mudarCursor('');
     $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
