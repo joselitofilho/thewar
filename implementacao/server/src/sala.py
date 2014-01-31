@@ -21,6 +21,11 @@ class Sala(object):
     def adiciona(self, usuario):
         jogador = None
 
+        # Verifica se o jogador esta na sala.
+        for k, v in self.jogadores.iteritems():
+            if v.usuario == usuario:
+                return None
+
         if not self.salaEstaCheia():
             posicao = self.proximaPosicao
             self.verificaDono(posicao)

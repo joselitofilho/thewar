@@ -7,8 +7,13 @@ class SalaTeste(unittest.TestCase):
         pass
 
     def testDeveRetornarAsInformacoesDaSala_QuandoAdicionarNovoJogadorNaSala(self):
+        # Preparando.
         sala = Sala("1")
+
+        # Acao.
         retorno = sala.adiciona("Joselito")
+
+        # Verificacao.
         self.assertIsNotNone(retorno)
         self.assertTrue(isinstance(retorno, InfoSala))
         self.assertEqual(retorno.sala, "1")
@@ -16,6 +21,7 @@ class SalaTeste(unittest.TestCase):
         self.assertEqual(retorno.extra["entrou_ou_saiu"], 1)
 
     def testDeveRetornarNone_QuandoAdicionarJogadorNumaSalaCheia(self):
+        # Preparando.
         sala = Sala("1")
         sala.adiciona("J1")
         sala.adiciona("J2")
@@ -24,16 +30,33 @@ class SalaTeste(unittest.TestCase):
         sala.adiciona("J5")
         sala.adiciona("J6")
 
-        # Adicionando jogador que nao deve ser aceito.
+        # Acao.
         retorno = sala.adiciona("J7")
+
+        # Verificacao.
         self.assertIsNone(retorno)
 
+    def testDeveRetornarNone_QuandoTentarAdicionarUmJogadorQueJaEstaNaSala(self):
+        # Preparando.
+        sala = Sala("1")
+        sala.adiciona("Joselito")
+
+        # Acao.
+        retorno = sala.adiciona("Joselito")
+
+        # Verificacao.
+        self.assertIsNone(retorno)
+
+
     def testDeveRetornarAsInformacoesDaSala_QuandoRemoverUmJogadorDaSalaQueEstaNaSala(self):
+        # Preparando.
         sala = Sala("2")
         sala.adiciona("Joselito")
 
-        # Remover jogador que ja existe.
+        # Acao.
         retorno = sala.remove("Joselito")
+
+        # Verificacao.
         self.assertIsNotNone(retorno)
         self.assertTrue(isinstance(retorno, InfoSala))
         self.assertEqual(retorno.sala, "2")
