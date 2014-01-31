@@ -20,6 +20,34 @@ class SalaTeste(unittest.TestCase):
         self.assertEqual(retorno.estado, EstadoDaSala.sala_criada)
         self.assertEqual(retorno.extra["entrou_ou_saiu"], 1)
 
+    def testOJogadorDeveSerODonoDaSala_QuandoForOPrimeiroAEntrar(self):
+        # Preparando.
+        sala = Sala("1")
+
+        # Acao.
+        retorno = sala.adiciona("Joselito")
+
+        # Verificacao.
+        self.assertIsNotNone(retorno)
+        self.assertTrue(isinstance(retorno, InfoSala))
+        self.assertEqual(retorno.sala, "1")
+        self.assertTrue(retorno.jogadores[0].dono)
+
+    def testOJogadorNaoDeveSerODonoDaSala_QuandoExistirUmJogadorNaSala(self):
+        # Preparando.
+        sala = Sala("1")
+        retorno = sala.adiciona("Joselito")
+
+        # Acao.
+        retorno = sala.adiciona("Zelito")
+
+        # Verificacao.
+        self.assertIsNotNone(retorno)
+        self.assertTrue(isinstance(retorno, InfoSala))
+        self.assertEqual(retorno.sala, "1")
+        self.assertEqual(retorno.jogadores[1].usuario, "Zelito")
+        self.assertFalse(retorno.jogadores[1].dono)
+
     def testDeveRetornarNone_QuandoAdicionarJogadorNumaSalaCheia(self):
         # Preparando.
         sala = Sala("1")
@@ -83,6 +111,7 @@ class SalaTeste(unittest.TestCase):
         # Verificacao.
         self.assertIsNotNone(retorno)
         self.assertTrue(isinstance(retorno, InfoSala))
+        self.assertEquals(retorno.sala, "3")
         self.assertEquals(retorno.jogadores[0].usuario, "Joselito")
         self.assertEquals(retorno.jogadores[0].posicao, 0)
 
@@ -101,6 +130,15 @@ class SalaTeste(unittest.TestCase):
         self.assertEquals(retorno.jogadorDaSala.usuario, "Joselito")
         self.assertEquals(retorno.jogadorDaSala.posicao, 3)
         self.assertEquals(retorno.posicaoAntiga, 0)
+
+    def testDeveRetornarFalse_QuandoASalaNaoEstiverVazia(self):
+        sala = Sala("4")
+        sala.adiciona("Joselito")
+        self.assertFalse(sala.vazia())
+
+    def testDeveRetornarTrue_QuandoASalaEstiverVazia(self):
+        sala = Sala("4")
+        self.assertTrue(sala.vazia())
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()

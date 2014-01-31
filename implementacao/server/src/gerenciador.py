@@ -78,7 +78,7 @@ class GerenciadorSala(object):
         if mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
             if self.estaDentro(usuario):
                 novaPosicao = mensagem.params['novaPosicao']
-                self.sala.alteraPosicao(cliente, usuario, novaPosicao)
+                self.sala.alteraPosicao(usuario, novaPosicao)
             else:
                 self.entra(cliente, usuario)
             
