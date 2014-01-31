@@ -83,7 +83,10 @@ class Sala(object):
         if 0 <= novaPosicao <= 5 and novaPosicao not in self.jogadores.keys():
             posicaoAtual = self.posicaoDoUsuario(usuario)
 
-            if posicaoAtual > -1:
+            # Usuario entrando na sala.
+            if posicaoAtual == -1:
+                retorno = self.adiciona(usuario)
+            else:
                 jogador = self.jogadores[posicaoAtual]
                 jogador.posicao = novaPosicao
                 self.jogadores[novaPosicao] = self.jogadores[posicaoAtual]
@@ -93,10 +96,6 @@ class Sala(object):
                 self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, retorno)
                         
                 self.defineProximaPosicao()
-
-            # Usuario entrando na sala.
-            if posicaoAtual == -1:
-                return self.adiciona(usuario)
 
         return retorno
 
