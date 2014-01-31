@@ -18,7 +18,8 @@ class GerenciadorSala(object):
         self.jogadores[cliente] = usuario
         
         if self.jogo == None:
-            self.sala.adiciona(usuario)
+            infoSalaMsg = self.sala.adiciona(usuario)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
             self.jogadoresDaSala = self.sala.jogadores.values()
         else:
             self.jogo.adiciona(cliente, usuario)
@@ -27,7 +28,8 @@ class GerenciadorSala(object):
         try:
             usuario = self.jogadores[cliente]
             if self.jogo == None:
-                self.sala.remove(usuario)
+                infoSalaMsg = self.sala.remove(usuario)
+                self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
                 self.jogadoresDaSala = self.sala.jogadores.values()
                 
                 if self.sala.vazia():
@@ -78,7 +80,8 @@ class GerenciadorSala(object):
         if mensagem.tipo == TipoMensagem.altera_posicao_na_sala:
             if self.estaDentro(usuario):
                 novaPosicao = mensagem.params['novaPosicao']
-                self.sala.alteraPosicao(usuario, novaPosicao)
+                alteraPosicaoNaSalaMsg = self.sala.alteraPosicao(usuario, novaPosicao)
+                self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, alteraPosicaoNaSalaMsg) 
             else:
                 self.entra(cliente, usuario)
             

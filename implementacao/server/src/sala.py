@@ -38,7 +38,6 @@ class Sala(object):
             infoSalaMsg = InfoSala(self.id, 
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
             return infoSalaMsg
 
         return None
@@ -62,7 +61,6 @@ class Sala(object):
             infoSalaMsg = InfoSala(self.id,
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
             return infoSalaMsg
 
         return None
@@ -93,7 +91,6 @@ class Sala(object):
                 self.jogadores.pop(posicaoAtual)
                         
                 retorno = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], posicaoAtual)
-                self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, retorno)
                         
                 self.defineProximaPosicao()
 
@@ -119,9 +116,5 @@ class Sala(object):
     def vazia(self):
         return len(self.jogadores) == 0
     
-    def enviaMsgParaTodos(self, tipo, msg):
-        if self.gerenciadorSala != None:
-            self.gerenciadorSala.enviaMsgParaTodos(tipo, msg)
-
     def __del__(self):
         del self.jogadores
