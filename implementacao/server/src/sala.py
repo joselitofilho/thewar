@@ -77,28 +77,28 @@ class Sala(object):
 
         return posicao
             
-    def alteraPosicao(self, cliente, usuario, novaPosicao):
-        try:
-            if 0 <= novaPosicao <= 5 and novaPosicao not in self.jogadores.keys():
-                posicaoAtual = -1
-                for k, v in self.jogadores.iteritems():
-                    if v != None and v.usuario == usuario:
-                        posicaoAtual = k
-                        v.posicao = novaPosicao
-                        self.jogadores[novaPosicao] = self.jogadores[k]
-                        self.jogadores.pop(k)
-                        
-                        msg = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], k)
-                        self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, msg)
-                        
-                        self.defineProximaPosicao()
-                        break
+    def alteraPosicao(self, usuario, novaPosicao):
+        retorno = None
 
-                # Usuario entrando na sala.
-                if posicaoAtual == -1:
-                    self.adiciona(cliente, usuario)
-        except:
-            print "Unexpected error:", sys.exc_info()[0]
+        if 0 <= novaPosicao <= 5 and novaPosicao not in self.jogadores.keys():
+            posicaoAtual = self.posicaoDoUsuario(usuario)
+
+            if posicaoAtual > -1:
+                jogador = self.jogadores[posicaoAtual]
+                jogador.posicao = novaPosicao
+                self.jogadores[novaPosicao] = self.jogadores[posicaoAtual]
+                self.jogadores.pop(posicaoAtual)
+                        
+                retorno = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], posicaoAtual)
+                self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, retorno)
+                        
+                self.defineProximaPosicao()
+
+            # Usuario entrando na sala.
+            if posicaoAtual == -1:
+                return self.adiciona(usuario)
+
+        return retorno
 
     def verificaDono(self, posicao = -1):
         if self.dono == None:

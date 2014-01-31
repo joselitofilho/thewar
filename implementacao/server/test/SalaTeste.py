@@ -73,6 +73,35 @@ class SalaTeste(unittest.TestCase):
         # Verificacao.
         self.assertIsNone(retorno)
 
+    def testDeveRetornarQueOJogadorFoiAdicionadoNaSalaNaPosicaoUm_QuandoAlterarAPosicaoDeUmJogadorQueNaoEstaNaSala(self):
+        # Preparando.
+        sala = Sala("3")
+
+        # Acao.
+        retorno = sala.alteraPosicao("Joselito", 2)
+
+        # Verificacao.
+        self.assertIsNotNone(retorno)
+        self.assertTrue(isinstance(retorno, InfoSala))
+        self.assertEquals(retorno.jogadores[0].usuario, "Joselito")
+        self.assertEquals(retorno.jogadores[0].posicao, 0)
+
+    def testDeveRetornarQueOJogadorEstaNaNovaPosicao_QuandoAlterarAPosicao(self):
+        # Preparando.
+        sala = Sala("3")
+        sala.adiciona("Joselito")
+
+        # Acao.
+        retorno = sala.alteraPosicao("Joselito", 3)
+
+        # Verificacao.
+        self.assertIsNotNone(retorno)
+        self.assertTrue(isinstance(retorno, AlteraPosicaoNaSala))
+        self.assertEquals(retorno.sala, "3")
+        self.assertEquals(retorno.jogadorDaSala.usuario, "Joselito")
+        self.assertEquals(retorno.jogadorDaSala.posicao, 3)
+        self.assertEquals(retorno.posicaoAntiga, 0)
+
 if __name__ == '__main__':
     loader = unittest.TestLoader()
     suite = loader.loadTestsFromTestCase(SalaTeste)
