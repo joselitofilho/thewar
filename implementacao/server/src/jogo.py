@@ -9,7 +9,7 @@ from carta import *
 from objetivos import * 
 
 class Jogo(object):
-    def __init__(self, gerenciador, clientes, jogadores):
+    def __init__(self, clientes, jogadores, gerenciador = None):
         random.seed()
 
         self.gerenciador = gerenciador
@@ -212,7 +212,7 @@ class Jogo(object):
                     ok = True
                     break
 
-        if not ok:
+        if not ok and self.gerenciador != None:
             self.gerenciador.jogoTerminou(self.id)
 
     def finalizaTurno_1(self):
@@ -242,7 +242,7 @@ class Jogo(object):
                     acaoDoTurno = self.criaAcaoDoTurno(turno)
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
-            if self.temUmVencedor():
+            if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.id)
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and turno.quantidadeDeTropas == 0:
@@ -268,7 +268,7 @@ class Jogo(object):
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             
-            if self.temUmVencedor():
+            if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.id)
             
     def finalizaTurno_2(self):
@@ -304,7 +304,7 @@ class Jogo(object):
             acaoDoTurno = self.criaAcaoDoTurno(turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             
-            if self.temUmVencedor():
+            if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.id)
             
     def finalizaTurno_I(self):
@@ -405,7 +405,7 @@ class Jogo(object):
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             erro = False
 
-            if self.temUmVencedor():
+            if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.id)
                 
             

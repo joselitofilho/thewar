@@ -8,7 +8,7 @@ class GerenciadorSala(object):
     def __init__(self, nome, gerenciadorPrincipal):
         self.id = nome
         self.gerenciadorPrincipal = gerenciadorPrincipal
-        self.sala = Sala(nome, self)
+        self.sala = Sala(nome)
         self.jogo = None
         self.jogadores = {}
         self.estado = EstadoDaSala.sala_criada
@@ -59,7 +59,7 @@ class GerenciadorSala(object):
                         jogadorDaSala.posicao,
                         jogadorDaSala.dono)
                 clientes[jogadorDaSala.posicao] = self.socketDoUsuario(jogadorDaSala.usuario)
-            self.jogo = Jogo(self, clientes, jogadoresDoJogo)
+            self.jogo = Jogo(clientes, jogadoresDoJogo, self)
 
             self.jogo.inicia()
             self.estado = EstadoDaSala.jogo_em_andamento
@@ -120,7 +120,7 @@ class GerenciadorSala(object):
         self.jogadoresDaSala = []
 
         if self.id == "1" or self.id == "2": 
-            self.sala = Sala(self.id, self)
+            self.sala = Sala(self.id)
             self.estado = EstadoDaSala.sala_criada
         
             infoSalaMsg = InfoSala(self.sala.id, 
