@@ -63,6 +63,15 @@ class SalaTeste(unittest.TestCase):
         self.assertEqual(retorno.estado, EstadoDaSala.sala_criada)
         self.assertEqual(retorno.extra["entrou_ou_saiu"], 0)
 
+    def testDeveRetornarNone_QuandoRemoverUmJogadorDaSalaQueNaoEstaNaSala(self):
+        # Preparando.
+        sala = Sala("2")
+        
+        # Acao.
+        retorno = sala.remove("Joselito")
+
+        # Verificacao.
+        self.assertIsNone(retorno)
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()

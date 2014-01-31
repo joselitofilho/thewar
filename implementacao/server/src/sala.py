@@ -20,13 +20,8 @@ class Sala(object):
 
     def adiciona(self, usuario):
         jogador = None
-
-        # Verifica se o jogador esta na sala.
-        for k, v in self.jogadores.iteritems():
-            if v.usuario == usuario:
-                return None
-
-        if not self.salaEstaCheia():
+        posicao = self.posicaoDoUsuario(usuario)
+        if not self.salaEstaCheia() and posicao == -1:
             posicao = self.proximaPosicao
             self.verificaDono(posicao)
        
@@ -49,11 +44,7 @@ class Sala(object):
         return None
 
     def remove(self, usuario):
-        posicao = -1
-        for k, v in self.jogadores.iteritems():
-            # TODO: Equals do objeto jogador...
-            if v.usuario == usuario:
-                posicao = k
+        posicao = self.posicaoDoUsuario(usuario)
 
         if posicao > -1:
             jogador = self.jogadores[posicao]
@@ -75,6 +66,16 @@ class Sala(object):
             return infoSalaMsg
 
         return None
+
+    def posicaoDoUsuario(self, usuario):
+        posicao = -1
+
+        for k, v in self.jogadores.iteritems():
+            # TODO: Equals do objeto jogador...
+            if v.usuario == usuario:
+                posicao = k
+
+        return posicao
             
     def alteraPosicao(self, cliente, usuario, novaPosicao):
         try:
