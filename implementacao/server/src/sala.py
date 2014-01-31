@@ -6,9 +6,8 @@ class EstadoDaSala:
     jogo_em_andamento = "jogo_em_andamento"
 
 class Sala(object):
-    def __init__(self, nome, gerenciadorSala = None):
+    def __init__(self, nome):
         self.id = nome
-        self.gerenciadorSala = gerenciadorSala
         self.proximaPosicao = 0
         self.jogadores = {}
         self.dono = None

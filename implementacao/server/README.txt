@@ -4,6 +4,7 @@ Install in python:
   - easy_install simplejson
   - easy_install autobahn-0.5.14-py2.7.egg
   - easy_install discover
+  - easy_install coverage
 
 
 Ferramenta para edição de mapas:
@@ -12,3 +13,5 @@ Ferramenta para edição de mapas:
     Plotar pontos: http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/encodeForm.html
     Plotar pontos: http://people.ucsc.edu/~pbuzbee/maps/
     Paises: http://www.dyngeometry.com/web/WorldRegion.aspx
+Sons:
+    http://www.freesound.org/
