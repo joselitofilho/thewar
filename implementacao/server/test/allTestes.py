@@ -2,9 +2,11 @@
 
 import unittest
 from FronteiraTerritorioTeste import FronteiraTerritorioTeste 
+from SalaTeste import SalaTeste 
 
 if __name__ == '__main__':
-    loader = unittest.TestLoader()
-    suite = loader.loadTestsFromTestCase(FronteiraTerritorioTeste)
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(FronteiraTerritorioTeste))
+    suite.addTest(unittest.makeSuite(SalaTeste))
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)

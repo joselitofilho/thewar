@@ -235,6 +235,7 @@
     visibility: hidden;
     top: 510px;
     left: 240px;
+    cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
 }
 
 #ganhou_carta {

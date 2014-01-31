@@ -9,6 +9,7 @@ html, body {
     padding: 0;
     font-family: 'PT Sans', sans-serif;
     background: url('../imagens/bg.jpg');
+    cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
 }
 
 #alerta {
