@@ -271,7 +271,7 @@ class GerenciadorPrincipal(object):
             self.usuarioPorSala.pop(u)
         del removerUsuarios
         
-        del self.salas[idJogo]
+        self.fechaSala(idJogo)
 
     def enviaMsgLobbyParaCliente(self, cliente):
         # Envia a lista de salas para o cliente.
