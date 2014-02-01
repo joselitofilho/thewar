@@ -80,6 +80,8 @@ class GerenciadorSala(object):
             infoSalaMsg = InfoSala(self.sala.id, 
                     self.estado, self.sala.jogadores.values(), None)
             self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+            
+            self.jogo.iniciaTurnos()
 
             del self.sala
             self.sala = None
