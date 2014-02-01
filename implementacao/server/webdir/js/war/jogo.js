@@ -204,7 +204,7 @@ function jogo_efetuaAtaque(msgParams) {
 }
 
 function processarMsg_jogo_fase_I(msgParams) {
-    $('#sala_boxCriarSala').html('visibility', 'hidden');
+    $('#sala_boxCriarSala').css('visibility', 'hidden');
 
     _territorios.limpa();    
     for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
