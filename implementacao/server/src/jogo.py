@@ -108,7 +108,7 @@ class Jogo(object):
                     TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
             
             inicio = inicio + incremento[i]
-            self.passaParaProximoJogador(False);
+            self.passaParaProximoJogador();
 
         return listaTerritoriosPorJogador
 
@@ -195,7 +195,7 @@ class Jogo(object):
     def todosJogaram(self):
         return self.cabecaDaFila == self.indiceOrdemJogadores
 
-    def passaParaProximoJogador(self, comVerificacaoExtra = True):
+    def passaParaProximoJogador(self):
         # Verifica se o jogador ainda esta no jogo. Caso nao esteja, pula a vez dele.
         ok = False
         for i in range(len(self.ordemJogadores)):
@@ -204,11 +204,8 @@ class Jogo(object):
             self.jogadorDaVezConquistouTerritorio = False
             
             # Verifica se o jogador esta logado na sala e nao foi destruido.
-            if self.posicaoJogadorDaVez in self.clientes.keys():
-                if not comVerificacaoExtra:
-                    ok = True
-                    break
-                elif len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
+            if self.posicaoJogadorDaVez in self.jogadores.keys():
+                if len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
                     ok = True
                     break
 
