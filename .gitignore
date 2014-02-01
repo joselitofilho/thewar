@@ -1,5 +1,6 @@
 *.pyc
 *.db
+*.*~
 
 **/*/test/.coverage
 **/*/test/htmlcov/
