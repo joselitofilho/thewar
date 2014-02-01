@@ -39,25 +39,10 @@ class Jogo(object):
         
         self.obrigatorioPassarAVez = False
 
-    def inicia(self):
-        self.iniciaFaseI()
-        self.iniciaTurnos()
-
-    def iniciaFaseI(self):
+    def faseI_Inicia(self):
         jogadorQueComeca = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
-        cartasObjetivos = self.faseI_DefinirObjetivos()
-        
-        self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, JogoFaseI(jogadorQueComeca, territoriosDosJogadores))
-
-        # NOTA: A carta objetivo deve ser enviada apenas ao jogador.
-        for i in range(len(self.jogadores)):
-            jsonMsg = json.dumps(Mensagem(
-                TipoMensagem.carta_objetivo,
-                CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
-            print "# ", jsonMsg
-            posicaoJogador = self.ordemJogadores[i]
-            self.clientes[posicaoJogador].sendMessage(jsonMsg)
+        return JogoFaseI(jogadorQueComeca, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
         numeroAleatorio = random.randint(0, len(self.jogadores)-1)
@@ -108,7 +93,7 @@ class Jogo(object):
                     TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
             
             inicio = inicio + incremento[i]
-            self.passaParaProximoJogador();
+            self.passaParaProximoJogador(False);
 
         return listaTerritoriosPorJogador
 
@@ -195,7 +180,7 @@ class Jogo(object):
     def todosJogaram(self):
         return self.cabecaDaFila == self.indiceOrdemJogadores
 
-    def passaParaProximoJogador(self):
+    def passaParaProximoJogador(self, comVerificacaoExtra = True):
         # Verifica se o jogador ainda esta no jogo. Caso nao esteja, pula a vez dele.
         ok = False
         for i in range(len(self.ordemJogadores)):
@@ -205,7 +190,10 @@ class Jogo(object):
             
             # Verifica se o jogador esta logado na sala e nao foi destruido.
             if self.posicaoJogadorDaVez in self.jogadores.keys():
-                if len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
+                if not comVerificacaoExtra:
+                     ok = True
+                     break
+                elif len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
                     ok = True
                     break
 

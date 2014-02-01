@@ -61,7 +61,20 @@ class GerenciadorSala(object):
                 clientes[jogadorDaSala.posicao] = self.socketDoUsuario(jogadorDaSala.usuario)
             self.jogo = Jogo(clientes, jogadoresDoJogo, self)
 
-            self.jogo.inicia()
+            # Distribui os territorios e define quem comeca.
+            jogoFaseIMsg = self.jogo.faseI_Inicia()
+            self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, jogoFaseIMsg)
+            
+            # Envia a carta objetivo para cada jogador individualmente.
+            cartasObjetivos = self.jogo.faseI_DefinirObjetivos()
+            for i in range(len(jogadoresDoJogo)):
+                jsonMsg = json.dumps(Mensagem(
+                    TipoMensagem.carta_objetivo,
+                    CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
+                print "# ", jsonMsg
+                posicaoJogador = self.jogo.ordemJogadores[i]
+                clientes[posicaoJogador].sendMessage(jsonMsg)
+            
             self.estado = EstadoDaSala.jogo_em_andamento
 
             infoSalaMsg = InfoSala(self.sala.id, 
