@@ -38,7 +38,7 @@ class GerenciadorSala(object):
                 self.jogo.remove(usuario)
             
                 if not self.jogo.temJogadorOnLine():
-                    self.jogoTerminou(self.jogo.id)
+                    self.jogoTerminou(self.id)
                     
                 self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
         
@@ -127,13 +127,12 @@ class GerenciadorSala(object):
             self.jogo.fecha()
             del self.jogo
             self.jogo = None
-      
-        self.gerenciadorPrincipal.jogoTerminou(self.id)
-       
+        
+        self.gerenciadorPrincipal.jogoTerminou(idJogo)
         self.jogadoresDaSala = []
-
-        if self.id == "1" or self.id == "2": 
-            self.sala = Sala(self.id)
+        
+        if idJogo == "1" or idJogo == "2":
+            self.sala = Sala(idJogo)
             self.estado = EstadoDaSala.sala_criada
         
             infoSalaMsg = InfoSala(self.sala.id, 
@@ -271,6 +270,8 @@ class GerenciadorPrincipal(object):
         for u in removerUsuarios:
             self.usuarioPorSala.pop(u)
         del removerUsuarios
+        
+        del self.salas[idJogo]
 
     def enviaMsgLobbyParaCliente(self, cliente):
         # Envia a lista de salas para o cliente.
