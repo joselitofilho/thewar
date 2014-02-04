@@ -31,6 +31,7 @@ class TipoMensagem:
     msg_chat_jogo = "MsgChatJogo"
     msg_chat_geral = "MsgChatGeral"
     usuario_conectou = "UsuarioConectou"
+    usuario_desconectou = "UsuarioDesconectou"
 
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
@@ -197,5 +198,9 @@ class MsgChatGeral(object):
         self.texto = texto
         
 class UsuarioConectou(object):
+    def __init__(self, usuario):
+        self.usuario = usuario
+
+class UsuarioDesconectou(object):
     def __init__(self, usuario):
         self.usuario = usuario

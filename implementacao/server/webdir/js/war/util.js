@@ -1,3 +1,20 @@
+var jogos = jogos || {};
+jogos.war = jogos.war || {};
+
+jogos.war.Util = function() {
+    this.dataAtualFormatada = function() {
+        var date = new Date();
+        var year    = date.getFullYear();
+        var month   = date.getMonth();
+        var day     = date.getDate();
+        var hour    = date.getHours();
+        var minute  = date.getMinutes();
+        var seconds = date.getSeconds();
+
+        return day+"/"+month+"/"+year+" "+hour+":"+minute;
+    };
+};
+
 var listaFadeinPoligono = {};
 var listaFadeoutPoligono = {};
 

@@ -1,9 +1,12 @@
-var jogowar = jogowar || {};
-jogowar.war = jogowar.war || {};
+var jogos = jogos || {};
+jogos.war = jogos.war || {};
 
-jogowar.war.ChatGeral = function(area) {
+jogos.war.ChatGeral = function(area) {
+    this.util = new jogos.war.Util();
+
     this.escreve = function(texto) {
-        area.append(texto + '<br/>');
+        var dataHora = this.util.dataAtualFormatada();
+        area.append(dataHora + " " + texto + '<br/>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
@@ -14,17 +17,20 @@ jogowar.war.ChatGeral = function(area) {
     };
     
     this.boasVindas = function() {
-        this.escreve("<b>Seja bem-vindo ao servidor principal!</b>");
+        area.append('<b>Seja bem-vindo ao servidor principal!</b><br/>');
+        area.scrollTop(
+            area[0].scrollHeight - area.height()
+        );
     };
 
     this.usuarioConectou = function(jogador) {
-        var texto = 'Servidor: ';
+        var texto = '<b>Servidor:</b> ';
         texto += jogador + ' acabou de entrar.';
         this.escreve(texto);
     };
     
-    this.usuarioDesconectou = function(jogador, olheiro) {
-        var texto = 'Servidor: ';
+    this.usuarioDesconectou = function(jogador) {
+        var texto = '<b>Servidor:</b> ';
         texto += jogador + ' saiu.';
         this.escreve(texto);
     };

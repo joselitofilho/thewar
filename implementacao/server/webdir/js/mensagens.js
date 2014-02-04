@@ -27,6 +27,7 @@ var TipoMensagem = {
     msg_chat_jogo: "MsgChatJogo",
     msg_chat_geral: "MsgChatGeral",
     usuario_conectou: "UsuarioConectou",
+    usuario_desconectou: "UsuarioDesconectou",
     jogador_destruido: "JogadorDestruido"
 };
 

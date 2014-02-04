@@ -202,6 +202,8 @@ class GerenciadorPrincipal(object):
             print "[ERRO][GerenciadorPrincipal] Erro ao tentar desconectar o usuario["+usuario+"] da sala."
             print "\tProvavelmente ele nao esteja em nenhuma."
         del self.jogadores[cliente]
+
+        self.enviaMsgParaTodos(TipoMensagem.usuario_desconectou, UsuarioDesconectou(usuario))
     
     def interpretaMensagem(self, cliente, mensagem):
         usuario = self.jogadores[cliente]

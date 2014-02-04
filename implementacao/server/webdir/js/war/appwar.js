@@ -103,7 +103,12 @@ function processarMsg_entrar(msgParams) {
 
 function appwar_processaMsg_usuario_conectou(msgParams) {
     _chatGeral.usuarioConectou(msgParams.usuario);
-    this.tocarSom(this, "entrou.mp3");
+    if (_salaDoJogador == null) this.tocarSom(this, "entrou.mp3");
+}
+
+function appwar_processaMsg_usuario_desconectou(msgParams) {
+    _chatGeral.usuarioDesconectou(msgParams.usuario);
+    if (_salaDoJogador == null) this.tocarSom(this, "saindo.wav");
 }
 
 function processarMsg_erro() {
@@ -172,6 +177,8 @@ function posRecebimentoMensagemServidor(valor) {
         appwar_processaMsg_msg_chat_geral(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.usuario_conectou) {
         appwar_processaMsg_usuario_conectou(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.usuario_desconectou) {
+        appwar_processaMsg_usuario_desconectou(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.jogador_destruido) {
         jogo_processaMsg_jogador_destruido(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
@@ -454,7 +461,7 @@ function appwar_recarregarPagina() {
 function appwar_processaMsg_msg_chat_geral(msgParams) {
     if (_salaDoJogador == null) this.tocarSom(this, 'mensagem.mp3');
     
-    var texto = msgParams.usuario + ": " + msgParams.texto;
+    var texto = "<b>" + msgParams.usuario + ":</b> " + msgParams.texto;
     _chatGeral.escreve(texto);
 }
 
