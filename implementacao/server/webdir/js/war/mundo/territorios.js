@@ -454,8 +454,7 @@ jogos.war.Territorios = function(mapa) {
 	        if (territorio.nome == nomeDoTerritorio) {
 	            _poligonosTerritorios[territorio.nome].setOptions({fillOpacity: "1"});
 	        } else if (!me.temFronteira(nomeDoTerritorio, territorio.nome) || 
-	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador ||
-	                me.quantidadeDeTropaDoTerritorio(territorio.nome) == 1) {
+	                _labelTerritorios[territorio.nome].posicaoJogador != posicaoJogador) {
                 me.escureceTerritorio(territorio.nome);
     	    }
 	    });
