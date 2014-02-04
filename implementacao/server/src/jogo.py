@@ -192,7 +192,8 @@ class Jogo(object):
             self.jogadorDaVezConquistouTerritorio = False
             
             # Verifica se o jogador esta logado na sala e nao foi destruido.
-            if self.posicaoJogadorDaVez in self.jogadores.keys():
+            # TODO: Retirar essa dependencia de self.clientes...
+            if self.posicaoJogadorDaVez in self.clientes.keys():
                 if not comVerificacaoExtra:
                      ok = True
                      break
