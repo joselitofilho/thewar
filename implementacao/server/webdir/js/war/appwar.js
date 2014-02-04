@@ -163,6 +163,8 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_carrega_jogo_olheiro(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_jogo) {
         jogo_processaMsg_msg_chat_jogo(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_geral) {
+        appwar_processaMsg_msg_chat_geral(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.jogador_destruido) {
         jogo_processaMsg_jogador_destruido(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
@@ -440,6 +442,13 @@ function appwar_registrar() {
 
 function appwar_recarregarPagina() {
     location.reload();
+}
+
+function appwar_processaMsg_msg_chat_geral(msgParams) {
+    if (_salaDoJogador == null) this.tocarSom(this, 'mensagem.mp3');
+    
+    var texto = msgParams.usuario + ": " + msgParams.texto;
+    _chatGeral.escreve(texto);
 }
 
 function iniciarControleDeAudio() {

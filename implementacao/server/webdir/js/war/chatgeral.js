@@ -3,23 +3,23 @@ jogowar.war = jogowar.war || {};
 
 jogowar.war.ChatGeral = function(area) {
     this.escreve = function(texto) {
-        area.append(texto + '\n');
+        area.append(texto + '<br/>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
     };
     
     this.limpa = function() {
-        area.text('');
+        area.html('');
     };
     
-    this.bemvindo = function() {
-        this.escreve("Seja bem-vindo no servidor profissional!");
+    this.boasVindas = function() {
+        this.escreve("<b>Seja bem-vindo ao servidor principal!</b>");
     };
 
     this.entrouNoJogo = function(jogador) {
         var texto = 'Servidor: ';
-        texto += jogador + ' entrou.';
+        texto += jogador + ' acabou de entrar.';
         this.escreve(texto);
     };
     

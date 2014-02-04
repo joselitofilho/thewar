@@ -1,0 +1,18 @@
+#chat_geral {
+    position: absolute;
+    top: 55px;
+    left: 922px;
+}
+
+#cg_mensagens {
+    display: block;
+    overflow: auto;
+    width: 356px;
+    height: 400px;
+    border: 0;
+    background-color: transparent;
+    cursor: text;
+    margin-bottom: 1px;
+    padding: 5px;
+    font-size: 17px;
+}

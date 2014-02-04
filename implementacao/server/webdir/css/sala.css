@@ -245,20 +245,3 @@
 }
 
 #sala_boxCriarSala .btn_fechar:hover { background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -190px no-repeat; }
-
-#chat_geral {
-    position: absolute;
-    top: 55px;
-    left: 922px;
-}
-
-#chat_geral textarea {
-    display: block;
-    resize: none;
-    width: 356px;
-    height: 400px;
-    border: 0;
-    background-color: transparent;
-    cursor: text;
-    margin-bottom: 1px;
-}

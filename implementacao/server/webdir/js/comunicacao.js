@@ -94,3 +94,10 @@ function comunicacao_MsgChatJogo(texto) {
         texto: texto
     });
 }
+
+function comunicacao_MsgChatGeral(texto) {
+    return new Mensagem(TipoMensagem.msg_chat_geral,
+    {
+        texto: texto
+    });
+}

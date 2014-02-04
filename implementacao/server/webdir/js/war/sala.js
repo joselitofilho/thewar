@@ -229,3 +229,20 @@ function appwar_alteraPosicaoSala(sala, posicao) {
     msg = comunicacao_alteraPosicaoNaSala(sala, posicao);
     _libwebsocket.enviarObjJson(msg);
 }
+
+/* Chat */
+function cg_texto_onkeypress(event) {
+    if (event.keyCode == 13) {
+        jogo_enviaMsgChatGeral();
+    }
+    return true;
+}
+
+function jogo_enviaMsgChatGeral() {
+    var texto = $('#cg_texto').val();
+    if (texto.length > 0) {
+        $('#cg_texto').val('');
+        msg = comunicacao_MsgChatGeral(texto);
+        _libwebsocket.enviarObjJson(msg);
+    }
+}

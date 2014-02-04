@@ -31,6 +31,7 @@
         <link href="css/jogo.css" rel="stylesheet">
         <link href="css/war/cartas_objetivos.css" rel="stylesheet">
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
+        <link href="css/chat.css" rel="stylesheet">
     </head>
     <body>
         <div id="fb-root"></div>
@@ -140,7 +141,11 @@
                 <button class="btn_criar" onclick="_sala.cria($('#sala_nomeParaCriar').val());"></button>
             </div>
             <div id="chat_geral">
-                <textarea id="cg_mensagens" readonly></textarea>
+                <div id="cg_mensagens"></div>
+                <input id="cg_texto" type="text" 
+                        class="form-control" 
+                        placeholder="Digite sua mensagem aqui." 
+                        onkeypress="return cg_texto_onkeypress(event);" />
             </div>
         </div>
         <div id="geral">

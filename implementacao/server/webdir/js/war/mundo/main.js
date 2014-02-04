@@ -16,6 +16,8 @@ function iniciarApp() {
     iniciarControleDeAudio();
 
     _sala = new jogos.war.Sala();
+    _chatGeral = new jogowar.war.ChatGeral($('#cg_mensagens'))
+    _chatGeral.boasVindas();
 }
 
 (function(){
