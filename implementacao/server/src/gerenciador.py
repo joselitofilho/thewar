@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import traceback
 import json
 from mensagens import *
 from jogador import *
@@ -6,7 +10,7 @@ from jogo import *
 
 class GerenciadorSala(object):
     def __init__(self, nome, gerenciadorPrincipal):
-        self.id = nome
+        self.nome = nome
         self.gerenciadorPrincipal = gerenciadorPrincipal
         self.sala = Sala(nome)
         self.jogo = None
@@ -18,9 +22,10 @@ class GerenciadorSala(object):
         self.jogadores[cliente] = usuario
         
         if self.jogo == None:
-            infoSalaMsg = self.sala.adiciona(usuario)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
-            self.jogadoresDaSala = self.sala.jogadores.values()
+            if self.sala != None:
+                infoSalaMsg = self.sala.adiciona(usuario)
+                self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+                self.jogadoresDaSala = self.sala.jogadores.values()
         else:
             self.jogo.adiciona(cliente, usuario)
 
@@ -28,23 +33,27 @@ class GerenciadorSala(object):
         try:
             usuario = self.jogadores[cliente]
             if self.jogo == None:
-                infoSalaMsg = self.sala.remove(usuario)
-                self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
-                self.jogadoresDaSala = self.sala.jogadores.values()
-                
-                if self.sala.vazia():
-                    self.gerenciadorPrincipal.fechaSala(self.id)
+                if self.sala != None:
+                    infoSalaMsg = self.sala.remove(usuario)
+                    self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+                    self.jogadoresDaSala = self.sala.jogadores.values()
+                    
+                    if self.sala.vazia():
+                        self.gerenciadorPrincipal.fechaSala(self.nome)
+                else:
+                    self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
             else:
                 self.jogo.remove(usuario)
             
                 if not self.jogo.temJogadorOnLine():
-                    self.jogoTerminou(self.id)
+                    self.jogoTerminou(self.nome)
                     
                 self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
         
             del self.jogadores[cliente]
         except:
-            print "[ERROR]", "Nao foi possivel desconectar o cliente", cliente 
+            traceback.print_exc()
+            print "[ERROR]", "Nao foi possivel desconectar o cliente ", cliente 
 
     def iniciaPartida(self):
         if len(self.sala.jogadores) >= 3 and self.jogo == None:
@@ -63,7 +72,7 @@ class GerenciadorSala(object):
 
             # Distribui os territorios e define quem comeca.
             jogoFaseIMsg = self.jogo.faseI_Inicia()
-            self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, jogoFaseIMsg)
+            self.jogo.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, jogoFaseIMsg)
             
             # Envia a carta objetivo para cada jogador individualmente.
             cartasObjetivos = self.jogo.faseI_DefinirObjetivos()
@@ -79,7 +88,7 @@ class GerenciadorSala(object):
 
             infoSalaMsg = InfoSala(self.sala.id, 
                     self.estado, self.sala.jogadores.values(), None)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+            self.jogo.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
             
             self.jogo.iniciaTurnos()
 
@@ -125,15 +134,15 @@ class GerenciadorSala(object):
                 self.jogo.msgChat(usuario, texto)
                 
     def jogoTerminou(self, idJogo):
-        if self.jogo != None:
-            self.jogo.fecha()
-            del self.jogo
-            self.jogo = None
+        idJogo = str(idJogo)
+    
+        self.fecha()
         
         self.gerenciadorPrincipal.jogoTerminou(idJogo)
         self.jogadoresDaSala = []
         
         if idJogo == "1" or idJogo == "2":
+            print "Recriando sala ", idJogo
             self.sala = Sala(idJogo)
             self.estado = EstadoDaSala.sala_criada
         
@@ -263,10 +272,17 @@ class GerenciadorPrincipal(object):
             self.usuarioPorSala[usuario] = idSala
     
     def fechaSala(self, idSala):
-        if idSala != '1' and idSala != '2':
-            self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
-                FecharSala(idSala))
-            del self.salas[idSala]
+        idSala = str(idSala)
+        print "[DEBUG] fechaSala(", idSala, ")"
+        try:
+            if idSala != "1" and idSala != "2":
+                del self.salas[idSala]
+                self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
+                    FecharSala(idSala))
+                print "[DEBUG] Sala ", idSala, " fechada."
+        except:
+            traceback.print_exc()
+            print "[ERRO] Tentou fechar sala de id:", idSala
             
     def jogoTerminou(self, idJogo):
         removerUsuarios = []
@@ -277,17 +293,14 @@ class GerenciadorPrincipal(object):
             self.usuarioPorSala.pop(u)
         del removerUsuarios
         
-        try:
-            self.fechaSala(idJogo)
-        except:
-            print "[ERRO] Tentou fechar sala de id=", idJogo
+        self.fechaSala(idJogo)
 
     def enviaMsgLobbyParaCliente(self, cliente):
         # Envia a lista de salas para o cliente.
         infoSalas = []
         for gerenciadorSala in self.salas.values():
             info = {
-                "sala": gerenciadorSala.id,
+                "sala": gerenciadorSala.nome,
                 "jogadores": gerenciadorSala.jogadoresDaSala,
                 "estado": gerenciadorSala.estado
             }

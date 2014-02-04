@@ -4,6 +4,7 @@
 import signal
 import sys
 import socket
+import traceback
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -75,10 +76,11 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 print "# ", jsonMsg
                 self.sendMessage(jsonMsg)
             else:
-                #try:
-                _gerenciadorPrincipal.interpretaMensagem(self, mensagem)
-                #except:
-                #    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem
+                try:
+                    _gerenciadorPrincipal.interpretaMensagem(self, mensagem)
+                except:
+                    traceback.print_exc()
+                    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
