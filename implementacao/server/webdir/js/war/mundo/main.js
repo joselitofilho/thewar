@@ -18,6 +18,8 @@ function iniciarApp() {
     _sala = new jogos.war.Sala();
     _chatGeral = new jogowar.war.ChatGeral($('#cg_mensagens'))
     _chatGeral.boasVindas();
+    
+    _mapaGoogle.setOptions({ draggableCursor : "url(../../../imagens/mouse/padrao.png), auto" })
 }
 
 (function(){

@@ -278,9 +278,11 @@ function appwar_iniciaCartasTerritorios() {
 
 function territorioMouseMoveFunc(evento, posicaoJogador, nomeDoTerritorio) {
     if (!isNaN(evento.edge) || !isNaN(evento.vertex)) {
-        document.getElementById("mapa").className = '';
+        document.getElementById("mapa").className = 'mouse_padrao';
     } else if (_posicaoJogadorDaVez == _posicaoJogador) {
-        if (_turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+        if (_turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais ||
+            _turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio ||
+            _turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
             $('#mapa').attr('class', 'mouse_colocar_tropa');
         } else if (_turno.tipoAcao == TipoAcaoTurno.atacar) {
             if (_territorioAlvoAtaque == null) {
@@ -296,7 +298,7 @@ function territorioMouseMoveFunc(evento, posicaoJogador, nomeDoTerritorio) {
             }
         }
     } else {
-        document.getElementById("mapa").className = '';
+        document.getElementById("mapa").className = 'mouse_padrao';
     }
 }
 
