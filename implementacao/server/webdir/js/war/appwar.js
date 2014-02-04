@@ -103,6 +103,7 @@ function processarMsg_entrar(msgParams) {
 
 function appwar_processaMsg_usuario_conectou(msgParams) {
     _chatGeral.usuarioConectou(msgParams.usuario);
+    this.tocarSom(this, "entrou.mp3");
 }
 
 function processarMsg_erro() {
