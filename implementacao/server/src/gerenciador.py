@@ -237,6 +237,10 @@ class GerenciadorPrincipal(object):
                     print "[DEBUG] Erro ao tentar retirar o jogador [" + usuario + "] da relacao usuario por sala."
             else:
                 self.enviaMsgLobbyParaCliente(cliente)
+                
+        elif mensagem.tipo == TipoMensagem.msg_chat_geral:
+            texto = mensagem.params['texto']
+            self.enviaMsgParaTodos(TipoMensagem.msg_chat_geral, MsgChatGeral(usuario, texto))
 
     def criaSala(self, cliente, usuario, mensagem):
         idSala = mensagem.params['sala']
