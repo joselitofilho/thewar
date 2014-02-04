@@ -277,7 +277,10 @@ class GerenciadorPrincipal(object):
             self.usuarioPorSala.pop(u)
         del removerUsuarios
         
-        self.fechaSala(idJogo)
+        try:
+            self.fechaSala(idJogo)
+        except:
+            print "[ERRO] Tentou fechar sala de id=", idJogo
 
     def enviaMsgLobbyParaCliente(self, cliente):
         # Envia a lista de salas para o cliente.
