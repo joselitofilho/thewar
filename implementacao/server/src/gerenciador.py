@@ -183,14 +183,14 @@ class GerenciadorPrincipal(object):
 
     def clienteConectou(self, cliente, usuario):
         self.jogadores[cliente] = usuario
-
+        
         if usuario in self.usuarioPorSala.keys():
             gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
             gerenciadorSala.entra(cliente, usuario)
         else:
             self.enviaMsgLobbyParaCliente(cliente)
-        
-        # TODO: Enviar mensagem para todos que o cliente entrou.
+            
+        self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(usuario))
         
     def clienteDesconectou(self, cliente):
         usuario = self.jogadores[cliente]

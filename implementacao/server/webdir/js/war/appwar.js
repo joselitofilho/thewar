@@ -101,6 +101,10 @@ function processarMsg_entrar(msgParams) {
     }
 }
 
+function appwar_processaMsg_usuario_conectou(msgParams) {
+    _chatGeral.usuarioConectou(msgParams.usuario);
+}
+
 function processarMsg_erro() {
     _jaPodeAtacar = true;
     _jaPodeMover = true;
@@ -165,6 +169,8 @@ function posRecebimentoMensagemServidor(valor) {
         jogo_processaMsg_msg_chat_jogo(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_geral) {
         appwar_processaMsg_msg_chat_geral(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.usuario_conectou) {
+        appwar_processaMsg_usuario_conectou(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.jogador_destruido) {
         jogo_processaMsg_jogador_destruido(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {

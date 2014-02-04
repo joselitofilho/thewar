@@ -26,6 +26,7 @@ var TipoMensagem = {
     altera_posicao_na_sala: "AlteraPosicaoNaSala",
     msg_chat_jogo: "MsgChatJogo",
     msg_chat_geral: "MsgChatGeral",
+    usuario_conectou: "UsuarioConectou",
     jogador_destruido: "JogadorDestruido"
 };
 

@@ -17,13 +17,13 @@ jogowar.war.ChatGeral = function(area) {
         this.escreve("<b>Seja bem-vindo ao servidor principal!</b>");
     };
 
-    this.entrouNoJogo = function(jogador) {
+    this.usuarioConectou = function(jogador) {
         var texto = 'Servidor: ';
         texto += jogador + ' acabou de entrar.';
         this.escreve(texto);
     };
     
-    this.saiuDoJogo = function(jogador, olheiro) {
+    this.usuarioDesconectou = function(jogador, olheiro) {
         var texto = 'Servidor: ';
         texto += jogador + ' saiu.';
         this.escreve(texto);
