@@ -3,6 +3,7 @@
 
 import math
 import random
+import logging
 
 from mensagens import *
 from turno import *
@@ -12,12 +13,13 @@ from carta import *
 from objetivos import * 
 
 class Jogo(object):
-    def __init__(self, clientes, jogadores, gerenciador = None):
+    def __init__(self, nome, clientes, jogadores, gerenciador = None):
+        logging.basicConfig(filename='log/jogo_'+nome+'.log', level=logging.DEBUG)
         random.seed()
 
         self.gerenciador = gerenciador
         
-        self.id = 1
+        self.nome = nome
         self.turno = Turno()
 
         self.clientes = clientes
@@ -202,7 +204,7 @@ class Jogo(object):
                     break
 
         if not ok and self.gerenciador != None:
-            self.gerenciador.jogoTerminou(self.id)
+            self.gerenciador.jogoTerminou(self.nome)
 
     def finalizaTurno_1(self):
         turno = self.turno
@@ -232,13 +234,13 @@ class Jogo(object):
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.id)
+                self.gerenciador.jogoTerminou(self.nome)
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and turno.quantidadeDeTropas == 0:
             try:
                 turno.gruposTerritorio.pop(0)
             except:
-                print "[WARN] Nao tem grupo territorio para remover."
+                logging.exception("Nao tem grupo territorio para remover.")
 
             if len(turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
@@ -258,7 +260,7 @@ class Jogo(object):
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.id)
+                self.gerenciador.jogoTerminou(self.nome)
             
     def finalizaTurno_2(self):
         turno = self.turno
@@ -321,7 +323,7 @@ class Jogo(object):
                 try:
                     turno.gruposTerritorio.pop(0)
                 except:
-                    print "WARN: Nao tem grupo territorio para remover."
+                    logging.exception("Nao tem grupo territorio para remover.")
 
                 jogador = self.jogadores[self.posicaoJogadorDaVez]
 
@@ -351,7 +353,7 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
             jogador = self.jogadores[self.posicaoJogadorDaVez]
-            print "Obrigatorio passar a vez?", self.obrigatorioPassarAVez
+            logging.debug("Obrigatorio passar a vez? " + str(self.obrigatorioPassarAVez))
             if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
                 if self.obrigatorioPassarAVez:
                     turno.tipoAcao = TipoAcaoTurno.mover
@@ -399,10 +401,7 @@ class Jogo(object):
                 
             
         if erro:
-            socket = self.clientes[self.posicaoJogadorDaVez]
-            jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-            print "# " + jsonMsg
-            socket.sendMessage(jsonMsg)
+            self.enviaMsgParaCliente(TipoMensagem.erro, None, self.clientes[self.posicaoJogadorDaVez])
 
     def finalizaTurno(self, usuario):
         posicaoJogador = -1
@@ -522,7 +521,6 @@ class Jogo(object):
                             valorDado = self.jogarDado()
                             dadosDefesa.append(valorDado)
                         dadosDefesa = sorted(dadosDefesa, reverse=True)
-                        print "Dados da defesa: ", dadosDefesa
                 
                         # Recuperando territorios do ataque.
                         territoriosDoAtaque = []
@@ -554,7 +552,6 @@ class Jogo(object):
                                 valorDado = self.jogarDado()
                                 dadosAtaque.append(valorDado)
                             dadosAtaque = sorted(dadosAtaque, reverse=True)
-                            print "Dados do ataque: ", dadosAtaque
                         
                             conquistouTerritorio = False
                         
@@ -590,10 +587,8 @@ class Jogo(object):
                                                 jogador.cartasTerritorio.extend(jogadorDefesa.cartasTerritorio)
                                                 
                                                 # Envia as cartas atualizadas para o cliente.
-                                                jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, 
-                                                    jogador.cartasTerritorio), default=lambda o: o.__dict__)
-                                                print "# " + jsonMsg
-                                                self.clientes[jogador.posicao].sendMessage(jsonMsg)
+                                                self.enviaMsgParaCliente(TipoMensagem.cartas_territorio, 
+                                                    jogador.cartasTerritorio, self.clientes[jogador.posicao])
                                                 
                                                 # Envia para todos que o jogador foi destruido.
                                                 self.enviaMsgParaTodos(TipoMensagem.jogador_destruido,
@@ -635,9 +630,7 @@ class Jogo(object):
                         temErro = True
                 
                     if temErro:
-                        jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                        print "# " + jsonMsg
-                        socket.sendMessage(jsonMsg)
+                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket.sendMessage(jsonMsg))
                     
     def defesaVenceu(self, i, territoriosDoAtaque, jogador):
         pos = i
@@ -671,13 +664,9 @@ class Jogo(object):
                             doTerritorioObj, paraOTerritorioObj,
                             quantidade))
                     else:
-                        jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                        print "# " + jsonMsg
-                        socket.sendMessage(jsonMsg)
+                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
                 else:
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                    print "# " + jsonMsg
-                    socket.sendMessage(jsonMsg)
+                    self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
             
             elif turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
                 if jogador.temTerritorio(doTerritorio) and \
@@ -699,13 +688,9 @@ class Jogo(object):
                                 doTerritorioObj, paraOTerritorioObj,
                                 quantidade))
                     else:
-                        jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                        print "# " + jsonMsg
-                        socket.sendMessage(jsonMsg)
+                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
                 else:
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                    print "# " + jsonMsg
-                    socket.sendMessage(jsonMsg)
+                    self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
                     
     def moveAposConquistarTerritorio(self, usuario, quantidade):
         turno = self.turno
@@ -721,11 +706,9 @@ class Jogo(object):
                     doTerritorio = terr.codigo
                     qtdTropasQuePodemSerMovidas = terr.quantidadeDeTropas-1
                     if quantidade > qtdTropasQuePodemSerMovidas:
-                        print usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas
                         self.move(usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas)
                         quantidade -= qtdTropasQuePodemSerMovidas
                     else:
-                        print usuario, doTerritorio, paraOTerritorio, qtdTropasQuePodemSerMovidas   
                         self.move(usuario, doTerritorio, paraOTerritorio, quantidade)
                         break
                         
@@ -737,7 +720,7 @@ class Jogo(object):
         jogador = self.jogadores[posicaoJogador]
         socket = self.clientes[posicaoJogador]
         
-        print "[trocaCartasTerritorio] ", cartasTerritorio
+        logging.debug("Troca de cartas territorio: ".join(cartasTerritorio))
 
         if turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
             jogador.usuario == usuario and \
@@ -751,9 +734,7 @@ class Jogo(object):
                     cartasParaTroca.append(carta)
 
             if len(cartasParaTroca) != 3:
-                jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                print "# " + jsonMsg
-                socket.sendMessage(jsonMsg)
+                self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
             else:
                 # Se chegou aqui, eh porque o jogador tem as cartas dos territorios.
                 
@@ -786,13 +767,9 @@ class Jogo(object):
                     for carta in cartasParaTroca:
                         jogador.removeCartaTerritorio(carta)
                         self.cartasTerritorioDescartadas.append(carta);
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.cartas_territorio, jogador.cartasTerritorio), default=lambda o: o.__dict__)
-                    print "# " + jsonMsg
-                    self.clientes[self.posicaoJogadorDaVez].sendMessage(jsonMsg)
+                    self.enviaMsgParaCliente(TipoMensagem.cartas_territorio, jogador.cartasTerritorio, self.clientes[self.posicaoJogadorDaVez])
                 else:
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.erro, None), default=lambda o: o.__dict__)
-                    print "# " + jsonMsg
-                    socket.sendMessage(jsonMsg)                    
+                    self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
 
     def jogarDado(self):
         dado = [1,2,3,4,5,6]
@@ -925,7 +902,7 @@ class Jogo(object):
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        print "# " + jsonMsg
+        logging.debug("JSON: " + jsonMsg)
         cliente.sendMessage(jsonMsg)
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
@@ -934,10 +911,10 @@ class Jogo(object):
             socket.sendMessage(jsonMsg)
         for socket in self.olheiros.values():
             socket.sendMessage(jsonMsg)
-        print "# ", jsonMsg
+        logging.debug("JSON: " + jsonMsg)
 
     def fecha(self):
-        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.id))
+        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
         self.turno.paraTimeout()
 
     def __del__(self):

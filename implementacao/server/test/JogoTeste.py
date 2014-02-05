@@ -29,7 +29,7 @@ class JogoTeste(unittest.TestCase):
     
     def setUp(self):
         self.iniciaJogadoresDoJogo()
-        self.jogo = Jogo(self.jogadores)
+        self.jogo = Jogo("1", self.jogadores)
         # TODO: Estou fazendo os clientes fakes apenas para a refatoracao. 
         # Ele deve ser retirando dessa classe quando terminado.
         self.jogo.clientes = self.fakeClientes()

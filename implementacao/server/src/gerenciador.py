@@ -68,7 +68,7 @@ class GerenciadorSala(object):
                         jogadorDaSala.posicao,
                         jogadorDaSala.dono)
                 clientes[jogadorDaSala.posicao] = self.socketDoUsuario(jogadorDaSala.usuario)
-            self.jogo = Jogo(clientes, jogadoresDoJogo, self)
+            self.jogo = Jogo(self.nome, clientes, jogadoresDoJogo, self)
 
             # Distribui os territorios e define quem comeca.
             jogoFaseIMsg = self.jogo.faseI_Inicia()
