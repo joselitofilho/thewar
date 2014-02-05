@@ -90,6 +90,8 @@ jogos.war.Sala = function() {
     };
 };
 
+_listaUsuarios = new jogos.war.ListaUsuarios($('#lista_usuarios'));
+
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
@@ -208,6 +210,8 @@ function processarMsg_lobby(msgParams) {
             }
         }
     }
+    
+    _listaUsuarios.carrega(msgParams.usuarios);
 }
 
 function processarMsg_criar_sala(msgParams) {

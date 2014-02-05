@@ -28,7 +28,9 @@ _cartasTerritoriosSelecionadas = [];
 
 _quantidadeDeJogadoresNaSala = 0;
 
-_sala = null;
+_sala = new jogos.war.Sala();
+_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'))
+_chatGeral.boasVindas();
 
 function appwar_limparVariaveis() {
     _posicaoJogador = -1;
@@ -102,12 +104,16 @@ function processarMsg_entrar(msgParams) {
 }
 
 function appwar_processaMsg_usuario_conectou(msgParams) {
-    _chatGeral.usuarioConectou(msgParams.usuario);
+    var usuario = msgParams.usuario;
+    _chatGeral.usuarioConectou(usuario);
+    _listaUsuarios.adiciona(usuario);
     if (_salaDoJogador == null) this.tocarSom(this, "entrou.mp3");
 }
 
 function appwar_processaMsg_usuario_desconectou(msgParams) {
-    _chatGeral.usuarioDesconectou(msgParams.usuario);
+    var usuario = msgParams.usuario;
+    _chatGeral.usuarioDesconectou(usuario);
+    _listaUsuarios.remove(usuario);
     if (_salaDoJogador == null) this.tocarSom(this, "saindo.wav");
 }
 
@@ -551,3 +557,6 @@ function inputSenha_onkeypress(event) {
     }
     return true;
 }
+
+
+iniciarControleDeAudio();

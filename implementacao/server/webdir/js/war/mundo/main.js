@@ -12,12 +12,6 @@ function iniciarApp() {
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
-        
-    iniciarControleDeAudio();
-
-    _sala = new jogos.war.Sala();
-    _chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'))
-    _chatGeral.boasVindas();
     
     _mapaGoogle.setOptions({ draggableCursor : "url(../../../imagens/mouse/padrao.png), auto" })
 }
