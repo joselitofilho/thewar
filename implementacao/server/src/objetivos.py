@@ -81,34 +81,43 @@ class Objetivo03(Objetivo):
 # deve conquistar 24 territorios a sua escolha.
 class Objetivo04(Objetivo):
     def completou(self, jogador, jogadores):
-        if jogador.posicao != 3 and 3 in jogadores.keys():
-            return jogador.destruiuJogador(3)
+        venceu = False
+        if jogador.destruiuJogador(3):
+            venceu = True
+        elif 3 in jogadores.keys():
+            venceu = len(jogador.territorios) >= 24 and len(jogadores[3].territorios) == 0
         else:
-            return len(jogador.territorios) >= 24
-
-        return False
+            venceu = len(jogador.territorios) >= 24
+            
+        return venceu
 
 # Destruir o exercitos verde. Se voce for o exercito verde, entao voce
 # deve conquistar 24 territorios a sua escolha.
 class Objetivo05(Objetivo):
     def completou(self, jogador, jogadores):
-        if jogador.posicao != 2 and 2 in jogadores.keys():
-            return jogador.destruiuJogador(2)
+        venceu = False
+        if jogador.destruiuJogador(2):
+            venceu = True
+        elif 2 in jogadores.keys():
+            venceu = len(jogador.territorios) >= 24 and len(jogadores[2].territorios) == 0
         else:
-            return len(jogador.territorios) >= 24
-
-        return False
+            venceu = len(jogador.territorios) >= 24
+            
+        return venceu
 
 # Destruir o exercitos vermelho. Se voce for o exercito vermelho, entao voce
 # deve conquistar 24 territorios a sua escolha.
 class Objetivo06(Objetivo):
     def completou(self, jogador, jogadores):
-        if jogador.posicao != 0 and 0 in jogadores.keys():
-            return jogador.destruiuJogador(0)
+        venceu = False
+        if jogador.destruiuJogador(0):
+            venceu = True
+        elif 0 in jogadores.keys():
+            venceu = len(jogador.territorios) >= 24 and len(jogadores[0].territorios) == 0
         else:
-            return len(jogador.territorios) >= 24
-
-        return False
+            venceu = len(jogador.territorios) >= 24
+            
+        return venceu
 
 # Conquistar 18 territorios com pelo menos 2 tropas em cada.
 class Objetivo07(Objetivo):
