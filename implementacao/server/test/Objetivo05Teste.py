@@ -137,3 +137,35 @@ class Objetivo05Teste(unittest.TestCase):
         
         # Verificação.
         self.assertTrue(venceu)
+        
+    # Cenário:
+    #   * Jogador3 tem o objetivo 05;
+    #   * Jogador3 tem 2 territorios.
+    #
+    # Critério: Não deve vencer o jogo.
+    def test_DadoJogador3Tem2Territorios_EntaoJogador3NaoVenceOJogo(self):
+        # Preparação.
+        self.jogador3.jogadoresDestruidos = []
+        self.jogador3.iniciaTerritorios(self.codigosTerritorios_2)
+        
+        # Operação.
+        venceu = Objetivo05().completou(self.jogador3, self.jogadores)
+        
+        # Verificação.
+        self.assertFalse(venceu)
+        
+    # Cenário:
+    #   * Jogador3 tem o objetivo 05;
+    #   * Jogador3 tem 24 territorios.
+    #
+    # Critério: Deve vencer o jogo.
+    def test_DadoJogador3Tem24Territorios_EntaoJogador3VenceOJogo(self):
+        # Preparação.
+        self.jogador3.jogadoresDestruidos = []
+        self.jogador3.iniciaTerritorios(self.codigosTerritorios_24)
+        
+        # Operação.
+        venceu = Objetivo05().completou(self.jogador3, self.jogadores)
+        
+        # Verificação.
+        self.assertTrue(venceu)

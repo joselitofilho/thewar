@@ -44,7 +44,10 @@ class Objetivo01(Objetivo):
         if jogador.destruiuJogador(5):
             venceu = True
         elif 5 in jogadores.keys():
-            venceu = len(jogador.territorios) >= 24 and len(jogadores[5].territorios) == 0
+            if jogador.posicao == 5:
+                venceu = len(jogador.territorios) >= 24
+            else:
+                venceu = len(jogador.territorios) >= 24 and len(jogadores[5].territorios) == 0
         else:
             venceu = len(jogador.territorios) >= 24
             
@@ -57,7 +60,10 @@ class Objetivo02(Objetivo):
         if jogador.destruiuJogador(1):
             venceu = True
         elif 1 in jogadores.keys():
-            venceu = len(jogador.territorios) >= 24 and len(jogadores[1].territorios) == 0
+            if jogador.posicao == 1:
+                venceu = len(jogador.territorios) >= 24
+            else:
+                venceu = len(jogador.territorios) >= 24 and len(jogadores[1].territorios) == 0
         else:
             venceu = len(jogador.territorios) >= 24
             
@@ -71,7 +77,10 @@ class Objetivo03(Objetivo):
         if jogador.destruiuJogador(4):
             venceu = True
         elif 4 in jogadores.keys():
-            venceu = len(jogador.territorios) >= 24 and len(jogadores[4].territorios) == 0
+            if jogador.posicao == 4:
+                venceu = len(jogador.territorios) >= 24
+            else:
+                venceu = len(jogador.territorios) >= 24 and len(jogadores[4].territorios) == 0
         else:
             venceu = len(jogador.territorios) >= 24
             
@@ -85,7 +94,10 @@ class Objetivo04(Objetivo):
         if jogador.destruiuJogador(3):
             venceu = True
         elif 3 in jogadores.keys():
-            venceu = len(jogador.territorios) >= 24 and len(jogadores[3].territorios) == 0
+            if jogador.posicao == 3:
+                venceu = len(jogador.territorios) >= 24
+            else:
+                venceu = len(jogador.territorios) >= 24 and len(jogadores[3].territorios) == 0
         else:
             venceu = len(jogador.territorios) >= 24
             
@@ -99,7 +111,10 @@ class Objetivo05(Objetivo):
         if jogador.destruiuJogador(2):
             venceu = True
         elif 2 in jogadores.keys():
-            venceu = len(jogador.territorios) >= 24 and len(jogadores[2].territorios) == 0
+            if jogador.posicao == 2:
+                venceu = len(jogador.territorios) >= 24
+            else:
+                venceu = len(jogador.territorios) >= 24 and len(jogadores[2].territorios) == 0
         else:
             venceu = len(jogador.territorios) >= 24
             
@@ -113,7 +128,10 @@ class Objetivo06(Objetivo):
         if jogador.destruiuJogador(0):
             venceu = True
         elif 0 in jogadores.keys():
-            venceu = len(jogador.territorios) >= 24 and len(jogadores[0].territorios) == 0
+            if jogador.posicao == 0:
+                venceu = len(jogador.territorios) >= 24
+            else:
+                venceu = len(jogador.territorios) >= 24 and len(jogadores[0].territorios) == 0
         else:
             venceu = len(jogador.territorios) >= 24
             
