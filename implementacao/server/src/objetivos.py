@@ -40,13 +40,15 @@ class Objetivo(object):
 # deve conquistar 24 territorios a sua escolha.
 class Objetivo01(Objetivo):
     def completou(self, jogador, jogadores):
-        if jogador.posicao != 5 and 5 in jogadores.keys():
-            return jogador.destruiuJogador(5)
+        venceu = False
+        if jogador.destruiuJogador(5):
+            venceu = True
+        elif 5 in jogadores.keys():
+            venceu = len(jogador.territorios) >= 24 and len(jogadores[5].territorios) == 0
         else:
-            return len(jogador.territorios) >= 24
-
-        return False
-
+            venceu = len(jogador.territorios) >= 24
+            
+        return venceu
 # Destruir o exercitos azul. Se voce for o exercito azul, entao voce
 # deve conquistar 24 territorios a sua escolha.
 class Objetivo02(Objetivo):
