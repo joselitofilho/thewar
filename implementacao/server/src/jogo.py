@@ -13,7 +13,7 @@ from carta import *
 from objetivos import * 
 
 class Jogo(object):
-    def __init__(self, nome, clientes, jogadores, gerenciador = None):
+    def __init__(self, nome, jogadores, clientes = None, gerenciador = None):
         logging.basicConfig(filename='log/jogo_'+nome+'.log', level=logging.DEBUG)
         random.seed()
 
@@ -322,8 +322,8 @@ class Jogo(object):
             if turno.quantidadeDeTropas == 0:
                 try:
                     turno.gruposTerritorio.pop(0)
-                except:
-                    logging.exception("Nao tem grupo territorio para remover.")
+                except Exception:
+                    logging.debug("Nao tem grupo territorio para remover.")
 
                 jogador = self.jogadores[self.posicaoJogadorDaVez]
 
@@ -720,8 +720,8 @@ class Jogo(object):
         jogador = self.jogadores[posicaoJogador]
         socket = self.clientes[posicaoJogador]
         
-        logging.debug("Troca de cartas territorio: ".join(cartasTerritorio))
-
+        logging.debug("Troca de cartas territorio: " + ", ".join(cartasTerritorio))
+        
         if turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
             jogador.usuario == usuario and \
             len(cartasTerritorio) == 3:
@@ -742,8 +742,12 @@ class Jogo(object):
                 #   - 3 formas iguais
                 #   - 3 formas diferentes
                 
+                print 
+                
                 podeTrocar = False
-                if CartasTerritorio.Coringa in cartasParaTroca:
+                if cartasParaTroca[0].codigoTerritorio == CartasTerritorio.Coringa or \
+                    cartasParaTroca[1].codigoTerritorio == CartasTerritorio.Coringa or \
+                    cartasParaTroca[2].codigoTerritorio == CartasTerritorio.Coringa:
                     podeTrocar = True
                 elif cartasParaTroca[0].forma == cartasParaTroca[1].forma == cartasParaTroca[2].forma:
                     podeTrocar = True
@@ -770,6 +774,8 @@ class Jogo(object):
                     self.enviaMsgParaCliente(TipoMensagem.cartas_territorio, jogador.cartasTerritorio, self.clientes[self.posicaoJogadorDaVez])
                 else:
                     self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                    
+        return turno.trocouCartas
 
     def jogarDado(self):
         dado = [1,2,3,4,5,6]
@@ -901,17 +907,23 @@ class Jogo(object):
         self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo, MsgChatJogo(usuario, texto))
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
-        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        logging.debug("JSON: " + jsonMsg)
-        cliente.sendMessage(jsonMsg)
+        try:
+            jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+            logging.debug("JSON: " + jsonMsg)
+            cliente.sendMessage(jsonMsg)
+        except Exception:
+            logging.exception("Nao foi possivel enviar a mensagem para o cliente - JSON: " + jsonMsg)
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
-        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        for socket in self.clientes.values():
-            socket.sendMessage(jsonMsg)
-        for socket in self.olheiros.values():
-            socket.sendMessage(jsonMsg)
-        logging.debug("JSON: " + jsonMsg)
+        try:
+            jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+            for socket in self.clientes.values():
+                socket.sendMessage(jsonMsg)
+            for socket in self.olheiros.values():
+                socket.sendMessage(jsonMsg)
+            logging.debug("JSON: " + jsonMsg)
+        except Exception:
+            logging.exception("Nao foi possivel enviar a mensagem para todos os clientes - JSON: " + jsonMsg)
 
     def fecha(self):
         self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))

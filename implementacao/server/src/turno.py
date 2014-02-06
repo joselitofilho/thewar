@@ -14,6 +14,8 @@ class Turno(object):
         self.gruposTerritorio = []
 
         self.reiniciaVariaveisExtras()
+        
+        self.trocouCartas = False
 
         self.loopTimeout = None
    

@@ -8,6 +8,7 @@ from Objetivo03Teste import Objetivo03Teste
 from Objetivo04Teste import Objetivo04Teste
 from Objetivo05Teste import Objetivo05Teste
 from Objetivo06Teste import Objetivo06Teste
+from JogoTeste import JogoTeste 
 from SalaTeste import SalaTeste 
 
 if __name__ == '__main__':
@@ -20,5 +21,6 @@ if __name__ == '__main__':
     suite.addTest(unittest.makeSuite(Objetivo05Teste))
     suite.addTest(unittest.makeSuite(Objetivo06Teste))
     suite.addTest(unittest.makeSuite(SalaTeste))
+    suite.addTest(unittest.makeSuite(JogoTeste))
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)
