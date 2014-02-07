@@ -1,11 +1,11 @@
 section {
-    position: relative;
+    position: absolute;
     width: 133px;
     height: 22px;
     background: url('../imagens/audioPlayer/bg.jpg') repeat top left;
     border-radius: 5px 0 0 5px;
-    top: 463px;
-    left: 891px;
+    top: 0;
+    left: 1024px;
     padding-top: 4px;
     z-index: 999;
 }

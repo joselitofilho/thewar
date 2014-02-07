@@ -214,50 +214,6 @@
                     </div>
                     <div id="tempo_restante"></div>
                 </div>
-
-                <div id="controles">
-                    <div id="chat_do_jogo">
-                        <textarea id="ct_mensagens" class="form-control" readonly></textarea>
-                        <input id="ct_texto" type="text" 
-                            class="form-control" 
-                            placeholder="Digite sua mensagem aqui."
-                            onkeypress="return ct_texto_onkeypress(event);" />
-                        <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
-                    </div>
-
-                    <div id="acoes_botoes">
-                        <ul>
-                            <li>
-                                <button class="btn btn-default" onclick="atacar();">
-                                    <img width="40" src="imagens/tanque.png" alt="Atacar" />
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                                    <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default" onclick="_painelObjetivo.abre();">
-                                    <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                     
-                    <div id="dados">
-                        <div id="dadosAtaque">
-                            <div id="da1" class="dado dado_ataque"></div>
-                            <div id="da2" class="dado dado_ataque"></div>
-                            <div id="da3" class="dado dado_ataque"></div>
-                        </div>
-                        <div id="dadosDefesa">
-                            <div id="dd1" class="dado dado_defesa"></div>
-                            <div id="dd2" class="dado dado_defesa"></div>
-                            <div id="dd3" class="dado dado_defesa"></div>
-                        </div>
-                    </div>
-                </div><!-- div: controles -->
                 
                 <div id="slider-mover-tropas">
                     <div class="controle">
@@ -282,10 +238,53 @@
                 </div>
                 
                 <div id="jogo_sair" onclick="jogo_sair();"></div>
-            </div>
+            </div> <!-- div: jogo -->
+            
+            <div id="controles">
+                <div id="chat_do_jogo">
+                    <textarea id="ct_mensagens" class="form-control" readonly></textarea>
+                    <input id="ct_texto" type="text" 
+                        class="form-control" 
+                        placeholder="Digite sua mensagem aqui."
+                        onkeypress="return ct_texto_onkeypress(event);" />
+                </div>
+
+                <div id="acoes_botoes">
+                    <ul>
+                        <li>
+                            <button class="btn btn-default" onclick="atacar();">
+                                <img width="40" src="imagens/tanque.png" alt="Atacar" />
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                                <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-default" onclick="_painelObjetivo.abre();">
+                                <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                 
+                <div id="dados">
+                    <div id="dadosAtaque">
+                        <div id="da1" class="dado dado_ataque"></div>
+                        <div id="da2" class="dado dado_ataque"></div>
+                        <div id="da3" class="dado dado_ataque"></div>
+                    </div>
+                    <div id="dadosDefesa">
+                        <div id="dd1" class="dado dado_defesa"></div>
+                        <div id="dd2" class="dado dado_defesa"></div>
+                        <div id="dd3" class="dado dado_defesa"></div>
+                    </div>
+                </div>
+            </div><!-- div: controles -->
 
             <div id="ganhou_carta"></div>
-        </div> <!-- div: jogo -->
+        </div> <!-- div: geral -->
 
         <div id="bloqueador_tela"></div>
         <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>

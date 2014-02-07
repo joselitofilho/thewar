@@ -66,11 +66,7 @@ html, body {
 }
 
 #geral {
-    min-height:100%;
     position:absolute;
-    max-width: 1024px;
-    left: 50%;
-    margin-left: -512px;
     visibility: hidden;
 }
 

@@ -7,7 +7,7 @@ function iniciarApp() {
 
     var divMapa = document.getElementById("mapa");
     mapa = new jogowar.mapa.Mapa();
-    mapa.inicia(divMapa, 10.0, 10.0, 2);
+    mapa.inicia(divMapa, 40.0, 10.0, 2);
     //this.tocarSomDeFundo(divMapa);
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);

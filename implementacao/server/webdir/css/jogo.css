@@ -97,16 +97,16 @@
 
 #barra_tempo {
     position: absolute;
-    top: 463px;
-    left: 471px;
-    width: 290px;
+    top: 600px;
+    left: 337px;
+    width: 350px;
     color: #FFF;
     z-index: 999;
 }
 
 .barra_de_progresso {
     float: left;
-    width: 240px;
+    width: 300px;
     height: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -124,8 +124,8 @@
 
 #controles {
     position: absolute;
-    top: 485px;
-    right: 0;
+    top: 22px;
+    left: 1024px;
     background: url('../imagens/muro.jpg');
     cursor: pointer;
     z-index: 999;
@@ -215,8 +215,8 @@
 #chat_do_jogo textarea {
     display: block;
     resize: none;
-    width: 400px;
-    height: 120px;
+    width: 356px;
+    height: 426px;
     border: 0;
     background-color: #FFF;
     cursor: text;
@@ -225,7 +225,7 @@
 
 #chat_do_jogo input {
     display: inline;
-    width: 329px;
+    width: 356px;
     cursor: text;
 }
 
