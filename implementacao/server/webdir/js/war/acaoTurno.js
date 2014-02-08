@@ -59,6 +59,8 @@ jogos.war.ComponenteAcaoTurno = function() {
     
     this.turnoAtacarEscolheuAlvo = function(nomeDoTerritorio, posicaoJogador, quantidade) {
         if (this.ehOJogadorDaVez) {
+            this.turnoAtacarLimparAtacante();
+            $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-geral');
             $('#acoes_turno .info #conteudoDinamico #meio').html('Selecione os territórios que vão atacar '+nomeDoTerritorio+'.');
         }
         
@@ -132,6 +134,13 @@ jogos.war.ComponenteAcaoTurno = function() {
                 $('#acoes_turno .info #conteudoDinamico #atacante').attr('class', 'terr-amarelo');
                 break;
         }
+    };
+    
+    this.turnoAtacarLimparAtacante = function() {
+        this.quantidadeDeTropasAtacante = {};
+
+        this.atualizaNomeDosTerritoriosAtacante();
+        this.atualizaQuantidadeDeTropasAtacante();
     };
     
     this.turnoAtacarRemoveAtacante = function(posicaoJogador, 
@@ -215,8 +224,9 @@ jogos.war.ComponenteAcaoTurno = function() {
         }
     };
     
-    this.turnoAtacarConquistouTerritorio = function(usuario, seFoiVoceQueConquistou, territorioConquistado) {
+    this.turnoAtacarConquistouTerritorio = function(usuario, foiVoceQueConquistou, territorioConquistado) {
         $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-geral');
+        $('#acoes_turno .info #conteudoDinamico #meio').empty();
         if (foiVoceQueConquistou) {
             $('#acoes_turno .info #conteudoDinamico #meio').html('Você conquistou o território ' + territorioConquistado + '.');
         } else {
