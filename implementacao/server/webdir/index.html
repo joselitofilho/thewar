@@ -202,6 +202,14 @@
                     <audio id="audioPlayer" autoplay></audio>
                 </section>
 
+                <div id="acoes_turno">
+                    <div class="info">
+                        <div id="btnAcao1" class="sprite-btn-acoes sprite-btn-acoes-turno-atacar"></div>
+                        <div id="btnAcao2" class="sprite-btn-acoes sprite-btn-acoes-turno-prosseguir"></div>
+                    </div>
+                    <div class="timeline"></div>
+                </div>
+
                 <div id="info_turno">
                     <div id="it_titulo">Distribuir tropas</div>
                     <div id="it_sub_titulo">Globais</div>
@@ -231,10 +239,6 @@
                         <div class="btn-cancelar" onclick="jogo_cancelaMoverTropas();"></div>
                         <div class="btn-mover" onclick="jogo_moveTropas();"></div>
                     </div>
-                </div>
-                
-                <div id="btnFinalizarTurno" onclick="finalizarTurno();">
-                    <div>Feito</div>
                 </div>
                 
                 <div id="jogo_sair" onclick="jogo_sair();"></div>

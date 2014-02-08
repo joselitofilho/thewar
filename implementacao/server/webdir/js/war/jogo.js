@@ -663,6 +663,18 @@ function jogo_cancelaMoverTropas() {
     _sliderMoverTropas.fechar();
 }
 
+$('#acoes_turno .sprite-btn-acoes-turno-atacar').click(function(){
+    atacar();
+});
+
+$('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
+    appwar_abrePainelCartasTerritorios();
+});
+
+$('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function(){
+    finalizarTurno();
+});
+
 function jogo_sair() {
     msg = comunicacao_sairDaSala();
     _libwebsocket.enviarObjJson(msg);
