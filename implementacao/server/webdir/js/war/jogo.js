@@ -487,13 +487,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
             msgParams.quantidadeDeTropas, 
             strGrupoTerritorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.trocar_cartas) {
-        $('#info_turno').attr('class', '');
-        $('#info_turno').addClass('info_turno_trocar' + posicaoJogador);
-        if (msgParams.obrigatorio)
-            $('#acoes_turno .info #titulo').html('Troca obrigatória');
-        else
-            $('#acoes_turno .info #titulo').html('Trocar?');
-            
+        // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoTrocarCartas(ehOJogadorDaVez, 
             posicaoJogador, msgParams.obrigatorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
