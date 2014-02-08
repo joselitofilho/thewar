@@ -252,11 +252,6 @@ function appwar_fechaPainelCartasTerritorios() {
     $('#pct_fundo').css('visibility', 'hidden');
 }
 
-function appwar_alteraQuantidadeDeTropas(valor) {
-    $('#quantidade_de_tropas').html(valor);
-    $('#acoes_turno .info #extra').html("+" + valor);
-}
-
 function selecionarCartaTerritorio(num) {
     var nomeDoElemento = '#cartaTerritorio' + num;
     var classesDoElemento = $(nomeDoElemento).attr('class').split(' ');
@@ -364,6 +359,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
                 _territorioAlvoAtaque = null;
                 _territoriosAtacante = [];
+                // TODO: Nome do jogador.
+                _componenteAcaoTurno.preparaAtacar(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
             }
             else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();
@@ -371,18 +368,27 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
                 _territoriosAtacante = [];
                 this.tocarSom(this, 'alvo.mp3');
+                var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
+                _componenteAcaoTurno.preparaAtacarEscolheuAlvo(nomeDoTerritorio, indiceCor,
+                    _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio));
             }
             else if (_territorioAlvoAtaque != null) {
-                if (_territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1 &&
+                var quantidadeDeTropasNoTerritorio = _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio);
+                if (quantidadeDeTropasNoTerritorio > 1 &&
                     _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoAtaque)) {
                     var indiceTerritorio = _territoriosAtacante.indexOf(nomeDoTerritorio);
                     if (indiceTerritorio == -1) {
                         this.tocarSom(this, 'simSenhor_' + (Math.floor(Math.random()*4)+1) + '.wav');
                         _territoriosAtacante.push(nomeDoTerritorio);
                         _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
+                        _componenteAcaoTurno.preparaAtacarAdicionaAtacante(_posicaoJogador, 
+                            nomeDoTerritorio, 
+                            quantidadeDeTropasNoTerritorio);
                     } else {
                         _territoriosAtacante.splice(indiceTerritorio, 1);
                         _territorios.diminuiBrilhoTerritorio(nomeDoTerritorio);
+                        _componenteAcaoTurno.preparaAtacarRemoveAtacante(_posicaoJogador,
+                            nomeDoTerritorio);
                     }
                 }
             }

@@ -279,7 +279,7 @@ function processarMsg_colocar_tropa(msgParams) {
     _territorios.piscar(msgParams.territorio.codigo);
     _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
     
-    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropasRestante);
+    _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropasRestante);
     
     if ((msgParams.quantidadeDeTropasRestante == 0) && 
         (msgParams.jogador == _usuario)) {
@@ -418,7 +418,7 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
     
-    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
+    _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
     _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador);
@@ -429,7 +429,7 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
     
-    appwar_alteraQuantidadeDeTropas(msgParams.quantidadeDeTropas);
+    _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
     _territorios.manterFocoNoGrupo(msgParams.grupoTerritorio);
@@ -445,7 +445,7 @@ function processarMsg_turno_trocar_cartas(msgParams) {
 
 function processarMsg_turno_atacar(msgParams) {
     this.tocarSom(this, 'atacar.wav');
-    appwar_alteraQuantidadeDeTropas(0);
+    _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(0);
 
     _territorioConquistado = null;
     _territorios.pintarGruposTerritorios();

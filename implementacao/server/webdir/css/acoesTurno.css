@@ -1,6 +1,6 @@
 #acoes_turno {
     position: absolute;
-    top: 10px;
+    top: 0px;
     left: 297px;
     z-index: 999;
 }
@@ -32,8 +32,8 @@
 
 #acoes_turno .info #orientacao {
     position: absolute;
-    top: 36px;
-    left: 90px;
+    top: 42px;
+    left: 88px;
     width: 258px;
     text-align: center;
     color: #FFD1AC;
@@ -51,6 +51,73 @@
     font-weight: bold;
     font-size: 28px;
 }
+
+/*Atacar*/
+#acoes_turno .info #alvo {
+    position: absolute;
+    top: 70px;
+    left: 350px;
+    width: 70px;
+    height: 55px;
+    text-align: center;
+}
+
+#acoes_turno .info #alvo .nome {
+    position: relative; 
+    top: -35px;
+    text-align: center;
+    color: #2E2014;
+    font-weight: bold;
+    width: 73px;
+}
+
+#acoes_turno .info #alvo .quantidade {
+    position: absolute;
+    top: 15px;
+    left: 22px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #2E2014;
+    width: 35px;
+}
+
+#acoes_turno .info #atacante {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    width: 70px;
+    height: 55px;
+    text-align: center;
+    color: #332417
+}
+
+#acoes_turno .info #atacante .nome {
+    position: relative; 
+    top: -35px;
+    text-align: center;
+    color: #2E2014;
+    font-weight: bold;
+    width: 83px;
+}
+
+#acoes_turno .info #atacante .quantidade {
+    position: absolute;
+    top: 15px;
+    left: 22px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #2E2014;
+    width: 35px;
+}
+
+#acoes_turno .info .terr-vermelho {background: url('../imagens/acoesTurno/territorio-vermelho.png') no-repeat;}
+#acoes_turno .info .terr-azul {background: url('../imagens/acoesTurno/territorio-azul.png') no-repeat;}
+#acoes_turno .info .terr-verde {background: url('../imagens/acoesTurno/territorio-verde.png') no-repeat;}
+#acoes_turno .info .terr-preto {background: url('../imagens/acoesTurno/territorio-preto.png') no-repeat;}
+#acoes_turno .info .terr-branco {background: url('../imagens/acoesTurno/territorio-branco.png') no-repeat;}
+#acoes_turno .info .terr-amarelo {background: url('../imagens/acoesTurno/territorio-amarelo.png') no-repeat;}
 
 #acoes_turno .info #btnAcao1 {
     position: absolute;
@@ -76,4 +143,4 @@
 .sprite-btn-acoes-turno-prosseguir:hover{ background-position: 0 -504px; width: 86px; height: 34px; } 
 .sprite-btn-acoes-turno-prosseguir{ background-position: 0 -588px; width: 86px; height: 34px; } 
 .sprite-btn-acoes-turno-ver-cartas:hover{ background-position: 0 -672px; width: 94px; height: 44px; } 
-.sprite-btn-acoes-turno-ver-cartas{ background-position: 0 -766px; width: 94px; height: 44px; } 
+.sprite-btn-acoes-turno-ver-cartas{ background-position: 0 -766px; width: 94px; height: 44px; }
