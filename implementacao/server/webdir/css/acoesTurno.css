@@ -113,6 +113,7 @@
     font-size: 18px;
     color: #2E2014;
     width: 35px;
+    visibility: hidden;
 }
 
 #acoes_turno .info #atacante {
@@ -143,6 +144,7 @@
     font-size: 18px;
     color: #2E2014;
     width: 35px;
+    visibility: hidden;
 }
 
 #acoes_turno .info .terr-vermelho {background: url('../imagens/acoesTurno/territorio-vermelho.png') no-repeat;}

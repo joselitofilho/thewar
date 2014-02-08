@@ -75,6 +75,10 @@ function jogo_iniciaAnimacaoBatalha(msgParams) {
 
     var territorioDaDefesa = msgParams.territorioDaDefesa;
     var territoriosDoAtaque = msgParams.territoriosDoAtaque;
+    
+    _componenteAcaoTurno.turnoAtacarExibeTerritoriosEnvolvidosNoAtaque(territoriosDoAtaque, territorioDaDefesa,
+        msgParams.jogadorAtaque, msgParams.jogadorDefesa);
+    
     var codigoTerritorios = [territorioDaDefesa.codigo];
     for (i = 0; i < territoriosDoAtaque.length; i++) {
         codigoTerritorios.push(territoriosDoAtaque[i].codigo);
@@ -144,6 +148,8 @@ function jogo_efetuaAtaque(msgParams) {
         }, 1000);
     }
     
+    _componenteAcaoTurno.turnoAtacarExibeResultadoDosDados(dadosAtaque, dadosDefesa);
+    
     // Computando ações após conquista de territorio. 
     if (msgParams.conquistouTerritorio) {
         _chatJogo.conquistouTerritorio(
@@ -151,6 +157,13 @@ function jogo_efetuaAtaque(msgParams) {
             msgParams.territorioDaDefesa.codigo);
     
         this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random()*6)+1) + '.wav');
+        
+        setTimeout(function(){
+            _componenteAcaoTurno.turnoAtacarConquistouTerritorio(
+            msgParams.jogadorAtaque.usuario,
+            msgParams.jogadorAtaque.usuario == _usuario,
+            msgParams.territorioDaDefesa.codigo);
+        }, 1000);
 
         _territorioAlvoAtaque = null;
         _territorios.alteraDonoTerritorio(territorioDaDefesa.codigo, msgParams.jogadorAtaque.posicao);
@@ -174,9 +187,6 @@ function jogo_efetuaAtaque(msgParams) {
     }
     
     _jaPodeAtacar = true;
-    
-    _componenteAcaoTurno.turnoAtacarResultadoAtaque(territoriosDoAtaque, territorioDaDefesa,
-        dadosAtaque, dadosDefesa, msgParams.jogadorAtaque, msgParams.jogadorDefesa);
 }
 
 function processarMsg_jogo_fase_I(msgParams) {

@@ -143,13 +143,25 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.atualizaQuantidadeDeTropasAtacante();
     };
     
-    this.turnoAtacarResultadoAtaque = function(territoriosDoAtaque, territorioDaDefesa, 
-        dadosAtaque, dadosDefesa, jogadorAtaque, jogadorDefesa) {
-        
-        this.turnoAtacarExibirDados();
-        
+    this.turnoAtacarExibeTerritoriosEnvolvidosNoAtaque = function(
+        territoriosDoAtaque, territorioDaDefesa, jogadorAtaque, jogadorDefesa) {
         this.turnoAtacarAlteraTerritorioAlvo(jogadorDefesa.posicao);
         this.turnoAtacarAlteraTerritorioAtacante(jogadorAtaque.posicao);
+        
+        // Atualizando quantidade de territórios.
+        this.quantidadeDeTropasAtacante = {}
+        for (i = 0; i < territoriosDoAtaque.length; i++) {
+            this.quantidadeDeTropasAtacante[territoriosDoAtaque[i].codigo] = territoriosDoAtaque[i].quantidadeDeTropas;
+        }
+        this.atualizaNomeDosTerritoriosAtacante();
+        this.atualizaQuantidadeDeTropasAtacante();
+        
+        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(territorioDaDefesa.codigo);
+        $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(territorioDaDefesa.quantidadeDeTropas);
+    }; 
+    
+    this.turnoAtacarExibeResultadoDosDados = function(dadosAtaque, dadosDefesa) {
+        this.turnoAtacarExibirDados();
         
         // Usabilidade: Dados do ataque.
         var qtdDadosAtaqueVenceu = 0;
@@ -177,17 +189,6 @@ jogos.war.ComponenteAcaoTurno = function() {
                 $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
         }
         
-        // Atualizando quantidade de territórios.
-        this.quantidadeDeTropasAtacante = {}
-        for (i = 0; i < territoriosDoAtaque.length; i++) {
-            this.quantidadeDeTropasAtacante[territoriosDoAtaque[i].codigo] = territoriosDoAtaque[i].quantidadeDeTropas;
-        }
-        this.atualizaQuantidadeDeTropasAtacante();
-        this.atualizaNomeDosTerritoriosAtacante();
-        
-        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(territorioDaDefesa.codigo);
-        $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(territorioDaDefesa.quantidadeDeTropas);
-        
         // Usabilidade: Resultado dos dados.
         if (qtdDadosAtaqueVenceu >= 1) tocarSom(this, 'ganhouNosDados.mp3');
         else tocarSom(this, 'perdeuNosDados.mp3');
@@ -211,6 +212,15 @@ jogos.war.ComponenteAcaoTurno = function() {
                     '</div>' +
                 '</div>';
             $('#acoes_turno .info #conteudoDinamico #meio').html(divDados);
+        }
+    };
+    
+    this.turnoAtacarConquistouTerritorio = function(usuario, seFoiVoceQueConquistou, territorioConquistado) {
+        $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-geral');
+        if (foiVoceQueConquistou) {
+            $('#acoes_turno .info #conteudoDinamico #meio').html('Você conquistou o território ' + territorioConquistado + '.');
+        } else {
+            $('#acoes_turno .info #conteudoDinamico #meio').html(usuario + ' conquistou o território ' + territorioConquistado + '.');
         }
     };
     
