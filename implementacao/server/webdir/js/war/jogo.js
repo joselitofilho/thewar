@@ -478,15 +478,60 @@ function jogo_processaMsg_msg_chat_jogo(msgParams) {
 }
 
 /* Informações dos turnos */
+function jogo_alteraBotoesDaAcao(posicaoJogadorDaVez, tipoAcao) {
+    $('#btnAcao1').attr('class', '');
+    $('#btnAcao2').attr('class', '');
+
+    if (_posicaoJogador == posicaoJogadorDaVez) {
+        if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+            $('#btnAcao1').attr('class', '');
+            $('#btnAcao2').attr('class', '');
+        } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+            $('#btnAcao1').attr('class', '');
+            $('#btnAcao2').attr('class', '');
+        } else if (tipoAcao == TipoAcaoTurno.trocar_cartas) {
+            $('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-ver-cartas');
+            $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
+        } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+            $('#btnAcao1').attr('class', '');
+            $('#btnAcao2').attr('class', '');
+        } else if (tipoAcao == TipoAcaoTurno.atacar) {
+            $('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-atacar');
+            $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
+        } else if (tipoAcao == TipoAcaoTurno.mover) {
+            $('#btnAcao1').attr('class', '');
+            $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
+        }
+    }
+    
+    $('#acoes_turno .sprite-btn-acoes-turno-atacar').unbind('click');
+    $('#acoes_turno .sprite-btn-acoes-turno-atacar').click(function(){
+        if (_posicaoJogador == posicaoJogadorDaVez) atacar();
+    });
+
+    $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
+    $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
+        if (_posicaoJogador == posicaoJogadorDaVez) appwar_abrePainelCartasTerritorios();
+    });
+
+    $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
+    $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function(){
+        if (_posicaoJogador == posicaoJogadorDaVez) finalizarTurno();
+    });
+}
+
 function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     $('#it_sub_titulo').css('visibility', 'hidden');
     $('#it_info').css('visibility', 'hidden');
 
     var posicaoJogador = Number(msgParams.vezDoJogador) + 1;
+    
+    jogo_alteraBotoesDaAcao(msgParams.vezDoJogador, msgParams.tipoAcao);
+    
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);
-        $('#it_titulo').html('Distribuir tropas');
+        $('#acoes_turno .info #titulo').html('Distribuir tropas');
         $('#it_sub_titulo').html('Globais');
         $('#it_info').html(msgParams.quantidadeDeTropas);
         $('#it_sub_titulo').css('visibility', 'visible');
@@ -494,7 +539,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);
-        $('#it_titulo').html('Distribuir tropas');
+        $('#acoes_turno .info #titulo').html('Distribuir tropas');
         
         var strGrupoTerritorio = msgParams.grupoTerritorio;
         if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
@@ -508,13 +553,13 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_trocar' + posicaoJogador);
         if (msgParams.obrigatorio)
-            $('#it_titulo').html('Troca obrigatória');
+            $('#acoes_turno .info #titulo').html('Troca obrigatória');
         else
-            $('#it_titulo').html('Trocar?');
+            $('#acoes_turno .info #titulo').html('Trocar?');
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);
-        $('#it_titulo').html('Distribuir tropas');
+        $('#acoes_turno .info #titulo').html('Distribuir tropas');
         $('#it_sub_titulo').html('Globais');
         $('#it_info').html(msgParams.quantidadeDeTropas);
         $('#it_sub_titulo').css('visibility', 'visible');
@@ -522,11 +567,11 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_atacar' + posicaoJogador);
-        $('#it_titulo').html('Atacar');
+        $('#acoes_turno .info #titulo').html('Atacar');
     } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_mover' + posicaoJogador);
-        $('#it_titulo').html('Mover');
+        $('#acoes_turno .info #titulo').html('Mover');
     }
 }
 
@@ -662,18 +707,6 @@ function jogo_cancelaMoverTropas() {
     }
     _sliderMoverTropas.fechar();
 }
-
-$('#acoes_turno .sprite-btn-acoes-turno-atacar').click(function(){
-    atacar();
-});
-
-$('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
-    appwar_abrePainelCartasTerritorios();
-});
-
-$('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function(){
-    finalizarTurno();
-});
 
 function jogo_sair() {
     msg = comunicacao_sairDaSala();

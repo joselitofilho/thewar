@@ -16,6 +16,16 @@
     background: url('../imagens/acoesTurno/bg.png') no-repeat;
 }
 
+#acoes_turno .info #titulo {
+    position: absolute;
+    top: 0;
+    left: 152px;
+    width: 130px;
+    text-align: center;
+    color: #E5B998;
+    font-weight: bold;
+}
+
 #acoes_turno .info #btnAcao1 {
     position: absolute;
     top: 38px;
