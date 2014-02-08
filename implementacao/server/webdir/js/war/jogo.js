@@ -478,17 +478,14 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoDistribuirTopasGlobais(ehOJogadorDaVez, posicaoJogador, msgParams.quantidadeDeTropas);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
-        $('#info_turno').attr('class', '');
-        $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);
-        $('#acoes_turno .info #titulo').html('Distribuir tropas');
         var strGrupoTerritorio = msgParams.grupoTerritorio;
         if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
         else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
-        $('#it_sub_titulo').html(strGrupoTerritorio);
         
-        $('#it_sub_titulo').css('visibility', 'visible');
-        $('#acoes_turno .info #extra').html("+" + msgParams.quantidadeDeTropas);
-        $('#acoes_turno .info #extra').css('visibility', 'visible');
+        _componenteAcaoTurno.turnoDistribuirTopasContinente(ehOJogadorDaVez, 
+            posicaoJogador, 
+            msgParams.quantidadeDeTropas, 
+            strGrupoTerritorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.trocar_cartas) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_trocar' + posicaoJogador);
@@ -496,6 +493,9 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
             $('#acoes_turno .info #titulo').html('Troca obrigatória');
         else
             $('#acoes_turno .info #titulo').html('Trocar?');
+            
+        _componenteAcaoTurno.turnoTrocarCartas(ehOJogadorDaVez, 
+            posicaoJogador, msgParams.obrigatorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);

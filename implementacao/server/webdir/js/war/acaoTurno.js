@@ -6,7 +6,6 @@ jogos.war.ComponenteAcaoTurno = function() {
     var jogadorDaVez = '';
     
     var quantidadeDeTropasAtacante = {};
-    
 
     this.turnoDistribuirTopasGlobais = function(ehOJogadorDaVez, jogadorDaVez, quantidadeDeTropas) {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
@@ -27,8 +26,57 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.alteraQuantidadeDistribuirTropas(quantidadeDeTropas);
     };
     
+    this.turnoDistribuirTopasContinente = function(ehOJogadorDaVez, jogadorDaVez, quantidadeDeTropas, grupo) {
+        this.ehOJogadorDaVez = ehOJogadorDaVez;
+        this.jogadorDaVez = jogadorDaVez;
+        $('#acoes_turno .info #titulo').html('Distribuir tropas');
+        
+        var conteudo = '<div class="img img-tropas"></div>';
+        if (this.ehOJogadorDaVez) {
+            conteudo += '<div id="meio" class="meio-geral">Distribua os exércitos em seus territorios na '+grupo+'.</div>';
+        } else {
+            conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está distribuindo suas tropas na '+grupo+'.</div>';
+        }
+        conteudo += '<div id="extra"></div>';
+        
+        $('#acoes_turno .info #conteudoDinamico').html('');
+        $('#acoes_turno .info #conteudoDinamico').html(conteudo);
+        
+        this.alteraQuantidadeDistribuirTropas(quantidadeDeTropas);
+    };
+    
     this.alteraQuantidadeDistribuirTropas = function(quantidadeDeTropas) {
         $('#acoes_turno .info #extra').html("+" + quantidadeDeTropas);
+    };
+    
+    this.turnoTrocarCartas = function(ehOJogadorDaVez, jogadorDaVez, obrigatorio) {
+        this.ehOJogadorDaVez = ehOJogadorDaVez;
+        this.jogadorDaVez = jogadorDaVez;
+        if (obrigatorio) {
+            $('#acoes_turno .info #titulo').html('Obrigatório trocar');
+        } else {
+            $('#acoes_turno .info #titulo').html('Trocar?');
+        }
+        
+        var conteudo = '';
+        if (this.ehOJogadorDaVez) {
+            if (obrigatorio) {
+                conteudo += '<div id="meio" class="meio-geral">Você está com 5 cartas. É obrigatório fazer uma troca.</div>';
+            } else {
+                conteudo += '<div id="meio" class="meio-geral">Faça troca de suas cartas por exército, se desejar.</div>';
+            }
+        } else {
+            if (obrigatorio) {
+                conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está fazendo uma troca.</div>';
+            } else {
+                conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está verificando se vai fazer uma troca.</div>';
+            }
+        }
+        
+        $('#acoes_turno .info #conteudoDinamico').html('');
+        $('#acoes_turno .info #conteudoDinamico').html(conteudo);
+        
+        this.alteraQuantidadeDistribuirTropas(quantidadeDeTropas);
     };
     
     this.turnoAtacar = function(ehOJogadorDaVez, jogadorDaVez) {
