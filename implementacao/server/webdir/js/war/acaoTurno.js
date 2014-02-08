@@ -8,16 +8,16 @@ jogos.war.ComponenteAcaoTurno = function() {
     var quantidadeDeTropasAtacante = {};
     
 
-    this.preparaDistribuirTopasGlobais = function(ehOJogadorDaVez, jogadorDaVez, quantidadeDeTropas) {
+    this.turnoDistribuirTopasGlobais = function(ehOJogadorDaVez, jogadorDaVez, quantidadeDeTropas) {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
         this.jogadorDaVez = jogadorDaVez;
         $('#acoes_turno .info #titulo').html('Distribuir tropas');
         
         var conteudo = '<div class="img img-tropas"></div>';
         if (this.ehOJogadorDaVez) {
-            conteudo += '<div id="orientacao">Distribua os exércitos em seus territorios.</div>';
+            conteudo += '<div id="meio" class="meio-geral">Distribua os exércitos em seus territorios.</div>';
         } else {
-            conteudo += '<div id="orientacao">'+this.jogadorDaVez+' está distribuindo suas tropas globais.</div>';
+            conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está distribuindo suas tropas globais.</div>';
         }
         conteudo += '<div id="extra"></div>';
         
@@ -31,16 +31,18 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #extra').html("+" + quantidadeDeTropas);
     };
     
-    this.preparaAtacar = function(ehOJogadorDaVez, jogadorDaVez) {
+    this.turnoAtacar = function(ehOJogadorDaVez, jogadorDaVez) {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
         this.jogadorDaVez = jogadorDaVez;
         this.quantidadeDeTropasAtacante = {};
         
+        $('#acoes_turno .info #titulo').html('Atacar');
+        
         var conteudo = "";
         if (this.ehOJogadorDaVez) {
-            conteudo += '<div id="orientacao">Selecione um território para atacar.</div>';
+            conteudo += '<div id="meio" class="meio-geral">Selecione um território para atacar.</div>';
         } else {
-            conteudo += '<div id="orientacao">'+this.jogadorDaVez+' está atacando.</div>';
+            conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está atacando.</div>';
         }
         conteudo += 
             '<div id="alvo">' +
@@ -55,11 +57,18 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #conteudoDinamico').html(conteudo);
     };
     
-    this.preparaAtacarEscolheuAlvo = function(nomeDoTerritorio, posicaoJogador, quantidade) {
+    this.turnoAtacarEscolheuAlvo = function(nomeDoTerritorio, posicaoJogador, quantidade) {
         if (this.ehOJogadorDaVez) {
-            $('#acoes_turno .info #conteudoDinamico #orientacao').html('Selecione os territórios que vão atacar '+nomeDoTerritorio+'.');
+            $('#acoes_turno .info #conteudoDinamico #meio').html('Selecione os territórios que vão atacar '+nomeDoTerritorio+'.');
         }
         
+        this.turnoAtacarAlteraTerritorioAlvo(posicaoJogador);
+        
+        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(nomeDoTerritorio);
+        $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(quantidade);
+    };
+    
+    this.turnoAtacarAlteraTerritorioAlvo = function(posicaoJogador) {
         $('#acoes_turno .info #conteudoDinamico #alvo').attr('class', '');
         switch(posicaoJogador) {
             case 0:
@@ -81,16 +90,27 @@ jogos.war.ComponenteAcaoTurno = function() {
                 $('#acoes_turno .info #conteudoDinamico #alvo').attr('class', 'terr-amarelo');
                 break;
         }
-        
-        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(nomeDoTerritorio);
-        $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(quantidade);
     };
     
-    this.preparaAtacarAdicionaAtacante = function(posicaoJogador, 
+    this.turnoAtacarAdicionaAtacante = function(posicaoJogador, 
         nomeDoTerritorio, quantidade) {
         
         this.quantidadeDeTropasAtacante[nomeDoTerritorio] = quantidade;
         
+        this.turnoAtacarAlteraTerritorioAtacante(posicaoJogador);
+        
+        var nomeDosTerritorios = "";
+        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += i + " ";
+        nomeDosTerritorios = nomeDosTerritorios.trim();
+        if (nomeDosTerritorios.length > 12) {
+            nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
+        }
+        $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
+        
+        this.atualizaQuantidadeDeTropasAtacante();
+    };
+    
+    this.turnoAtacarAlteraTerritorioAtacante = function(posicaoJogador) {
         $('#acoes_turno .info #conteudoDinamico #atacante').attr('class', '');
         switch(posicaoJogador) {
             case 0:
@@ -112,40 +132,85 @@ jogos.war.ComponenteAcaoTurno = function() {
                 $('#acoes_turno .info #conteudoDinamico #atacante').attr('class', 'terr-amarelo');
                 break;
         }
-        
-        var nomeDosTerritorios = "";
-        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += i + " ";
-        nomeDosTerritorios = nomeDosTerritorios.trim();
-        if (nomeDosTerritorios.length > 12) {
-            nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
-        }
-        $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
-        
-        var qtdTotal = 0;
-        for (var i in this.quantidadeDeTropasAtacante) qtdTotal += this.quantidadeDeTropasAtacante[i];
-        $('#acoes_turno .info #conteudoDinamico #atacante .quantidade').html(qtdTotal);
     };
     
-    this.preparaAtacarRemoveAtacante = function(posicaoJogador, 
+    this.turnoAtacarRemoveAtacante = function(posicaoJogador, 
         nomeDoTerritorio) {
         
         delete this.quantidadeDeTropasAtacante[nomeDoTerritorio];
+
+        this.atualizaNomeDosTerritoriosAtacante();
+        this.atualizaQuantidadeDeTropasAtacante();
+    };
+    
+    this.turnoAtacarResultadoAtaque = function(territoriosDoAtaque, territorioDaDefesa, 
+        dadosAtaque, dadosDefesa, jogadorAtaque, jogadorDefesa) {
         
-        var nomeDosTerritorios = "";
-        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += i + " ";
-        nomeDosTerritorios = nomeDosTerritorios.trim();
-        if (nomeDosTerritorios.length > 12) {
-            nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
+        this.turnoAtacarExibirDados();
+        
+        this.turnoAtacarAlteraTerritorioAlvo(jogadorDefesa.posicao);
+        this.turnoAtacarAlteraTerritorioAtacante(jogadorAtaque.posicao);
+        
+        // Usabilidade: Dados do ataque.
+        var qtdDadosAtaqueVenceu = 0;
+        for (i = 0; i < dadosAtaque.length; i++) {
+            if (i < dadosDefesa.length) {
+                if (dadosAtaque[i] <= dadosDefesa[i])
+                    $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
+                else {
+                    ++qtdDadosAtaqueVenceu;
+                    $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
+                }
+            } else
+                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
         }
-        $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
         
-        var qtdTotal = 0;
-        for (var i in this.quantidadeDeTropasAtacante) qtdTotal += this.quantidadeDeTropasAtacante[i];
-        if (qtdTotal == 0) {
-            $('#acoes_turno .info #conteudoDinamico #atacante .quantidade').html('');
-            $('#acoes_turno .info #conteudoDinamico #atacante').attr('class', '');
-        } else {
-            $('#acoes_turno .info #conteudoDinamico #atacante .quantidade').html(qtdTotal);
+        // Usabilidade: Dados da defesa.
+        for (i = 0; i < dadosDefesa.length; i++) {
+            if (i < dadosAtaque.length) {
+                if (dadosDefesa[i] < dadosAtaque[i])
+                    $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
+                else {
+                    $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
+                }
+            } else
+                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
+        }
+        
+        // Atualizando quantidade de territórios.
+        this.quantidadeDeTropasAtacante = {}
+        for (i = 0; i < territoriosDoAtaque.length; i++) {
+            this.quantidadeDeTropasAtacante[territoriosDoAtaque[i].codigo] = territoriosDoAtaque[i].quantidadeDeTropas;
+        }
+        this.atualizaQuantidadeDeTropasAtacante();
+        this.atualizaNomeDosTerritoriosAtacante();
+        
+        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(territorioDaDefesa.codigo);
+        $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(territorioDaDefesa.quantidadeDeTropas);
+        
+        // Usabilidade: Resultado dos dados.
+        if (qtdDadosAtaqueVenceu >= 1) tocarSom(this, 'ganhouNosDados.mp3');
+        else tocarSom(this, 'perdeuNosDados.mp3');
+    };
+    
+    this.turnoAtacarExibirDados = function() {
+        if ($('#acoes_turno .info #conteudoDinamico #meio').attr('class') == 'meio-geral') {
+            $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-dados');
+        
+            var divDados = 
+                '<div id="dados">' +
+                    '<div id="dadosAtaque">' +
+                        '<div id="da1" class="dado dado_ataque"></div>' +
+                        '<div id="da2" class="dado dado_ataque"></div>' +
+                        '<div id="da3" class="dado dado_ataque"></div>' +
+                    '</div>' +
+                    '<div id="dadosDefesa">' +
+                        '<div id="dd1" class="dado dado_defesa"></div>' +
+                        '<div id="dd2" class="dado dado_defesa"></div>' +
+                        '<div id="dd3" class="dado dado_defesa"></div>' +
+                    '</div>' +
+                '</div>';
+            $('#acoes_turno .info #conteudoDinamico #meio').html(divDados);
         }
     };
     
@@ -189,5 +254,26 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function(){
             if (ehOJogadorDaVez) finalizarTurno();
         });
+    };
+    
+    this.atualizaQuantidadeDeTropasAtacante = function() {
+        var qtdTotal = 0;
+        for (var i in this.quantidadeDeTropasAtacante) qtdTotal += this.quantidadeDeTropasAtacante[i];
+        if (qtdTotal == 0) {
+            $('#acoes_turno .info #conteudoDinamico #atacante .quantidade').html('');
+            $('#acoes_turno .info #conteudoDinamico #atacante').attr('class', '');
+        } else {
+            $('#acoes_turno .info #conteudoDinamico #atacante .quantidade').html(qtdTotal);
+        }
+    };
+    
+    this.atualizaNomeDosTerritoriosAtacante = function() {
+        var nomeDosTerritorios = "";
+        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += i + " ";
+        nomeDosTerritorios = nomeDosTerritorios.trim();
+        if (nomeDosTerritorios.length > 12) {
+            nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
+        }
+        $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
     };
 };

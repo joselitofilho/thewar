@@ -360,7 +360,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territorioAlvoAtaque = null;
                 _territoriosAtacante = [];
                 // TODO: Nome do jogador.
-                _componenteAcaoTurno.preparaAtacar(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
+                _componenteAcaoTurno.turnoAtacar(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
             }
             else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();
@@ -369,7 +369,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territoriosAtacante = [];
                 this.tocarSom(this, 'alvo.mp3');
                 var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
-                _componenteAcaoTurno.preparaAtacarEscolheuAlvo(nomeDoTerritorio, indiceCor,
+                _componenteAcaoTurno.turnoAtacarEscolheuAlvo(nomeDoTerritorio, indiceCor,
                     _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio));
             }
             else if (_territorioAlvoAtaque != null) {
@@ -381,13 +381,13 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                         this.tocarSom(this, 'simSenhor_' + (Math.floor(Math.random()*4)+1) + '.wav');
                         _territoriosAtacante.push(nomeDoTerritorio);
                         _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
-                        _componenteAcaoTurno.preparaAtacarAdicionaAtacante(_posicaoJogador, 
+                        _componenteAcaoTurno.turnoAtacarAdicionaAtacante(_posicaoJogador, 
                             nomeDoTerritorio, 
                             quantidadeDeTropasNoTerritorio);
                     } else {
                         _territoriosAtacante.splice(indiceTerritorio, 1);
                         _territorios.diminuiBrilhoTerritorio(nomeDoTerritorio);
-                        _componenteAcaoTurno.preparaAtacarRemoveAtacante(_posicaoJogador,
+                        _componenteAcaoTurno.turnoAtacarRemoveAtacante(_posicaoJogador,
                             nomeDoTerritorio);
                     }
                 }

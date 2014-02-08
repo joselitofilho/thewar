@@ -66,6 +66,8 @@ function jogo_jogaDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
 }
 
 function jogo_iniciaAnimacaoBatalha(msgParams) {
+    _componenteAcaoTurno.turnoAtacarExibirDados();
+    
     this.tocarSom(this, "batalha" + (Math.floor(Math.random()*4)+1) + ".wav");
 
     var dadosAtaque = msgParams.dadosAtaque;
@@ -141,36 +143,6 @@ function jogo_efetuaAtaque(msgParams) {
             territorioClickFunc(_posicaoJogador, territorioDaDefesa.codigo)
         }, 1000);
     }
-
-    // Usabilidade: Dados do ataque.
-    var qtdDadosAtaqueVenceu = 0;
-    for (i = 0; i < dadosAtaque.length; i++) {
-        if (i < dadosDefesa.length) {
-            if (dadosAtaque[i] <= dadosDefesa[i])
-                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
-            else {
-                ++qtdDadosAtaqueVenceu;
-                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
-            }
-        } else
-            $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
-    }
-    
-    // Usabilidade: Dados da defesa.
-    for (i = 0; i < dadosDefesa.length; i++) {
-        if (i < dadosAtaque.length) {
-            if (dadosDefesa[i] < dadosAtaque[i])
-                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
-            else {
-                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
-            }
-        } else
-            $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
-    }
-    
-    // Usabilidade: Resultado dos dados.
-    if (qtdDadosAtaqueVenceu >= 1) this.tocarSom(this, 'ganhouNosDados.mp3');
-    else this.tocarSom(this, 'perdeuNosDados.mp3');
     
     // Computando ações após conquista de territorio. 
     if (msgParams.conquistouTerritorio) {
@@ -202,6 +174,9 @@ function jogo_efetuaAtaque(msgParams) {
     }
     
     _jaPodeAtacar = true;
+    
+    _componenteAcaoTurno.turnoAtacarResultadoAtaque(territoriosDoAtaque, territorioDaDefesa,
+        dadosAtaque, dadosDefesa, msgParams.jogadorAtaque, msgParams.jogadorDefesa);
 }
 
 function processarMsg_jogo_fase_I(msgParams) {
@@ -290,6 +265,7 @@ function processarMsg_colocar_tropa(msgParams) {
 function processarMsg_atacar(msgParams) {
     if (msgParams.jogadorDefesa.usuario == _usuario) {
         this.tocarSom(this, "ohno.mp3");
+        
         var me = this;
         setTimeout(function() {
             me.jogo_iniciaAnimacaoBatalha(msgParams);
@@ -490,7 +466,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         // TODO: Colocar nome do jogador.
-        _componenteAcaoTurno.preparaDistribuirTopasGlobais(ehOJogadorDaVez, posicaoJogador, msgParams.quantidadeDeTropas);
+        _componenteAcaoTurno.turnoDistribuirTopasGlobais(ehOJogadorDaVez, posicaoJogador, msgParams.quantidadeDeTropas);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);
@@ -520,10 +496,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         $('#acoes_turno .info #extra').css('visibility', 'visible');
     } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
         // TODO: Colocar nome do jogador.
-        _componenteAcaoTurno.preparaAtacar(ehOJogadorDaVez, posicaoJogador);
-        $('#info_turno').attr('class', '');
-        $('#info_turno').addClass('info_turno_atacar' + posicaoJogador);
-        $('#acoes_turno .info #titulo').html('Atacar');
+        _componenteAcaoTurno.turnoAtacar(ehOJogadorDaVez, posicaoJogador);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
         $('#info_turno').attr('class', '');
         $('#info_turno').addClass('info_turno_mover' + posicaoJogador);

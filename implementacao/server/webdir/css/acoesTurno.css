@@ -30,7 +30,7 @@
 }
 #acoes_turno .info .img-tropas { background: url('../imagens/acoesTurno/tropas.png') no-repeat; }
 
-#acoes_turno .info #orientacao {
+#acoes_turno .info .meio-geral {
     position: absolute;
     top: 42px;
     left: 88px;
@@ -39,6 +39,39 @@
     color: #FFD1AC;
     font-weight: bold;
     font-size: 20px;
+}
+
+#acoes_turno .info .meio-dados {
+    position: absolute;
+    top: 28px;
+    left: 140px;
+    width: 151px;
+    height: 96px;
+    background: url('../imagens/acoesTurno/area-dados.png') no-repeat;
+}
+
+#dados { 
+    position: relative;
+    left: 9px;
+    top: 5px;
+    width: 151px;
+    height: 96px;
+}
+
+.dado {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url('../imagens/dados.png') no-repeat;
+    margin: 2px 2px;
+}
+
+.dado_ataque {
+    background-position: 0px 0px;
+}
+
+.dado_defesa {
+    background-position: 0px -40px;
 }
 
 #acoes_turno .info #extra {

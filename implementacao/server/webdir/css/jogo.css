@@ -131,29 +131,6 @@
     z-index: 999;
 }
 
-#dados { 
-    position: relative;
-    float: left;
-    margin-left: 4px;
-}
-#dadosAtaque { float: left; }
-#dadosDefesa { float: right; }
-
-.dado {
-    width: 40px;
-    height: 40px;
-    background: url('../imagens/dados.png') no-repeat;
-    margin: 2px 2px;
-}
-
-.dado_ataque {
-    background-position: 0px 0px;
-}
-
-.dado_defesa {
-    background-position: 0px -40px;
-}
-
 #btnFinalizarTurno {
     position: absolute;
     top: 560px;
@@ -231,11 +208,11 @@
 
 #slider-mover-tropas {
     position: absolute;
-    z-index: 999;
     visibility: hidden;
     top: 510px;
     left: 240px;
     cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
+    z-index: 1000;
 }
 
 #ganhou_carta {
