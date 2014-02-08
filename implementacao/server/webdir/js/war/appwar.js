@@ -254,7 +254,7 @@ function appwar_fechaPainelCartasTerritorios() {
 
 function appwar_alteraQuantidadeDeTropas(valor) {
     $('#quantidade_de_tropas').html(valor);
-    $('#it_info').html(valor);
+    $('#acoes_turno .info #extra').html("+" + valor);
 }
 
 function selecionarCartaTerritorio(num) {

@@ -1,0 +1,79 @@
+#acoes_turno {
+    position: absolute;
+    top: 10px;
+    left: 297px;
+    z-index: 999;
+}
+
+#acoes_turno .info {
+    width: 515px;
+    height: 133px;
+    background: url('../imagens/acoesTurno/bg.png') no-repeat;
+}
+
+#acoes_turno .info #titulo {
+    position: absolute;
+    top: 0;
+    left: 152px;
+    width: 130px;
+    text-align: center;
+    color: #E5B998;
+    font-weight: bold;
+}
+
+#acoes_turno .info .img {
+    position: absolute;
+    top: 48px;
+    left: 10px;
+    width: 70px;
+    height: 65px;
+}
+#acoes_turno .info .img-tropas { background: url('../imagens/acoesTurno/tropas.png') no-repeat; }
+
+#acoes_turno .info #orientacao {
+    position: absolute;
+    top: 36px;
+    left: 90px;
+    width: 258px;
+    text-align: center;
+    color: #FFD1AC;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#acoes_turno .info #extra {
+    position: absolute;
+    top: 60px;
+    left: 350px;
+    width: 64px;
+    text-align: center;
+    color: #FFD1AC;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+#acoes_turno .info #btnAcao1 {
+    position: absolute;
+    top: 38px;
+    left: 429px;
+    cursor: pointer;
+}
+
+#acoes_turno .info #btnAcao2 {
+    position: absolute;
+    top: 85px;
+    left: 429px;
+    cursor: pointer;
+}
+
+.sprite-btn-acoes {background: url('../imagens/acoesTurno/sprite-btn-acoes.png') no-repeat;}
+.sprite-btn-acoes-turno-atacar:hover{ background-position: 0 0; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-atacar{ background-position: 0 -84px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-cancelar:hover{ background-position: 0 -168px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-cancelar{ background-position: 0 -252px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-mover:hover{ background-position: 0 -336px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-mover{ background-position: 0 -420px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-prosseguir:hover{ background-position: 0 -504px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-prosseguir{ background-position: 0 -588px; width: 86px; height: 34px; } 
+.sprite-btn-acoes-turno-ver-cartas:hover{ background-position: 0 -672px; width: 94px; height: 44px; } 
+.sprite-btn-acoes-turno-ver-cartas{ background-position: 0 -766px; width: 94px; height: 44px; } 
