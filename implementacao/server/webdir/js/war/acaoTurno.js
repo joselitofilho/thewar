@@ -102,7 +102,7 @@ jogos.war.ComponenteAcaoTurno = function() {
             if (obrigatorio) {
                 conteudo += '<div id="meio" class="meio-geral">Você está com 5 cartas. É obrigatório fazer uma troca.</div>';
             } else {
-                conteudo += '<div id="meio" class="meio-geral">Faça troca de suas cartas por exército, se desejar.</div>';
+                conteudo += '<div id="meio" class="meio-geral">Faça troca de suas cartas por exércitos, se desejar.</div>';
             }
         } else {
             if (obrigatorio) {
@@ -406,6 +406,8 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
             if (ehOJogadorDaVez) {
+                $('#acoes_turno').css('z-index', '9001');
+                me.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
                 me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
                 appwar_abrePainelCartasTerritorios();
             }
@@ -438,9 +440,39 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
     };
     
+    this.alteraFuncaoBtnVerCartasParaTrocar = function(ehOJogadorDaVez) {
+        if (ehOJogadorDaVez) {
+            $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
+            $('#acoes_turno #btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-trocar');
+            $('#acoes_turno .sprite-btn-acoes-turno-trocar').unbind('click');
+            var me = this;
+            $('#acoes_turno .sprite-btn-acoes-turno-trocar').click(function() {
+                if (ehOJogadorDaVez) {
+                    appwar_trocaCartasTerritorios();
+                }
+            });
+        }
+    };
+    
+    this.alteraFuncaoBtnTrocarParaVerCartas = function(ehOJogadorDaVez) {
+        if (ehOJogadorDaVez) {
+            $('#acoes_turno .sprite-btn-acoes-turno-trocar').unbind('click');
+            $('#acoes_turno #btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-ver-cartas');
+            $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
+            var me = this;
+            $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function() {
+                if (ehOJogadorDaVez) {
+                    $('#acoes_turno').css('z-index', '9001');
+                    me.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
+                    me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
+                    appwar_abrePainelCartasTerritorios();
+                }
+            });
+        }
+    };
+    
     this.alteraFuncaoBtnProsseguirParaCancelar = function(ehOJogadorDaVez) {
         if (ehOJogadorDaVez) {
-            $('#acoes_turno').css('z-index', '9001');
             $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
             $('#acoes_turno #btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-cancelar');
             $('#acoes_turno .sprite-btn-acoes-turno-cancelar').unbind('click');
@@ -448,6 +480,7 @@ jogos.war.ComponenteAcaoTurno = function() {
             $('#acoes_turno .sprite-btn-acoes-turno-cancelar').click(function() {
                 if (ehOJogadorDaVez) {
                     me.alteraFuncaoBtnCancelarParaProsseguir(ehOJogadorDaVez);
+                    me.alteraFuncaoBtnTrocarParaVerCartas(ehOJogadorDaVez);
                     appwar_fechaPainelCartasTerritorios();
                 }
             });

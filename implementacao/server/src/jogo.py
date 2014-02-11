@@ -751,7 +751,9 @@ class Jogo(object):
                     podeTrocar = True
                 elif cartasParaTroca[0].forma == cartasParaTroca[1].forma == cartasParaTroca[2].forma:
                     podeTrocar = True
-                elif cartasParaTroca[0].forma != cartasParaTroca[1].forma != cartasParaTroca[2].forma:
+                elif cartasParaTroca[0].forma != cartasParaTroca[1].forma and \
+                     cartasParaTroca[0].forma != cartasParaTroca[2].forma and \
+                     cartasParaTroca[1].forma != cartasParaTroca[2].forma:
                     podeTrocar = True
                 
                 if podeTrocar:

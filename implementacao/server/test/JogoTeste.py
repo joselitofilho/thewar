@@ -203,6 +203,32 @@ class JogoTeste(unittest.TestCase):
         # Verificação.
         self.assertTrue(trocou)
         
+    # Cenário:
+    #   * Dado que está no turno de trocar cartas;
+    #   * Dado que Jogador1 solicita fazer uma troca com as cartas:
+    #     - [Mexico, Mongolia, Omsk]
+    #   * Dado que Jogador1 tem as cartas [Mexico, Mongolia, Omsk].
+    # 
+    # Critério: Não realiza a troca.
+    def test_NaoDeveRealizarTroca_Quando2FormasQuadradoE1FromaTriangulo(self):
+        # Preparação.
+        self.jogo.posicaoJogadorDaVez = 0
+        self.jogo.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+        self.jogo.jogadores[0].cartasTerritorio = [
+            CartaTerritorio(CodigoTerritorio.Mexico, CartaForma.Quadrado, CartaCor.Amarela),
+            CartaTerritorio(CodigoTerritorio.Mongolia, CartaForma.Bola, CartaCor.Azul),
+            CartaTerritorio(CodigoTerritorio.Omsk, CartaForma.Quadrado, CartaCor.Amarela)
+        ]
+        
+        # Operação.
+        trocou = self.jogo.trocaCartasTerritorio("J1",
+        [
+            CodigoTerritorio.Mexico,CodigoTerritorio.Mongolia,CodigoTerritorio.Omsk
+        ])
+        
+        # Verificação.
+        self.assertFalse(trocou)
+        
     def tearDown(self):
         self.jogo.fecha()
 

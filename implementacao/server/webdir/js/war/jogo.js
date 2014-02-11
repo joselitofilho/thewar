@@ -315,6 +315,9 @@ function processarMsg_mover(msgParams) {
 }
 
 function processarMsg_colocar_tropa_na_troca_de_cartas_territorios(msgParams) {
+    // TODO: Levar isso para uma classe.
+    $('#painel_cartas_territorios').css('visibility', 'hidden');
+    $('#pct_fundo').css('visibility', 'hidden');
     var territorios = msgParams.territorios;
     for (i = 0; i < territorios.length; i++) {
         _labelTerritorios[territorios[i].codigo].alteraQuantiadeDeTropas("" + territorios[i].quantidadeDeTropas);
