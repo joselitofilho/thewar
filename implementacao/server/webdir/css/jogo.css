@@ -87,8 +87,9 @@
 
 #menu_jogadores {
     position: absolute;
-    width: 1024px;
+    width: 150px;
     z-index: 999;
+    top: 420px;
 }
 
 #menu_jogadores ul {

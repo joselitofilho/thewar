@@ -21,14 +21,23 @@
     font-weight: bold;
 }
 
-#acoes_turno .info .img {
+#acoes_turno .info .img-tropas {
     position: absolute;
     top: 48px;
     left: 10px;
     width: 70px;
     height: 65px;
+    background: url('../imagens/acoesTurno/tropas.png') no-repeat;
 }
-#acoes_turno .info .img-tropas { background: url('../imagens/acoesTurno/tropas.png') no-repeat; }
+
+#acoes_turno .info .img-trocar {
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    width: 63px;
+    height: 88px;
+    background: url('../imagens/acoesTurno/cartas.png') no-repeat;
+}
 
 #acoes_turno .info .meio-geral {
     position: absolute;

@@ -4,7 +4,7 @@
 
 .pct_content {
     position: absolute;
-    margin-top: 138px;
+    top: 162px;
     text-align:center; /* hack para o IE */
     width: 100%;
     z-index: 9001;

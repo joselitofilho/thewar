@@ -32,7 +32,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.jogadorDaVez = jogadorDaVez;
         $('#acoes_turno .info #titulo').html('Distribuir tropas');
         
-        var conteudo = '<div class="img img-tropas"></div>';
+        var conteudo = '<div class="img-tropas"></div>';
         if (this.ehOJogadorDaVez) {
             conteudo += '<div id="meio" class="meio-geral">Distribua os exércitos em seus territorios.</div>';
         } else {
@@ -97,7 +97,7 @@ jogos.war.ComponenteAcaoTurno = function() {
             $('#acoes_turno .info #titulo').html('Trocar?');
         }
         
-        var conteudo = '';
+        var conteudo = '<div class="img-trocar"></div>';
         if (this.ehOJogadorDaVez) {
             if (obrigatorio) {
                 conteudo += '<div id="meio" class="meio-geral">Você está com 5 cartas. É obrigatório fazer uma troca.</div>';
