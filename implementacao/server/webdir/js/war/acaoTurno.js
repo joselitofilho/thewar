@@ -164,7 +164,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.turnoAtacarAlteraTerritorioAtacante(posicaoJogador);
         
         var nomeDosTerritorios = "";
-        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += i + " ";
+        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += _nomeDosTerritoriosPeloCodigo[i] + " ";
         nomeDosTerritorios = nomeDosTerritorios.trim();
         if (nomeDosTerritorios.length > 12) {
             nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
@@ -226,7 +226,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.atualizaNomeDosTerritoriosAtacante();
         this.atualizaQuantidadeDeTropasAtacante();
         
-        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(territorioDaDefesa.codigo);
+        $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(_nomeDosTerritoriosPeloCodigo[territorioDaDefesa.codigo]);
         $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(territorioDaDefesa.quantidadeDeTropas);
     }; 
     
@@ -430,7 +430,7 @@ jogos.war.ComponenteAcaoTurno = function() {
     
     this.atualizaNomeDosTerritoriosAtacante = function() {
         var nomeDosTerritorios = "";
-        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += i + " ";
+        for (var i in this.quantidadeDeTropasAtacante) nomeDosTerritorios += _nomeDosTerritoriosPeloCodigo[i] + " ";
         nomeDosTerritorios = nomeDosTerritorios.trim();
         if (nomeDosTerritorios.length > 12) {
             nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
