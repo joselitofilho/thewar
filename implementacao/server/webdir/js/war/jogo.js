@@ -378,7 +378,7 @@ function processarMsg_turno(msgParams) {
     var tempoTotal = Number(msgParams.tempoRestante);
     jogo_iniciaBarraDeProgresso(tempoTotal);
     
-    jogo_alteraInfoTurno(TipoAcaoTurno.distribuir_tropas_globais, msgParams);
+    jogo_alteraInfoTurno(msgParams.tipoAcao, msgParams);
     
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         processarMsg_turno_distribuir_tropas_globais(msgParams);
@@ -472,6 +472,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     var posicaoJogador = Number(msgParams.vezDoJogador) + 1;
     var ehOJogadorDaVez = msgParams.vezDoJogador == _posicaoJogador;
     
+    _componenteAcaoTurno.alteraTimelineJogadorDaVez(msgParams.tipoAcao, posicaoJogador);
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, msgParams.tipoAcao);
     
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
@@ -482,6 +483,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
         else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
         
+        // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoDistribuirTopasContinente(ehOJogadorDaVez, 
             posicaoJogador, 
             msgParams.quantidadeDeTropas, 
@@ -491,13 +493,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         _componenteAcaoTurno.turnoTrocarCartas(ehOJogadorDaVez, 
             posicaoJogador, msgParams.obrigatorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
-        $('#info_turno').attr('class', '');
-        $('#info_turno').addClass('info_turno_tropas' + posicaoJogador);
-        $('#acoes_turno .info #titulo').html('Distribuir tropas');
-        $('#it_sub_titulo').html('Globais');
-        $('#it_sub_titulo').css('visibility', 'visible');
-        $('#acoes_turno .info #extra').html("+" + msgParams.quantidadeDeTropas);
-        $('#acoes_turno .info #extra').css('visibility', 'visible');
+        _componenteAcaoTurno.turnoDistribuirTopasPorTroca(ehOJogadorDaVez, posicaoJogador, msgParams.quantidadeDeTropas);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
         // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoAtacar(ehOJogadorDaVez, posicaoJogador);

@@ -2,12 +2,12 @@
     position: absolute;
     top: 0px;
     left: 297px;
-    z-index: 9001;
+    z-index: 999;
 }
 
 #acoes_turno .info {
     width: 515px;
-    height: 133px;
+    height: 145px;
     background: url('../imagens/acoesTurno/bg.png') no-repeat;
 }
 
@@ -179,3 +179,26 @@
 .sprite-btn-acoes-turno-prosseguir{ background-position: 0 -588px; width: 86px; height: 34px; } 
 .sprite-btn-acoes-turno-ver-cartas:hover{ background-position: 0 -672px; width: 94px; height: 44px; } 
 .sprite-btn-acoes-turno-ver-cartas{ background-position: 0 -766px; width: 94px; height: 44px; }
+
+#acoes_turno .timeline {
+    position: absolute;
+    top: 118px;
+    left: 66px;
+    width: 280px;
+    height: 47px;
+}
+
+#acoes_turno .timeline .turno {
+    float: left;
+    width: 47px;
+    height: 47px;
+    margin-left: 22px;
+}
+
+#acoes_turno .timeline .turno-padrao {background: url('../imagens/acoesTurno/inativo-marrom.png') no-repeat;}
+#acoes_turno .timeline .turno-j1 {background: url('../imagens/acoesTurno/ativo-vermelho.png') no-repeat;}
+#acoes_turno .timeline .turno-j2 {background: url('../imagens/acoesTurno/ativo-azul.png') no-repeat;}
+#acoes_turno .timeline .turno-j3 {background: url('../imagens/acoesTurno/ativo-verde.png') no-repeat;}
+#acoes_turno .timeline .turno-j4 {background: url('../imagens/acoesTurno/ativo-preto.png') no-repeat;}
+#acoes_turno .timeline .turno-j5 {background: url('../imagens/acoesTurno/ativo-branco.png') no-repeat;}
+#acoes_turno .timeline .turno-j6 {background: url('../imagens/acoesTurno/ativo-amarelo.png') no-repeat;}

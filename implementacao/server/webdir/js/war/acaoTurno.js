@@ -6,6 +6,26 @@ jogos.war.ComponenteAcaoTurno = function() {
     var jogadorDaVez = '';
     
     var quantidadeDeTropasAtacante = {};
+    
+    this.alteraTimelineJogadorDaVez = function(tipoAcao, jogadorDaVez) {
+        $('#acoes_turno .timeline #turno1').attr('class', 'turno turno-padrao');
+        $('#acoes_turno .timeline #turno2').attr('class', 'turno turno-padrao');
+        $('#acoes_turno .timeline #turno3').attr('class', 'turno turno-padrao');
+        $('#acoes_turno .timeline #turno4').attr('class', 'turno turno-padrao');
+        if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+            $('#acoes_turno .timeline #turno1').attr('class', 'turno turno-j'+jogadorDaVez);
+        } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+            $('#acoes_turno .timeline #turno1').attr('class', 'turno turno-j'+jogadorDaVez);
+        } else if (tipoAcao == TipoAcaoTurno.trocar_cartas) {
+            $('#acoes_turno .timeline #turno2').attr('class', 'turno turno-j'+jogadorDaVez);
+        } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+            $('#acoes_turno .timeline #turno2').attr('class', 'turno turno-j'+jogadorDaVez);
+        } else if (tipoAcao == TipoAcaoTurno.atacar) {
+            $('#acoes_turno .timeline #turno3').attr('class', 'turno turno-j'+jogadorDaVez);
+        } else if (tipoAcao == TipoAcaoTurno.mover) {
+            $('#acoes_turno .timeline #turno4').attr('class', 'turno turno-j'+jogadorDaVez);
+        }
+    };
 
     this.turnoDistribuirTopasGlobais = function(ehOJogadorDaVez, jogadorDaVez, quantidadeDeTropas) {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
@@ -45,6 +65,25 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.alteraQuantidadeDistribuirTropas(quantidadeDeTropas);
     };
     
+     this.turnoDistribuirTopasPorTroca = function(ehOJogadorDaVez, jogadorDaVez, quantidadeDeTropas) {
+        this.ehOJogadorDaVez = ehOJogadorDaVez;
+        this.jogadorDaVez = jogadorDaVez;
+        $('#acoes_turno .info #titulo').html('Distribuir tropas');
+        
+        var conteudo = '<div class="img img-tropas"></div>';
+        if (this.ehOJogadorDaVez) {
+            conteudo += '<div id="meio" class="meio-geral">Distribua os exércitos em seus territorios.</div>';
+        } else {
+            conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está distribuindo suas tropas pela troca.</div>';
+        }
+        conteudo += '<div id="extra"></div>';
+        
+        $('#acoes_turno .info #conteudoDinamico').html('');
+        $('#acoes_turno .info #conteudoDinamico').html(conteudo);
+        
+        this.alteraQuantidadeDistribuirTropas(quantidadeDeTropas);
+    };
+    
     this.alteraQuantidadeDistribuirTropas = function(quantidadeDeTropas) {
         $('#acoes_turno .info #extra').html("+" + quantidadeDeTropas);
     };
@@ -53,7 +92,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
         this.jogadorDaVez = jogadorDaVez;
         if (obrigatorio) {
-            $('#acoes_turno .info #titulo').html('Obrigatório trocar');
+            $('#acoes_turno .info #titulo').html('Troca obrigatória');
         } else {
             $('#acoes_turno .info #titulo').html('Trocar?');
         }
@@ -75,8 +114,6 @@ jogos.war.ComponenteAcaoTurno = function() {
         
         $('#acoes_turno .info #conteudoDinamico').html('');
         $('#acoes_turno .info #conteudoDinamico').html(conteudo);
-        
-        this.alteraQuantidadeDistribuirTropas(quantidadeDeTropas);
     };
     
     this.turnoAtacar = function(ehOJogadorDaVez, jogadorDaVez) {
@@ -313,9 +350,13 @@ jogos.war.ComponenteAcaoTurno = function() {
             if (ehOJogadorDaVez) atacar();
         });
 
+        var me = this;
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
-            if (ehOJogadorDaVez) appwar_abrePainelCartasTerritorios();
+            if (ehOJogadorDaVez) {
+                me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
+                appwar_abrePainelCartasTerritorios();
+            }
         });
 
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
@@ -343,5 +384,33 @@ jogos.war.ComponenteAcaoTurno = function() {
             nomeDosTerritorios = nomeDosTerritorios.substring(0, 13) + "...";
         }
         $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
+    };
+    
+    this.alteraFuncaoBtnProsseguirParaCancelar = function(ehOJogadorDaVez) {
+        if (ehOJogadorDaVez) {
+            $('#acoes_turno').css('z-index', '9001');
+            $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
+            $('#acoes_turno #btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-cancelar');
+            $('#acoes_turno .sprite-btn-acoes-turno-cancelar').unbind('click');
+            var me = this;
+            $('#acoes_turno .sprite-btn-acoes-turno-cancelar').click(function() {
+                if (ehOJogadorDaVez) {
+                    me.alteraFuncaoBtnCancelarParaProsseguir(ehOJogadorDaVez);
+                    appwar_fechaPainelCartasTerritorios();
+                }
+            });
+        }
+    };
+    
+    this.alteraFuncaoBtnCancelarParaProsseguir = function(ehOJogadorDaVez) {
+        if (ehOJogadorDaVez) {
+            $('#acoes_turno').css('z-index', '999');
+            $('#acoes_turno .sprite-btn-acoes-turno-cancelar').unbind('click');
+            $('#acoes_turno #btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
+            $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
+            $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function() {
+                if (ehOJogadorDaVez) finalizarTurno();
+            });
+        } 
     };
 };
