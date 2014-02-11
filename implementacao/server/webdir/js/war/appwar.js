@@ -329,17 +329,29 @@ function territorioClickMover(posicaoJogador, nomeDoTerritorio) {
         _territorioAlvoMover = null;
         _territorioMovimento = null;
         _sliderMoverTropas.fechar();
+        _componenteAcaoTurno.turnoMover(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
     } else if (_territorioMovimento == null &&
         _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio) > 1) {
         _territorios.pintarGruposTerritorios();
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
         _territorioMovimento = nomeDoTerritorio;
         _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
+        var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
+        _componenteAcaoTurno.turnoMoverEscolheuSaida(nomeDoTerritorio, indiceCor);
         this.tocarSom(this, 'vamosLa.wav');
     } else if (_territorioAlvoMover == null && 
                _territorios.temFronteira(nomeDoTerritorio, _territorioMovimento)) {
         _territorioAlvoMover = nomeDoTerritorio;
         _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
+        var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
+        _componenteAcaoTurno.turnoMoverEscolheuEntrada(nomeDoTerritorio, indiceCor);
+    } else {
+        _territorios.pintarGruposTerritorios();
+        _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
+        _territorioAlvoMover = null;
+        _territorioMovimento = null;
+        _sliderMoverTropas.fechar();
+        _componenteAcaoTurno.turnoMover(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
     }
     
     if (_territorioAlvoMover != null && _territorioMovimento != null) {

@@ -85,8 +85,9 @@
     font-size: 28px;
 }
 
-/*Atacar*/
-#acoes_turno .info #alvo {
+/*Atacar e mover*/
+#acoes_turno .info #alvo,
+#acoes_turno .info #saida {
     position: absolute;
     top: 70px;
     left: 350px;
@@ -95,7 +96,8 @@
     text-align: center;
 }
 
-#acoes_turno .info #alvo .nome {
+#acoes_turno .info #alvo .nome,
+#acoes_turno .info #saida .nome {
     position: relative; 
     top: -35px;
     text-align: center;
@@ -116,7 +118,8 @@
     visibility: hidden;
 }
 
-#acoes_turno .info #atacante {
+#acoes_turno .info #atacante,
+#acoes_turno .info #entrada {
     position: absolute;
     top: 70px;
     left: 10px;
@@ -126,7 +129,8 @@
     color: #332417
 }
 
-#acoes_turno .info #atacante .nome {
+#acoes_turno .info #atacante .nome,
+#acoes_turno .info #entrada .nome {
     position: relative; 
     top: -35px;
     text-align: center;

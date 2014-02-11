@@ -498,9 +498,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoAtacar(ehOJogadorDaVez, posicaoJogador);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
-        $('#info_turno').attr('class', '');
-        $('#info_turno').addClass('info_turno_mover' + posicaoJogador);
-        $('#acoes_turno .info #titulo').html('Mover');
+        _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, posicaoJogador);
     }
 }
 
@@ -623,6 +621,7 @@ function jogo_moveTropas() {
     }
     
     _sliderMoverTropas.fechar();
+    _componenteAcaoTurno.turnoMoverLimpar();
 }
 
 function jogo_cancelaMoverTropas() {
@@ -635,6 +634,7 @@ function jogo_cancelaMoverTropas() {
         _territorioMovimento = null;
     }
     _sliderMoverTropas.fechar();
+    _componenteAcaoTurno.turnoMoverLimpar();
 }
 
 function jogo_sair() {
