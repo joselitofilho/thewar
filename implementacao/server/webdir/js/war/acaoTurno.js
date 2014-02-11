@@ -142,8 +142,9 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #conteudoDinamico').html(conteudo);
     };
     
-    this.turnoAtacarEscolheuAlvo = function(nomeDoTerritorio, posicaoJogador, quantidade) {
+    this.turnoAtacarEscolheuAlvo = function(codigoDoTerritorio, posicaoJogador, quantidade) {
         if (this.ehOJogadorDaVez) {
+            var nomeDoTerritorio = _nomeDosTerritoriosPeloCodigo[codigoDoTerritorio];
             this.turnoAtacarLimparAtacante();
             $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-geral');
             $('#acoes_turno .info #conteudoDinamico #meio').html('Selecione os territórios que vão atacar '+nomeDoTerritorio+'.');
@@ -156,8 +157,8 @@ jogos.war.ComponenteAcaoTurno = function() {
     };
     
     this.turnoAtacarAdicionaAtacante = function(posicaoJogador, 
-        nomeDoTerritorio, quantidade) {
-        
+        codigoDoTerritorio, quantidade) {
+        var nomeDoTerritorio = _nomeDosTerritoriosPeloCodigo[codigoDoTerritorio];
         this.quantidadeDeTropasAtacante[nomeDoTerritorio] = quantidade;
         
         this.turnoAtacarAlteraTerritorioAtacante(posicaoJogador);
@@ -204,10 +205,9 @@ jogos.war.ComponenteAcaoTurno = function() {
         this.atualizaQuantidadeDeTropasAtacante();
     };
     
-    this.turnoAtacarRemoveAtacante = function(posicaoJogador, 
-        nomeDoTerritorio) {
+    this.turnoAtacarRemoveAtacante = function(posicaoJogador, codigoDoTerritorio) {
         
-        delete this.quantidadeDeTropasAtacante[nomeDoTerritorio];
+        delete this.quantidadeDeTropasAtacante[_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]];
 
         this.atualizaNomeDosTerritoriosAtacante();
         this.atualizaQuantidadeDeTropasAtacante();
@@ -319,20 +319,20 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #conteudoDinamico').html(conteudo);
     };
     
-    this.turnoMoverEscolheuSaida = function(nomeDoTerritorio, posicaoJogador) {
+    this.turnoMoverEscolheuSaida = function(codigoDoTerritorio, posicaoJogador) {
         if (this.ehOJogadorDaVez) {
             $('#acoes_turno .info #conteudoDinamico #meio').html('Selecione um território para onde os exércitos irão.');
         }
         this.turnoAlteraTerritorioAlvo(posicaoJogador, '#saida');
-        $('#acoes_turno .info #conteudoDinamico #saida .nome').html(nomeDoTerritorio);
+        $('#acoes_turno .info #conteudoDinamico #saida .nome').html(_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]);
     };
     
-    this.turnoMoverEscolheuEntrada = function(nomeDoTerritorio, posicaoJogador) {
+    this.turnoMoverEscolheuEntrada = function(codigoDoTerritorio, posicaoJogador) {
         if (this.ehOJogadorDaVez) {
             $('#acoes_turno .info #conteudoDinamico #meio').html('Agora escolha a quantidade de exércitos à movimentar.');
         }
         this.turnoAlteraTerritorioAlvo(posicaoJogador, '#entrada');
-        $('#acoes_turno .info #conteudoDinamico #entrada .nome').html(nomeDoTerritorio);
+        $('#acoes_turno .info #conteudoDinamico #entrada .nome').html(_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]);
     };
     
     this.turnoMoverLimpar = function() {

@@ -291,7 +291,7 @@ function appwar_iniciaCartasTerritorios() {
     }
 }
 
-function territorioMouseMoveFunc(evento, posicaoJogador, nomeDoTerritorio) {
+function territorioMouseMoveFunc(evento, posicaoJogador, codigoDoTerritorio) {
     if (!isNaN(evento.edge) || !isNaN(evento.vertex)) {
         document.getElementById("mapa").className = 'mouse_padrao';
     } else if (_posicaoJogadorDaVez == _posicaoJogador) {
@@ -316,10 +316,13 @@ function territorioMouseMoveFunc(evento, posicaoJogador, nomeDoTerritorio) {
     } else {
         document.getElementById("mapa").className = 'mouse_padrao';
     }
+    
+    $('#legenda').html(_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]);
 }
 
-function territorioMouseOutFunc(posicaoJogador, nomeDoTerritorio) {
+function territorioMouseOutFunc(posicaoJogador, codigoDoTerritorio) {
     document.getElementById("mapa").className = '';
+    $('#legenda').html('');
 }
 
 function territorioClickMover(posicaoJogador, nomeDoTerritorio) {
