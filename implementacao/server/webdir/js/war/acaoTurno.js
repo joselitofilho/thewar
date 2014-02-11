@@ -7,6 +7,8 @@ jogos.war.ComponenteAcaoTurno = function() {
     
     var quantidadeDeTropasAtacante = {};
     
+    var obrigatorio = false;
+    
     this.alteraTimelineJogadorDaVez = function(tipoAcao, jogadorDaVez) {
         $('#acoes_turno .timeline #turno1').attr('class', 'turno turno-padrao');
         $('#acoes_turno .timeline #turno2').attr('class', 'turno turno-padrao');
@@ -91,7 +93,8 @@ jogos.war.ComponenteAcaoTurno = function() {
     this.turnoTrocarCartas = function(ehOJogadorDaVez, jogadorDaVez, obrigatorio) {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
         this.jogadorDaVez = jogadorDaVez;
-        if (obrigatorio) {
+        this.obrigatorio = obrigatorio;
+        if (this.obrigatorio) {
             $('#acoes_turno .info #titulo').html('Troca obrigatória');
         } else {
             $('#acoes_turno .info #titulo').html('Trocar?');
@@ -99,13 +102,13 @@ jogos.war.ComponenteAcaoTurno = function() {
         
         var conteudo = '<div class="img-trocar"></div>';
         if (this.ehOJogadorDaVez) {
-            if (obrigatorio) {
+            if (this.obrigatorio) {
                 conteudo += '<div id="meio" class="meio-geral">Você está com 5 cartas. É obrigatório fazer uma troca.</div>';
             } else {
                 conteudo += '<div id="meio" class="meio-geral">Faça troca de suas cartas por exércitos, se desejar.</div>';
             }
         } else {
-            if (obrigatorio) {
+            if (this.obrigatorio) {
                 conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está fazendo uma troca.</div>';
             } else {
                 conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está verificando se vai fazer uma troca.</div>';
@@ -407,6 +410,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
             if (ehOJogadorDaVez) {
                 $('#acoes_turno').css('z-index', '9001');
+                $('#acoes_turno .info #conteudoDinamico #meio').html('Escolha 3 cartas de forma iguais ou 3 cartas de formas diferentes.');
                 me.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
                 me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
                 appwar_abrePainelCartasTerritorios();
@@ -463,6 +467,7 @@ jogos.war.ComponenteAcaoTurno = function() {
             $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function() {
                 if (ehOJogadorDaVez) {
                     $('#acoes_turno').css('z-index', '9001');
+                    $('#acoes_turno .info #conteudoDinamico #meio').html('Escolha 3 cartas de forma iguais ou 3 cartas de formas diferentes.');
                     me.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
                     me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
                     appwar_abrePainelCartasTerritorios();
@@ -479,6 +484,13 @@ jogos.war.ComponenteAcaoTurno = function() {
             var me = this;
             $('#acoes_turno .sprite-btn-acoes-turno-cancelar').click(function() {
                 if (ehOJogadorDaVez) {
+                    var texto = "";
+                    if (me.obrigatorio) {
+                        texto = 'Você está com 5 cartas. É obrigatório fazer uma troca.';
+                    } else {
+                        texto = 'Faça troca de suas cartas por exércitos, se desejar.';
+                    }
+                    $('#acoes_turno .info #conteudoDinamico #meio').html(texto);
                     me.alteraFuncaoBtnCancelarParaProsseguir(ehOJogadorDaVez);
                     me.alteraFuncaoBtnTrocarParaVerCartas(ehOJogadorDaVez);
                     appwar_fechaPainelCartasTerritorios();

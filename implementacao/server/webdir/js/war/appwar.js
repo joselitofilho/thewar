@@ -250,8 +250,10 @@ function appwar_abrePainelCartasTerritorios() {
 function appwar_fechaPainelCartasTerritorios() {
     $('#painel_cartas_territorios').css('visibility', 'hidden');
     $('#pct_fundo').css('visibility', 'hidden');
-    _componenteAcaoTurno.alteraFuncaoBtnTrocarParaVerCartas(_posicaoJogadorDaVez == _posicaoJogador);
-    _componenteAcaoTurno.alteraFuncaoBtnCancelarParaProsseguir(_posicaoJogadorDaVez == _posicaoJogador);
+    if (_turno.tipoAcao == TipoAcaoTurno.trocar_cartas) {
+        _componenteAcaoTurno.alteraFuncaoBtnTrocarParaVerCartas(_posicaoJogadorDaVez == _posicaoJogador);
+        _componenteAcaoTurno.alteraFuncaoBtnCancelarParaProsseguir(_posicaoJogadorDaVez == _posicaoJogador);
+    }
 }
 
 function selecionarCartaTerritorio(num) {
