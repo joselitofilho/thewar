@@ -128,7 +128,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         
         var conteudo = "";
         if (this.ehOJogadorDaVez) {
-            conteudo += '<div id="meio" class="meio-geral">Selecione um território para atacar.</div>';
+            conteudo += '<div id="meio" class="meio-geral">Selecione o território alvo.</div>';
         } else {
             conteudo += '<div id="meio" class="meio-geral">'+this.jogadorDaVez+' está atacando.</div>';
         }
