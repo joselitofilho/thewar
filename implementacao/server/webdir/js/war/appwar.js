@@ -9,6 +9,7 @@ _posicaoJogador = -1;
 _salaDoJogador = null;
 _turno = null;
 _posicaoJogadorDaVez = -1;
+_infoJogadorDaVezDoTurno = null;
 
 _territorioAlvoAtaque = null;
 _territoriosAtacante = [];

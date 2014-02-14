@@ -141,6 +141,10 @@ class Jogo(object):
         valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
         
         jogador = self.jogadores[jogadorDaVez]
+        infoJogadorDaVez = {
+            "usuario": jogador.usuario,
+            "posicao": jogador.posicao
+        }
 
         acao = None
         # Preencher os dados da acao
@@ -152,7 +156,7 @@ class Jogo(object):
                 else:
                     turno.quantidadeDeTropas = 3
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca, 
+                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, 
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             turno.grupoTerritorioAtual = None
@@ -162,23 +166,23 @@ class Jogo(object):
             if turno.quantidadeDeTropas == 0:
                 turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
             acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
+                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
                     turno.quantidadeDeTropas, turno.grupoTerritorioAtual)
         elif tipoAcaoDoTurno == TipoAcaoTurno.trocar_cartas:
             acao = AcaoTrocarCartas(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
+                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
                     (len(jogador.cartasTerritorio) >= 5))
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
+                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
             acao = AcaoJogoTerminou(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca,
+                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
                     jogador.objetivo, jogador.usuario)
         else:
             acao = AcaoTurno(tipoAcaoDoTurno, 
-                    numeroDoTurno, jogadorDaVez, tempoRestante, valorDaTroca)
+                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca)
 
         return acao
  
