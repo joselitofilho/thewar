@@ -474,7 +474,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     var posicaoJogador = Number(msgParams.vezDoJogador.posicao) + 1;
     var ehOJogadorDaVez = msgParams.vezDoJogador.posicao == _posicaoJogador;
     
-    _componenteAcaoTurno.alteraTimelineJogadorDaVez(msgParams.tipoAcao, msgParams.vezDoJogador.usuario);
+    _componenteAcaoTurno.alteraTimelineJogadorDaVez(msgParams.tipoAcao, posicaoJogador);
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, msgParams.tipoAcao);
     
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
