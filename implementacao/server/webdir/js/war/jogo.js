@@ -478,7 +478,6 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, msgParams.tipoAcao);
     
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
-        // TODO: Colocar nome do jogador.
         console.log(msgParams.vezDoJogador);
         _componenteAcaoTurno.turnoDistribuirTopasGlobais(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
@@ -486,19 +485,16 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
         else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
         
-        // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoDistribuirTopasContinente(ehOJogadorDaVez, 
             msgParams.vezDoJogador.usuario, 
             msgParams.quantidadeDeTropas, 
             strGrupoTerritorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.trocar_cartas) {
-        // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoTrocarCartas(ehOJogadorDaVez, 
             msgParams.vezDoJogador.usuario, msgParams.obrigatorio);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
         _componenteAcaoTurno.turnoDistribuirTopasPorTroca(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
-        // TODO: Colocar nome do jogador.
         _componenteAcaoTurno.turnoAtacar(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
