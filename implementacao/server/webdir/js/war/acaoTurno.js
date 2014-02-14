@@ -288,13 +288,13 @@ jogos.war.ComponenteAcaoTurno = function() {
         }
     };
     
-    this.turnoAtacarConquistouTerritorio = function(usuario, foiVoceQueConquistou, territorioConquistado) {
+    this.turnoAtacarConquistouTerritorio = function(usuario, foiVoceQueConquistou, codigoTerritorioConquistado) {
         $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-geral');
         $('#acoes_turno .info #conteudoDinamico #meio').empty();
         if (foiVoceQueConquistou) {
-            $('#acoes_turno .info #conteudoDinamico #meio').html('Você conquistou o território ' + territorioConquistado + '.');
+            $('#acoes_turno .info #conteudoDinamico #meio').html('Você conquistou o território ' + _nomeDosTerritoriosPeloCodigo[codigoTerritorioConquistado] + '.');
         } else {
-            $('#acoes_turno .info #conteudoDinamico #meio').html(usuario + ' conquistou o território ' + territorioConquistado + '.');
+            $('#acoes_turno .info #conteudoDinamico #meio').html(usuario + ' conquistou o território ' + _nomeDosTerritoriosPeloCodigo[codigoTerritorioConquistado] + '.');
         }
     };
     
