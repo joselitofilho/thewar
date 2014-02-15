@@ -13,7 +13,7 @@ function iniciarApp() {
     {
         "featureType": "water",
         "elementType": "geometry",
-        "stylers": [{ "visibility": "off" }]
+        "stylers": [{ "visibility": "off"}]
     },
     {
         "featureType": "landscape",
@@ -23,7 +23,7 @@ function iniciarApp() {
     {
         "featureType": "landscape.natural.landcover",
         "elementType": "geometry",
-        "stylers": [{ "visibility": "on" }]
+        "stylers": [{ "visibility": "off" }]
     },
     {
         "featureType": "administrative",
