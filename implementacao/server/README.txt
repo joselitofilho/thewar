@@ -14,5 +14,7 @@ Ferramenta para edição de mapas:
     Plotar pontos: http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/encodeForm.html
     Plotar pontos: http://people.ucsc.edu/~pbuzbee/maps/
     Paises: http://www.dyngeometry.com/web/WorldRegion.aspx
+    Mapa Estilizado: http://gmaps-samples-v3.googlecode.com/svn/trunk/styledmaps/wizard/index.html
+    Gerador de sprite: http://pt.spritegen.website-performance.org/
 Sons:
     http://www.freesound.org/
