@@ -162,7 +162,7 @@ jogos.war.ComponenteAcaoTurno = function() {
     this.turnoAtacarAdicionaAtacante = function(posicaoJogador, 
         codigoDoTerritorio, quantidade) {
         var nomeDoTerritorio = _nomeDosTerritoriosPeloCodigo[codigoDoTerritorio];
-        this.quantidadeDeTropasAtacante[nomeDoTerritorio] = quantidade;
+        this.quantidadeDeTropasAtacante[codigoDoTerritorio] = quantidade;
         
         this.turnoAtacarAlteraTerritorioAtacante(posicaoJogador);
         
@@ -210,7 +210,7 @@ jogos.war.ComponenteAcaoTurno = function() {
     
     this.turnoAtacarRemoveAtacante = function(posicaoJogador, codigoDoTerritorio) {
         
-        delete this.quantidadeDeTropasAtacante[_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]];
+        delete this.quantidadeDeTropasAtacante[codigoDoTerritorio];
 
         this.atualizaNomeDosTerritoriosAtacante();
         this.atualizaQuantidadeDeTropasAtacante();
