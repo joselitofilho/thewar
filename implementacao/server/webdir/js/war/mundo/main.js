@@ -8,6 +8,29 @@ function iniciarApp() {
     var divMapa = document.getElementById("mapa");
     mapa = new jogowar.mapa.Mapa();
     mapa.inicia(divMapa, 40.0, 10.0, 2);
+
+    var estiloDoMapa = [
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [{ "visibility": "off" }]
+    },
+    {
+        "featureType": "landscape.natural.landcover",
+        "elementType": "geometry",
+        "stylers": [{ "visibility": "on" }]
+    },
+    {
+        "featureType": "administrative",
+        "stylers": [{ "visibility": "off" }]
+    }
+    ];
+    mapa.alteraEstilo(estiloDoMapa);
     //this.tocarSomDeFundo(divMapa);
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);

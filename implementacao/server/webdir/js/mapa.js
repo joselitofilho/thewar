@@ -23,5 +23,15 @@ jogowar.mapa.Mapa = function() {
         };
 
         _mapaGoogle = new google.maps.Map(mapaDiv, mapOptions);
+        mapaDiv.style.backgroundColor = "transparent";
+    };
+
+    this.alteraEstilo = function(estilo) {
+        if (_mapaGoogle) {
+            var styledMap = new google.maps.StyledMapType(estilo, {name: "GuerraMap"});
+            //_mapaGoogle.setOptions({styles: estilo});
+            _mapaGoogle.mapTypes.set('guerra_map_style', styledMap);
+            _mapaGoogle.setMapTypeId('guerra_map_style');
+        }
     };
 };
