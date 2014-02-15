@@ -11,6 +11,7 @@ from tipoAcaoTurno import *
 from territorio import * 
 from carta import * 
 from objetivos import * 
+from pontuacao import *
 
 class Jogo(object):
     def __init__(self, nome, jogadores, clientes = None, gerenciador = None):
@@ -43,6 +44,10 @@ class Jogo(object):
         self.numeroDaTroca = 1
         
         self.obrigatorioPassarAVez = False
+
+        self.contabilizouPontos = False
+
+        self.jogadorVencedor = None
 
     def faseI_Inicia(self):
         jogadorQueComeca = self.faseI_DefinirQuemComeca()
@@ -300,7 +305,7 @@ class Jogo(object):
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.id)
+                self.gerenciador.jogoTerminou(self.nome)
             
     def finalizaTurno_I(self):
         turno = self.turno
@@ -401,7 +406,7 @@ class Jogo(object):
             erro = False
 
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.id)
+                self.gerenciador.jogoTerminou(self.nome)
                 
             
         if erro:
@@ -904,7 +909,28 @@ class Jogo(object):
     def temUmVencedor(self):
         jogador = self.jogadores[self.posicaoJogadorDaVez]
         objetivo = FabricaObjetivo().cria(jogador.objetivo)
-        return objetivo.completou(jogador, self.jogadores)
+        jogadorVenceu = objetivo.completou(jogador, self.jogadores)
+        
+        if jogadorVenceu:
+            self.jogadorVencedor = jogador
+            self.contabilizaPontosDoVencedor()
+
+        return jogadorVenceu
+
+    def contabilizaPontosDoVencedor(self):
+        pontos = -1
+        if not self.contabilizouPontos:
+            qtdJogadores = len(self.jogadores)
+            usuarios = []
+            for k, v in self.jogadores.iteritems():
+                usuarios.append(v.usuario)
+
+            pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios)
+            pontos = pontuacao.contabiliza()
+
+            self.contabilizouPontos = True
+
+        return pontos
 
     def temJogadorOnLine(self):
         return len(self.clientes) > 0

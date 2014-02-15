@@ -228,6 +228,11 @@ class JogoTeste(unittest.TestCase):
         
         # Verificação.
         self.assertFalse(trocou)
+
+    #def test_DadoJogadorJ2_DeveGanhar3Pontos_QuandoVencerUmaPartidadeDe3Jogadores(self):
+    #    pontos = self.jogo.contabilizaPontosParaOVencedor()
+
+    #    self.assertEqual(3, pontos)
         
     def tearDown(self):
         self.jogo.fecha()
