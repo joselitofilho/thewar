@@ -15,13 +15,13 @@ class Pontuacao(object):
         pontos = 0
         qtdUsuarios = len(self.usuarios)
         if qtdUsuarios == 3:
-            pontos = 100
-        elif qtdUsuarios == 4:
             pontos = 200
-        elif qtdUsuarios == 5:
+        elif qtdUsuarios == 4:
             pontos = 300
-        elif qtdUsuarios == 6:
+        elif qtdUsuarios == 5:
             pontos = 500
+        elif qtdUsuarios == 6:
+            pontos = 800
 
         pontuacaoDB = PontuacaoDB()
         pontosAtual = pontuacaoDB.pontosDoUsuario(self.usuarioVencedor)
