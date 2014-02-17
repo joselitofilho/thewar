@@ -5,7 +5,10 @@ var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
     $('#sala').css('visibility', 'hidden');
-    $('#sala .form-signin').children().each(function(i, elemento) {
+    $('#sala #sala_content .box').children().each(function(i, elemento) {
+        $(elemento).css('visibility', 'hidden');
+    });
+    $('#sala #sala_content').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
     $('#bloqueador_tela').css('visibility', 'hidden');
