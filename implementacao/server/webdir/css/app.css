@@ -110,6 +110,10 @@ html, body {
     z-index: 9000;
 }
 
+#po_fundo {
+    z-index: 9002;
+}
+
 #botao_recarregar {
     position: absolute;
     width: 128px;
