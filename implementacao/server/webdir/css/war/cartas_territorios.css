@@ -6,7 +6,7 @@
     position: absolute;
     top: 162px;
     text-align:center; /* hack para o IE */
-    width: 100%;
+    width: 1024px;
     z-index: 9001;
 }
 

@@ -1,11 +1,13 @@
 #acoes_turno {
     position: absolute;
-    top: 0px;
+    top: 65px;
     left: 297px;
     z-index: 999;
 }
 
 #acoes_turno .info {
+    position: relative;
+    top: 0px;
     width: 515px;
     height: 145px;
     background: url('../imagens/acoesTurno/bg.png') no-repeat;

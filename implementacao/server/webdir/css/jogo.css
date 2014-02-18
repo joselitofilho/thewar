@@ -1,11 +1,13 @@
 #jogo {
 	overflow: hidden;
 	visibility: hidden;
+    width: 1280px;
+    height: 800px;
+    background: url('../imagens/jogo/bg-mapa.png') no-repeat;
 }
 
 #acoes_botoes {
     float: left;
-    margin-left: 4px;
 }
 
 #acoes_botoes ul {
@@ -25,14 +27,15 @@
 #mapa {
     position: relative;
     float: left;
-    width: 1024px;
+    top: 130px;
+    width: 979px;
     height: 640px;
     z-index: 998;
 }
 
 #barra_tempo {
     position: absolute;
-    top: 570px;
+    top: 680px;
     left: 337px;
     width: 350px;
     color: #FFF;
@@ -59,9 +62,8 @@
 
 #controles {
     position: absolute;
-    top: 22px;
-    left: 1024px;
-    background: url('../imagens/muro.jpg');
+    top: 52px;
+    left: 992px;
     cursor: pointer;
     z-index: 999;
 }
@@ -89,7 +91,7 @@
     position: absolute;
     width: 150px;
     z-index: 999;
-    top: 420px;
+    top: 490px;
 }
 
 #menu_jogadores ul {
@@ -128,17 +130,18 @@
 #chat_do_jogo textarea {
     display: block;
     resize: none;
-    width: 356px;
+    width: 286px;
     height: 426px;
     border: 0;
-    background-color: #FFF;
+    background-color: transparent;
     cursor: text;
-    margin-bottom: 1px;
+    padding: 5px;
+    top: 0px;
 }
 
 #chat_do_jogo input {
     display: inline;
-    width: 356px;
+    width: 286px;
     cursor: text;
 }
 
@@ -167,8 +170,8 @@
 
 #jogo_sair {
     position: absolute;
-    top: 10px;
-    right: 0;
+    top: 65px;
+    right: 305px;
     width: 40px;
     height: 40px;
     background: url('../imagens/sair.png');
@@ -180,7 +183,7 @@
     position: absolute;
     width: 533px;
     height: 24px;
-    top: 600px;
+    top: 708px;
     left: 245px;
     background: url('../imagens/legenda-rodape.png');
     text-align: center;

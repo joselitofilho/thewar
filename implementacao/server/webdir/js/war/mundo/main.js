@@ -7,7 +7,7 @@ function iniciarApp() {
 
     var divMapa = document.getElementById("mapa");
     mapa = new jogowar.mapa.Mapa();
-    mapa.inicia(divMapa, 40.0, 10.0, 2);
+    mapa.inicia(divMapa, 25.0, 10.0, 2);
 
     var estiloDoMapa = [
     {

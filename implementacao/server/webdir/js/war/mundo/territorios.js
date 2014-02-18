@@ -145,7 +145,7 @@ jogos.war.Territorios = function(mapa) {
 	        [new google.maps.LatLng(-12.039321,49.042969),new google.maps.LatLng(1.230374,45.351563)],
 	        [new google.maps.LatLng(-25.799891,44.121094),new google.maps.LatLng(-28.613459,33.046875)],
 	        [new google.maps.LatLng(53.540307,160.488281),new google.maps.LatLng(53.540307,-152.226563),new google.maps.LatLng(59.977005,-143.964844)],
-	        [new google.maps.LatLng(70.436799,-68.906250),new google.maps.LatLng(72.127936,-55.371094)],
+	        [new google.maps.LatLng(68.528235,-81.914063),new google.maps.LatLng(71.746432,-55.195313)], // Mackenzie <-> Groelandia
 	        [new google.maps.LatLng(56.072035,-60.820313),new google.maps.LatLng(62.431074,-50.449219)],
 	        [new google.maps.LatLng(68.656555,-25.488281),new google.maps.LatLng(66.018018,-19.511719)],
 	        [new google.maps.LatLng(63.782486,-15.996094),new google.maps.LatLng(58.263287,-6.679688)],
