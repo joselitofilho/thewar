@@ -1,0 +1,2 @@
+# Pontuacao dos usuários.
+select * from Pontuacao p inner join Usuarios u on u.id=p.idUsuario;
