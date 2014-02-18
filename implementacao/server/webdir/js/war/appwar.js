@@ -540,7 +540,7 @@ function iniciarControleDeAudio() {
 }
 
 function appwar_alterarTituloDaPagina(str) {
-    document.title = str + ' | JogoWar';
+    document.title = str + ' | Guerra';
 }
 
 function tocarSom(el, soundfile) {
