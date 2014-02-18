@@ -1,4 +1,4 @@
-var _chatJogo = new jogowar.war.ChatJogo($('#ct_mensagens'));
+var _chatJogo = new jogowar.war.ChatJogo($('#cj_mensagens'));
 var _sliderMoverTropas = new jogos.war.Slider($('#slider-mover-tropas'));
 var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
 
@@ -465,8 +465,9 @@ function processarMsg_turno_jogo_terminou(msgParams) {
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
     this.tocarSom(this, 'mensagem.mp3');
 
-    var texto = msgParams.usuario + ": " + msgParams.texto;
-    _chatJogo.escreve(texto);
+    var posicao = msgParams.jogador.posicao;
+    var texto = msgParams.jogador.usuario + ": " + msgParams.texto;
+    _chatJogo.escreveColorido(texto, posicao);
 }
 
 /* Informações dos turnos */

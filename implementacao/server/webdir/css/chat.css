@@ -6,7 +6,8 @@
 
 #cg_mensagens {
     display: block;
-    overflow: auto;
+    overflow-x: none;
+    overflow-y: auto;
     width: 356px;
     height: 400px;
     border: 0;

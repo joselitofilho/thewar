@@ -188,8 +188,8 @@ class JogoInterrompido(object):
         self.identificador = identificador
         
 class MsgChatJogo(object):
-    def __init__(self, usuario, texto):
-        self.usuario = usuario
+    def __init__(self, jogador, texto):
+        self.jogador = jogador
         self.texto = texto
         
 class MsgChatGeral(object):

@@ -147,9 +147,8 @@
     float: left;
 }
 
-#chat_do_jogo textarea {
+#cj_mensagens {
     display: block;
-    resize: none;
     width: 286px;
     height: 426px;
     border: 0;
@@ -157,6 +156,8 @@
     cursor: text;
     padding: 5px;
     top: 0px;
+    overflow-x: none;
+    overflow-y: auto;
 }
 
 #chat_do_jogo input {

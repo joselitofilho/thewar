@@ -447,6 +447,14 @@ class Jogo(object):
         self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
         acaoDoTurno = self.criaAcaoDoTurno(self.turno)
         self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
+
+    def posicaoDoUsuario(self, usuario):
+        posicaoJogador = -1
+        for k, v in self.jogadores.iteritems():
+            if v.usuario == usuario:
+                posicaoJogador = k
+                break
+        return posicaoJogador
         
     def colocaTropaReq(self, usuario, codigoTerritorio, quantidade):
         turno = self.turno
@@ -936,7 +944,9 @@ class Jogo(object):
         return len(self.clientes) > 0
         
     def msgChat(self, usuario, texto):
-        self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo, MsgChatJogo(usuario, texto))
+        posicao = self.posicaoDoUsuario(usuario)
+        self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo, 
+            MsgChatJogo({"usuario": usuario, "posicao": posicao}, texto))
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         try:
