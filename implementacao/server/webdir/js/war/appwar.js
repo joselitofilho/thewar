@@ -323,11 +323,13 @@ function territorioMouseMoveFunc(evento, posicaoJogador, codigoDoTerritorio) {
     }
     
     $('#legenda').html(_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]);
+    $('#legenda').css('visibility', 'visible');
 }
 
 function territorioMouseOutFunc(posicaoJogador, codigoDoTerritorio) {
     document.getElementById("mapa").className = '';
     $('#legenda').html('');
+    $('#legenda').css('visibility', 'hidden');
 }
 
 function territorioClickMover(posicaoJogador, nomeDoTerritorio) {

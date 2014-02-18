@@ -35,7 +35,7 @@
 
 #barra_tempo {
     position: absolute;
-    top: 680px;
+    top: 676px;
     left: 337px;
     width: 350px;
     color: #FFF;
@@ -195,13 +195,14 @@
 
 #legenda {
     position: absolute;
-    width: 533px;
-    height: 24px;
-    top: 708px;
-    left: 245px;
+    width: 234px;
+    height: 32px;
+    top: 700px;
+    left: 386px;
     background: url('../imagens/legenda-rodape.png');
     text-align: center;
     color: white;
     font-size: 17px;
+    visibility: hidden;
     z-index: 999;
 }

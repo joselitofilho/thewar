@@ -950,8 +950,10 @@ class Jogo(object):
         try:
             jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
             for socket in self.clientes.values():
+                logging.debug("Enviando para socket " + str(socket))
                 socket.sendMessage(jsonMsg)
             for socket in self.olheiros.values():
+                logging.debug("Enviando para olheiro " + str(socket))
                 socket.sendMessage(jsonMsg)
             logging.debug("JSON: " + jsonMsg)
         except Exception:
