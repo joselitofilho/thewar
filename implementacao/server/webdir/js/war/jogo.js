@@ -648,7 +648,7 @@ function jogo_removeElementosHtml() {
     $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
-    $('#menu_jogadores li div').each(function(i, elemento) {
+    $('#menu_jogadores li span').each(function(i, elemento) {
         $(elemento).html('0');
     });
     $('#menu_jogadores li a').each(function(i, elemento) {

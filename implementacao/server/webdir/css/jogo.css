@@ -89,38 +89,52 @@
 
 #menu_jogadores {
     position: absolute;
-    width: 150px;
-    z-index: 999;
     top: 490px;
+    width: 213px;
+    height: 289px;
+    background: url('../imagens/jogo/fundo-6-jogadores.png') no-repeat;
+    z-index: 999;
 }
 
 #menu_jogadores ul {
     padding:0px;
-    margin:0px;
+    margin-top:10px;
+    margin-left:23px;
     list-style:none;
-    text-align: center;
 }
 
 #menu_jogadores ul li {
     display: inline;
-    width: 150px;
+    width: 165px;
     display: inline-block;
     border-radius: 0 0 4px 4px;
     font-size: 16px;
+    margin-bottom: -5px;
+}
+
+#menu_jogadores ul li div {
+    float: left;
+    width: 42px;
+    height: 42px;
 }
 
 #menu_jogadores ul li a {
+    position: relative;
+    top: 10px;
     float: left;
     margin-left: 5px;
 }
 
-#menu_jogadores ul li div {
+#menu_jogadores ul li span {
+    position: relative;
+    top: 10px;
     float: right;
     width: 20px;
     display: inline-block;
     border-radius: 4px;
     background-color: #FFF;
     color: #444;
+    text-align: center;
 }
 
 #chat_do_jogo {
