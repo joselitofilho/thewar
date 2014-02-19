@@ -10,6 +10,7 @@ jogowar.war.ChatJogo = function(area) {
         else if (indiceCor == 3) texto = texto.fontcolor("#282423");
         else if (indiceCor == 4) texto = texto.fontcolor("#F8F7E9");
         else if (indiceCor == 5) texto = texto.fontcolor("#DFE136");
+        else texto = texto.fontcolor("#494949");
 
         this.escreve(texto);
     };
@@ -81,13 +82,13 @@ jogowar.war.ChatJogo = function(area) {
         var texto = 'Servidor: ';
         if (olheiro) texto += jogador + ' está assintindo a partida.';
         else texto += jogador + ' voltou para o jogo.';
-        this.escreve(texto);
+        this.escreveColorido(texto, -1);
     };
     
     this.saiuDoJogo = function(jogador, olheiro) {
         var texto = 'Servidor: ';
         if (olheiro) texto += jogador + ' não está mais assistindo a partida.';
         else texto += jogador + ' saiu do jogo.';
-        this.escreve(texto);
+        this.escreveColorido(texto, -1);
     };
 };

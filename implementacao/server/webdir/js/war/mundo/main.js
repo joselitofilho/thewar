@@ -12,7 +12,6 @@ function iniciarApp() {
     var estiloDoMapa = [
     {
         "featureType": "water",
-        "elementType": "geometry",
         "stylers": [{ "visibility": "off"}]
     },
     {
