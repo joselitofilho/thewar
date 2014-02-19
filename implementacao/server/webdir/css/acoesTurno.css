@@ -71,19 +71,15 @@
 
 .dado {
     float: left;
-    width: 40px;
-    height: 40px;
+    width: 39px;
+    height: 38px;
     background: url('../imagens/dados.png') no-repeat;
     margin: 2px 2px;
 }
 
-.dado_ataque {
-    background-position: 0px 0px;
-}
+.dado_ataque {background-position: 0px 0px;}
 
-.dado_defesa {
-    background-position: 0px -40px;
-}
+.dado_defesa {background-position: 0px -39px;}
 
 #acoes_turno .info #extra {
     position: absolute;

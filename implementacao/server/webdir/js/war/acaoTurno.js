@@ -241,25 +241,25 @@ jogos.war.ComponenteAcaoTurno = function() {
         for (i = 0; i < dadosAtaque.length; i++) {
             if (i < dadosDefesa.length) {
                 if (dadosAtaque[i] <= dadosDefesa[i])
-                    $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
+                    $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -78px');
                 else {
                     ++qtdDadosAtaqueVenceu;
                     $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px 0px');
                 }
             } else
-                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -80px');
+                $('#da' + (i+1)).css('background-position', ((dadosAtaque[i]-1)*-40) + 'px -78px');
         }
         
         // Usabilidade: Dados da defesa.
         for (i = 0; i < dadosDefesa.length; i++) {
             if (i < dadosAtaque.length) {
                 if (dadosDefesa[i] < dadosAtaque[i])
-                    $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
+                    $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -118px');
                 else {
-                    $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -40px');
+                    $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -39px');
                 }
             } else
-                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -120px');
+                $('#dd' + (i+1)).css('background-position', ((dadosDefesa[i]-1)*-40) + 'px -118px');
         }
         
         // Usabilidade: Resultado dos dados.

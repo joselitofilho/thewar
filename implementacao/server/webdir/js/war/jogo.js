@@ -31,9 +31,9 @@ function animarDados() {
     $('#da2').css('background-position', (da2*-40) + 'px 0px');
     $('#da3').css('background-position', (da3*-40) + 'px 0px');
     
-    $('#dd1').css('background-position', (dd1*-40) + 'px -40px');
-    $('#dd2').css('background-position', (dd2*-40) + 'px -40px');
-    $('#dd3').css('background-position', (dd3*-40) + 'px -40px');
+    $('#dd1').css('background-position', (dd1*-40) + 'px -39px');
+    $('#dd2').css('background-position', (dd2*-40) + 'px -39px');
+    $('#dd3').css('background-position', (dd3*-40) + 'px -39px');
 }
 
 function pararAnimacaoDosDados(msgParams) {
