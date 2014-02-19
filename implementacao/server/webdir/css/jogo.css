@@ -37,27 +37,38 @@
     position: absolute;
     top: 676px;
     left: 337px;
-    width: 350px;
+    width: 417px;
+    height: 49px;
     color: #FFF;
+    background: url('../imagens/jogo/bg-barra-tempo.png') no-repeat;
     z-index: 999;
 }
 
 .barra_de_progresso {
-    float: left;
-    width: 300px;
-    height: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    position: relative;
+    top: 15px;
+    left: 60px;
+    width: 296px;
+    height: 10px;
+    border: 0;
+    border-radius: 4px;
     overflow: hidden;
     display: inline-block;
-    margin: 0px 10px 5px 5px;
+    margin: 5px;
     vertical-align: top;
 }
 
 #barra {
-    height: 25px;
-    background-color: #5eb95e;
-    width:0;
+    height: 25px; width:0;
+    background-color: #5EB95E;
+}
+
+#barra_tempo #tempo_restante {
+    position: relative;
+    float: right;
+    top: 14px;
+    right: 12px;
+    color: #FFD1AC;
 }
 
 #controles {
@@ -204,7 +215,7 @@
     position: absolute;
     width: 234px;
     height: 32px;
-    top: 700px;
+    top: 730px;
     left: 395px;
     background: url('../imagens/legenda-rodape.png');
     text-align: center;
