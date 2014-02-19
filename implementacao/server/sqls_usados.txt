@@ -1,2 +1,5 @@
 # Pontuacao dos usuários.
 select * from Pontuacao p inner join Usuarios u on u.id=p.idUsuario;
+
+# Listar triggers
+select * from sqlite_master where type = 'trigger';
