@@ -3,6 +3,7 @@
     width: 1280px;
     height: 800px;
     background: url('../imagens/lobby/bg_fundo.jpg') no-repeat;
+    background-size: 100%;
     visibility: hidden;
 }
 
@@ -95,29 +96,12 @@
     margin-left: 195px;
 }
 
-.jogador_sala_vermelho {
-    background: url('../imagens/soldados_sala.png') 0px 0px no-repeat;
-}
-
-.jogador_sala_azul {
-    background: url('../imagens/soldados_sala.png') -42px 0px no-repeat;
-}
-
-.jogador_sala_verde {
-    background: url('../imagens/soldados_sala.png') -84px 0px no-repeat;
-}
-
-.jogador_sala_preto {
-    background: url('../imagens/soldados_sala.png') -126px 0px no-repeat;
-}
-
-.jogador_sala_branco {
-    background: url('../imagens/soldados_sala.png') -168px 0px no-repeat;
-}
-
-.jogador_sala_amarelo {
-    background: url('../imagens/soldados_sala.png') -210px 0px no-repeat;
-}
+.jogador_sala_vermelho {background: url('../imagens/soldados_sala.png') 0px 0px no-repeat;}
+.jogador_sala_azul {background: url('../imagens/soldados_sala.png') -42px 0px no-repeat;}
+.jogador_sala_verde {background: url('../imagens/soldados_sala.png') -84px 0px no-repeat;}
+.jogador_sala_preto {background: url('../imagens/soldados_sala.png') -126px 0px no-repeat;}
+.jogador_sala_branco {background: url('../imagens/soldados_sala.png') -168px 0px no-repeat;}
+.jogador_sala_amarelo {background: url('../imagens/soldados_sala.png') -210px 0px no-repeat;}
 
 .sc_bloqueador {
     position: absolute;

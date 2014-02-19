@@ -79,14 +79,14 @@ jogowar.war.ChatJogo = function(area) {
     };
     
     this.entrouNoJogo = function(jogador, olheiro) {
-        var texto = 'Servidor: ';
+        var texto = '<b>Servidor</b>: ';
         if (olheiro) texto += jogador + ' está assintindo a partida.';
         else texto += jogador + ' voltou para o jogo.';
         this.escreveColorido(texto, -1);
     };
     
     this.saiuDoJogo = function(jogador, olheiro) {
-        var texto = 'Servidor: ';
+        var texto = '<b>Servidor</b>: ';
         if (olheiro) texto += jogador + ' não está mais assistindo a partida.';
         else texto += jogador + ' saiu do jogo.';
         this.escreveColorido(texto, -1);

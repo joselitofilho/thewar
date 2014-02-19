@@ -12,6 +12,18 @@ html, body {
     cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
 }
 
+.btn-pagseguro {
+    position: absolute;
+    top: 632px;
+    left: 782px;
+}
+
+.btn-paypal {
+    position: absolute;
+    top: 690px;
+    left: 790px;
+}
+
 #alerta {
     position: fixed;
     top: 0;
