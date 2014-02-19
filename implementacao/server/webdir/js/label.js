@@ -6,7 +6,7 @@ function Label(opt_options) {
     this.setValues(opt_options);
     
     this.texto = '1';
-    this.corTexto = '#FFF';
+    this.corTexto = '#F8F7E9';
     this.posicaoJogador = -1;
     this.infoTropasPerdidas = '0';
 
@@ -76,9 +76,9 @@ Label.prototype.alteraQuantiadeDeTropas = function(qtd) {
 Label.prototype.alteraPosicaoJogador = function(posicaoJogador) {
     this.posicaoJogador = posicaoJogador;
     if (posicaoJogador == 4 || posicaoJogador == 5) {
-        this.corTexto = '#444';
+        this.corTexto = '#282423';
     } else {
-        this.corTexto = '#FFF';
+        this.corTexto = '#F8F7E9';
     }
     this.span_.style.color = this.corTexto;
 };

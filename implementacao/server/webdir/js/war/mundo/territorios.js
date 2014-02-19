@@ -157,11 +157,22 @@ jogos.war.Territorios = function(mapa) {
 	        [new google.maps.LatLng(40.313043,141.855469),new google.maps.LatLng(59.085739,148.359375)],
 	        [new google.maps.LatLng(33.431441,133.066406),new google.maps.LatLng(28.613459,121.992188)]
 	    ];
+
+        var lineSymbol = {
+            path: 'M 0,-1 0,1',
+            strokeOpacity: 1,
+            scale: 4
+        };
         
         $.each(coords, function(i, coord) {
             new google.maps.Polyline({
                 path: coord,
-                strokeColor: "#FFF", strokeOpacity: 1, strokeWeight: 3,
+                strokeColor: "#282423", strokeOpacity: 1, strokeWeight: 1,
+                icons: [{
+                    icon: lineSymbol,
+                    offset: '0',
+                    repeat: '18px'
+                }],
                 map: mapa
             });
         });
@@ -475,22 +486,22 @@ jogos.war.Territorios = function(mapa) {
 	    var corDeFundo = '#555';
         switch(posicao) {
             case 0:
-                corDeFundo = '#FA0C01';
+                corDeFundo = '#841D0F';
                 break;
             case 1:
-                corDeFundo = '#00008B';
+                corDeFundo = '#262165';
                 break;
             case 2:
-                corDeFundo = '#006400';
+                corDeFundo = '#214A29';
                 break;
             case 3:
-                corDeFundo = '#000';
+                corDeFundo = '#282423';
                 break;
             case 4:
-                corDeFundo = '#FFF';
+                corDeFundo = '#F8F7E9';
                 break;
             case 5:
-                corDeFundo = '#FFD700';
+                corDeFundo = '#DFE136';
                 break;
         }
         
@@ -521,7 +532,7 @@ jogos.war.Territorios = function(mapa) {
             fillColor: corDeFundo,
             fillOpacity: 0.8,
             scale: 15,
-            strokeColor: "#000000",
+            strokeColor: "#282423",
             strokeWeight: 2
         };
 	    _markerTerritorios[codigoTerritorio].setOptions({icon: novoCirculo});
@@ -542,9 +553,9 @@ jogos.war.Territorios = function(mapa) {
         var circulo = {
             path: google.maps.SymbolPath.CIRCLE, 
             fillColor: corDeFundo,
-            fillOpacity: 1,
+            fillOpacity: 0.8,
             scale: 15,
-            strokeColor: "#000000",
+            strokeColor: "#282423",
             strokeWeight: 2
         };
         
