@@ -1,7 +1,10 @@
-# Pontuacao dos usuários.
+### Pontuacao dos usuários ###
 select * from Pontuacao p inner join Usuarios u on u.id=p.idUsuario;
 
 select nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido from Pontuacao p inner join Usuarios u on u.id=p.idUsuario;
 
-# Listar triggers
+# Ordenado
+select nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido from Pontuacao p inner join Usuarios u on u.id=p.idUsuario order by pontos + quantidadeDePartidas +quantidadeDeVitorias desc;
+
+### Listar triggers ###
 select * from sqlite_master where type = 'trigger';
