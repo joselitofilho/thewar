@@ -235,16 +235,13 @@
 
 .legenda-grupo-territorio {
     position: absolute;
-    /*color: #4D2E14;
-    font-family: 'Stardos Stencil', cursive;
-    font-size: 20px;*/
-    background: url('../imagens/jogo/sprite-nomes-grupos-territorios.png') no-repeat;
+    background: url('../imagens/jogo/sprite-nomes-grupos-territorios-v2.png') no-repeat;
     z-index: 999;
 }
 
 .legenda-gt-amdonorte {
     top: 185px; left: 90px;
-    background-position: 0 -255px; width: 147px; height: 47px;
+    background-position: 0 -235px; width: 147px; height: 47px;
 }
 .legenda-gt-amdosul {
     top: 626px; left: 316px;
@@ -252,17 +249,17 @@
 }
 .legenda-gt-europa {
     top: 320px; left: 360px;
-    background-position: 0 -205px; width: 66px; height: 45px;
+    background-position: 0 -189px; width: 66px; height: 45px;
 }
 .legenda-gt-asia {
     top: 370px; left: 880px;
-    background-position: 0 -153px; width: 41px; height: 47px;
+    background-position: 0 -141px; width: 41px; height: 47px;
 }
 .legenda-gt-oceania {
     top: 560px; left: 715px;
-    background-position: 0 -104px; width: 70px; height: 44px;
+    background-position: 0 -96px; width: 70px; height: 44px;
 }
 .legenda-gt-africa {
     top: 518px; left: 428px;
-    background-position: 0 -52px; width: 60px; height: 47px;
+    background-position: 0 -48px; width: 60px; height: 47px;
 }
