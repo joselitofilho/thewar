@@ -174,8 +174,9 @@
     cursor: text;
     padding: 5px;
     top: 0px;
-    overflow-x: none;
+    overflow-x: hidden;
     overflow-y: auto;
+    text-shadow: #888 0.1em 0.0em 0.1em;
 }
 
 #chat_do_jogo input {
