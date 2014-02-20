@@ -4,6 +4,8 @@ var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
 
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
+    
+    $('#googleads').css('left', '-728px');
     $('#sala').css('visibility', 'hidden');
     $('#sala #sala_content .box').children().each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');

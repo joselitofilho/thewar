@@ -12,6 +12,13 @@ html, body {
     cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
 }
 
+#googleads {
+    position: absolute;
+    top: 632px;
+    left: -728px;
+    z-index: 998;
+}
+
 .btn-pagseguro {
     position: absolute;
     top: 632px;
