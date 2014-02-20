@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="pragma" content="no-cache"> 
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>Guerra</title>
         
         <link rel="icon" type="image/png" href="imagens/ico.png" />
+
+        <!-- Google Analytics -->
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-48255924-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+        <!-- End Google Analytics -->
 
         <!-- Fontes -->
         <link href='http://fonts.googleapis.com/css?family=Stardos+Stencil:400,700' rel='stylesheet' type='text/css'>
@@ -38,7 +52,21 @@
         <link href="css/chat.css" rel="stylesheet">
     </head>
     <body>
+        <!-- Facebook - Inicio -->
         <div id="fb-root"></div>
+        <!-- Curtir -->
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=449500988484457";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
+        <!---->
+        
+        <!-- Login com Facebook
         <script src="http://connect.facebook.net/pt_BR/all.js"></script>
         <script>
             window.fbAsyncInit = function() {
@@ -61,8 +89,10 @@
                  });
             };
 
-            
         </script>
+        -->
+        <!---->
+        <!-- Facebook - Fim  -->
 
         <!-- Google ADS-->
         <div id="googleads">
@@ -452,4 +482,10 @@
         <script type="text/javascript" src="js/war/mundo/main.js"></script>
         <!---->
     </body>
+
+    <!-- Não armazenar o cache -->
+    <head>
+        <meta http-equiv="pragma" content="no-cache"> 
+    </head>
+    <!---->
 </html>
