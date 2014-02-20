@@ -4,6 +4,7 @@
 import os
 import shutil
 import unittest
+from src.JogadorRanking import *
 from src.pontuacaodb import *
 
 class PontuacaoDBTeste(unittest.TestCase):
@@ -46,6 +47,24 @@ class PontuacaoDBTeste(unittest.TestCase):
 
         # Verificação.
         self.assertEqual(novaPontuacaoDBO, pontuacaoDBOAtualizada)
+
+    def test_DeveRetornarORanking(self):
+        # Preparação.
+        jogadorRanking1 = JogadorRanking(1, "Joselito", 500, 3, 2, 0)
+        jogadorRanking2 = JogadorRanking(2, "kellymineiro", 200, 1, 1, 0)
+        jogadorRanking3 = JogadorRanking(3, "Katryne", 0, 1, 0, 0)
+        rankingEsperado = [
+           jogadorRanking1,
+           jogadorRanking2,
+           jogadorRanking3
+        ]
+
+        # Operação.
+        pontuacaoDB = PontuacaoDB('wartest.db')
+        ranking = pontuacaoDB.rankingDosUsuarios()
+
+        # Verificação.
+        self.assertEqual(rankingEsperado, ranking)
 
     def tearDown(self):
         os.remove('wartest.db')

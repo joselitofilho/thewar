@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
+from JogadorRanking import *
 
 class PontuacaoDBO(object):
     def __init__(self):
@@ -42,6 +43,24 @@ class PontuacaoDB(object):
         conn.close()
 
         return retorno
+
+    def rankingDosUsuarios(self):
+        conn = sqlite3.connect(self.baseDeDados)
+        c = conn.cursor()
+        rowPontuacoes = c.execute('SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
+
+        ranking = []
+        if rowPontuacoes:
+            posicaoRanking = 1
+            for row in rowPontuacoes:
+                jogadorRanking = JogadorRanking(posicaoRanking, 
+                    row[0], row[1], row[2], row[3], row[4])
+                ranking.append(jogadorRanking)
+                posicaoRanking += 1
+
+        conn.close()
+
+        return ranking
 
     def pontosDoUsuario(self, usuario):
         pontos = None
