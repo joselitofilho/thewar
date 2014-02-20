@@ -919,26 +919,26 @@ class Jogo(object):
         objetivo = FabricaObjetivo().cria(jogador.objetivo)
         jogadorVenceu = objetivo.completou(jogador, self.jogadores)
         
-        if jogadorVenceu:
+        if jogadorVenceu and not self.contabilizouPontos:
             self.jogadorVencedor = jogador
-            self.contabilizaPontosDoVencedor()
-
-        return jogadorVenceu
-
-    def contabilizaPontosDoVencedor(self):
-        pontos = -1
-        if not self.contabilizouPontos:
+            
             qtdJogadores = len(self.jogadores)
             usuarios = []
+            quemDestruiuQuem = {}
             for k, v in self.jogadores.iteritems():
                 usuarios.append(v.usuario)
+                if len(v.jogadoresDestruidos) > 0:
+                    quemDestruiuQuem[v.usuario] = []
+                    for p in v.jogadoresDestruidos:
+                        quemDestruiuQuem[v.usuario].append(self.jogadores[p].usuario)
 
-            pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios)
-            pontos = pontuacao.contabiliza()
+            pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem)
+            pontuacao.contabilizaPontuacaoDoVencedor()
+            pontuacao.contabilizaPontuacaoDosQueNaoVenceram()
 
             self.contabilizouPontos = True
 
-        return pontos
+        return jogadorVenceu
 
     def temJogadorOnLine(self):
         return len(self.clientes) > 0
