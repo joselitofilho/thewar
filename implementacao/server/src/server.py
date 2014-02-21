@@ -17,6 +17,7 @@ from autobahn.websocket import WebSocketServerFactory, \
 import gerenciador
 import banco
 from mensagens import *
+from pontuacaodb import *
                                
 class BroadcastServerProtocol(WebSocketServerProtocol):
 
@@ -73,6 +74,13 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     params["status"] = 2
                     
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.registrar, params), default=lambda o: o.__dict__)
+                print "# ", jsonMsg
+                self.sendMessage(jsonMsg)
+            elif mensagem.tipo == TipoMensagem.ranking:
+                pontuacaoDB = PontuacaoDB()
+                ranking = pontuacaoDB.ranking()
+
+                jsonMsg = json.dumps(Mensagem(TipoMensagem.ranking, ranking), default=lambda o: o.__dict__)
                 print "# ", jsonMsg
                 self.sendMessage(jsonMsg)
             else:

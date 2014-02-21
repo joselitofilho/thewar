@@ -3,6 +3,7 @@ import json
 class TipoMensagem:
     entrar = "Entrar"
     registrar = "Registrar"
+    ranking = "Ranking"
     lobby = "Lobby"
     erro = "Erro"
     criar_sala = "CriarSala"

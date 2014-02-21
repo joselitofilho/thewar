@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Guerra</title>
+        
+        <link rel="icon" type="image/png" href="imagens/ico.png" />
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/bootstrap-2.3.2.min.css" />
+
+        <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/jquery.dynatable.css" />    
+        <script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery.dynatable.js'></script>
+                
+        <script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/highcharts.js'></script>
+    </head>
+    <body>
+        Ranking
+        <table id="ranking-table" class="table table-bordered">
+            <thead>
+                <th data-dynatable-column="posicaoNoRanking" class="dynatable-head">Posi&ccedil;&aatild;o</th>
+                <th data-dynatable-column="nome" class="dynatable-head">Nome</th>
+                <th data-dynatable-column="pontos" class="dynatable-head">Pontos</th>
+                <th data-dynatable-column="quantidadeDePartidas" class="dynatable-head">Partidas</th>
+                <th data-dynatable-column="quantidadeDeVitorias" class="dynatable-head">Vit&oacute;rias</th>
+                <th data-dynatable-column="quantidadeDestruido" class="dynatable-head">Destru&iacute;do</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <script type="text/javascript" src="js/websocket/websocket.js"></script>
+        <script type="text/javascript" src="js/mensagens.js"></script>
+        <script type="text/javascript" src="js/comunicacao.js"></script>
+
+        <script>
+            //$('#ranking-table').dynatable();
+            _libwebsocketRanking = new gpscheck.comunicacao.GPSWebSocket(8080);
+
+            function posAberturaSocket(msg) {
+                rankingMsg = comunicacao_ranking();
+                _libwebsocketRanking.enviarObjJson(rankingMsg);
+            }
+            function posRecebimentoMensagemServidor(msg) {
+                console.log(msg);
+                var jsonMensagem = JSON.parse(msg);
+                $('#ranking-table').dynatable({
+                    dataset: {
+                        records: jsonMensagem.params
+                    }
+                });
+            }
+
+            _libwebsocketRanking.FOnOpen(posAberturaSocket);
+            _libwebsocketRanking.FOnMessage(posRecebimentoMensagemServidor);
+            _libwebsocketRanking.iniciar();
+        </script>
+    </body>
+</html>

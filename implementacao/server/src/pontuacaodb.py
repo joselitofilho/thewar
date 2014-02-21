@@ -44,7 +44,7 @@ class PontuacaoDB(object):
 
         return retorno
 
-    def rankingDosUsuarios(self):
+    def ranking(self):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
         rowPontuacoes = c.execute('SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()

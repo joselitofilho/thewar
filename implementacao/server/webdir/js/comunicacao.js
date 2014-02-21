@@ -18,6 +18,10 @@ function comunicacao_registrar(usuario, senha, email) {
     });
 }
 
+function comunicacao_ranking() {
+    return new Mensagem(TipoMensagem.ranking, null);
+}
+
 function comunicacao_criarSala(id) {
     return new Mensagem(TipoMensagem.criar_sala,
     {

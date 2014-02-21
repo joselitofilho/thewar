@@ -61,7 +61,7 @@ class PontuacaoDBTeste(unittest.TestCase):
 
         # Operação.
         pontuacaoDB = PontuacaoDB('wartest.db')
-        ranking = pontuacaoDB.rankingDosUsuarios()
+        ranking = pontuacaoDB.ranking()
 
         # Verificação.
         self.assertEqual(rankingEsperado, ranking)
