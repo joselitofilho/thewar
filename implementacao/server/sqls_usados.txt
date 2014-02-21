@@ -6,5 +6,9 @@ select nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestr
 # Ordenado
 select nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido from Pontuacao p inner join Usuarios u on u.id=p.idUsuario order by pontos + quantidadeDePartidas +quantidadeDeVitorias desc;
 
+# Criar pontuacao para jogadores que nao foi criado.
+INSERT INTO Pontuacao(idUsuario)
+SELECT distinct(u.id) FROM Usuarios u WHERE u.id NOT IN (SELECT p.idUsuario FROM Pontuacao p);
+
 ### Listar triggers ###
 select * from sqlite_master where type = 'trigger';
