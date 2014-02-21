@@ -51,7 +51,7 @@ class Sala(object):
             self.defineProximaPosicao()
             
             if jogador.dono:
-                self.verificaDono();
+                self.verificaDono()
 
             extra = {
                 "entrou_ou_saiu": 0,
@@ -96,10 +96,13 @@ class Sala(object):
         return retorno
 
     def verificaDono(self, posicao = -1):
-        if self.dono == None:
+        if self.dono == None and not posicao == -1:
             self.dono = posicao
         else:
             self.dono = None
+            for pos in self.jogadores.keys():
+                self.jogadores[pos].dono = False
+
             for pos in self.jogadores.keys():
                 self.dono = pos
                 self.jogadores[pos].dono = True
@@ -115,5 +118,5 @@ class Sala(object):
     def vazia(self):
         return len(self.jogadores) == 0
     
-    def __del__(self):
-        del self.jogadores
+    #def __del__(self):
+    #    del self.jogadores
