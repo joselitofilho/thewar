@@ -50,13 +50,15 @@ class Sala(object):
             
             self.defineProximaPosicao()
             
-            if jogador.dono:
-                self.verificaDono()
-
             extra = {
                 "entrou_ou_saiu": 0,
                 "jogador": jogador
             }
+
+            if jogador.dono:
+                self.dono = None
+                self.escolheNovoDono()
+
             infoSalaMsg = InfoSala(self.id,
                     EstadoDaSala.sala_criada,
                     self.jogadores.values(), extra)
@@ -98,8 +100,9 @@ class Sala(object):
     def verificaDono(self, posicao = -1):
         if self.dono == None and not posicao == -1:
             self.dono = posicao
-        else:
-            self.dono = None
+
+    def escolheNovoDono(self):
+        if self.dono == None:
             for pos in self.jogadores.keys():
                 self.jogadores[pos].dono = False
 
@@ -107,6 +110,7 @@ class Sala(object):
                 self.dono = pos
                 self.jogadores[pos].dono = True
                 break
+
                     
     def defineProximaPosicao(self):
         for i in range(6):
