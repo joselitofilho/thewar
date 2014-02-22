@@ -41,7 +41,6 @@
                 _libwebsocketRanking.enviarObjJson(rankingMsg);
             }
             function posRecebimentoMensagemServidor(msg) {
-                console.log(msg);
                 var jsonMensagem = JSON.parse(msg);
                 $('#ranking-table').dynatable({
                     dataset: {
