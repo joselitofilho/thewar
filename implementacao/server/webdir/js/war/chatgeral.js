@@ -5,8 +5,7 @@ jogos.war.ChatGeral = function(area) {
     this.util = new jogos.war.Util();
 
     this.escreve = function(texto) {
-        var dataHora = this.util.dataAtualFormatada();
-        area.append(dataHora + " " + texto + '<br/>');
+        area.append(texto + '<br/>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
