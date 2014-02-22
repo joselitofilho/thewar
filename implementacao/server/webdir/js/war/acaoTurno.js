@@ -394,6 +394,7 @@ jogos.war.ComponenteAcaoTurno = function() {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', '');
             } else if (tipoAcao == TipoAcaoTurno.trocar_cartas) {
+                $('#btnAcao1').css('visibility', 'visible');
                 $('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-ver-cartas');
                 $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
             } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {

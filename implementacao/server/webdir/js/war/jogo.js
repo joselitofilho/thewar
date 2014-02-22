@@ -21,12 +21,6 @@ function jogo_preparaElementosHtml() {
     $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'visible');
     });
-    $('#menu_jogadores li span').each(function(i, elemento) {
-        $(elemento).html('0');
-    });
-    $('#menu_jogadores li a').each(function(i, elemento) {
-        $(elemento).html('');
-    });
 }
 
 function animarDados() {
