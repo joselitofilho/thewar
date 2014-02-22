@@ -24,7 +24,10 @@ class Sala(object):
             posicao = self.proximaPosicao
             self.verificaDono(posicao)
        
-            jogador = JogadorDaSala(usuario, posicao, (self.dono == posicao))
+            print "POSICAO: ", posicao
+            print "DONO: ", self.dono
+
+            jogador = JogadorDaSala(usuario, posicao, (self.dono == posicao and posicao > -1))
             self.jogadores[posicao] = jogador
 
             self.defineProximaPosicao()
@@ -90,6 +93,9 @@ class Sala(object):
                 jogador.posicao = novaPosicao
                 self.jogadores[novaPosicao] = self.jogadores[posicaoAtual]
                 self.jogadores.pop(posicaoAtual)
+
+                if jogador.dono:
+                    self.dono = novaPosicao
                         
                 retorno = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], posicaoAtual)
                         
@@ -97,8 +103,8 @@ class Sala(object):
 
         return retorno
 
-    def verificaDono(self, posicao = -1):
-        if self.dono == None and not posicao == -1:
+    def verificaDono(self, posicao):
+        if self.dono == None:
             self.dono = posicao
 
     def escolheNovoDono(self):
