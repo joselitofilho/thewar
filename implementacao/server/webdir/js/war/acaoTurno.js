@@ -118,7 +118,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #conteudoDinamico').html('');
         $('#acoes_turno .info #conteudoDinamico').html(conteudo);
     };
-    
+ 
     this.turnoAtacar = function(ehOJogadorDaVez, jogadorDaVez) {
         this.ehOJogadorDaVez = ehOJogadorDaVez;
         this.jogadorDaVez = jogadorDaVez;
@@ -143,6 +143,8 @@ jogos.war.ComponenteAcaoTurno = function() {
             '</div>';
         $('#acoes_turno .info #conteudoDinamico').html('');
         $('#acoes_turno .info #conteudoDinamico').html(conteudo);
+        
+        this.escondeBtn1Atacar();
     };
     
     this.turnoAtacarEscolheuAlvo = function(codigoDoTerritorio, posicaoJogador, quantidade) {
@@ -157,6 +159,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         
         $('#acoes_turno .info #conteudoDinamico #alvo .nome').html(nomeDoTerritorio);
         $('#acoes_turno .info #conteudoDinamico #alvo .quantidade').html(quantidade);
+        this.escondeBtn1Atacar();
     };
     
     this.turnoAtacarAdicionaAtacante = function(posicaoJogador, 
@@ -175,6 +178,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         $('#acoes_turno .info #conteudoDinamico #atacante .nome').html(nomeDosTerritorios.trim());
         
         this.atualizaQuantidadeDeTropasAtacante();
+        this.exibeBtn1Atacar();
     };
     
     this.turnoAtacarAlteraTerritorioAtacante = function(posicaoJogador) {
@@ -214,6 +218,10 @@ jogos.war.ComponenteAcaoTurno = function() {
 
         this.atualizaNomeDosTerritoriosAtacante();
         this.atualizaQuantidadeDeTropasAtacante();
+
+        if (Object.keys(this.quantidadeDeTropasAtacante).length == 0) {
+            this.escondeBtn1Atacar();
+        }
     };
     
     this.turnoAtacarExibeTerritoriosEnvolvidosNoAtaque = function(
@@ -509,5 +517,13 @@ jogos.war.ComponenteAcaoTurno = function() {
                 if (ehOJogadorDaVez) finalizarTurno();
             });
         } 
+    };
+
+    this.escondeBtn1Atacar = function() {
+        $('.sprite-btn-acoes-turno-atacar').css('visibility', 'hidden');
+    };
+
+    this.exibeBtn1Atacar = function() {
+        $('.sprite-btn-acoes-turno-atacar').css('visibility', 'visible');
     };
 };
