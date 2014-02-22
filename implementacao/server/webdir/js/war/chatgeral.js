@@ -5,6 +5,7 @@ jogos.war.ChatGeral = function(area) {
     this.util = new jogos.war.Util();
 
     this.escreve = function(texto) {
+        texto = this.util.substituiURLPorHTMLLinks(texto);
         area.append(texto + '<br/>');
         area.scrollTop(
             area[0].scrollHeight - area.height()

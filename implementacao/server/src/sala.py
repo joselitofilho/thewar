@@ -24,9 +24,6 @@ class Sala(object):
             posicao = self.proximaPosicao
             self.verificaDono(posicao)
        
-            print "POSICAO: ", posicao
-            print "DONO: ", self.dono
-
             jogador = JogadorDaSala(usuario, posicao, (self.dono == posicao and posicao > -1))
             self.jogadores[posicao] = jogador
 

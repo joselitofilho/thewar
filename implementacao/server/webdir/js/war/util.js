@@ -13,6 +13,11 @@ jogos.war.Util = function() {
 
         return day+"/"+month+"/"+year+" "+hour+":"+minute;
     };
+
+    this.substituiURLPorHTMLLinks = function(texto) {
+        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        return texto.replace(exp,"<a href='$1' target='_blank'>$1</a>"); 
+    };
 };
 
 var listaFadeinPoligono = {};

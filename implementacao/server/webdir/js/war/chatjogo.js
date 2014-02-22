@@ -2,6 +2,7 @@ var jogowar = jogowar || {};
 jogowar.war = jogowar.war || {};
 
 jogowar.war.ChatJogo = function(area) {
+    this.util = new jogos.war.Util();
 
     this.escreveColorido = function(texto, indiceCor) {
         if (indiceCor == 0) texto = texto.fontcolor("#841D0F");
@@ -16,6 +17,7 @@ jogowar.war.ChatJogo = function(area) {
     };
 
     this.escreve = function(texto) {
+        texto = this.util.substituiURLPorHTMLLinks(texto);
         area.append(texto + '</br>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
