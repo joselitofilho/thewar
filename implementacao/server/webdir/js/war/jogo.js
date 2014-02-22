@@ -4,6 +4,8 @@ var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
 
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
+
+    _jogadorEstaEmJogo = true;
     
     $('#googleads').css('left', '-728px');
     $('#sala').css('visibility', 'hidden');

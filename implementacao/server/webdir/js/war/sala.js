@@ -136,7 +136,7 @@ function processarMsg_info_sala(msgParams) {
 }
 
 function entrouNaSala(sala, jogadorDaSala) {
-    this.tocarSom(this, "entrou.mp3");
+    if (!_jogadorEstaEmJogo) this.tocarSom(this, "entrou.mp3");
 
     if (_usuario == jogadorDaSala.usuario) {
         _salaDoJogador = sala;
@@ -147,7 +147,7 @@ function entrouNaSala(sala, jogadorDaSala) {
 }
 
 function saiuDaSala(sala, jogadorDaSala) {
-    this.tocarSom(this, "saindo.wav");
+    if (!_jogadorEstaEmJogo) this.tocarSom(this, "saindo.wav");
     
     _sala.limpaPosicao(sala, Number(jogadorDaSala.posicao));
 

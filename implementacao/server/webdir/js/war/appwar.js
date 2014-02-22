@@ -6,6 +6,7 @@ _painelObjetivo = null;
 
 _usuario = null;
 _posicaoJogador = -1;
+_jogadorEstaEmJogo = false;
 _salaDoJogador = null;
 _turno = null;
 _posicaoJogadorDaVez = -1;
@@ -35,6 +36,7 @@ _chatGeral.boasVindas();
 
 function appwar_limparVariaveis() {
     _posicaoJogador = -1;
+    _jogadorEstaEmJogo = false;
     _salaDoJogador = null;
     _posicaoJogadorDaVez = -1;
 
@@ -108,14 +110,14 @@ function appwar_processaMsg_usuario_conectou(msgParams) {
     var usuario = msgParams.usuario;
     _chatGeral.usuarioConectou(usuario);
     _listaUsuarios.adiciona(usuario);
-    if (_salaDoJogador == null) this.tocarSom(this, "entrou.mp3");
+    if (!_jogadorEstaEmJogo) this.tocarSom(this, "entrou.mp3");
 }
 
 function appwar_processaMsg_usuario_desconectou(msgParams) {
     var usuario = msgParams.usuario;
     _chatGeral.usuarioDesconectou(usuario);
     _listaUsuarios.remove(usuario);
-    if (_salaDoJogador == null) this.tocarSom(this, "saindo.wav");
+    if (!_jogadorEstaEmJogo) this.tocarSom(this, "saindo.wav");
 }
 
 function processarMsg_erro() {
@@ -493,7 +495,7 @@ function appwar_recarregarPagina() {
 }
 
 function appwar_processaMsg_msg_chat_geral(msgParams) {
-    if (_salaDoJogador == null) this.tocarSom(this, 'mensagem.mp3');
+    if (!_jogadorEstaEmJogo) this.tocarSom(this, 'mensagem.mp3');
     
     var texto = "<b>" + msgParams.usuario + ":</b> " + msgParams.texto;
     _chatGeral.escreve(texto);
