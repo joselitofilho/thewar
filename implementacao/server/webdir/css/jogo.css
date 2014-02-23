@@ -179,6 +179,10 @@
     text-shadow: #888 0.1em 0.0em 0.1em;
 }
 
+#cj_mensagens object {
+    max-width: 300px;
+}
+
 #chat_do_jogo input {
     display: inline;
     width: 286px;
