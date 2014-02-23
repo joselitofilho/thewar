@@ -485,14 +485,16 @@ jogos.war.Territorios = function(mapa) {
 	this.corDeFundoDaPosicao = function(posicao) {
 	    var corDeFundo = '#555';
         switch(posicao) {
-            case 0:
+            case 0: // Vermelho
                 corDeFundo = '#841D0F';
                 break;
-            case 1:
+            case 1: // Azul
                 corDeFundo = '#262165';
                 break;
-            case 2:
-                corDeFundo = '#214A29';
+            case 2: // Verde
+                //corDeFundo = '#214A29';
+                //corDeFundo = '#325b3a';
+                corDeFundo = '#436c4b';
                 break;
             case 3:
                 corDeFundo = '#282423';
