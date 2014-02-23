@@ -100,6 +100,8 @@ function jogo_iniciaAnimacaoBatalha(msgParams) {
 }
 
 function jogo_efetuaAtaque(msgParams) {
+    _jaPodeAtacar = true;
+
     _chatJogo.ataque(
         msgParams.jogadorAtaque.usuario,
         msgParams.territoriosDoAtaque,
@@ -191,9 +193,7 @@ function jogo_efetuaAtaque(msgParams) {
                 _sliderMoverTropas.alteraPosicionamentoNoHTML(posicao);
             }
         }
-    }
-    
-    _jaPodeAtacar = true;
+    }    
 }
 
 function processarMsg_jogo_fase_I(msgParams) {
