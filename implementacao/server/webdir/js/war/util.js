@@ -16,7 +16,30 @@ jogos.war.Util = function() {
 
     this.substituiURLPorHTMLLinks = function(texto) {
         var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        if (this.temImagemNaURL(texto)) {
+            return texto.replace(exp,"<object data='$1'></object>"); 
+        }
+
         return texto.replace(exp,"<a href='$1' target='_blank'>$1</a>"); 
+    };
+
+    this.imagemDaURLEstaValida = function(url) {
+        var image_new = new Image();
+        image_new.src = url;
+        if ((image_new.width>0)&&(image_new.height>0)){
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    this.temImagemNaURL = function(texto) {
+        if (/(jpg|gif|png)$/.test(texto)) {
+            //return imagemDaURLEstaValida(texto);
+            return true;
+        }
+
+        return false;
     };
 };
 
