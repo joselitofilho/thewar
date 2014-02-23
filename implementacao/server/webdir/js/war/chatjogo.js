@@ -7,7 +7,7 @@ jogowar.war.ChatJogo = function(area) {
     this.escreveColorido = function(texto, indiceCor) {
         if (indiceCor == 0) texto = texto.fontcolor("#841D0F");
         else if (indiceCor == 1) texto = texto.fontcolor("#262165");
-        else if (indiceCor == 2) texto = texto.fontcolor("#214A29");
+        else if (indiceCor == 2) texto = texto.fontcolor("#436C4B");
         else if (indiceCor == 3) texto = texto.fontcolor("#282423");
         else if (indiceCor == 4) texto = texto.fontcolor("#F8F7E9");
         else if (indiceCor == 5) texto = texto.fontcolor("#DFE136");

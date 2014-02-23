@@ -492,9 +492,7 @@ jogos.war.Territorios = function(mapa) {
                 corDeFundo = '#262165';
                 break;
             case 2: // Verde
-                //corDeFundo = '#214A29';
-                //corDeFundo = '#325b3a';
-                corDeFundo = '#436c4b';
+                corDeFundo = '#436C4B';
                 break;
             case 3:
                 corDeFundo = '#282423';
