@@ -57,8 +57,6 @@ function appwar_limparVariaveis() {
     _cartasTerritoriosSelecionadas = [];
 
     _quantidadeDeJogadoresNaSala = 0;
-
-    _sala = null;
 }
 
 function exibirAlerta(tipo, msg) {
