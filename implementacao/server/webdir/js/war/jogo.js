@@ -434,8 +434,7 @@ function processarMsg_turno_trocar_cartas(msgParams) {
     this.tocarSom(this, "turnoTrocarCarta.mp3");
     
     if (msgParams.obrigatorio && (_posicaoJogador == msgParams.vezDoJogador.posicao)) {
-        // TODO: Abrir painel do componente de turnos.
-        //appwar_abrePainelCartasTerritorios();
+        _componenteAcaoTurno.btnVerCartasClick(true);
     }
 }
 

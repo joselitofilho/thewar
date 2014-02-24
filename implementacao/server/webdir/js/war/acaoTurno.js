@@ -381,6 +381,17 @@ jogos.war.ComponenteAcaoTurno = function() {
                 break;
         }
     };
+
+    this.btnVerCartasClick = function(ehOJogadorDaVez) {
+        if (ehOJogadorDaVez) {
+            $('#acoes_turno').css('z-index', '9001');
+            $('#acoes_turno .info #conteudoDinamico #meio').html('Escolha 3 cartas de forma iguais ou 3 cartas de formas diferentes.');
+            this.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
+            this.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
+            $('#painel_cartas_territorios').css('visibility', 'visible');
+            $('#pct_fundo').css('visibility', 'visible');
+        }
+    };
     
     this.alteraBotoesDaAcao = function(ehOJogadorDaVez, tipoAcao) {
         $('#btnAcao1').attr('class', '');
@@ -417,13 +428,7 @@ jogos.war.ComponenteAcaoTurno = function() {
         var me = this;
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
         $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function(){
-            if (ehOJogadorDaVez) {
-                $('#acoes_turno').css('z-index', '9001');
-                $('#acoes_turno .info #conteudoDinamico #meio').html('Escolha 3 cartas de forma iguais ou 3 cartas de formas diferentes.');
-                me.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
-                me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
-                appwar_abrePainelCartasTerritorios();
-            }
+            me.btnVerCartasClick(ehOJogadorDaVez);
         });
 
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
@@ -474,13 +479,7 @@ jogos.war.ComponenteAcaoTurno = function() {
             $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').unbind('click');
             var me = this;
             $('#acoes_turno .sprite-btn-acoes-turno-ver-cartas').click(function() {
-                if (ehOJogadorDaVez) {
-                    $('#acoes_turno').css('z-index', '9001');
-                    $('#acoes_turno .info #conteudoDinamico #meio').html('Escolha 3 cartas de forma iguais ou 3 cartas de formas diferentes.');
-                    me.alteraFuncaoBtnVerCartasParaTrocar(ehOJogadorDaVez);
-                    me.alteraFuncaoBtnProsseguirParaCancelar(ehOJogadorDaVez);
-                    appwar_abrePainelCartasTerritorios();
-                }
+                me.btnVerCartasClick(ehOJogadorDaVez);
             });
         }
     };

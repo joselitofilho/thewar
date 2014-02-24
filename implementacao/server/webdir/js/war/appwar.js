@@ -244,8 +244,13 @@ function atacar() {
 }
 
 function appwar_abrePainelCartasTerritorios() {
-    $('#painel_cartas_territorios').css('visibility', 'visible');
-    $('#pct_fundo').css('visibility', 'visible');
+    if (_posicaoJogador == _posicaoJogadorDaVez && 
+        _turno.tipoAcao == TipoAcaoTurno.trocar_cartas) {
+        _componenteAcaoTurno.btnVerCartasClick(true);
+    } else {
+        $('#painel_cartas_territorios').css('visibility', 'visible');
+        $('#pct_fundo').css('visibility', 'visible');
+    }
 }
 
 function appwar_fechaPainelCartasTerritorios() {
