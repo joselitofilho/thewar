@@ -176,6 +176,7 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 
 function processarMsg_lobby(msgParams) {
     jogo_removeElementosHtml();
+    _jogadorEstaEmJogo = false;
 
     $('#googleads').css('left', '34px');
 
