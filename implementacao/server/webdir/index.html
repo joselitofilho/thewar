@@ -123,11 +123,12 @@
                 <div id="pre_content">
                     <input id="inputUsuario" type="text" 
                         class="input-block-level" 
-                        placeholder="Usu&aacute;rio" />
+                        placeholder="Usu&aacute;rio" maxlength="15"
+                        onkeypress="return inputFormLogin_onkeypress(event);" />
                     <input id="inputSenha" type="password" 
                         class="input-block-level" 
                         placeholder="Senha"
-                        onkeypress="return inputSenha_onkeypress(event);" />
+                        onkeypress="return inputFormLogin_onkeypress(event);" />
                     <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
                     <!--<fb:login-button></fb:login-button>-->
                 </div>

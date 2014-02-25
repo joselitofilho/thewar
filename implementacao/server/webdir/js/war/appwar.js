@@ -584,7 +584,7 @@ function appwar_abrirRegras() {
     win.focus();
 }
 
-function inputSenha_onkeypress(event) {
+function inputFormLogin_onkeypress(event) {
     if (event.keyCode == 13) {
         appwar_entrar();
     }
