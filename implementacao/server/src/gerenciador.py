@@ -141,14 +141,15 @@ class GerenciadorSala(object):
         self.gerenciadorPrincipal.jogoTerminou(idJogo)
         self.jogadoresDaSala = []
         
-        if idJogo == "1" or idJogo == "2":
-            print "Recriando sala ", idJogo
-            self.sala = Sala(idJogo)
-            self.estado = EstadoDaSala.sala_criada
+        # TODO: Verificar criacao de salas pre-criadas.
+        #if idJogo == "1" or idJogo == "2":
+        print "Recriando sala ", idJogo
+        self.sala = Sala(idJogo)
+        self.estado = EstadoDaSala.sala_criada
         
-            infoSalaMsg = InfoSala(self.sala.id, 
-                self.estado, self.sala.jogadores.values(), None)
-            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+        infoSalaMsg = InfoSala(self.sala.id, 
+            self.estado, self.sala.jogadores.values(), None)
+        self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
         if self.jogo != None:
@@ -178,8 +179,9 @@ class GerenciadorPrincipal(object):
         self.salas = {}
         self.usuarioPorSala = {}
         
-        self.salas["1"] = GerenciadorSala("1", self)
-        self.salas["2"] = GerenciadorSala("2", self)
+        # TODO: Verificar criacao de salas pre-criadas.
+        #self.salas["1"] = GerenciadorSala("1", self)
+        #self.salas["2"] = GerenciadorSala("2", self)
 
     def clienteConectou(self, cliente, usuario):
         self.jogadores[cliente] = usuario
@@ -277,11 +279,12 @@ class GerenciadorPrincipal(object):
         idSala = str(idSala)
         print "[DEBUG] fechaSala(", idSala, ")"
         try:
-            if idSala != "1" and idSala != "2":
-                del self.salas[idSala]
-                self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
-                    FecharSala(idSala))
-                print "[DEBUG] Sala ", idSala, " fechada."
+            # TODO: Verificar criacao de salas pre-criadas.
+            #if idSala != "1" and idSala != "2":
+            del self.salas[idSala]
+            self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
+                FecharSala(idSala))
+            print "[DEBUG] Sala ", idSala, " fechada."
         except:
             traceback.print_exc()
             print "[ERRO] Tentou fechar sala de id:", idSala
