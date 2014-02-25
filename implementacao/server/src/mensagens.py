@@ -117,9 +117,11 @@ class AcaoTurno(object):
 
 class AcaoDistribuirTropasGlobais(AcaoTurno):
     def __init__(self, tipoAcao, 
-            numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas):
+            numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas,
+            territoriosDosJogadores):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca)
         self.quantidadeDeTropas = quantidadeDeTropas
+        self.territoriosDosJogadores = territoriosDosJogadores
         
 class AcaoDistribuirTropasGrupoTerritorio(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas, grupoTerritorio):

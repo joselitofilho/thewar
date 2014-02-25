@@ -563,37 +563,51 @@ jogos.war.Territorios = function(mapa) {
 		$.each(territorios, function(i, territorio) {
 			if (me.territorios[territorio.codigo]) {
 				var posicao = me.territorios[territorio.codigo].centro;
-		        var marker = new google.maps.Marker({
-		            position: posicao,
-		            map: mapa,
-		            icon: circulo,
-		            title: territorio.nome,
-		            zIndex: 2
-		        });
+                
+                var marker = null;
+                if (_markerTerritorios[territorio.codigo]) {
+                    marker = _markerTerritorios[territorio.codigo];
+                    marker.position = posicao;
+                    marker.icon = circulo;
+                } else {
+		            marker = new google.maps.Marker({
+		                position: posicao,
+		                map: mapa,
+		                icon: circulo,
+		                title: territorio.nome,
+		                zIndex: 2
+		            });
+
+                    google.maps.event.addListener(marker, 'mousemove', function(event) {
+                        territorioMouseMove(event, _labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    });
+
+                    google.maps.event.addListener(marker, 'mouseout', function() {
+                        territorioMouseOut(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function(event) {
+                        territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    });
+                }
 		        
-		        var label = new Label({
-                    map: mapa
-                });
-                label.bindTo('position', marker, 'position');
-                label.bindTo('text', marker, 'position');
+                var label = null;
+                if (_labelTerritorios[territorio.codigo]) {
+                    label = _labelTerritorios[territorio.codigo];
+                } else {
+		            label = new Label({
+                        map: mapa
+                    });
+
+                    label.bindTo('position', marker, 'position');
+                    label.bindTo('text', marker, 'position');
+                }
               
                 label.texto = territorio.quantidadeDeTropas;
                 label.alteraPosicaoJogador(posicaoJogador);
 
                 _markerTerritorios[territorio.codigo] = marker;
                 _labelTerritorios[territorio.codigo] = label;
-
-                google.maps.event.addListener(marker, 'mousemove', function(event) {
-                    territorioMouseMove(event, _labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
-                });
-
-                google.maps.event.addListener(marker, 'mouseout', function() {
-                    territorioMouseOut(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
-                });
-
-                google.maps.event.addListener(marker, 'click', function(event) {
-                    territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
-                });
 			}
 		});
 	};

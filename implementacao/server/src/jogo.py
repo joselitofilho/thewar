@@ -160,9 +160,10 @@ class Jogo(object):
                     turno.quantidadeDeTropas = qtd
                 else:
                     turno.quantidadeDeTropas = 3
+            territoriosDosJogadores = self.listaDeTerritoriosDosJogadores()
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, 
                     numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, 
-                    turno.quantidadeDeTropas)
+                    turno.quantidadeDeTropas, territoriosDosJogadores)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             turno.grupoTerritorioAtual = None
             for grupo in turno.gruposTerritorio:
@@ -829,6 +830,15 @@ class Jogo(object):
                     jogador.cartasTerritorio, self.clientes[self.posicaoJogadorDaVez])
 
             self.jogadorDaVezConquistouTerritorio = False
+
+    def listaDeTerritoriosDosJogadores(self):
+        territoriosDosJogadores = []
+        for j in self.jogadores.values():
+            territoriosDosJogadores.append({
+                "territorios": j.territorios,
+                "posicao": j.posicao
+            })
+        return territoriosDosJogadores
 
     def adiciona(self, cliente, usuario):
         listaJogadoresInfoCurta = []

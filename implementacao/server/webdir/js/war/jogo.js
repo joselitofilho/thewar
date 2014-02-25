@@ -412,7 +412,12 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     } else {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
-    
+   
+    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
+        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
+        _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+    }
+
     _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropas);
     
     _territorios.pintarGruposTerritorios();
