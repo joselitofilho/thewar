@@ -26,6 +26,14 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             print "[%s] Enviou: %s" % (self.peerstr, msg)
             mensagem = Mensagem()
             mensagem.fromJson(msg)
+
+            # TODO: Criar um metodo para isso e deixar eu fazer isso.
+            # Verificando se tem scripts maliciosos.
+            if msg.find("<script>") > -1:
+                print "Alguem esta tentando usar um script."
+                return None
+            # ----
+
             if mensagem.tipo == TipoMensagem.entrar:
                 params = {}
                 
