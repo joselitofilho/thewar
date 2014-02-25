@@ -4,9 +4,11 @@ jogos.war = jogos.war || {};
 jogos.war.Sala = function() {
     this.nomeValido = function(id) {
         if (id == "") return false;
-        if (id.indexOf('#') != -1 || 
+        if (id.length > 10 ||
+            id.indexOf('#') != -1 || 
             id.indexOf('/') != -1 || 
             id.indexOf('\\') != -1 ||
+            id.indexOf('@') != -1 ||
             id.indexOf(' ') != -1) return false;
         return true;
     };
@@ -14,8 +16,8 @@ jogos.war.Sala = function() {
     this.cria = function(id) {
         id = id.trim();
         if (!this.nomeValido(id))
-            alert('Digite um nome adequando para sua sala. Não pode conter os caracteres:\n' +
-                '[#, /, \\, espaço]');
+            alert('Digite um nome adequando para sua sala de no máximo 10 letras. Não pode conter os caracteres:\n' +
+                '[#, /, \\, @, espaço]');
         else {
             msg = comunicacao_criarSala(id);
             _libwebsocket.enviarObjJson(msg);
