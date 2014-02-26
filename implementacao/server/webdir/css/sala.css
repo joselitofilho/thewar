@@ -112,22 +112,31 @@
     margin-left: 4px;
 }
 
-#sala .btn_criar_sala {
+.menu .btn_ranking {
     width: 116px;
     height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -320px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -788px no-repeat;
     border: 0;
 
 }
-#sala .btn_criar_sala:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -284px no-repeat; }
+.menu .btn_ranking:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -823px no-repeat; }
+
+#sala .btn_criar_sala {
+    width: 116px;
+    height: 31px;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -320px no-repeat;
+    border: 0;
+
+}
+#sala .btn_criar_sala:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -284px no-repeat; }
 
 #sala .btn_regras {
     width: 25px;
     height: 28px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -33px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -33px no-repeat;
     border: 0;
 }
-#sala .btn_regras:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px 0px no-repeat; }
+#sala .btn_regras:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px 0px no-repeat; }
 
 #sala .btn_entrar {
     float: right;
@@ -135,10 +144,10 @@
     margin-top: 15px;
     width: 72px;
     height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -392px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -392px no-repeat;
     border: 0;
 }
-#sala .btn_entrar:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -356px no-repeat; }
+#sala .btn_entrar:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -356px no-repeat; }
 
 #sala .btn_reentrar {
     float: right;
@@ -146,10 +155,10 @@
     margin-top: 17px;
     width: 79px;
     height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -608px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -608px no-repeat;
     border: 0;
 }
-#sala .btn_reentrar:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -572px no-repeat; }
+#sala .btn_reentrar:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -572px no-repeat; }
 
 #sala .btn_assistir {
     float: right;
@@ -157,21 +166,21 @@
     margin-top: 17px;
     width: 72px;
     height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -102px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -102px no-repeat;
     border: 0;
 }
-#sala .btn_assistir:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -66px no-repeat; }
+#sala .btn_assistir:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -66px no-repeat; }
 
 #sala .btn_iniciar_partida {
     float: right;
     margin-top: 17px;
     width: 117px;
     height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -464px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -464px no-repeat;
     border: 0;
     visibility: hidden;
 }
-#sala .btn_iniciar_partida:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -428px no-repeat; }
+#sala .btn_iniciar_partida:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -428px no-repeat; }
 
 #sala .btn_sair {
     float: right;
@@ -180,12 +189,12 @@
     margin-top: 17px;
     width: 54px;
     height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -680px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -680px no-repeat;
     border: 0;
     visibility: hidden;
 }
 
-#sala .btn_sair:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -644px no-repeat; }
+#sala .btn_sair:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -644px no-repeat; }
 
 #sala_boxCriarSala {
     position: absolute;
@@ -211,11 +220,11 @@
     margin-left: -37px;
     width: 73px;
     height: 33px;
-    background: url('../imagens/lobby/btn_sala_sprite.png') 0px -246px no-repeat;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -246px no-repeat;
     border: 0;
 
 }
-#sala_boxCriarSala .btn_criar:hover { background: url('../imagens/lobby/btn_sala_sprite.png') 0px -208px no-repeat; }
+#sala_boxCriarSala .btn_criar:hover { background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -208px no-repeat; }
 
 #sala_boxCriarSala .btn_fechar {
     position: absolute;

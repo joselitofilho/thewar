@@ -579,6 +579,11 @@ function tocarSomDeFundo(el) {
     }
 }
 
+function appwar_abrirRanking() {
+    var win=window.open('http://guerra.meutabuleiro.com/ranking.html?sorts%5BposicaoNoRanking%5D=1', '_blank');
+    win.focus();
+}
+
 function appwar_abrirRegras() {
     var win=window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
     win.focus();
