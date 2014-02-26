@@ -15,6 +15,7 @@ jogos.war.Sala = function() {
     
     this.cria = function(id) {
         id = id.trim();
+        id = utilRetiraAcento(id);
         if (!this.nomeValido(id))
             alert('Digite um nome adequando para sua sala de no máximo 10 letras. Não pode conter os caracteres:\n' +
                 '[#, /, \\, @, espaço]');
