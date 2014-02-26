@@ -16,5 +16,7 @@ Ferramenta para edição de mapas:
     Paises: http://www.dyngeometry.com/web/WorldRegion.aspx
     Mapa Estilizado: http://gmaps-samples-v3.googlecode.com/svn/trunk/styledmaps/wizard/index.html
     Gerador de sprite: http://pt.spritegen.website-performance.org/
+    drop-shadow: http://css3gen.com/box-shadow/
+    linear-gradient: http://www.css3factory.com/linear-gradients/
 Sons:
     http://www.freesound.org/
