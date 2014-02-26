@@ -12,13 +12,14 @@
     border: 0;
     width: 832px;
     height: 436px;
-    margin-top: 130px;
+    margin-top: 180px;
     margin-left: 38px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 #sala .topo {
+    position: absolute;
     height: 50px;
     padding: 10px;
 }

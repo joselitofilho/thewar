@@ -87,6 +87,7 @@
     float: left;
     width: 286px;
     height: 294px;
+    margin-top: 4px;
     background-image: linear-gradient(to bottom, #453122, #876850);
     -moz-box-shadow: inset 18px 48px 45px -30px #453122;
     -webkit-box-shadow: inset 18px 48px 45px -30px #453122;
