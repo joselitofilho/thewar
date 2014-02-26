@@ -8,8 +8,7 @@
     -moz-box-shadow: inset 0 45px 20px -15px #453122;
     -webkit-box-shadow: inset 0 45px 20px -15px #453122;
     box-shadow: inset 0px 45px 20px -15px #453122;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 #lista_usuarios .titulo {
@@ -17,6 +16,12 @@
     width: 345px;
     height: 20px;
     background: url('../imagens/lobby/titulo-jogadores-online.png') no-repeat;
+}
+
+#lista_usuarios .conteudo {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
 }
 
 #lista_usuarios .conteudo .item {
@@ -45,6 +50,7 @@
     margin-left: 4px;
     color: #4D2E14;
     font-weight: bold;
+    font-size: 16px;
 }
 
 
@@ -60,6 +66,5 @@
     color: #4D2E14;
     margin-left: 4px;
     margin-top: -3px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
 }
