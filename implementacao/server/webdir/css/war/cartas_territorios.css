@@ -27,11 +27,13 @@
 }
 
 #pct_valorDaTroca {
-    float: right;
+    position: absolute;
+    top: 185px;
+    left: 132px;
     font-size: 20px;
-    margin: 3px 42px 0px 0px;
     color: white;
     font-weight: bold;
+    z-index: 9001;
 }
 
 #cartasTerritorios {

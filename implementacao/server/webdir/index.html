@@ -151,6 +151,8 @@
         </div>
         
         <div id="painel_cartas_territorios">
+            <div id="pct_valorDaTroca">Valor da troca: 4</div>
+
             <div class="pct_content">
                 <div id="cartasTerritorios">
                     <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(1);"></div>
@@ -160,13 +162,7 @@
                     <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(5);"></div>
                 </div>
             </div>
-
-            <!--<div class="pct_controles">
-                <div class="pct_botoes">
-                    <span id="pct_valorDaTroca">Valor da troca: 4</span>
-                </div>
-            </div>-->
-            
+ 
             <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
         </div>
         
@@ -289,6 +285,21 @@
                     <span class="audioPlayerVolume"></span>
                     <audio id="audioPlayer" autoplay></audio>
                 </section>
+                
+                <div id="acoes_botoes">
+                    <ul>
+                        <li>
+                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                                <img width="33" src="imagens/jogo/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-default" onclick="_painelObjetivo.abre();">
+                                <img width="33" src="imagens/jogo/btnObjetivo.png" alt="Objetivo" />
+                            </button>
+                        </li>
+                    </ul>
+                </div>
 
                 <div id="acoes_turno">
                     <div class="info">
@@ -336,8 +347,9 @@
                 <div id="jogo_sair" onclick="jogo_sair();"></div>
             </div> <!-- div: jogo -->
             
-            <div id="controles">
+            <div id="lado_direito_jogo">
                 <div id="chat_do_jogo">
+                    <div class="titulo"></div>
                     <div id="cj_mensagens"></div>
                     <input id="ct_texto" type="text" 
                         class="form-control" 
@@ -345,24 +357,11 @@
                         onkeypress="return ct_texto_onkeypress(event);" />
                 </div>
 
-                <div id="acoes_botoes">
-                    <ul>
-                        <li>
-                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                                <img width="33" src="imagens/jogo/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
-                            </button>
-                        </li>
-                        <li>
-                            <button class="btn btn-default" onclick="_painelObjetivo.abre();">
-                                <img width="33" src="imagens/jogo/btnObjetivo.png" alt="Objetivo" />
-                            </button>
-                        </li>
-                    </ul>
+                <div class="jogadores">
+                    <div class="titulo"></div>
                 </div>
-                
-                <span id="pct_valorDaTroca">Valor da troca: 4</span>
-
-            </div><!-- div: controles -->
+ 
+            </div><!-- div: lado_direito_jogo -->
 
             <div id="ganhou_carta"></div>
             

@@ -7,7 +7,10 @@
 }
 
 #acoes_botoes {
-    float: left;
+    position: absolute;
+    top: 110px;
+    left: 262px;
+    z-index: 999;
 }
 
 #acoes_botoes ul {
@@ -72,12 +75,29 @@
     color: #FFD1AC;
 }
 
-#controles {
+#lado_direito_jogo {
     position: absolute;
     top: 52px;
     left: 992px;
     cursor: pointer;
     z-index: 999;
+}
+
+#lado_direito_jogo .jogadores {
+    float: left;
+    width: 286px;
+    height: 294px;
+    background-image: linear-gradient(to bottom, #453122, #876850);
+    -moz-box-shadow: inset 18px 48px 45px -30px #453122;
+    -webkit-box-shadow: inset 18px 48px 45px -30px #453122;
+    box-shadow: inset 18px 48px 45px -30px #453122;
+}
+
+#lado_direito_jogo .jogadores .titulo {
+    width: 280px;
+    height: 16px;
+    margin-left: 4px;
+    background: url('../imagens/jogo/titulo-jogadores.png') no-repeat;
 }
 
 #btnFinalizarTurno {
@@ -166,10 +186,17 @@
     float: left;
 }
 
+#chat_do_jogo .titulo {
+    width: 280px;
+    height: 16px;
+    margin-left: 4px;
+    background: url('../imagens/jogo/titulo-chat.png') no-repeat;
+}
+
 #cj_mensagens {
     display: block;
     width: 286px;
-    height: 426px;
+    height: 400px;
     border: 0;
     background-color: transparent;
     cursor: text;
