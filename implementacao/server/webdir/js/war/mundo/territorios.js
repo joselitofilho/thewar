@@ -604,6 +604,7 @@ jogos.war.Territorios = function(mapa) {
                 }
               
                 label.texto = territorio.quantidadeDeTropas;
+                label.alteraQuantiadeDeTropas(territorio.quantidadeDeTropas);
                 label.alteraPosicaoJogador(posicaoJogador);
 
                 _markerTerritorios[territorio.codigo] = marker;
