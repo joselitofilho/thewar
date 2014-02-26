@@ -7,6 +7,7 @@ from mensagens import *
 from jogador import *
 from sala import *
 from jogo import *
+from pontuacaodb import *
 
 class GerenciadorSala(object):
     def __init__(self, nome, gerenciadorPrincipal):
@@ -191,8 +192,17 @@ class GerenciadorPrincipal(object):
             gerenciadorSala.entra(cliente, usuario)
         else:
             self.enviaMsgLobbyParaCliente(cliente)
-            
-        self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(usuario))
+       
+        # TODO: Implementar mecanismo de cache.
+        infoUsuario = {"nome": usuario}
+        ranking = PontuacaoDB().ranking()
+        for r in ranking:
+            if r.nome == usuario:
+                infoUsuario = r
+                break
+        
+        if infoUsuario:
+            self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(infoUsuario))
         
     def clienteDesconectou(self, cliente):
         usuario = self.jogadores[cliente]
@@ -310,8 +320,15 @@ class GerenciadorPrincipal(object):
                 "estado": gerenciadorSala.estado
             }
             infoSalas.append(info)
+        
+        # TODO: Implementar mecanismo de cache.
+        infoUsuarios = []
+        ranking = PontuacaoDB().ranking()
+        for r in ranking:
+            if r.nome in self.jogadores.values():
+                infoUsuarios.append(r)
         self.enviaMsgParaCliente(TipoMensagem.lobby, 
-            Lobby(infoSalas, self.jogadores.values()), cliente)
+            Lobby(infoSalas, infoUsuarios), cliente)
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)

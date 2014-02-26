@@ -47,6 +47,7 @@
         <link href="css/mouse_cursor.css" rel="stylesheet">
         <link href="css/label_tropas.css" rel="stylesheet">
         <link href="css/cores.css" rel="stylesheet">
+        <link href="css/listaUsuariosLobby.css" rel="stylesheet">
         <link href="css/sala.css" rel="stylesheet">
         <link href="css/acoesTurno.css" rel="stylesheet">
         <link href="css/jogo.css" rel="stylesheet">
@@ -213,6 +214,7 @@
                 <button class="btn_criar" onclick="_sala.cria($('#sala_nomeParaCriar').val()); _sala.fechaBoxCriarSala();"></button>
             </div>
             <div id="chat_geral">
+                <div class="titulo"></div>
                 <div id="cg_mensagens"></div>
                 <input id="cg_texto" type="text" 
                         class="form-control" 
@@ -230,7 +232,10 @@
                 </script>-->
             </div>
             <div id="lista_usuarios">
-                <!-- NOTE: Lista gerada dinamicamente. -->
+                <div class="titulo"></div>
+                <div class="conteudo">
+                    <!-- NOTE: Lista gerada dinamicamente. -->
+                </div>
             </div>
         </div>
         <div id="geral">

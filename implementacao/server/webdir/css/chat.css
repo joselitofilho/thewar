@@ -4,12 +4,19 @@
     left: 922px;
 }
 
+#chat_geral .titulo {
+    margin-left: 5px;
+    width: 344px;
+    height: 20px;
+    background: url('../imagens/lobby/titulo-chat.png') no-repeat;
+}
+
 #cg_mensagens {
     display: block;
     overflow-x: hidden;
     overflow-y: auto;
     width: 356px;
-    height: 350px;
+    height: 330px;
     border: 0;
     background-color: transparent;
     cursor: text;

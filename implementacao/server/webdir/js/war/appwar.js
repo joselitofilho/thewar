@@ -106,7 +106,7 @@ function processarMsg_entrar(msgParams) {
 
 function appwar_processaMsg_usuario_conectou(msgParams) {
     var usuario = msgParams.usuario;
-    _chatGeral.usuarioConectou(usuario);
+    _chatGeral.usuarioConectou(usuario.nome);
     _listaUsuarios.adiciona(usuario);
     if (!_jogadorEstaEmJogo) this.tocarSom(this, "entrou.mp3");
 }
