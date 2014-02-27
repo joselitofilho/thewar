@@ -188,6 +188,7 @@ function jogo_efetuaAtaque(msgParams) {
                 if (quantidadeDeTropasDosTerritoriosDoAtaque > 2) {
                     quantidadeDeTropasDosTerritoriosDoAtaque = 2;
                 }
+                _componenteAcaoTurno.turnoAtacarExibirDados();
                 _sliderMoverTropas.inicia(0, quantidadeDeTropasDosTerritoriosDoAtaque);
                 var posicao = _territorios.posicaoHTML(_territorioConquistado);
                 _sliderMoverTropas.alteraPosicionamentoNoHTML(posicao);
@@ -456,6 +457,7 @@ function processarMsg_turno_atacar(msgParams) {
 }
 
 function processarMsg_turno_mover(msgParams) {
+    _componenteAcaoTurno.exibeBtn1Atacar();
     this.tocarSom(this, 'mover.wav');
     
     _territorios.pintarGruposTerritorios();
