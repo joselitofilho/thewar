@@ -398,6 +398,9 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
                 _componenteAcaoTurno.turnoAtacarEscolheuAlvo(nomeDoTerritorio, indiceCor,
                     _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio));
+
+                var posicao = _territorios.posicaoHTML(_territorioAlvoAtaque);
+                $('#popupBtnAtacar').offset({ top: posicao.top+21, left: posicao.left-8 });
             }
             else if (_territorioAlvoAtaque != null) {
                 var quantidadeDeTropasNoTerritorio = _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio);

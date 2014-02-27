@@ -412,7 +412,8 @@ jogos.war.ComponenteAcaoTurno = function() {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', '');
             } else if (tipoAcao == TipoAcaoTurno.atacar) {
-                $('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-atacar');
+                //$('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-atacar');
+                $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
             } else if (tipoAcao == TipoAcaoTurno.mover) {
                 $('#btnAcao1').attr('class', '');
@@ -520,10 +521,12 @@ jogos.war.ComponenteAcaoTurno = function() {
     };
 
     this.escondeBtn1Atacar = function() {
-        $('.sprite-btn-acoes-turno-atacar').css('visibility', 'hidden');
+        //$('.sprite-btn-acoes-turno-atacar').css('visibility', 'hidden');
+        $('#popupBtnAtacar').css('visibility', 'hidden');
     };
 
     this.exibeBtn1Atacar = function() {
-        $('.sprite-btn-acoes-turno-atacar').css('visibility', 'visible');
+        //$('.sprite-btn-acoes-turno-atacar').css('visibility', 'visible');
+        $('#popupBtnAtacar').css('visibility', 'visible');
     };
 };

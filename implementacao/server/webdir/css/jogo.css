@@ -298,3 +298,9 @@
     top: 518px; left: 428px;
     background-position: 0 -48px; width: 60px; height: 47px;
 }
+
+#popupBtnAtacar {
+    position: absolute;
+    visibility: hidden;
+    z-index: 999;
+}
