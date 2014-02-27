@@ -25,6 +25,9 @@ class Pontuacao(object):
         elif qtdUsuarios == 6:
             pontos = 800
 
+        pontosExtra = self.contabilizaPontosExtra()
+        pontos += pontosExtra
+
         pontuacaoDB = PontuacaoDB(self.baseDeDados)
         pontuacaoDBOAtual = pontuacaoDB.pontuacaoDBODoUsuario(self.usuarioVencedor)
         novaPontuacaoDBO = PontuacaoDBO()
@@ -57,22 +60,20 @@ class Pontuacao(object):
             novaPontuacaoDBO = PontuacaoDBO()
             if pontuacaoDBOAtual == None:
                 pontuacaoDB.iniciaPontuacaoParaUsuario(usuario)
+                novaPontuacaoDBO.pontos = 0
                 novaPontuacaoDBO.quantidadeDePartidas = 1
                 novaPontuacaoDBO.quantidadeDeVitorias = 0
                 if destruidoPorAlguem:
-                    novaPontuacaoDBO.pontos = -100
                     novaPontuacaoDBO.quantidadeDestruido = 1
                 else:
-                    novaPontuacaoDBO.pontos = 0
                     novaPontuacaoDBO.quantidadeDestruido = 0
             else:
+                novaPontuacaoDBO.pontos = pontuacaoDBOAtual.pontos
                 novaPontuacaoDBO.quantidadeDePartidas = pontuacaoDBOAtual.quantidadeDePartidas + 1
                 novaPontuacaoDBO.quantidadeDeVitorias = pontuacaoDBOAtual.quantidadeDeVitorias
                 if destruidoPorAlguem:
-                    novaPontuacaoDBO.pontos = pontuacaoDBOAtual.pontos - 100
                     novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido + 1
                 else:
-                    novaPontuacaoDBO.pontos = pontuacaoDBOAtual.pontos
                     novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
             
             pontuacaoDB.atualizaPontuacaoDBOParaUsuario(usuario, novaPontuacaoDBO)
@@ -83,3 +84,12 @@ class Pontuacao(object):
                 return True
 
         return False
+
+    def contabilizaPontosExtra(self):
+        pontosExtra = 0
+        for k, v in self.quemDestruiuQuem.iteritems():
+            if k == self.usuarioVencedor:
+                pontosExtra = len(v)
+                break
+        return pontosExtra * 50
+
