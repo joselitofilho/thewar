@@ -9,7 +9,11 @@ jogos.war.ListaUsuarios = function(elementoListaUsuarios) {
         _conteudoDaLista.html('');
         for (i=0; i<this.lista.length; i++) {
             conteudo = "<div class='item'>";
-            conteudo += "<div class='foto'></div>";
+            if (this.lista[i].nome == "Joselito") {
+                conteudo += "<div class='foto soldado-heineken'></div>";
+            } else {
+                conteudo += "<div class='foto soldado-padrao'></div>";
+            }
             conteudo += "<div class='infos'>";
             conteudo += "<div class='nome'>"+this.lista[i].nome+"</div>";
             conteudo += "<div>";

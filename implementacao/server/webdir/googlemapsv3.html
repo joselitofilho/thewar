@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0"> 
+        <META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+        <META HTTP-EQUIV="expires" CONTENT="-1">
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Guerra</title>
+        
+        <link rel="icon" type="image/png" href="imagens/ico.png" />
+
+        <!-- Google Analytics -->
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-48255924-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+        <!-- End Google Analytics -->
+
+        <!-- Fontes -->
+        <link href='http://fonts.googleapis.com/css?family=Stardos+Stencil:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <!---->
+
+        <!-- Bootstrap -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!---->
+
+        <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+
+        <!-- Audio Player -->
+        <link href="css/audioPlayer.css" rel="stylesheet">
+        <!---->
+        
+        <!-- Slider -->
+        <link href="slider/slider.css" rel="stylesheet">
+        <!---->
+
+        <link href="css/app.css" rel="stylesheet">
+        <link href="css/mouse_cursor.css" rel="stylesheet">
+        <link href="css/label_tropas.css" rel="stylesheet">
+        <link href="css/cores.css" rel="stylesheet">
+        <link href="css/listaUsuariosLobby.css" rel="stylesheet">
+        <link href="css/sala.css" rel="stylesheet">
+        <link href="css/acoesTurno.css" rel="stylesheet">
+        <link href="css/jogo.css" rel="stylesheet">
+        <link href="css/war/cartas_objetivos.css" rel="stylesheet">
+        <link href="css/war/cartas_territorios.css" rel="stylesheet">
+        <link href="css/chat.css" rel="stylesheet">
+    </head>
+    <body>
+                
+        <style>
+                .map-container {
+                    position: relative;
+                        padding-bottom: 26.25%;
+                            padding-top: 30px;
+                                height: 0;
+                                    overflow: hidden;
+                                    }
+                                     
+                                    .map-container iframe,  
+                                    .map-container object, 
+                                    .map-container embed {
+                                        position: absolute;
+                                            top: 0;
+                                                left: 0;
+                                                    width: 100%;
+                                                        height: 100%;
+                                                    }
+                                                </style>
+                                                <div class="map-container">
+                                                        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.ch/maps?f=q&amp;source=s_q&amp;hl=de&amp;geocode=&amp;q=Bern&amp;aq=&amp;sll=28.9285745,77.09149350000007&amp;sspn=3.379772,8.453979&amp;ie=UTF8&amp;hq=&amp;hnear=Bern&amp;t=m&amp;z=12&amp;ll=28.9285745,77.09149350000007&amp;output=embed&amp;iwloc=near"></iframe>
+                                                    </div>
+        
+        <!-- Google Maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+        <!---->
+
+        <!-- jQuery -->
+        <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!---->
+        
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <!---->
+
+        <!--Here is jQuery UI added from CDN
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+
+	    <!-- Shortcut -->
+        <script type="text/javascript" src="js/shortcut.js"></script>
+        <!---->
+
+        <!-- AudioPlayer -->
+        <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
+        <!---->
+        
+        <!-- Crypto-js -->
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+        <!---->
+
+        <!-- Coordenada dos mapas -->
+        <!-- America do Sul -->
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/argentina.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/brasil.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/chile.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/colombia.js"></script>
+        <!---->
+
+        <!-- America do Norte -->
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/alaska.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/california.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/groelandia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/labrador.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/mackenzie.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/mexico.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-york.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/ottawa.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/vancouver.js"></script>
+        <!---->
+
+        <!-- Africa -->
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/africa-do-sul.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/argelia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/congo.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/egito.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/madagascar.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/sudao.js"></script>
+        <!---->
+
+        <!-- Oceania -->
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/australia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/borneo.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-guine.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/sumatra.js"></script>
+        <!---->
+
+        <!-- Asia -->
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/aral.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/china.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/dudinka.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/india.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/japao.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/mongolia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/omsk.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/oriente-medio.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/siberia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/tchita.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/vietna.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/vladivostok.js"></script>
+        <!---->
+
+        <!-- Europa -->
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/alemanha.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/inglaterra.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/islandia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/portugal.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/polonia.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/moscou.js"></script>
+        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/suecia.js"></script>
+        <!---->
+
+        <!-- Do sistema -->
+        <script type="text/javascript" src="js/libs/namespace.js"></script>
+        <script type="text/javascript" src="js/websocket/websocket.js"></script>
+        <script type="text/javascript" src="js/cookie.js"></script>
+        <script type="text/javascript" src="js/cor.js"></script>
+        <script type="text/javascript" src="js/mensagens.js"></script>
+        <script type="text/javascript" src="js/label.js"></script>
+        <script type="text/javascript" src="slider/slider.js"></script>
+        <script type="text/javascript" src="js/comunicacao.js"></script>
+        <script type="text/javascript" src="js/mapa.js"></script>
+        
+        <script type="text/javascript" src="js/war/util.js"></script>
+        <script type="text/javascript" src="js/war/mundo/territorios.js"></script>
+        <script type="text/javascript" src="js/war/painelObjetivo.js"></script>
+        <script type="text/javascript" src="js/war/listausuarios.js"></script>
+        <script type="text/javascript" src="js/war/chatgeral.js"></script>
+        <script type="text/javascript" src="js/war/chatjogo.js"></script>
+        <script type="text/javascript" src="js/war/acaoTurno.js"></script>
+        <script type="text/javascript" src="js/war/jogo.js"></script>
+        <script type="text/javascript" src="js/war/sala.js"></script>
+        <script type="text/javascript" src="js/war/appwar.js"></script>
+        <script type="text/javascript" src="js/war/mundo/main.js"></script>
+        <!---->
+    </body>
+
+    <!-- Não armazenar o cache -->
+    <head>
+        <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0"> 
+        <META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+        <META HTTP-EQUIV="expires" CONTENT="-1">
+    </head>
+    <!---->
+</html>
