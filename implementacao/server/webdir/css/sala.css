@@ -104,6 +104,15 @@
 .jogador_sala_branco {background: url('../imagens/soldados_sala.png') -168px 0px no-repeat;}
 .jogador_sala_amarelo {background: url('../imagens/soldados_sala.png') -210px 0px no-repeat;}
 
+.soldado-padrao {
+    width: 42px;height:42px;
+    background: url('../imagens/soldado-padrao.png') no-repeat;
+}
+.soldado-heineken {
+    width: 42px;height:42px;
+    background: url('../imagens/soldado-heineken.png') no-repeat;
+}
+
 .sc_bloqueador {
     position: absolute;
     margin-top: 4px;
