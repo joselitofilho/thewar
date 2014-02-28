@@ -10,5 +10,9 @@ select nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestr
 INSERT INTO Pontuacao(idUsuario)
 SELECT distinct(u.id) FROM Usuarios u WHERE u.id NOT IN (SELECT p.idUsuario FROM Pontuacao p);
 
+# Limpar Ranking
+update pontuacao set pontos=0, quantidadeDeVitorias=0, quantidadeDePartidas = 0, quantidadeDestruido = 0;
+
+
 ### Listar triggers ###
 select * from sqlite_master where type = 'trigger';
