@@ -302,5 +302,13 @@
 #popupBtnAtacar {
     position: absolute;
     visibility: hidden;
+    width: 125px;
+    height: 54px;
+    background: url('../imagens/jogo/btn-atacar.png') 0 0 no-repeat;
+    cursor: pointer;
     z-index: 1000;
+}
+
+#popupBtnAtacar:hover {
+    background: url('../imagens/jogo/btn-atacar.png') -125px 0 no-repeat;
 }
