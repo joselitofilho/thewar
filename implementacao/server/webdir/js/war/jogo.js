@@ -477,8 +477,9 @@ function jogo_processaMsg_msg_chat_jogo(msgParams) {
     this.tocarSom(this, 'mensagem.mp3');
 
     var posicao = msgParams.jogador.posicao;
-    var texto = "<b>" + msgParams.jogador.usuario + "</b>: " + msgParams.texto;
-    _chatJogo.escreveColorido(texto, posicao);
+    var textoUsuario = "<b>" + msgParams.jogador.usuario + "</b> diz: ";
+    _chatJogo.escreveColorido(textoUsuario, posicao);
+    _chatJogo.escreveColorido(msgParams.texto, -1);
 }
 
 /* Informações dos turnos */

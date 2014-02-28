@@ -29,13 +29,13 @@ jogowar.war.ChatJogo = function(area) {
     };
 
     this.colocaTropa = function(usuario, territorio, quantidade) {
-        var texto = 'Servidor: ' + 
+        var texto = '<i>Servidor: ' + 
             usuario + ' colocou ';
         if (quantidade > 1)
             texto += quantidade + ' exércitos';
         else
             texto += quantidade + ' exército';
-        texto += ' no território ' + territorio + '.';
+        texto += ' no território ' + territorio + '.</i>';
         //this.escreve(texto);
     };
 
@@ -81,16 +81,16 @@ jogowar.war.ChatJogo = function(area) {
     };
     
     this.entrouNoJogo = function(jogador, olheiro) {
-        var texto = '<b>Servidor</b>: ';
+        var texto = '<i><b>Servidor</b>: ';
         if (olheiro) texto += jogador + ' está assintindo a partida.';
-        else texto += jogador + ' voltou para o jogo.';
+        else texto += jogador + ' voltou para o jogo.</i>';
         this.escreveColorido(texto, -1);
     };
     
     this.saiuDoJogo = function(jogador, olheiro) {
-        var texto = '<b>Servidor</b>: ';
+        var texto = '<i><b>Servidor</b>: ';
         if (olheiro) texto += jogador + ' não está mais assistindo a partida.';
-        else texto += jogador + ' saiu do jogo.';
+        else texto += jogador + ' saiu do jogo.</i>';
         this.escreveColorido(texto, -1);
     };
 };
