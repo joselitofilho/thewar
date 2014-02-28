@@ -26,10 +26,10 @@ class PontuacaoTeste(unittest.TestCase):
             'wartest.db')
 
         # Operação.
-        pontosExtra = pontuacao.contabilizaPontosExtra()
+        pontosExtra = pontuacao.contabilizaPontosExtra('1')
 
         # Verificação.
-        self.assertEqual(150, pontosExtra)
+        self.assertEqual(300, pontosExtra)
 
     def tearDown(self):
         os.remove('wartest.db')
