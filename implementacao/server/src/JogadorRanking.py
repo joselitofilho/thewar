@@ -3,13 +3,14 @@
 
 class JogadorRanking(object):
     def __init__(self, posicaoNoRanking, nome, 
-        pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido):
+        pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, eficiencia):
         self.posicaoNoRanking = posicaoNoRanking
         self.nome = nome
         self.pontos = pontos
         self.quantidadeDePartidas = quantidadeDePartidas
         self.quantidadeDeVitorias = quantidadeDeVitorias
         self.quantidadeDestruido = quantidadeDestruido
+        self.eficiencia = eficiencia
 
     def __eq__(self, other):
         if isinstance(other, JogadorRanking):

@@ -50,9 +50,9 @@ class PontuacaoDBTeste(unittest.TestCase):
 
     def test_DeveRetornarORanking(self):
         # Preparação.
-        jogadorRanking1 = JogadorRanking(1, "Joselito", 500, 3, 2, 0)
-        jogadorRanking2 = JogadorRanking(2, "kellymineiro", 200, 1, 1, 0)
-        jogadorRanking3 = JogadorRanking(3, "Katryne", 0, 1, 0, 0)
+        jogadorRanking1 = JogadorRanking(1, "Joselito", 500, 3, 2, 0, 67)
+        jogadorRanking2 = JogadorRanking(2, "kellymineiro", 200, 1, 1, 0, 100)
+        jogadorRanking3 = JogadorRanking(3, "Katryne", 0, 1, 0, 0, 0)
         rankingEsperado = [
            jogadorRanking1,
            jogadorRanking2,

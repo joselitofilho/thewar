@@ -53,8 +53,13 @@ class PontuacaoDB(object):
         if rowPontuacoes:
             posicaoRanking = 1
             for row in rowPontuacoes:
+                eficiencia = 0
+                try:
+                    eficiencia = int((float(row[3]) / float(row[2])) * 100)
+                except:
+                    pass
                 jogadorRanking = JogadorRanking(posicaoRanking, 
-                    row[0], row[1], row[2], row[3], row[4])
+                    row[0], row[1], row[2], row[3], row[4], eficiencia)
                 ranking.append(jogadorRanking)
                 posicaoRanking += 1
 
