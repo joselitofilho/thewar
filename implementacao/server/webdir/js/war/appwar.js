@@ -78,6 +78,7 @@ function exibirAlerta(tipo, msg) {
 function processarMsg_registrar(msgParams) {
     if (msgParams.status == 1) {
         exibirAlerta('alert-success', 'Registrado com sucesso.');
+        appwar_exibirPainelEntrar();
     } else if (msgParams.status == 0) {
         exibirAlerta('alert-info', 'Você já está registrado.');
     } else {
