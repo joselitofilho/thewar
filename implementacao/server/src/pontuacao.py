@@ -25,7 +25,7 @@ class Pontuacao(object):
         elif qtdUsuarios == 6:
             pontos = 800
 
-        pontosExtra = self.contabilizaPontosExtra()
+        pontosExtra = self.contabilizaPontosExtra(self.usuarioVencedor)
         pontos += pontosExtra
 
         pontuacaoDB = PontuacaoDB(self.baseDeDados)
@@ -55,12 +55,13 @@ class Pontuacao(object):
                 continue
 
             destruidoPorAlguem = self.usuarioFoiDestruidoPorAlguem(usuario)
+            pontosExtra = self.contabilizaPontosExtra(usuario)
 
             pontuacaoDBOAtual = pontuacaoDB.pontuacaoDBODoUsuario(usuario)
             novaPontuacaoDBO = PontuacaoDBO()
             if pontuacaoDBOAtual == None:
                 pontuacaoDB.iniciaPontuacaoParaUsuario(usuario)
-                novaPontuacaoDBO.pontos = 0
+                novaPontuacaoDBO.pontos = 0 + pontosExtra
                 novaPontuacaoDBO.quantidadeDePartidas = 1
                 novaPontuacaoDBO.quantidadeDeVitorias = 0
                 if destruidoPorAlguem:
@@ -68,7 +69,7 @@ class Pontuacao(object):
                 else:
                     novaPontuacaoDBO.quantidadeDestruido = 0
             else:
-                novaPontuacaoDBO.pontos = pontuacaoDBOAtual.pontos
+                novaPontuacaoDBO.pontos = pontuacaoDBOAtual.pontos + pontosExtra
                 novaPontuacaoDBO.quantidadeDePartidas = pontuacaoDBOAtual.quantidadeDePartidas + 1
                 novaPontuacaoDBO.quantidadeDeVitorias = pontuacaoDBOAtual.quantidadeDeVitorias
                 if destruidoPorAlguem:
@@ -85,11 +86,11 @@ class Pontuacao(object):
 
         return False
 
-    def contabilizaPontosExtra(self):
+    def contabilizaPontosExtra(self, usuario):
         pontosExtra = 0
         for k, v in self.quemDestruiuQuem.iteritems():
-            if k == self.usuarioVencedor:
+            if k == usuario:
                 pontosExtra = len(v)
                 break
-        return pontosExtra * 50
+        return pontosExtra * 100
 
