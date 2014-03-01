@@ -53,7 +53,7 @@ html, body {
     margin-top: -170px;
     left: 50%;
     margin-left: -150px;
-    visibility: visible;
+    visibility: hidden;
     z-index: 9001;
 }
 
