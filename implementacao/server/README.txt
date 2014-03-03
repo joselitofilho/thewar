@@ -6,7 +6,9 @@ Install in python:
   - easy_install discover
   - easy_install coverage
   - apt-get install sqlite3
+  - apt-get install redis-server
   - easy_install redis 
+  - apt-get install screen
 
 
 Ferramenta para edição de mapas:
