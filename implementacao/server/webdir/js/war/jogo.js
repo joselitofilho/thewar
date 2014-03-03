@@ -146,6 +146,7 @@ function jogo_efetuaAtaque(msgParams) {
     if (msgParams.conquistouTerritorio) {
         labelTerritorioDefesa.explosao();
         if (!fazSentidoMoverAposConquistar) {
+            _componenteAcaoTurno.escondeBtn1Atacar();
             setTimeout(function() {
                 _territorios.pintarGruposTerritorios();
                 _territorios.escureceTodosOsTerritoriosDoJogador(_posicaoJogador);
@@ -469,8 +470,7 @@ function processarMsg_turno_mover(msgParams) {
 
 function processarMsg_turno_jogo_terminou(msgParams) {
     this.tocarSom(this, 'venceuJogo.wav');
-    _painelObjetivo.abreEspecifico(Number(msgParams.objetivo) + 1, 
-            msgParams.ganhador + ' venceu o jogo!');
+    _painelVitoria.abre(msgParams.ganhador.usuario, msgParams.ganhador.pontos, msgParams.objetivo);
 }
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
@@ -655,6 +655,10 @@ function jogo_cancelaMoverTropas() {
 function jogo_sair() {
     msg = comunicacao_sairDaSala();
     _libwebsocket.enviarObjJson(msg);
+}
+
+function jogo_fechaPainelVitoria() {
+    _painelVitoria.fecha();
 }
 
 function jogo_removeElementosHtml() {

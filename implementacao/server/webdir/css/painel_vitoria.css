@@ -1,0 +1,56 @@
+#painel_vitoria {
+    visibility: hidden;
+}
+
+#painel_vitoria .conteudo {
+    position: absolute;
+    margin-left: 264px;
+    width: 506px;
+    height: 690px;
+    background: url('../imagens/jogo/bg-vitoria.png') no-repeat;
+    z-index: 9002;
+}
+
+#painel_vitoria .conteudo #pv_foto {
+    position: absolute;
+    top: 193px;
+    left: 232px;
+}
+
+#painel_vitoria .conteudo .texto {
+    position: relative;
+    top: 242px;
+    left: 110px;
+    width: 280px;
+    text-align: center;
+    color: #4D2E14;
+}
+
+#painel_vitoria .conteudo .texto h1 {
+    font-weight: bold;
+}
+
+#painel_vitoria .conteudo ul {
+    position: absolute;
+    top:485px;
+    left:164px;
+    list-style-type:none;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#painel_vitoria .conteudo ul li a {
+    color:#4D2E14;
+    text-decoration:underline;
+}
+
+#painel_vitoria .conteudo #pv_pontos {
+    position: absolute;
+    top: 490px;
+    left: 315px;
+    width: 74px;
+    height: 38px;
+    font-size: 27px;
+    color: #FFD1AC;
+    text-align: center;
+}

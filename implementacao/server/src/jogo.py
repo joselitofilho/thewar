@@ -183,9 +183,17 @@ class Jogo(object):
                     numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
+            # TODO: Fazer uma negoco direito...
+            pontuacaoDB = PontuacaoDB()
+            pontuacaoDBO = pontuacaoDB.pontuacaoDBODoUsuario(jogador.usuario)
+            ganhador = {
+                "usuario": jogador.usuario,
+                "pontos": pontuacaoDBO.pontos
+            }
+
             acao = AcaoJogoTerminou(tipoAcaoDoTurno, 
                     numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                    jogador.objetivo, jogador.usuario)
+                    jogador.objetivo, ganhador)
         else:
             acao = AcaoTurno(tipoAcaoDoTurno, 
                     numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca)

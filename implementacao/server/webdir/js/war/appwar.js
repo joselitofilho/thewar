@@ -2,7 +2,8 @@
 // http://soundbible.com/tags-war.html
 //
 
-_painelObjetivo = null;
+_painelObjetivo = new gpscheck.war.PainelObjetivo(-1);
+_painelVitoria = new jogos.war.PainelVitoria();
 
 _usuario = null;
 _posicaoJogador = -1;
@@ -389,6 +390,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 _territoriosAtacante = [];
                 // TODO: Nome do jogador.
                 _componenteAcaoTurno.turnoAtacar(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
+                _componenteAcaoTurno.escondeBtn1Atacar();
             }
             else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();

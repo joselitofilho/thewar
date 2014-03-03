@@ -61,6 +61,7 @@
         <link href="css/sala.css" rel="stylesheet">
         <link href="css/acoesTurno.css" rel="stylesheet">
         <link href="css/jogo.css" rel="stylesheet">
+        <link href="css/painel_vitoria.css" rel="stylesheet">
         <link href="css/war/cartas_objetivos.css" rel="stylesheet">
         <link href="css/war/cartas_territorios.css" rel="stylesheet">
         <link href="css/chat.css" rel="stylesheet">
@@ -156,6 +157,20 @@
         
         <div id="alerta" class="alert alert-info">
             <div id="alerta_texto"></div>
+        </div>
+
+        <div id="painel_vitoria">
+            <div class="conteudo">
+                <div id="pv_foto" class="imagem-soldado imagem-soldado-padrao"></div>
+                <div class="texto"><h1 id="pv_vencedor"></h1><h2> venceu a partida!</h2></div>
+                <ul>
+                    <li><a href="javascript:void(0);" onclick="_painelVitoria.abreObjetivoDoVencedor();">Ver objetivo</a></li>
+                    <li><a href="javascript:void(0);" onclick="appwar_abrirRanking();">Ver ranking</a></li>
+                </ul>
+                <div id="pv_pontos">400</div>
+            </div>
+
+            <div id="pv_fundo" class="bloqueador_tela" onclick="jogo_fechaPainelVitoria();"></div>
         </div>
 
         <div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
@@ -494,6 +509,7 @@
         
         <script type="text/javascript" src="js/war/util.js"></script>
         <script type="text/javascript" src="js/war/mundo/territorios.js"></script>
+        <script type="text/javascript" src="js/war/painelVitoria.js"></script>
         <script type="text/javascript" src="js/war/painelObjetivo.js"></script>
         <script type="text/javascript" src="js/war/listausuarios.js"></script>
         <script type="text/javascript" src="js/war/chatgeral.js"></script>
