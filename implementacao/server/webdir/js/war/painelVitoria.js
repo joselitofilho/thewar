@@ -9,7 +9,7 @@ jogos.war.PainelVitoria = function() {
         $('#painel_vitoria').css('visibility', 'visible');
         $('#pv_fundo').css('visibility', 'visible');
         $('#pv_vencedor').html(vencedor);
-        $('#pv_pontos').html(pontos);
+        $('#pv_pontos').html('+' + pontos);
         _nomeVencedor = vencedor;
         _objetivoVencedor = Number(objetivo) + 1;
     };

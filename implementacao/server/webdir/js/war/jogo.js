@@ -470,7 +470,9 @@ function processarMsg_turno_mover(msgParams) {
 
 function processarMsg_turno_jogo_terminou(msgParams) {
     this.tocarSom(this, 'venceuJogo.wav');
-    _painelVitoria.abre(msgParams.ganhador.usuario, msgParams.ganhador.pontos, msgParams.objetivo);
+    var textoVencedor = msgParams.ganhador.usuario;
+    if (msgParams.ganhador.usuario == _usuario) textoVencedor = "Você";
+    _painelVitoria.abre(textoVencedor, msgParams.ganhador.pontos, msgParams.objetivo);
 }
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
