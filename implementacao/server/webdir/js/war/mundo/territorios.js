@@ -103,9 +103,9 @@ jogos.war.Territorios = function(mapa) {
         fronteiras["Inglaterra"] = ["Islandia", "Portugal", "Alemanha", "Suecia"];
         fronteiras["Suecia"] = ["Inglaterra", "Moscou"];
         fronteiras["Moscou"] = ["Suecia", "Polonia", "OrienteMedio", "Aral", "Omsk"];
-        fronteiras["Polonia"] = ["Moscou", "OrienteMedio", "Egito", "Alemanha"];
+        fronteiras["Polonia"] = ["Moscou", "Portugal", "OrienteMedio", "Egito", "Alemanha"];
         fronteiras["Alemanha"] = ["Portugal", "Polonia", "Inglaterra"];
-        fronteiras["Portugal"] = ["Alemanha", "Inglaterra", "Argelia", "Egito"];
+        fronteiras["Portugal"] = ["Alemanha", "Inglaterra", "Polonia", "Argelia", "Egito"];
         
         fronteiras["Argelia"] = ["Portugal", "Brasil", "Congo", "Sudao", "Egito"];
         fronteiras["Egito"] = ["Argelia", "Sudao", "OrienteMedio", "Polonia", "Portugal"];
@@ -155,7 +155,8 @@ jogos.war.Territorios = function(mapa) {
 	        [new google.maps.LatLng(38.685510,17.226563),new google.maps.LatLng(31.353637,19.511719)],
 	        [new google.maps.LatLng(42.811522,4.042969),new google.maps.LatLng(37.020098,5.800781)],
 	        [new google.maps.LatLng(40.313043,141.855469),new google.maps.LatLng(59.085739,148.359375)],
-	        [new google.maps.LatLng(33.431441,133.066406),new google.maps.LatLng(28.613459,121.992188)]
+	        [new google.maps.LatLng(33.431441,133.066406),new google.maps.LatLng(28.613459,121.992188)],
+            [new google.maps.LatLng(14.349548,-89.296875),new google.maps.LatLng(7.710992,-77.167969)] // Mexico <-> Colombia
 	    ];
 
         var lineSymbol = {

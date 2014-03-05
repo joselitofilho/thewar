@@ -97,9 +97,9 @@ class FronteiraTerritorio(object):
         CodigoTerritorio.Inglaterra: [CodigoTerritorio.Islandia, CodigoTerritorio.Portugal, CodigoTerritorio.Alemanha, CodigoTerritorio.Suecia],
         CodigoTerritorio.Suecia: [CodigoTerritorio.Inglaterra, CodigoTerritorio.Moscou],
         CodigoTerritorio.Moscou: [CodigoTerritorio.Suecia, CodigoTerritorio.Polonia, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Aral, CodigoTerritorio.Omsk],
-        CodigoTerritorio.Polonia: [CodigoTerritorio.Moscou, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Egito, CodigoTerritorio.Alemanha],
+        CodigoTerritorio.Polonia: [CodigoTerritorio.Moscou, CodigoTerritorio.Portugal, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Egito, CodigoTerritorio.Alemanha],
         CodigoTerritorio.Alemanha: [CodigoTerritorio.Portugal, CodigoTerritorio.Polonia, CodigoTerritorio.Inglaterra],
-        CodigoTerritorio.Portugal: [CodigoTerritorio.Alemanha, CodigoTerritorio.Inglaterra, CodigoTerritorio.Argelia, CodigoTerritorio.Egito],
+        CodigoTerritorio.Portugal: [CodigoTerritorio.Alemanha, CodigoTerritorio.Inglaterra, CodigoTerritorio.Polonia, CodigoTerritorio.Argelia, CodigoTerritorio.Egito],
         
         CodigoTerritorio.Argelia: [CodigoTerritorio.Portugal, CodigoTerritorio.Brasil, CodigoTerritorio.Congo, CodigoTerritorio.Sudao, CodigoTerritorio.Egito],
         CodigoTerritorio.Egito: [CodigoTerritorio.Argelia, CodigoTerritorio.Sudao, CodigoTerritorio.OrienteMedio, CodigoTerritorio.Polonia, CodigoTerritorio.Portugal],

@@ -49,6 +49,8 @@ class Jogo(object):
 
         self.jogadorVencedor = None
 
+        self.pontuacaoPelaVitoria = 0
+
     def faseI_Inicia(self):
         jogadorQueComeca = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
@@ -183,12 +185,9 @@ class Jogo(object):
                     numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
                     turno.quantidadeDeTropas)
         elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
-            # TODO: Fazer uma negoco direito...
-            pontuacaoDB = PontuacaoDB()
-            pontuacaoDBO = pontuacaoDB.pontuacaoDBODoUsuario(jogador.usuario)
             ganhador = {
                 "usuario": jogador.usuario,
-                "pontos": pontuacaoDBO.pontos
+                "pontos": self.pontuacaoPelaVitoria
             }
 
             acao = AcaoJogoTerminou(tipoAcaoDoTurno, 
@@ -951,7 +950,7 @@ class Jogo(object):
                         quemDestruiuQuem[v.usuario].append(self.jogadores[p].usuario)
 
             pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem)
-            pontuacao.contabilizaPontuacaoDoVencedor()
+            self.pontuacaoPelaVitoria = pontuacao.contabilizaPontuacaoDoVencedor()
             pontuacao.contabilizaPontuacaoDosQueNaoVenceram()
 
             self.contabilizouPontos = True

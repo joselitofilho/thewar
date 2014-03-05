@@ -481,7 +481,7 @@ function jogo_processaMsg_msg_chat_jogo(msgParams) {
     var posicao = msgParams.jogador.posicao;
     var textoUsuario = "<b>" + msgParams.jogador.usuario + "</b> diz: ";
     _chatJogo.escreveColorido(textoUsuario, posicao);
-    _chatJogo.escreveColorido(msgParams.texto, -1);
+    _chatJogo.escreveColorido(msgParams.texto, 999);
 }
 
 /* Informações dos turnos */

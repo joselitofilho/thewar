@@ -45,7 +45,7 @@ class Pontuacao(object):
         
         pontuacaoDB.atualizaPontuacaoDBOParaUsuario(self.usuarioVencedor, novaPontuacaoDBO)
 
-        return novaPontuacaoDBO
+        return pontos
 
     def contabilizaPontuacaoDosQueNaoVenceram(self):
         # TODO: Fazer em uma transacao.
