@@ -142,6 +142,8 @@ function jogo_efetuaAtaque(msgParams) {
         }
     }
 
+    _componenteAcaoTurno.exibeBtn1Atacar();
+
     // Usabilidade...
     if (msgParams.conquistouTerritorio) {
         labelTerritorioDefesa.explosao();
@@ -282,6 +284,7 @@ function processarMsg_colocar_tropa(msgParams) {
 }
 
 function processarMsg_atacar(msgParams) {
+    _componenteAcaoTurno.escondeBtn1Atacar();
     if (msgParams.jogadorDefesa.usuario == _usuario) {
         this.tocarSom(this, "ohno.mp3");
         
@@ -664,6 +667,7 @@ function jogo_fechaPainelVitoria() {
 }
 
 function jogo_removeElementosHtml() {
+    _componenteAcaoTurno.escondeBtn1Atacar();
     $('#dados .dado').each(function(i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
