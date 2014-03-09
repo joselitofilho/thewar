@@ -144,6 +144,7 @@ function jogo_efetuaAtaque(msgParams) {
 
     if (_posicaoJogador == _posicaoJogadorDaVez) {
         _componenteAcaoTurno.exibeBtn1Atacar();
+        _jaPodeAtacar = true;
     }
 
     // Usabilidade...
