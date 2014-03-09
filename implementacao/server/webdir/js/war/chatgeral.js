@@ -4,12 +4,23 @@ jogos.war = jogos.war || {};
 jogos.war.ChatGeral = function(area) {
     this.util = new jogos.war.Util();
 
-    this.escreve = function(texto) {
+    this.escreve = function(texto, indiceCor) {
         texto = this.util.substituiURLPorHTMLLinks(texto);
+
+        if (indiceCor == -1) texto = texto.fontcolor("#494949"); // Servidor.
+        else texto = texto.fontcolor("#453122");
+
         area.append(texto + '<br/>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
+    };
+
+    this.servidorDiz = function(msg) {
+        var texto = '<i><b>Servidor:</b> ';
+        texto += msg;
+        texto += "</i>";
+        this.escreve(texto, -1);
     };
     
     this.limpa = function() {
@@ -17,21 +28,21 @@ jogos.war.ChatGeral = function(area) {
     };
     
     this.boasVindas = function() {
-        area.append('<b>Seja bem-vindo ao servidor principal!</b><br/>');
+        texto = '<b>Seja bem-vindo ao servidor principal!</b>';
+        texto = texto.fontcolor("#453122");
+        area.append(texto + '<br/>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
     };
 
     this.usuarioConectou = function(jogador) {
-        var texto = '<b>Servidor:</b> ';
-        texto += jogador + ' acabou de entrar.';
-        this.escreve(texto);
+        msg = jogador + ' acabou de entrar.';
+        this.servidorDiz(msg);
     };
     
     this.usuarioDesconectou = function(jogador) {
-        var texto = '<b>Servidor:</b> ';
-        texto += jogador + ' saiu.';
-        this.escreve(texto);
+        msg = jogador + ' saiu.';
+        this.servidorDiz(msg);
     };
 };

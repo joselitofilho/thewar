@@ -506,7 +506,7 @@ function appwar_recarregarPagina() {
 function appwar_processaMsg_msg_chat_geral(msgParams) {
     if (!_jogadorEstaEmJogo) this.tocarSom(this, 'mensagem.mp3');
     
-    var texto = "<b>" + msgParams.usuario + ":</b> " + msgParams.texto;
+    var texto = "<b>" + msgParams.usuario + "</b> diz:<br/>" + msgParams.texto;
     _chatGeral.escreve(texto);
 }
 
