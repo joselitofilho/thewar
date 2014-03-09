@@ -142,7 +142,9 @@ function jogo_efetuaAtaque(msgParams) {
         }
     }
 
-    _componenteAcaoTurno.exibeBtn1Atacar();
+    if (_posicaoJogador == _posicaoJogadorDaVez) {
+        _componenteAcaoTurno.exibeBtn1Atacar();
+    }
 
     // Usabilidade...
     if (msgParams.conquistouTerritorio) {
