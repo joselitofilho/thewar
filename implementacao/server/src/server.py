@@ -5,6 +5,7 @@ import signal
 import sys
 import socket
 import traceback
+import re
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -24,15 +25,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
     def onMessage(self, msg, binary):
         if not binary:
             print "[%s] Enviou: %s" % (self.peerstr, msg)
+
+            # Retirando qualquer tipo de tag html da mensagem.
+            msg = re.sub('<[^<]+?>', '', msg)
+
             mensagem = Mensagem()
             mensagem.fromJson(msg)
-
-            # TODO: Criar um metodo para isso e deixar eu fazer isso.
-            # Verificando se tem scripts maliciosos.
-            if msg.find("<script>") > -1:
-                print "Alguem esta tentando usar um script."
-                return None
-            # ----
 
             if mensagem.tipo == TipoMensagem.entrar:
                 params = {}
