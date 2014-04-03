@@ -352,10 +352,38 @@ function processarMsg_entrou_no_jogo(msgParams) {
             
             // Olheiro.
             if (posicaoJogador == 7) {
-                alert("Este jogo já está em andamento. Você poderá apenas assistí-lo.");
+                jNotify(
+                    "Este jogo já está em andamento. Você poderá apenas assistí-lo.",
+                    {
+                        autoHide : true,
+                        clickOverlay : true,
+                        MinWidth : 250,
+                        TimeShown : 3000,
+                        ShowTimeEffect : 200,
+                        HideTimeEffect : 200,
+                        LongTrip :20,
+                        HorizontalPosition : 'center',
+                        VerticalPosition : 'top',
+                        ShowOverlay : false
+                    }
+                );
             }
         } else if(posicaoJogador == 7) {
-            alert(usuario + " está olhando esta partida.");
+            jNotify(
+                usuario + " está assistindo a partida.",
+                {
+                    autoHide : true,
+                    clickOverlay : true,
+                    MinWidth : 250,
+                    TimeShown : 3000,
+                    ShowTimeEffect : 200,
+                    HideTimeEffect : 200,
+                    LongTrip :20,
+                    HorizontalPosition : 'center',
+                    VerticalPosition : 'top',
+                    ShowOverlay : false
+                }
+            );
         }
         
         $("#jogador" + (posicaoJogador+1)).html(usuario);

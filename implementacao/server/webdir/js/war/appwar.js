@@ -206,7 +206,23 @@ function iniciarPartida() {
         iniciarPartidaMsg = comunicacao_iniciarPartida();
         _libwebsocket.enviarObjJson(iniciarPartidaMsg);
     } else {
-        alert('Para iniciar o jogo é preciso pelo menos 3 jogadores na sala.');
+        jError(
+            'Para iniciar o jogo é preciso pelo menos 3 jogadores na sala.',
+            {
+                autoHide : true,
+                clickOverlay : true,
+                MinWidth : 250,
+                TimeShown : 3000,
+                ShowTimeEffect : 200,
+                HideTimeEffect : 200,
+                LongTrip :20,
+                HorizontalPosition : 'center',
+                VerticalPosition : 'top',
+                ShowOverlay : true,
+                ColorOverlay: '#493625',
+                OpacityOverlay: 0.8
+            }
+        );
     }
 }
 

@@ -17,8 +17,23 @@ jogos.war.Sala = function() {
         id = id.trim();
         id = utilRetiraAcento(id);
         if (!this.nomeValido(id))
-            alert('Digite um nome adequando para sua sala de no máximo 10 letras. Não pode conter os caracteres:\n' +
-                '[#, /, \\, @, espaço]');
+            jError(
+                "Digite um nome adequando para sua sala de no máximo 10 letras.<br/> Não pode conter os caracteres: [#, /, \\, @, espaço]",
+                {
+                autoHide : true,
+                clickOverlay : true,
+                MinWidth : 250,
+                TimeShown : 3000,
+                ShowTimeEffect : 200,
+                HideTimeEffect : 200,
+                LongTrip :20,
+                HorizontalPosition : 'center',
+                VerticalPosition : 'top',
+                ShowOverlay : true,
+                ColorOverlay: '#493625',
+                OpacityOverlay: 0.8
+                }
+            );
         else {
             msg = comunicacao_criarSala(id);
             _libwebsocket.enviarObjJson(msg);
