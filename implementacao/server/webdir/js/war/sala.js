@@ -178,7 +178,7 @@ function saiuDaSala(sala, jogadorDaSala) {
 }
 
 function processarMsg_altera_posicao_na_sala(msgParams) {
-    this.tocarSom(this, "entrou.mp3");
+    if (!_jogadorEstaEmJogo) this.tocarSom(this, "entrou.mp3");
 
     var posicaoAntigaJogador = Number(msgParams.posicaoAntiga);
     _sala.limpaPosicao(msgParams.sala, posicaoAntigaJogador);
