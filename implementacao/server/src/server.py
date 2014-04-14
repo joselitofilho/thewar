@@ -6,6 +6,7 @@ import sys
 import socket
 import traceback
 import re
+import logging
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -52,6 +53,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     
                     params["status"] = 1
                     self.factory.clienteConectou(self, usuario)
+                    logging.info('%s %s', usuario, self.peerstr)
 
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
                     print "# ", jsonMsg
@@ -156,6 +158,18 @@ if __name__ == '__main__':
         debug = True
     else:
         debug = False
+
+    logging.basicConfig(filename='log/server.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
+
+    #_loggerIP = logging.getLogger('ip')
+    #_loggerIP.setLevel(logging.DEBUG)
+    #loggerIPch = logging.StreamHandler()
+    #loggerIPch.setLevel(logging.DEBUG)
+    #loggerFormatter = logging.Formatter("%(asctime)s;%(levelname)s;%(message)s","%Y-%m-%d %H:%M:%S")
+    #loggerIPch.setFormatter(loggerFormatter)
+    #_loggerIP.addHandler(loggerIPch)
+
+    #_loggerIP.debug('Teste')
         
     ServerFactory = BroadcastServerFactory
     factory = ServerFactory("ws://localhost:8080",
