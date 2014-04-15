@@ -1,0 +1,72 @@
+Changelog
+=========
+
+pysha3 0.3
+----------
+
+*Release date: 14-Oct-2012*
+
+- Fix 64bit big endian support
+
+- Add workaround for alignment error on 64bit SPARC machine by using the opt32
+  implementation.
+
+- block_size now returns NotImplemented to prevent users from using pysha3
+  with the hmac module.
+
+
+pysha3 0.2.2
+------------
+
+*Release date: 07-Oct-2012*
+
+- Re-add brg_endian.h to fix issue on Solaris (big endian platform)
+
+
+pysha3 0.2.1
+------------
+
+*Release date: 06-Oct-2012*
+
+- Fix MANIFEST.in to include Makefile and tests.py
+
+- Add setup.py test command with hack for inplace builds
+
+- Enhance README.txt and fixed its markup
+
+
+pysha3 0.2
+----------
+
+*Release date: 06-Oct-2012*
+
+- Change directory struct to use the same directory layout as Python 3.4.
+
+- Remove C++ comments from Keccak sources for ANSI C compatibility.
+
+- Declare all Keccak functions and globals as static to avoid name clashes.
+
+- Remove alias sha3() for sha3_512().
+
+- Add block_size attribute. Keccak has a internal sponge size of 1600 bits.
+
+- Release GIL around SHA3_update() calls.
+
+- Monkey patch the hashlib module to support, e.g. hashlib.sha3_512() and
+  hashlib.new("sha3_512")
+
+- Release GIL around SHA3_update() when the data exceeds a certain size.
+
+- Fix build on platforms with an unsigned 64bit integer type (uint64_t). The
+  module falls back to 32bit implementation of Keccak with interleave tables.
+
+
+pysha3 0.1
+----------
+
+*Release date: 04-Oct-2012*
+
+- first release
+
+- based on KeccakReferenceAndOptimized-3.2.zip
+
