@@ -92,7 +92,7 @@ function processarMsg_entrar(msgParams) {
         var cookie = new gpscheck.web.Cookie();
         cookie.cria("usuario", $('#inputUsuario').val());
         var senha = CryptoJS.SHA3($('#inputSenha').val());
-        senha = senha.toString(CryptoJS.enc.Base64);
+        senha = base64_encode(senha.toString());
 
         this.tocarSom(this, "entrou.mp3");
         appwar_alterarTituloDaPagina(msgParams.usuario);
@@ -496,7 +496,7 @@ function emailValido(email) {
 
 function appwar_entrar() {
     var senha = CryptoJS.SHA3($('#inputSenha').val());
-    senha = senha.toString(CryptoJS.enc.Base64);
+    senha = base64_encode(senha.toString());
     var entrarMsg = comunicacao_entrar($('#inputUsuario').val(), senha);
     _libwebsocket.enviarObjJson(entrarMsg);
 }
@@ -509,7 +509,7 @@ function appwar_registrar() {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     } else {
         senha = CryptoJS.SHA3(senha);
-        senha = senha.toString(CryptoJS.enc.Base64);
+        senha = base64_encode(senha.toString());
         var registrarMsg = comunicacao_registrar(usuario, senha, email);
         _libwebsocket.enviarObjJson(registrarMsg);
     }
