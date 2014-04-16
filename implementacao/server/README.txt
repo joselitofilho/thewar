@@ -5,7 +5,7 @@ Install in python:
   - easy_install autobahn-0.5.14-py2.7.egg
   - easy_install discover
   - easy_install coverage
-  - python modules-extras/pysha3-0.3/setup.py install
+  - cd modules-extras/pysha3-0.3/ && python setup.py install && cd ../../
   - apt-get install sqlite3
   - apt-get install redis-server
   - easy_install redis 
