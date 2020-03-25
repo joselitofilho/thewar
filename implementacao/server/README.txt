@@ -2,7 +2,8 @@ Install in python:
   - apt-get install python-dev
   - apt-get install python-setuptools
   - easy_install simplejson
-  - easy_install autobahn-0.5.14-py2.7.egg
+  #- easy_install autobahn-0.5.14-py2.7.egg
+  - easy_install "autobahn==19.11.2"
   - easy_install discover
   - easy_install coverage
   - cd modules-extras/pysha3-0.3/ && python setup.py install && cd ../../

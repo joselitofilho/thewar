@@ -415,6 +415,7 @@
         <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
         
         <!-- Google Maps -->
+	<!-- Precisamos adicionar o parametro "key" que deve ser a chave gerada na conta do google maps. Atualmente, estamos usando a chave do Ricardo Galeno no servidor. -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
         <!---->
 
@@ -444,8 +445,10 @@
         <!---->
         
         <!-- Crypto-js -->
-        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
-        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/x64-core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/enc-base64.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/sha3.min.js"></script>
         <!---->
 
         <!-- Coordenada dos mapas -->
