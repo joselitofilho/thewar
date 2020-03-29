@@ -25,7 +25,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 
     def onMessage(self, msg, binary):
         if not binary:
-            print "[%s] Enviou: %s" % (self.peer, msg)
+            #print "[%s] Enviou: %s" % (self.peer, msg)
 
             # Retirando qualquer tipo de tag html da mensagem.
             msg = re.sub('<[^<]+?>', '', msg)
@@ -127,7 +127,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
             self.clients.remove(client)
 
     def broadcast(self, msg):
-        print "broadcasting message '%s' .." % msg
+        #print "broadcasting message '%s' .." % msg
         for c in self.clients:
             c.sendMessage(msg)
             print "message sent to " + c.peer
