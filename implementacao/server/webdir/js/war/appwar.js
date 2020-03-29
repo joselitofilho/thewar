@@ -580,7 +580,7 @@ function tocarSom(el, soundfile) {
     //    if(el.mp3.paused) el.mp3.play();
     //    else el.mp3.pause();
     //} else {
-        el.mp3 = new Audio("http://war.jogowar.com.br:9092/sons/" + soundfile);
+        el.mp3 = new Audio("/sons/" + soundfile);
         el.mp3.volume = volume;
         el.mp3.play();
     //}
@@ -591,7 +591,7 @@ function tocarSomDeFundo(el) {
         if(el.mp3.paused) el.mp3.play();
         else el.mp3.pause();
     } else {
-        el.mp3 = new Audio("http://war.jogowar.com.br:9092/sons/lux_aeterna.mp3");
+        el.mp3 = new Audio("/sons/lux_aeterna.mp3");
         el.mp3.addEventListener('ended', function() {
             this.currentTime = 0;
             this.play();
@@ -602,7 +602,7 @@ function tocarSomDeFundo(el) {
 }
 
 function appwar_abrirRanking() {
-    var win=window.open('http://guerra.meutabuleiro.com/ranking.html?sorts%5BposicaoNoRanking%5D=1', '_blank');
+    var win=window.open('/ranking.html?sorts%5BposicaoNoRanking%5D=1', '_blank');
     win.focus();
 }
 

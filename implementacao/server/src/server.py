@@ -13,7 +13,7 @@ from twisted.python import log
 from twisted.web.server import Site
 from twisted.web.static import File
 
-from autobahn.websocket import WebSocketServerFactory, \
+from autobahn.twisted.websocket import WebSocketServerFactory, \
                                WebSocketServerProtocol, \
                                listenWS
 import gerenciador
@@ -25,7 +25,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 
     def onMessage(self, msg, binary):
         if not binary:
-            print "[%s] Enviou: %s" % (self.peerstr, msg)
+            #print "[%s] Enviou: %s" % (self.peer, msg)
 
             # Retirando qualquer tipo de tag html da mensagem.
             msg = re.sub('<[^<]+?>', '', msg)
@@ -53,7 +53,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     
                     params["status"] = 1
                     self.factory.clienteConectou(self, usuario)
-                    logging.info('%s %s', usuario, self.peerstr)
+                    logging.info('%s %s', usuario, self.peer)
 
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
                     print "# ", jsonMsg
@@ -110,27 +110,27 @@ class BroadcastServerFactory(WebSocketServerFactory):
     """
 
     def __init__(self, url, debug = False, debugCodePaths = False):
-        WebSocketServerFactory.__init__(self, url, debug = debug, debugCodePaths = debugCodePaths)
+        WebSocketServerFactory.__init__(self, url)
         self.clients = []
         self.tickcount = 0
         self.clientesConectados = {}
 
     def register(self, client):
         if not client in self.clients:
-            print "registered client " + client.peerstr
+            print "registered client " + client.peer
             self.clients.append(client)
 
     def unregister(self, client):
         if client in self.clients:
-            print "unregistered client " + client.peerstr
+            print "unregistered client " + client.peer
             _gerenciadorPrincipal.clienteDesconectou(client)
             self.clients.remove(client)
 
     def broadcast(self, msg):
-        print "broadcasting message '%s' .." % msg
+        #print "broadcasting message '%s' .." % msg
         for c in self.clients:
             c.sendMessage(msg)
-            print "message sent to " + c.peerstr
+            print "message sent to " + c.peer
     
     def usuarioEstaConectado(self, usuario):
         return usuario in self.clientesConectados
@@ -178,7 +178,7 @@ if __name__ == '__main__':
     print 'Servido websocket iniciado na porta 8080.'
 
     factory.protocol = BroadcastServerProtocol
-    factory.setProtocolOptions(allowHixie76 = True)
+    factory.setProtocolOptions()
     listenWS(factory)
 
     _gerenciadorPrincipal = gerenciador.GerenciadorPrincipal()
