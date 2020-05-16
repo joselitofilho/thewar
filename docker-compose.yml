@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  server:
+    image: ricardogpsf/jogowar:v1
+    volumes:
+      - .:/opt/app
+    ports:
+      - "8000:8000"
+      - "9200:9200"
+    networks:
+      - jogowar-network
+    stdin_open: true
+    tty: true
+
+
+networks:
+  jogowar-network:
+    driver: bridge
