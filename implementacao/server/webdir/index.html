@@ -1,544 +1,585 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0"> 
-        <META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-        <META HTTP-EQUIV="expires" CONTENT="-1">
+<head>
+    <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="expires" CONTENT="-1">
 
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>Guerra</title>
-		
-        <meta content='jogos, games, guerra, war, meutabuleiro, tabuleiro, board' name='keywords'>
-        <meta content='website' property='og:type'>
-        <meta content='449500988484457' property='fb:app_id'>
-        <meta content='@guerrameutabuleiro' name='twitter:site'>
-        <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.' name='description'>
-        <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.' property='og:description'>
-        <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.' name='twitter:description'>
-        <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.' itemprop='description'>
-        
-        <link rel="icon" type="image/png" href="imagens/ico.png" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Guerra</title>
 
-        <!-- Google Analytics -->
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <meta content='jogos, games, guerra, war, meutabuleiro, tabuleiro, board' name='keywords'>
+    <meta content='website' property='og:type'>
+    <meta content='449500988484457' property='fb:app_id'>
+    <meta content='@guerrameutabuleiro' name='twitter:site'>
+    <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.'
+          name='description'>
+    <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.'
+          property='og:description'>
+    <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.'
+          name='twitter:description'>
+    <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.'
+          itemprop='description'>
 
-            ga('create', 'UA-48255924-1', 'auto');
-            ga('require', 'displayfeatures');
-            ga('send', 'pageview');
+    <link rel="icon" type="image/png" href="imagens/ico.png"/>
 
-        </script>
-        <!-- End Google Analytics -->
+    <!-- Google Analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-        <!-- Fontes -->
-        <link href='http://fonts.googleapis.com/css?family=Stardos+Stencil:400,700' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-        <!---->
+        ga('create', 'UA-48255924-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
 
-        <!-- Bootstrap -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!---->
+    </script>
+    <!-- End Google Analytics -->
 
-        <!-- jnotify -->
-        <link href="jnotify/jNotify.jquery.css" rel="stylesheet">
-        <!---->
-
-        <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
-
-        <!-- Audio Player -->
-        <link href="css/audioPlayer.css" rel="stylesheet">
-        <!---->
-        
-        <!-- Slider -->
-        <link href="slider/slider.css" rel="stylesheet">
-        <!---->
-
-        <link href="css/app.css" rel="stylesheet">
-        <link href="css/mouse_cursor.css" rel="stylesheet">
-        <link href="css/label_tropas.css" rel="stylesheet">
-        <link href="css/cores.css" rel="stylesheet">
-        <link href="css/listaUsuariosLobby.css" rel="stylesheet">
-        <link href="css/sala.css" rel="stylesheet">
-        <link href="css/acoesTurno.css" rel="stylesheet">
-        <link href="css/jogo.css" rel="stylesheet">
-        <link href="css/painel_vitoria.css" rel="stylesheet">
-        <link href="css/war/cartas_objetivos.css" rel="stylesheet">
-        <link href="css/war/cartas_territorios.css" rel="stylesheet">
-        <link href="css/chat.css" rel="stylesheet">
-
-
-        <script type="text/javascript" src="js/libs/namespace.js"></script>
-        <script type="text/javascript" src="js/websocket/websocket.js"></script>
-        <script type="text/javascript" src="js/cookie.js"></script>
-        <script type="text/javascript" src="js/mensagens.js"></script>
-        <script type="text/javascript" src="js/comunicacao.js"></script>
-    </head>
-    <body>
-        <!-- Facebook - Inicio -->
-        <div id="fb-root"></div>
-        <!-- Curtir 
-        <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=449500988484457";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-        <div class="fb-like" data-href="https://facebook.com/guerrameutabuleiro" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>-->
-        <!---->
-        
-        <!-- Login com Facebook
-        <script src="http://connect.facebook.net/pt_BR/all.js"></script>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '449500988484457',
-                    status     : true,
-                    cookie     : true,
-                    xfbml      : true
-                });
-                
-                /*FB.Event.subscribe('auth.authResponseChange', function(response) {
-                    if (response.status === 'connected') {
-                        console.log('Logged in');
-                    } else {
-                        FB.login();
-                    }
-                });*/
-                FB.Event.subscribe('auth.login', function(response) {
-                    alert('login');
-                 });
-            };
-
-        </script>
-        -->
-        <!---->
-        <!-- Facebook - Fim  -->
-
-        <!-- Google ADS-->
-        <div id="googleads">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- guerra.meutabuleiro.com rodapé -->
-            <ins class="adsbygoogle"
-                style="display:inline-block;width:728px;height:90px"
-                data-ad-client="ca-pub-6816702413600662"
-                data-ad-slot="3992107535"></ins>
-            <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        <!---->
-    
-        <!-- Registrar / Entrar -->
-        <div id="painelRegistrarOuEntrar">
-            <div class="form-signin">
-                <h2 class="form-signin-heading">Bem-vindo</h2>
-                <ul class="nav nav-tabs">
-                    <li id="abaEntrar" class="active"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
-                    <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
-                </ul>
-                <br/>
-                <div id="pre_content">
-                    <input id="inputUsuario" type="text" 
-                        class="input-block-level" 
-                        placeholder="Usu&aacute;rio" maxlength="15"
-                        onkeypress="return inputFormLogin_onkeypress(event);" />
-                    <input id="inputSenha" type="password" 
-                        class="input-block-level" 
-                        placeholder="Senha"
-                        onkeypress="return inputFormLogin_onkeypress(event);" />
-                    <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
-                    <!--<fb:login-button></fb:login-button>-->
-                </div>
-            </div>
-        </div>
-        <!---->
-        
-        <div id="alerta" class="alert alert-info">
-            <div id="alerta_texto"></div>
-        </div>
-
-        <div id="painel_vitoria">
-            <div class="conteudo">
-                <div id="pv_foto" class="imagem-soldado imagem-soldado-padrao"></div>
-                <div class="texto"><h1 id="pv_vencedor"></h1><h2> venceu a partida!</h2></div>
-                <ul>
-                    <li><a href="javascript:void(0);" onclick="_painelVitoria.abreObjetivoDoVencedor();">Ver objetivo</a></li>
-                    <li><a href="javascript:void(0);" onclick="appwar_abrirRanking();">Ver ranking</a></li>
-                </ul>
-                <div id="pv_pontos">400</div>
-            </div>
-
-            <div id="pv_fundo" class="bloqueador_tela" onclick="jogo_fechaPainelVitoria();"></div>
-        </div>
-
-        <div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
-            <span id="po_titulo">Carta objetivo</span>
-
-            <div class="po_content">
-                <div id="cartaObjetivo" class="carta_objetivo"></div>
-            </div>
-            
-            <div id="po_fundo" class="bloqueador_tela"></div>
-        </div>
-        
-        <div id="painel_cartas_territorios">
-            <div id="pct_valorDaTroca">Valor da troca: 4</div>
-
-            <div class="pct_content">
-                <div id="cartasTerritorios">
-                    <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(1);"></div>
-                    <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(2);"></div>
-                    <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(3);"></div>
-                    <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(4);"></div>
-                    <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(5);"></div>
-                </div>
-            </div>
- 
-            <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
-        </div>
-        
-        <div id="sala">
-            
-            <!-- INICIO FORMULARIO BOTAO PAYPAL -->
-            <div class="btn-paypal">
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
-                ">
-                <input type="image" src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - A maneira mais fácil e segura de efetuar pagamentos online!">
-                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-            </form>
-            </div>
-            <!-- FINAL FORMULARIO BOTAO PAYPAL -->
-
-            <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
-            <div class="btn-pagseguro">
-            <form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
-                <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
-                <input type="hidden" name="receiverEmail" value="joselitofilhoo@gmail.com" />
-                <input type="hidden" name="currency" value="BRL" />
-                <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/95x45-doar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
-            </form>
-            </div>
-            <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
-            
-            <div class="topo">
-                <div class="menu">
-                    <button class="btn_criar_sala" onclick="_sala.abreBoxCriarSala();"></button>
-                    <button class="btn_ranking" onclick="appwar_abrirRanking();"></button>
-                    <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
-                </div>
-                <div class="st_jogador"></div>
-            </div>
-            <div id="sala_content">
-                <!--
-                 NOTE: As salas são geradas dinâmicamentes.
-                -->
-            </div> <!-- sala_content -->
-            <div id="sala_boxCriarSala">
-                <button class="btn_fechar" onclick="_sala.fechaBoxCriarSala();"></button>
-                <input id="sala_nomeParaCriar" type="text" 
-                    class="form-control" 
-                    placeholder="Digite o nome da sala." maxlength="10" />
-                    
-                <button class="btn_criar" onclick="_sala.cria($('#sala_nomeParaCriar').val()); _sala.fechaBoxCriarSala();"></button>
-            </div>
-            <div id="chat_geral">
-                <div class="titulo"></div>
-                <div id="cg_mensagens"></div>
-                <input id="cg_texto" type="text" 
-                        class="form-control" 
-                        placeholder="Digite sua mensagem aqui." 
-                        onkeypress="return cg_texto_onkeypress(event);" />
-                <!-- Adsense -->
-                <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
-                <!-- guerra.meutabuleiro -->
-                <!--<ins class="adsbygoogle"
-                     style="display:inline-block;width:336px;height:280px"
-                     data-ad-client="ca-pub-6816702413600662"
-                     data-ad-slot="7836674733"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>-->
-            </div>
-            <div id="lista_usuarios">
-                <div class="titulo"></div>
-                <div class="conteudo">
-                    <!-- NOTE: Lista gerada dinamicamente. -->
-                </div>
-            </div>
-        </div>
-        <div id="geral">
-            
-            <div id="jogo">
-                <div class="legenda-grupo-territorio legenda-gt-amdonorte"></div>
-                <div class="legenda-grupo-territorio legenda-gt-amdosul"></div>
-                <div class="legenda-grupo-territorio legenda-gt-europa"></div>
-                <div class="legenda-grupo-territorio legenda-gt-asia"></div>
-                <div class="legenda-grupo-territorio legenda-gt-oceania"></div>
-                <div class="legenda-grupo-territorio legenda-gt-africa"></div>
-                <div id="menu_jogadores">
-                    <ul>
-                        <li class="mj_vermelho">
-                            <div class="jogador_sala_vermelho"></div>
-                            <a id="jogador1" class="cor_vermelha" href="javascript:void(0);"></a>
-                            <span id="qtdTerritorio0">0</span>
-                        </li>
-                        <li class="mj_azul">
-                            <div class="jogador_sala_azul"></div>
-                            <a id="jogador2" class="cor_azul" href="javascript:void(0);"></a>
-                            <span id="qtdTerritorio1">0</span>
-                        </li>
-                        <li class="mj_verde">
-                            <div class="jogador_sala_verde"></div>
-                            <a id="jogador3" class="cor_verde" href="javascript:void(0);"></a>
-                            <span id="qtdTerritorio2">0</span>
-                        </li>
-                        <li class="mj_preto">
-                            <div class="jogador_sala_preto"></div>
-                            <a id="jogador4" class="cor_preto" href="javascript:void(0);"></a>
-                            <span id="qtdTerritorio3">0</span>
-                        </li>
-                        <li class="mj_branco">
-                            <div class="jogador_sala_branco"></div>
-                            <a id="jogador5" class="cor_branco" href="javascript:void(0);"></a>
-                            <span id="qtdTerritorio4">0</span>
-                        </li>
-                        <li class="mj_amarelo">
-                            <div class="jogador_sala_amarelo"></div>
-                            <a id="jogador6" class="cor_amarelo" href="javascript:void(0);"></a>
-                            <span id="qtdTerritorio5">0</span>
-                        </li>
-                    </ul>
-                </div><!-- div: menu_jogadores -->
-                
-                <div id="mapa"></div>
-                
-                <section>
-                    <span class="audioSliderTooltip"></span>
-                    <div id="audioSlider"></div>
-                    <span class="audioPlayerVolume"></span>
-                    <audio id="audioPlayer" autoplay></audio>
-                </section>
-                
-                <div id="acoes_botoes">
-                    <ul>
-                        <li>
-                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                                <img width="33" src="imagens/jogo/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
-                            </button>
-                        </li>
-                        <li>
-                            <button class="btn btn-default" onclick="_painelObjetivo.abre();">
-                                <img width="33" src="imagens/jogo/btnObjetivo.png" alt="Objetivo" />
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-
-                <div id="acoes_turno">
-                    <div class="info">
-                        <div id="titulo"></div>
-                        <div id="conteudoDinamico">
-                            <!-- Codigo gerado -->
-                        </div>
-                        <div id="btnAcao1"></div>
-                        <div id="btnAcao2"></div>
-                        
-                        <div class="timeline">
-                            <div id="turno1" class="turno turno-padrao"></div>
-                            <div id="turno2" class="turno turno-padrao"></div>
-                            <div id="turno3" class="turno turno-padrao"></div>
-                            <div id="turno4" class="turno turno-padrao"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="barra_tempo">
-                    <div class="barra_de_progresso">
-                        <div id="barra"></div>
-                    </div>
-                    <div id="tempo_restante"></div>
-                </div>
-                
-                <div id="slider-mover-tropas">
-                    <div class="controle">
-                        <div class="btn-min" onclick="_sliderMoverTropas.minimo();"></div>
-                        <div class="valores">
-                            <div id="smt_itemEsquerda" class="item item-esquerda" 
-                                unselectable="on" onclick="_sliderMoverTropas.esquerda();"></div>
-                            <div id="smt_itemAtivo" unselectable="on" class="item item-ativo"></div>
-                            <div id="smt_itemDireita" class="item item-direita" 
-                                unselectable="on" onclick="_sliderMoverTropas.direita();"></div>
-                        </div>
-                        <div class="btn-max" onclick="_sliderMoverTropas.maximo();"></div>
-                    </div>
-                    <div class="botoes">
-                        <div class="btn-cancelar" onclick="jogo_cancelaMoverTropas();"></div>
-                        <div class="btn-mover" onclick="jogo_moveTropas();"></div>
-                    </div>
-                </div>
-
-                <div id="popupBtnAtacar" onclick="atacar();"></div>
-
-                <div id="jogo_sair" onclick="jogo_sair();"></div>
-            </div> <!-- div: jogo -->
-            
-            <div id="lado_direito_jogo">
-                <div id="chat_do_jogo">
-                    <div class="titulo"></div>
-                    <div id="cj_mensagens"></div>
-                    <input id="ct_texto" type="text" 
-                        class="form-control" 
-                        placeholder="Digite sua mensagem aqui."
-                        onkeypress="return ct_texto_onkeypress(event);" />
-                </div>
-
-                <div class="jogadores">
-                    <div class="titulo"></div>
-                </div>
- 
-            </div><!-- div: lado_direito_jogo -->
-
-            <div id="ganhou_carta"></div>
-            
-            <div id="legenda"></div>
-        </div> <!-- div: geral -->
-
-        <div id="bloqueador_tela"></div>
-        <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
-        
-        <!-- Google Maps -->
-	<!-- Precisamos adicionar o parametro "key" que deve ser a chave gerada na conta do google maps. Atualmente, estamos usando a chave do Ricardo Galeno no servidor. -->
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
-        <!---->
-
-        <!-- jQuery -->
-        <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <!---->
-        
-        <!-- Bootstrap -->
-        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-        <!---->
-
-        <!--Here is jQuery UI added from CDN
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
-
-	    <!-- jnotify -->
-        <script type="text/javascript" src="jnotify/jNotify.jquery.js"></script>
-        <!---->
-
-	    <!-- Shortcut -->
-        <script type="text/javascript" src="js/shortcut.js"></script>
-        <!---->
-
-        <!-- AudioPlayer -->
-        <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
-        <!---->
-        
-        <!-- Crypto-js -->
-	<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/core.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/x64-core.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/enc-base64.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/sha3.min.js"></script>
-        <!---->
-
-        <!-- Coordenada dos mapas -->
-        <!-- America do Sul -->
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/argentina.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/brasil.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/chile.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/colombia.js"></script>
-        <!---->
-
-        <!-- America do Norte -->
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/alaska.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/california.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/groelandia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/labrador.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/mackenzie.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/mexico.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-york.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/ottawa.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/vancouver.js"></script>
-        <!---->
-
-        <!-- Africa -->
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/africa-do-sul.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/argelia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/congo.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/egito.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/madagascar.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/sudao.js"></script>
-        <!---->
-
-        <!-- Oceania -->
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/australia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/borneo.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-guine.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/sumatra.js"></script>
-        <!---->
-
-        <!-- Asia -->
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/aral.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/china.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/dudinka.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/india.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/japao.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/mongolia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/omsk.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/oriente-medio.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/siberia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/tchita.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/vietna.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/vladivostok.js"></script>
-        <!---->
-
-        <!-- Europa -->
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/alemanha.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/inglaterra.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/islandia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/portugal.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/polonia.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/moscou.js"></script>
-        <script type="text/javascript" src="js/war/mundo/coordenadasmapa/suecia.js"></script>
-        <!---->
-
-        <!-- Do sistema -->
-        <script type="text/javascript" src="js/cor.js"></script>
-        <script type="text/javascript" src="slider/slider.js"></script>
-        <script type="text/javascript" src="js/label.js"></script>
-        <script type="text/javascript" src="js/mapa.js"></script>
-        
-        <script type="text/javascript" src="js/war/util.js"></script>
-        <script type="text/javascript" src="js/war/base64.min.js"></script>
-        <script type="text/javascript" src="js/war/mundo/territorios.js"></script>
-        <script type="text/javascript" src="js/war/painelVitoria.js"></script>
-        <script type="text/javascript" src="js/war/painelObjetivo.js"></script>
-        <script type="text/javascript" src="js/war/listausuarios.js"></script>
-        <script type="text/javascript" src="js/war/chatgeral.js"></script>
-        <script type="text/javascript" src="js/war/chatjogo.js"></script>
-        <script type="text/javascript" src="js/war/acaoTurno.js"></script>
-        <script type="text/javascript" src="js/war/jogo.js"></script>
-        <script type="text/javascript" src="js/war/sala.js"></script>
-        <script type="text/javascript" src="js/war/appwar.js"></script>
-        <script type="text/javascript" src="js/war/mundo/main.js"></script>
-        <!---->
-    </body>
-
-    <!-- Não armazenar o cache -->
-    <head>
-        <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0"> 
-        <META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-        <META HTTP-EQUIV="expires" CONTENT="-1">
-    </head>
+    <!-- Fontes -->
+    <link href='http://fonts.googleapis.com/css?family=Stardos+Stencil:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
     <!---->
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!---->
+
+    <!-- jnotify -->
+    <link href="jnotify/jNotify.jquery.css" rel="stylesheet">
+    <!---->
+
+    <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+
+    <!-- Audio Player -->
+    <link href="css/audioPlayer.css" rel="stylesheet">
+    <!---->
+
+    <!-- Slider -->
+    <link href="slider/slider.css" rel="stylesheet">
+    <!---->
+
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/mouse_cursor.css" rel="stylesheet">
+    <link href="css/label_tropas.css" rel="stylesheet">
+    <link href="css/cores.css" rel="stylesheet">
+    <link href="css/listaUsuariosLobby.css" rel="stylesheet">
+    <link href="css/sala.css" rel="stylesheet">
+    <link href="css/acoesTurno.css" rel="stylesheet">
+    <link href="css/jogo.css" rel="stylesheet">
+    <link href="css/painel_vitoria.css" rel="stylesheet">
+    <link href="css/war/cartas_objetivos.css" rel="stylesheet">
+    <link href="css/war/cartas_territorios.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
+
+
+    <script type="text/javascript" src="js/libs/namespace.js"></script>
+    <script type="text/javascript" src="js/websocket/websocket.js"></script>
+    <script type="text/javascript" src="js/cookie.js"></script>
+    <script type="text/javascript" src="js/mensagens.js"></script>
+    <script type="text/javascript" src="js/comunicacao.js"></script>
+</head>
+<body>
+<!-- Facebook - Inicio -->
+<div id="fb-root"></div>
+<!-- Curtir
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=449500988484457";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="fb-like" data-href="https://facebook.com/guerrameutabuleiro" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>-->
+<!---->
+
+<!-- Login com Facebook
+<script src="http://connect.facebook.net/pt_BR/all.js"></script>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '449500988484457',
+            status     : true,
+            cookie     : true,
+            xfbml      : true
+        });
+
+        /*FB.Event.subscribe('auth.authResponseChange', function(response) {
+            if (response.status === 'connected') {
+                console.log('Logged in');
+            } else {
+                FB.login();
+            }
+        });*/
+        FB.Event.subscribe('auth.login', function(response) {
+            alert('login');
+         });
+    };
+
+</script>
+-->
+<!---->
+<!-- Facebook - Fim  -->
+
+<!-- Google ADS-->
+<div id="googleads">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- guerra.meutabuleiro.com rodapé -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-6816702413600662"
+         data-ad-slot="3992107535"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+<!---->
+
+<!-- Registrar / Entrar -->
+<div id="painelRegistrarOuEntrar">
+    <div class="form-signin">
+        <h2 class="form-signin-heading">Bem-vindo</h2>
+        <ul class="nav nav-tabs">
+            <li id="abaEntrar" class="active"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
+            <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
+        </ul>
+        <br/>
+        <div id="pre_content">
+            <input id="inputUsuario" type="text"
+                   class="input-block-level"
+                   placeholder="Usu&aacute;rio" maxlength="15"
+                   onkeypress="return inputFormLogin_onkeypress(event);"/>
+            <input id="inputSenha" type="password"
+                   class="input-block-level"
+                   placeholder="Senha"
+                   onkeypress="return inputFormLogin_onkeypress(event);"/>
+            <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+            <!--<fb:login-button></fb:login-button>-->
+        </div>
+    </div>
+</div>
+<!---->
+
+<div id="alerta" class="alert alert-info">
+    <div id="alerta_texto"></div>
+</div>
+
+<div id="painel_vitoria">
+    <div class="conteudo">
+        <div id="pv_foto" class="imagem-soldado imagem-soldado-padrao"></div>
+        <div class="texto"><h1 id="pv_vencedor"></h1>
+            <h2> venceu a partida!</h2></div>
+        <ul>
+            <li><a href="javascript:void(0);" onclick="_painelVitoria.abreObjetivoDoVencedor();">Ver objetivo</a></li>
+            <li><a href="javascript:void(0);" onclick="appwar_abrirRanking();">Ver ranking</a></li>
+        </ul>
+        <div id="pv_pontos">400</div>
+    </div>
+
+    <div id="pv_fundo" class="bloqueador_tela" onclick="jogo_fechaPainelVitoria();"></div>
+</div>
+
+<div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
+    <span id="po_titulo">Carta objetivo</span>
+
+    <div class="po_content">
+        <div id="cartaObjetivo" class="carta_objetivo"></div>
+    </div>
+
+    <div id="po_fundo" class="bloqueador_tela"></div>
+</div>
+
+<div id="painel_cartas_territorios">
+    <div id="pct_valorDaTroca">Valor da troca: 4</div>
+
+    <div class="pct_content">
+        <div id="cartasTerritorios">
+            <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia"
+                 onclick="selecionarCartaTerritorio(1);"></div>
+            <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia"
+                 onclick="selecionarCartaTerritorio(2);"></div>
+            <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia"
+                 onclick="selecionarCartaTerritorio(3);"></div>
+            <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia"
+                 onclick="selecionarCartaTerritorio(4);"></div>
+            <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia"
+                 onclick="selecionarCartaTerritorio(5);"></div>
+        </div>
+    </div>
+
+    <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
+</div>
+
+<div id="sala">
+
+    <!-- INICIO FORMULARIO BOTAO PAYPAL -->
+    <div class="btn-paypal">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+                ">
+            <input type="image" src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_LG.gif" border="0"
+                   name="submit" alt="PayPal - A maneira mais fácil e segura de efetuar pagamentos online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+    <!-- FINAL FORMULARIO BOTAO PAYPAL -->
+
+    <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+    <div class="btn-pagseguro">
+        <form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
+            <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+            <input type="hidden" name="receiverEmail" value="joselitofilhoo@gmail.com"/>
+            <input type="hidden" name="currency" value="BRL"/>
+            <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/95x45-doar.gif"
+                   name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!"/>
+        </form>
+    </div>
+    <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+
+    <div class="topo">
+        <div class="menu">
+            <button class="btn_criar_sala" onclick="_sala.abreBoxCriarSala();"></button>
+            <button class="btn_ranking" onclick="appwar_abrirRanking();"></button>
+            <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
+        </div>
+        <div class="st_jogador"></div>
+    </div>
+    <div id="sala_content">
+        <!--
+         NOTE: As salas são geradas dinâmicamentes.
+        -->
+    </div> <!-- sala_content -->
+    <div id="sala_boxCriarSala">
+        <button class="btn_fechar" onclick="_sala.fechaBoxCriarSala();"></button>
+        <input id="sala_nomeParaCriar" type="text"
+               class="form-control"
+               placeholder="Digite o nome da sala." maxlength="10"/>
+
+        <button class="btn_criar"
+                onclick="_sala.cria($('#sala_nomeParaCriar').val()); _sala.fechaBoxCriarSala();"></button>
+    </div>
+    <div id="chat_geral">
+        <div class="titulo"></div>
+        <div id="cg_mensagens"></div>
+        <input id="cg_texto" type="text"
+               class="form-control"
+               placeholder="Digite sua mensagem aqui."
+               onkeypress="return cg_texto_onkeypress(event);"/>
+        <!-- Adsense -->
+        <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+        <!-- guerra.meutabuleiro -->
+        <!--<ins class="adsbygoogle"
+             style="display:inline-block;width:336px;height:280px"
+             data-ad-client="ca-pub-6816702413600662"
+             data-ad-slot="7836674733"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>-->
+    </div>
+    <div id="lista_usuarios">
+        <div class="titulo"></div>
+        <div class="conteudo">
+            <!-- NOTE: Lista gerada dinamicamente. -->
+        </div>
+    </div>
+</div>
+<div id="geral">
+
+    <div id="jogo">
+        <div class="legenda-grupo-territorio legenda-gt-amdonorte"></div>
+        <div class="legenda-grupo-territorio legenda-gt-amdosul"></div>
+        <div class="legenda-grupo-territorio legenda-gt-europa"></div>
+        <div class="legenda-grupo-territorio legenda-gt-asia"></div>
+        <div class="legenda-grupo-territorio legenda-gt-oceania"></div>
+        <div class="legenda-grupo-territorio legenda-gt-africa"></div>
+        <div id="menu_jogadores">
+            <ul>
+                <li class="mj_vermelho">
+                    <div class="jogador_sala_vermelho"></div>
+                    <a id="jogador1" class="cor_vermelha" href="javascript:void(0);"></a>
+                    <span id="qtdTerritorio0">0</span>
+                </li>
+                <li class="mj_azul">
+                    <div class="jogador_sala_azul"></div>
+                    <a id="jogador2" class="cor_azul" href="javascript:void(0);"></a>
+                    <span id="qtdTerritorio1">0</span>
+                </li>
+                <li class="mj_verde">
+                    <div class="jogador_sala_verde"></div>
+                    <a id="jogador3" class="cor_verde" href="javascript:void(0);"></a>
+                    <span id="qtdTerritorio2">0</span>
+                </li>
+                <li class="mj_preto">
+                    <div class="jogador_sala_preto"></div>
+                    <a id="jogador4" class="cor_preto" href="javascript:void(0);"></a>
+                    <span id="qtdTerritorio3">0</span>
+                </li>
+                <li class="mj_branco">
+                    <div class="jogador_sala_branco"></div>
+                    <a id="jogador5" class="cor_branco" href="javascript:void(0);"></a>
+                    <span id="qtdTerritorio4">0</span>
+                </li>
+                <li class="mj_amarelo">
+                    <div class="jogador_sala_amarelo"></div>
+                    <a id="jogador6" class="cor_amarelo" href="javascript:void(0);"></a>
+                    <span id="qtdTerritorio5">0</span>
+                </li>
+            </ul>
+        </div><!-- div: menu_jogadores -->
+
+        <div id="mapa"></div>
+
+        <section>
+            <span class="audioSliderTooltip"></span>
+            <div id="audioSlider"></div>
+            <span class="audioPlayerVolume"></span>
+            <audio id="audioPlayer" autoplay></audio>
+        </section>
+
+        <div id="acoes_botoes">
+            <ul>
+                <li>
+                    <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                        <img width="33" src="imagens/jogo/btnVerCartas.png" alt="Cartas territ&oacute;rios"/>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-default" onclick="_painelObjetivo.abre();">
+                        <img width="33" src="imagens/jogo/btnObjetivo.png" alt="Objetivo"/>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="acoes_turno">
+            <div class="info">
+                <div id="titulo"></div>
+                <div id="conteudoDinamico">
+                    <!-- Codigo gerado -->
+                </div>
+                <div id="btnAcao1"></div>
+                <div id="btnAcao2"></div>
+
+                <div class="timeline">
+                    <div id="turno1" class="turno turno-padrao"></div>
+                    <div id="turno2" class="turno turno-padrao"></div>
+                    <div id="turno3" class="turno turno-padrao"></div>
+                    <div id="turno4" class="turno turno-padrao"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quantidade_tropas">
+            <div class="rb_quantidade_tropa">
+                <div class="rb-tab rb-tab-active" data-value="1">
+                    <div class="rb-spot">
+                        <span class="rb-txt">1</span>
+                    </div>
+                </div>
+                <div class="rb-tab" data-value="5">
+                    <div class="rb-spot">
+                        <span class="rb-txt">5</span>
+                    </div>
+                </div>
+                <div class="rb-tab" data-value="10">
+                    <div class="rb-spot">
+                        <span class="rb-txt">10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="barra_tempo">
+            <div class="barra_de_progresso">
+                <div id="barra"></div>
+            </div>
+            <div id="tempo_restante"></div>
+        </div>
+
+        <div id="slider-mover-tropas">
+            <div class="controle">
+                <div class="btn-min" onclick="_sliderMoverTropas.minimo();"></div>
+                <div class="valores">
+                    <div id="smt_itemEsquerda" class="item item-esquerda"
+                         unselectable="on" onclick="_sliderMoverTropas.esquerda();"></div>
+                    <div id="smt_itemAtivo" unselectable="on" class="item item-ativo"></div>
+                    <div id="smt_itemDireita" class="item item-direita"
+                         unselectable="on" onclick="_sliderMoverTropas.direita();"></div>
+                </div>
+                <div class="btn-max" onclick="_sliderMoverTropas.maximo();"></div>
+            </div>
+            <div class="botoes">
+                <div class="btn-cancelar" onclick="jogo_cancelaMoverTropas();"></div>
+                <div class="btn-mover" onclick="jogo_moveTropas();"></div>
+            </div>
+        </div>
+
+        <div id="popupBtnAtacar" onclick="atacar();"></div>
+
+        <div id="jogo_sair" onclick="jogo_sair();"></div>
+    </div> <!-- div: jogo -->
+
+    <div id="lado_direito_jogo">
+        <div id="chat_do_jogo">
+            <div class="titulo"></div>
+            <div id="cj_mensagens"></div>
+            <input id="ct_texto" type="text"
+                   class="form-control"
+                   placeholder="Digite sua mensagem aqui."
+                   onkeypress="return ct_texto_onkeypress(event);"/>
+        </div>
+
+        <div class="jogadores">
+            <div class="titulo"></div>
+        </div>
+
+    </div><!-- div: lado_direito_jogo -->
+
+    <div id="ganhou_carta"></div>
+
+    <div id="legenda"></div>
+</div> <!-- div: geral -->
+
+<div id="bloqueador_tela"></div>
+<div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
+
+<!-- Google Maps -->
+<!-- Precisamos adicionar o parametro "key" que deve ser a chave gerada na conta do google maps. Atualmente, estamos usando a chave do Ricardo Galeno no servidor. -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+<!---->
+
+<!-- jQuery -->
+<!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!---->
+
+<!-- Bootstrap -->
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<!---->
+
+<!--Here is jQuery UI added from CDN
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+
+<!-- jnotify -->
+<script type="text/javascript" src="jnotify/jNotify.jquery.js"></script>
+<!---->
+
+<!-- Shortcut -->
+<script type="text/javascript" src="js/shortcut.js"></script>
+<!---->
+
+<!-- AudioPlayer -->
+<script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
+<!---->
+
+<!-- Crypto-js -->
+<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/x64-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/enc-base64.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/crypto-js@3.1.2/sha3.min.js"></script>
+<!---->
+
+<!-- Coordenada dos mapas -->
+<!-- America do Sul -->
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/argentina.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/brasil.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/chile.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/colombia.js"></script>
+<!---->
+
+<!-- America do Norte -->
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/alaska.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/california.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/groelandia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/labrador.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/mackenzie.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/mexico.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-york.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/ottawa.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/vancouver.js"></script>
+<!---->
+
+<!-- Africa -->
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/africa-do-sul.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/argelia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/congo.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/egito.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/madagascar.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/sudao.js"></script>
+<!---->
+
+<!-- Oceania -->
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/australia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/borneo.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-guine.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/sumatra.js"></script>
+<!---->
+
+<!-- Asia -->
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/aral.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/china.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/dudinka.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/india.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/japao.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/mongolia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/omsk.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/oriente-medio.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/siberia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/tchita.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/vietna.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/vladivostok.js"></script>
+<!---->
+
+<!-- Europa -->
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/alemanha.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/inglaterra.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/islandia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/portugal.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/polonia.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/moscou.js"></script>
+<script type="text/javascript" src="js/war/mundo/coordenadasmapa/suecia.js"></script>
+<!---->
+
+<!-- Do sistema -->
+<script type="text/javascript" src="js/cor.js"></script>
+<script type="text/javascript" src="slider/slider.js"></script>
+<script type="text/javascript" src="js/label.js"></script>
+<script type="text/javascript" src="js/mapa.js"></script>
+
+<script type="text/javascript" src="js/war/util.js"></script>
+<script type="text/javascript" src="js/war/base64.min.js"></script>
+<script type="text/javascript" src="js/war/mundo/territorios.js"></script>
+<script type="text/javascript" src="js/war/painelVitoria.js"></script>
+<script type="text/javascript" src="js/war/painelObjetivo.js"></script>
+<script type="text/javascript" src="js/war/listausuarios.js"></script>
+<script type="text/javascript" src="js/war/chatgeral.js"></script>
+<script type="text/javascript" src="js/war/chatjogo.js"></script>
+<script type="text/javascript" src="js/war/acaoTurno.js"></script>
+<script type="text/javascript" src="js/war/jogo.js"></script>
+<script type="text/javascript" src="js/war/sala.js"></script>
+<script type="text/javascript" src="js/war/appwar.js"></script>
+<script type="text/javascript" src="js/war/mundo/main.js"></script>
+<!---->
+</body>
+
+<!-- Não armazenar o cache -->
+<head>
+    <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="expires" CONTENT="-1">
+</head>
+<!---->
 </html>

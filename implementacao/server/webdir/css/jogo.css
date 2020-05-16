@@ -1,6 +1,6 @@
 #jogo {
-	overflow: hidden;
-	visibility: hidden;
+    overflow: hidden;
+    visibility: hidden;
     width: 1280px;
     height: 800px;
     background: url('../imagens/jogo/bg-mapa.png') no-repeat;
@@ -16,7 +16,7 @@
 #acoes_botoes ul {
     padding: 0px;
     margin: 0px;
-    list-style:none;
+    list-style: none;
     text-align: center;
 }
 
@@ -35,6 +35,70 @@
     width: 979px;
     height: 640px;
     z-index: 998;
+}
+
+#quantidade_tropas {
+    position: absolute;
+    top: 637px;
+    width: 120px;
+    left: 50%;
+    margin-left: -158px;
+    max-width: 420px;
+    height: 40px;
+    z-index: 999;
+
+    padding: 4px;
+    color: #FFD1AC;
+    background: rgba(103, 68, 36, 1);
+    border-radius: .75em;
+    -webkit-filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, .3));
+    filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, .3));
+    box-shadow: 0 2px 2px rgba(103, 68, 36, .5),
+    0 0px 5px rgba(56, 39, 24, .15),
+    0 0px 4px rgba(56, 39, 24, .35),
+    0 5px 20px rgba(56, 39, 24, .25),
+    0 10px 50px rgba(56, 39, 24, .75),
+    inset 0 0 15px rgba(255, 255, 255, .05);
+}
+
+.rb_quantidade_tropa {
+    padding: 3px;
+    text-align: center;
+    /*background: rgba(255,255,255,.03);*/
+    border-radius: .3em;
+}
+
+.rb-tab {
+    display: inline-block;
+    position: relative;
+    width: 32px;
+}
+
+.rb-txt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+}
+
+.rb-spot {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 100%;
+    cursor: pointer;
+    transition: ease .5s;
+}
+
+.rb-tab-active .rb-spot {
+    background: rgba(56, 39, 24, .90);
+    border: 2px solid rgba(56, 39, 24, .90);
 }
 
 #barra_tempo {
@@ -63,7 +127,8 @@
 }
 
 #barra {
-    height: 25px; width:0;
+    height: 25px;
+    width: 0;
     background-color: #5EB95E;
 }
 
@@ -132,10 +197,10 @@
 }
 
 #menu_jogadores ul {
-    padding:0px;
-    margin-top:14px;
-    margin-left:23px;
-    list-style:none;
+    padding: 0px;
+    margin-top: 14px;
+    margin-left: 23px;
+    list-style: none;
 }
 
 #menu_jogadores ul li {
@@ -178,12 +243,29 @@
     text-shadow: black 0.1em 0.1em 0.2em;
 }
 
-#qtdTerritorio0 {color: #F8F7E9;}
-#qtdTerritorio1 {color: #F8F7E9;}
-#qtdTerritorio2 {color: #F8F7E9;}
-#qtdTerritorio3 {color: #F8F7E9;}
-#qtdTerritorio4 {color: #282423;}
-#qtdTerritorio5 {color: #282423;}
+#qtdTerritorio0 {
+    color: #F8F7E9;
+}
+
+#qtdTerritorio1 {
+    color: #F8F7E9;
+}
+
+#qtdTerritorio2 {
+    color: #F8F7E9;
+}
+
+#qtdTerritorio3 {
+    color: #F8F7E9;
+}
+
+#qtdTerritorio4 {
+    color: #282423;
+}
+
+#qtdTerritorio5 {
+    color: #282423;
+}
 
 #chat_do_jogo {
     float: left;
@@ -275,28 +357,51 @@
 }
 
 .legenda-gt-amdonorte {
-    top: 185px; left: 90px;
-    background-position: 0 -235px; width: 147px; height: 47px;
+    top: 185px;
+    left: 90px;
+    background-position: 0 -235px;
+    width: 147px;
+    height: 47px;
 }
+
 .legenda-gt-amdosul {
-    top: 626px; left: 316px;
-    background-position: 0 0; width: 126px; height: 47px;
+    top: 626px;
+    left: 316px;
+    background-position: 0 0;
+    width: 126px;
+    height: 47px;
 }
+
 .legenda-gt-europa {
-    top: 320px; left: 360px;
-    background-position: 0 -189px; width: 66px; height: 45px;
+    top: 320px;
+    left: 360px;
+    background-position: 0 -189px;
+    width: 66px;
+    height: 45px;
 }
+
 .legenda-gt-asia {
-    top: 370px; left: 880px;
-    background-position: 0 -141px; width: 41px; height: 47px;
+    top: 370px;
+    left: 880px;
+    background-position: 0 -141px;
+    width: 41px;
+    height: 47px;
 }
+
 .legenda-gt-oceania {
-    top: 560px; left: 715px;
-    background-position: 0 -96px; width: 70px; height: 44px;
+    top: 560px;
+    left: 715px;
+    background-position: 0 -96px;
+    width: 70px;
+    height: 44px;
 }
+
 .legenda-gt-africa {
-    top: 518px; left: 428px;
-    background-position: 0 -48px; width: 60px; height: 47px;
+    top: 518px;
+    left: 428px;
+    background-position: 0 -48px;
+    width: 60px;
+    height: 47px;
 }
 
 #popupBtnAtacar {
