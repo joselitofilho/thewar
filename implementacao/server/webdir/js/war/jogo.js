@@ -721,3 +721,10 @@ function jogo_removeElementosHtml() {
     clearInterval(_loopTempoRestante);
     clearTimeout(_timeoutTempoRestante);
 }
+
+//Quantidade de tropas - switcher function:
+$(".rb-tab").click(function(){
+  //Spot switcher:
+  $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+  $(this).addClass("rb-tab-active");
+});
