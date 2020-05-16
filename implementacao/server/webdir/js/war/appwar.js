@@ -446,7 +446,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 territorioClickMover(posicaoJogador, nomeDoTerritorio);
             }
         } else {
-            var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, 1);
+            var qtd = parseInt($("#quantidade_tropas").find(".rb-tab-active").attr("data-value"));
+            var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, qtd);
             _libwebsocket.enviarObjJson(colocarTropaMsg);
         }
     }
