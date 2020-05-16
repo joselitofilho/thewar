@@ -446,7 +446,9 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 territorioClickMover(posicaoJogador, nomeDoTerritorio);
             }
         } else {
-            var qtd = parseInt($("#quantidade_tropas").find(".rb-tab-active").attr("data-value"));
+            var qtd_disponivel = parseInt($('#acoes_turno .info').find("#extra").text().replace("+", ""));
+            var qtd_escolhida = parseInt($("#quantidade_tropas").find(".rb-tab-active").attr("data-value"));
+            var qtd = Math.min(qtd_disponivel, qtd_escolhida);
             var colocarTropaMsg = comunicacao_colocarTropa(posicaoJogador, nomeDoTerritorio, qtd);
             _libwebsocket.enviarObjJson(colocarTropaMsg);
         }
