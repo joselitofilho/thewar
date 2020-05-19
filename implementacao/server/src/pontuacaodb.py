@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
+
 from JogadorRanking import *
+
 
 class PontuacaoDBO(object):
     def __init__(self):
@@ -14,14 +16,15 @@ class PontuacaoDBO(object):
     def __eq__(self, other):
         if isinstance(other, PontuacaoDBO):
             return self.pontos == other.pontos and \
-                    self.quantidadeDePartidas == other.quantidadeDePartidas and \
-                    self.quantidadeDeVitorias == other.quantidadeDeVitorias and \
-                    self.quantidadeDestruido == other.quantidadeDestruido
+                   self.quantidadeDePartidas == other.quantidadeDePartidas and \
+                   self.quantidadeDeVitorias == other.quantidadeDeVitorias and \
+                   self.quantidadeDestruido == other.quantidadeDestruido
         return NotImplemented
+
 
 class PontuacaoDB(object):
 
-    def __init__(self, baseDeDados = 'war.db'):
+    def __init__(self, baseDeDados='war.db'):
         self.baseDeDados = baseDeDados
 
     def pontuacaoDBODoUsuario(self, usuario):
@@ -32,7 +35,9 @@ class PontuacaoDB(object):
         rowUsuarios = c.execute('SELECT id FROM Usuarios WHERE nome=?', [usuario]).fetchone()
         if rowUsuarios:
             idUsuario = rowUsuarios[0]
-            rowPontuacao = c.execute('SELECT pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao WHERE idUsuario=?', [idUsuario]).fetchone()
+            rowPontuacao = c.execute(
+                'SELECT pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao WHERE idUsuario=?',
+                [idUsuario]).fetchone()
             if rowPontuacao:
                 retorno = PontuacaoDBO()
                 retorno.pontos = rowPontuacao[0]
@@ -47,7 +52,8 @@ class PontuacaoDB(object):
     def ranking(self):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
-        rowPontuacoes = c.execute('SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
+        rowPontuacoes = c.execute(
+            'SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
 
         ranking = []
         if rowPontuacoes:
@@ -58,8 +64,8 @@ class PontuacaoDB(object):
                     eficiencia = int((float(row[3]) / float(row[2])) * 100)
                 except:
                     pass
-                jogadorRanking = JogadorRanking(posicaoRanking, 
-                    row[0], row[1], row[2], row[3], row[4], eficiencia)
+                jogadorRanking = JogadorRanking(posicaoRanking,
+                                                row[0], row[1], row[2], row[3], row[4], eficiencia)
                 ranking.append(jogadorRanking)
                 posicaoRanking += 1
 
@@ -87,7 +93,8 @@ class PontuacaoDB(object):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
 
-        c.execute('UPDATE Pontuacao SET pontos=? WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);', [pontos, usuario])
+        c.execute('UPDATE Pontuacao SET pontos=? WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);',
+                  [pontos, usuario])
         conn.commit()
 
         conn.close()
@@ -96,7 +103,10 @@ class PontuacaoDB(object):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
 
-        c.execute('UPDATE Pontuacao SET pontos=?, quantidadeDePartidas=?, quantidadeDeVitorias=?, quantidadeDestruido=? WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);', [pontuacaoDBO.pontos, pontuacaoDBO.quantidadeDePartidas, pontuacaoDBO.quantidadeDeVitorias, pontuacaoDBO.quantidadeDestruido, usuario])
+        c.execute(
+            'UPDATE Pontuacao SET pontos=?, quantidadeDePartidas=?, quantidadeDeVitorias=?, quantidadeDestruido=? WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);',
+            [pontuacaoDBO.pontos, pontuacaoDBO.quantidadeDePartidas, pontuacaoDBO.quantidadeDeVitorias,
+             pontuacaoDBO.quantidadeDestruido, usuario])
         conn.commit()
 
         conn.close()

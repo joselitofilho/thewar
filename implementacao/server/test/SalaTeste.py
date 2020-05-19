@@ -1,8 +1,10 @@
 import unittest
+
 from src.sala import *
 
+
 class SalaTeste(unittest.TestCase):
-    
+
     def setUp(self):
         pass
 
@@ -75,7 +77,6 @@ class SalaTeste(unittest.TestCase):
         # Verificacao.
         self.assertIsNone(retorno)
 
-
     def testDeveRetornarAsInformacoesDaSala_QuandoRemoverUmJogadorDaSalaQueEstaNaSala(self):
         # Preparando.
         sala = Sala("2")
@@ -94,14 +95,15 @@ class SalaTeste(unittest.TestCase):
     def testDeveRetornarNone_QuandoRemoverUmJogadorDaSalaQueNaoEstaNaSala(self):
         # Preparando.
         sala = Sala("2")
-        
+
         # Acao.
         retorno = sala.remove("Joselito")
 
         # Verificacao.
         self.assertIsNone(retorno)
 
-    def testDeveRetornarQueOJogadorFoiAdicionadoNaSalaNaPosicaoUm_QuandoAlterarAPosicaoDeUmJogadorQueNaoEstaNaSala(self):
+    def testDeveRetornarQueOJogadorFoiAdicionadoNaSalaNaPosicaoUm_QuandoAlterarAPosicaoDeUmJogadorQueNaoEstaNaSala(
+            self):
         # Preparando.
         sala = Sala("3")
 
@@ -139,6 +141,7 @@ class SalaTeste(unittest.TestCase):
     def testDeveRetornarTrue_QuandoASalaEstiverVazia(self):
         sala = Sala("4")
         self.assertTrue(sala.vazia())
+
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()

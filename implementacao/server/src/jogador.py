@@ -1,10 +1,12 @@
 from territorio import *
 
+
 class JogadorDaSala(object):
     def __init__(self, usuario, posicao, dono):
         self.usuario = usuario
         self.posicao = posicao
         self.dono = dono
+
 
 class JogadorDoJogo(object):
     def __init__(self, usuario, posicao, dono):
@@ -71,7 +73,7 @@ class JogadorDoJogo(object):
                 temOceania = False
         if temOceania:
             retorno.append(GrupoTerritorio.Oceania)
-    
+
         return retorno
 
     def temTerritorio(self, codigoTerritorio):
@@ -79,12 +81,12 @@ class JogadorDoJogo(object):
             if t.codigo == codigoTerritorio:
                 return True
         return False
-        
+
     def temOsTerritorios(self, listaCodigoTerritorio):
         codigosTerritoriosDoJogador = []
         for t in self.territorios:
             codigosTerritoriosDoJogador.append(t.codigo)
-            
+
         for t in listaCodigoTerritorio:
             if t not in codigosTerritoriosDoJogador:
                 return False
@@ -96,39 +98,40 @@ class JogadorDoJogo(object):
             if t.codigo == codigoTerritorio:
                 territorio = t
                 break
-        
+
         if territorio != None:
             territorio.quantidadeDeTropas += quantidade
 
         return territorio
-    
+
     def removeTropasNoTerritorio(self, codigoTerritorio, quantidade):
         territorio = None
         for t in self.territorios:
             if t.codigo == codigoTerritorio:
                 territorio = t
                 break
-        
+
         if territorio != None:
             territorio.quantidadeDeTropas -= quantidade
 
         return territorio
-        
+
     def seuTerritorio(self, codigoTerritorio):
         for t in self.territorios:
             if t.codigo == codigoTerritorio:
                 return t
-                
+
         return None
-    
+
     def adicionaCartaTerritorio(self, cartaTerritorio):
         self.cartasTerritorio.append(cartaTerritorio)
-    
+
     def removeCartaTerritorio(self, cartaTerritorio):
         self.cartasTerritorio.remove(cartaTerritorio)
 
     def destruiuJogador(self, posicao):
         return posicao in self.jogadoresDestruidos
+
 
 class Jogador(object):
     _usuario = None
@@ -144,7 +147,7 @@ class Jogador(object):
         self._socket = None
         self._territorios = []
         self._cartasTerritorio = []
-        
+
     def gruposTerritorio(self):
         retorno = []
 
@@ -193,7 +196,7 @@ class Jogador(object):
                 temOceania = False
         if temOceania:
             retorno.append(GrupoTerritorio.Oceania)
-    
+
         return retorno
 
     def temTerritorio(self, codigoTerritorio):
@@ -201,12 +204,12 @@ class Jogador(object):
             if t.codigo == codigoTerritorio:
                 return True
         return False
-        
+
     def temOsTerritorios(self, listaCodigoTerritorio):
         codigosTerritoriosDoJogador = []
         for t in self._territorios:
             codigosTerritoriosDoJogador.append(t.codigo)
-            
+
         for t in listaCodigoTerritorio:
             if t not in codigosTerritoriosDoJogador:
                 return False
@@ -218,40 +221,41 @@ class Jogador(object):
             if t.codigo == codigoTerritorio:
                 territorio = t
                 break
-        
+
         if territorio != None:
             territorio.quantidadeDeTropas += quantidade
 
         return territorio
-    
+
     def removeTropasNoTerritorio(self, codigoTerritorio, quantidade):
         territorio = None
         for t in self._territorios:
             if t.codigo == codigoTerritorio:
                 territorio = t
                 break
-        
+
         if territorio != None:
             territorio.quantidadeDeTropas -= quantidade
 
         return territorio
-        
+
     def seuTerritorio(self, codigoTerritorio):
         for t in self._territorios:
             if t.codigo == codigoTerritorio:
                 return t
-                
+
         return None
-    
+
     def adicionaCartaTerritorio(self, cartaTerritorio):
         self._cartasTerritorio.append(cartaTerritorio)
-    
+
     def removeCartaTerritorio(self, cartaTerritorio):
         self._cartasTerritorio.remove(cartaTerritorio)
 
     @property
     def usuario(self):
         return self._usuario
+
     @usuario.setter
     def usuario(self, valor):
         self._usuario = valor
@@ -259,6 +263,7 @@ class Jogador(object):
     @property
     def posicaoNaSala(self):
         return self._posicaoNaSala
+
     @posicaoNaSala.setter
     def posicaoNaSala(self, valor):
         self._posicaoNaSala = valor
@@ -266,6 +271,7 @@ class Jogador(object):
     @property
     def socket(self):
         return self._socket
+
     @socket.setter
     def socket(self, valor):
         self._socket = valor;
@@ -273,19 +279,21 @@ class Jogador(object):
     @property
     def objetivo(self):
         return self._objetivo
+
     @objetivo.setter
     def objetivo(self, objetivo):
         self._objetivo = objetivo
-    
+
     @property
     def territorios(self):
         return self._territorios
+
     @territorios.setter
     def territorios(self, codigosTerritorios):
         self._territorios = []
         for t in codigosTerritorios:
             self._territorios.append(Territorio(t))
-            
+
     @property
     def cartasTerritorio(self):
         return self._cartasTerritorio

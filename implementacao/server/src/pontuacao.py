@@ -3,15 +3,16 @@
 
 from pontuacaodb import *
 
+
 class Pontuacao(object):
-    def __init__(self, usuarioVencedor, usuarios, quemDestruiuQuem, baseDeDados = 'war.db'):
+    def __init__(self, usuarioVencedor, usuarios, quemDestruiuQuem, baseDeDados='war.db'):
         self.usuarioVencedor = usuarioVencedor
         self.usuarios = usuarios
         self.quemDestruiuQuem = quemDestruiuQuem
         self.baseDeDados = baseDeDados
         # TODO: Pegar o id dos usuarios e guarda-lo.
-        #self.idUsuarioVencedor
-        #self.idsUsuarios
+        # self.idUsuarioVencedor
+        # self.idsUsuarios
 
     def contabilizaPontuacaoDoVencedor(self):
         pontos = 0
@@ -42,7 +43,7 @@ class Pontuacao(object):
             novaPontuacaoDBO.quantidadeDePartidas = pontuacaoDBOAtual.quantidadeDePartidas + 1
             novaPontuacaoDBO.quantidadeDeVitorias = pontuacaoDBOAtual.quantidadeDeVitorias + 1
             novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
-        
+
         pontuacaoDB.atualizaPontuacaoDBOParaUsuario(self.usuarioVencedor, novaPontuacaoDBO)
 
         return pontos
@@ -76,7 +77,7 @@ class Pontuacao(object):
                     novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido + 1
                 else:
                     novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
-            
+
             pontuacaoDB.atualizaPontuacaoDBOParaUsuario(usuario, novaPontuacaoDBO)
 
     def usuarioFoiDestruidoPorAlguem(self, usuario):
@@ -93,4 +94,3 @@ class Pontuacao(object):
                 pontosExtra = len(v)
                 break
         return pontosExtra * 100
-

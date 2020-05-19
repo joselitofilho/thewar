@@ -49,7 +49,7 @@
     text-align: center;
     color: #FFD1AC;
     font-weight: bold;
-    font-size:18px;
+    font-size: 18px;
 }
 
 #acoes_turno .info .meio-dados {
@@ -61,7 +61,7 @@
     background: url('../imagens/acoesTurno/area-dados.png') no-repeat;
 }
 
-#dados { 
+#dados {
     position: relative;
     left: 9px;
     top: 5px;
@@ -77,9 +77,13 @@
     margin: 2px 2px;
 }
 
-.dado_ataque {background-position: 0px 0px;}
+.dado_ataque {
+    background-position: 0px 0px;
+}
 
-.dado_defesa {background-position: 0px -39px;}
+.dado_defesa {
+    background-position: 0px -39px;
+}
 
 #acoes_turno .info #extra {
     position: absolute;
@@ -105,7 +109,7 @@
 
 #acoes_turno .info #alvo .nome,
 #acoes_turno .info #saida .nome {
-    position: relative; 
+    position: relative;
     top: -35px;
     text-align: center;
     color: #2E2014;
@@ -138,7 +142,7 @@
 
 #acoes_turno .info #atacante .nome,
 #acoes_turno .info #entrada .nome {
-    position: relative; 
+    position: relative;
     top: -35px;
     text-align: center;
     color: #2E2014;
@@ -158,12 +162,29 @@
     visibility: hidden;
 }
 
-#acoes_turno .info .terr-vermelho {background: url('../imagens/acoesTurno/territorio-vermelho.png') no-repeat;}
-#acoes_turno .info .terr-azul {background: url('../imagens/acoesTurno/territorio-azul.png') no-repeat;}
-#acoes_turno .info .terr-verde {background: url('../imagens/acoesTurno/territorio-verde.png') no-repeat;}
-#acoes_turno .info .terr-preto {background: url('../imagens/acoesTurno/territorio-preto.png') no-repeat;}
-#acoes_turno .info .terr-branco {background: url('../imagens/acoesTurno/territorio-branco.png') no-repeat;}
-#acoes_turno .info .terr-amarelo {background: url('../imagens/acoesTurno/territorio-amarelo.png') no-repeat;}
+#acoes_turno .info .terr-vermelho {
+    background: url('../imagens/acoesTurno/territorio-vermelho.png') no-repeat;
+}
+
+#acoes_turno .info .terr-azul {
+    background: url('../imagens/acoesTurno/territorio-azul.png') no-repeat;
+}
+
+#acoes_turno .info .terr-verde {
+    background: url('../imagens/acoesTurno/territorio-verde.png') no-repeat;
+}
+
+#acoes_turno .info .terr-preto {
+    background: url('../imagens/acoesTurno/territorio-preto.png') no-repeat;
+}
+
+#acoes_turno .info .terr-branco {
+    background: url('../imagens/acoesTurno/territorio-branco.png') no-repeat;
+}
+
+#acoes_turno .info .terr-amarelo {
+    background: url('../imagens/acoesTurno/territorio-amarelo.png') no-repeat;
+}
 
 #acoes_turno .info #btnAcao1 {
     position: absolute;
@@ -179,19 +200,81 @@
     cursor: pointer;
 }
 
-.sprite-btn-acoes {background: url('../imagens/acoesTurno/sprite-btn-acoes.png') no-repeat;}
-.sprite-btn-acoes-turno-atacar:hover{ background-position: 0 0; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-atacar{ background-position: 0 -39px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-cancelar:hover{ background-position: 0 -78px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-cancelar{ background-position: 0 -117px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-mover:hover{ background-position: 0 -156px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-mover{ background-position: 0 -195px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-prosseguir:hover{ background-position: 0 -234px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-prosseguir{ background-position: 0 -273px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-trocar:hover{ background-position: 0 -312px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-trocar{ background-position: 0 -351px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-ver-cartas:hover{ background-position: 0 -390px; width: 86px; height: 34px; } 
-.sprite-btn-acoes-turno-ver-cartas{ background-position: 0 -429px; width: 86px; height: 34px; }
+.sprite-btn-acoes {
+    background: url('../imagens/acoesTurno/sprite-btn-acoes.png') no-repeat;
+}
+
+.sprite-btn-acoes-turno-atacar:hover {
+    background-position: 0 0;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-atacar {
+    background-position: 0 -39px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-cancelar:hover {
+    background-position: 0 -78px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-cancelar {
+    background-position: 0 -117px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-mover:hover {
+    background-position: 0 -156px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-mover {
+    background-position: 0 -195px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-prosseguir:hover {
+    background-position: 0 -234px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-prosseguir {
+    background-position: 0 -273px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-trocar:hover {
+    background-position: 0 -312px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-trocar {
+    background-position: 0 -351px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-ver-cartas:hover {
+    background-position: 0 -390px;
+    width: 86px;
+    height: 34px;
+}
+
+.sprite-btn-acoes-turno-ver-cartas {
+    background-position: 0 -429px;
+    width: 86px;
+    height: 34px;
+}
 
 #acoes_turno .timeline {
     position: absolute;
@@ -208,10 +291,30 @@
     margin-left: 22px;
 }
 
-#acoes_turno .timeline .turno-padrao {background: url('../imagens/acoesTurno/inativo-marrom.png') no-repeat;}
-#acoes_turno .timeline .turno-j1 {background: url('../imagens/acoesTurno/ativo-vermelho.png') no-repeat;}
-#acoes_turno .timeline .turno-j2 {background: url('../imagens/acoesTurno/ativo-azul.png') no-repeat;}
-#acoes_turno .timeline .turno-j3 {background: url('../imagens/acoesTurno/ativo-verde.png') no-repeat;}
-#acoes_turno .timeline .turno-j4 {background: url('../imagens/acoesTurno/ativo-preto.png') no-repeat;}
-#acoes_turno .timeline .turno-j5 {background: url('../imagens/acoesTurno/ativo-branco.png') no-repeat;}
-#acoes_turno .timeline .turno-j6 {background: url('../imagens/acoesTurno/ativo-amarelo.png') no-repeat;}
+#acoes_turno .timeline .turno-padrao {
+    background: url('../imagens/acoesTurno/inativo-marrom.png') no-repeat;
+}
+
+#acoes_turno .timeline .turno-j1 {
+    background: url('../imagens/acoesTurno/ativo-vermelho.png') no-repeat;
+}
+
+#acoes_turno .timeline .turno-j2 {
+    background: url('../imagens/acoesTurno/ativo-azul.png') no-repeat;
+}
+
+#acoes_turno .timeline .turno-j3 {
+    background: url('../imagens/acoesTurno/ativo-verde.png') no-repeat;
+}
+
+#acoes_turno .timeline .turno-j4 {
+    background: url('../imagens/acoesTurno/ativo-preto.png') no-repeat;
+}
+
+#acoes_turno .timeline .turno-j5 {
+    background: url('../imagens/acoesTurno/ativo-branco.png') no-repeat;
+}
+
+#acoes_turno .timeline .turno-j6 {
+    background: url('../imagens/acoesTurno/ativo-amarelo.png') no-repeat;
+}

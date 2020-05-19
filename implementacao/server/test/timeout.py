@@ -1,5 +1,6 @@
-import time
 import threading
+import time
+
 
 class Timeout(threading.Thread):
     def __init__(self, tempoMaximo=60, func=None):
@@ -8,12 +9,12 @@ class Timeout(threading.Thread):
         self.tempoMaximo = tempoMaximo
         self.func = func
         self.loop = True
-    
+
     def run(self):
         while (self.tempo < self.tempoMaximo and self.loop):
             time.sleep(1)
             self.tempo += 1
-        
+
         if self.tempo == self.tempoMaximo and self.func != None:
             self.func()
 

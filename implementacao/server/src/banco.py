@@ -3,23 +3,25 @@
 
 import sqlite3
 
+
 class Banco(object):
 
     def __init__(self):
         self.conn = sqlite3.connect("war.db")
-        
+
     def registraUsuario(self, usuario, senha, email):
         try:
             cursor = self.conn.cursor()
             sql = "INSERT INTO Usuarios(nome, senha, email) VALUES(?,?,?)"
             cursor.execute(sql, (usuario, senha, email))
             self.conn.commit()
-        
+
         except sqlite3.Error, e:
             if self.conn:
                 self.conn.rollback()
-            print "Error %s:" % e.args[0]
-            
+            print
+            "Error %s:" % e.args[0]
+
     def verificaCredenciaisDoUsuario(self, usuario, senha):
         retorno = False
 

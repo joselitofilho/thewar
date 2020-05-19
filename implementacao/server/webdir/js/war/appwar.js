@@ -32,7 +32,7 @@ _cartasTerritoriosSelecionadas = [];
 _quantidadeDeJogadoresNaSala = 0;
 
 _sala = new jogos.war.Sala();
-_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'))
+_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'));
 _chatGeral.boasVindas();
 
 function appwar_limparVariaveis() {
@@ -67,8 +67,8 @@ function exibirAlerta(tipo, msg) {
     $('#alerta').css('visibility', 'visible');
     $("#alerta")
         .fadeIn('slow')
-        .animate({opacity : 1.0}, 2000)
-        .fadeOut('slow', function() {
+        .animate({opacity: 1.0}, 2000)
+        .fadeOut('slow', function () {
             $(this).hide();
         });
 }
@@ -100,7 +100,7 @@ function processarMsg_entrar(msgParams) {
 
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
         $('#sala').css('visibility', 'visible');
-	$('html,body').css('overflow','auto');
+        $('html,body').css('overflow', 'auto');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     }
@@ -132,7 +132,7 @@ function processarMsg_erro() {
 function posAberturaSocket(valor) {
     var cookie = new gpscheck.web.Cookie();
     var usuarioCookie = cookie.le("usuario");
-    
+
     if (usuarioCookie != null) {
         $('#inputUsuario').val(usuarioCookie);
     }
@@ -209,16 +209,16 @@ function iniciarPartida() {
         jError(
             'Para iniciar o jogo é preciso pelo menos 3 jogadores na sala.',
             {
-                autoHide : true,
-                clickOverlay : true,
-                MinWidth : 250,
-                TimeShown : 3000,
-                ShowTimeEffect : 200,
-                HideTimeEffect : 200,
-                LongTrip :20,
-                HorizontalPosition : 'center',
-                VerticalPosition : 'top',
-                ShowOverlay : true,
+                autoHide: true,
+                clickOverlay: true,
+                MinWidth: 250,
+                TimeShown: 3000,
+                ShowTimeEffect: 200,
+                HideTimeEffect: 200,
+                LongTrip: 20,
+                HorizontalPosition: 'center',
+                VerticalPosition: 'top',
+                ShowOverlay: true,
                 ColorOverlay: '#493625',
                 OpacityOverlay: 0.8
             }
@@ -238,8 +238,8 @@ function atacar() {
         var qtdDadosDefesa = _territorios.quantidadeDeTropaDoTerritorio(_territorioAlvoAtaque);
         var qtdDadosAtaque = 0;
         territorios.push(_territorioAlvoAtaque);
-        
-        $.each(_territoriosAtacante, function(i, codigoTerritorio) {
+
+        $.each(_territoriosAtacante, function (i, codigoTerritorio) {
             var qtdTropas = _territorios.quantidadeDeTropaDoTerritorio(codigoTerritorio);
             if (qtdTropas <= 3 && qtdTropas > 0) {
                 qtdDadosAtaque += qtdTropas - 1;
@@ -248,11 +248,11 @@ function atacar() {
             }
             territorios.push(codigoTerritorio);
         });
-        
+
         var bounds = _territorios.barreiraDosTerritorios(territorios);
         // TODO: Desabilitar quando a idéia estiver mais amadurecida...
         //_mapaGoogle.fitBounds(bounds);
-        
+
         if (qtdDadosDefesa > 0 && qtdDadosAtaque > 0 && _jaPodeAtacar) {
             _jaPodeAtacar = false;
             var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);
@@ -262,7 +262,7 @@ function atacar() {
 }
 
 function appwar_abrePainelCartasTerritorios() {
-    if (_posicaoJogador == _posicaoJogadorDaVez && 
+    if (_posicaoJogador == _posicaoJogadorDaVez &&
         _turno.tipoAcao == TipoAcaoTurno.trocar_cartas) {
         _componenteAcaoTurno.btnVerCartasClick(true);
     } else {
@@ -283,21 +283,21 @@ function appwar_fechaPainelCartasTerritorios() {
 function selecionarCartaTerritorio(num) {
     var nomeDoElemento = '#cartaTerritorio' + num;
     var classesDoElemento = $(nomeDoElemento).attr('class').split(' ');
-    
-    if (classesDoElemento.length > 1 && 
+
+    if (classesDoElemento.length > 1 &&
         classesDoElemento[1] != 'carta_territorio_vazia') {
         var nomeDividido = classesDoElemento[1].split('_');
         if (_cartasTerritoriosSelecionadas.length < 3 && nomeDividido.length == 3) {
             // Carta não estava selecionada.
             $(nomeDoElemento).removeClass(classesDoElemento[1]);
             $(nomeDoElemento).addClass(classesDoElemento[1] + '_selecionado');
-            
+
             _cartasTerritoriosSelecionadas.push(nomeDividido[2]);
         } else if (_cartasTerritoriosSelecionadas.length > 0 && nomeDividido.length == 4) {
             // Carta estava selecionada.
             $(nomeDoElemento).removeClass(classesDoElemento[1]);
             $(nomeDoElemento).addClass(nomeDividido[0] + '_' + nomeDividido[1] + '_' + nomeDividido[2]);
-            
+
             _cartasTerritoriosSelecionadas.splice(_cartasTerritoriosSelecionadas.indexOf(nomeDividido[2]), 1);
         }
     }
@@ -314,8 +314,8 @@ function appwar_trocaCartasTerritorios() {
 function appwar_iniciaCartasTerritorios() {
     _cartasTerritoriosSelecionadas = [];
 
-    for (i=1; i<=5; i++) {
-        $('#cartaTerritorio' + i).attr('class','carta_territorio carta_territorio_vazia');
+    for (i = 1; i <= 5; i++) {
+        $('#cartaTerritorio' + i).attr('class', 'carta_territorio carta_territorio_vazia');
     }
 }
 
@@ -344,7 +344,7 @@ function territorioMouseMoveFunc(evento, posicaoJogador, codigoDoTerritorio) {
     } else {
         document.getElementById("mapa").className = 'mouse_padrao';
     }
-    
+
     $('#legenda').html(_nomeDosTerritoriosPeloCodigo[codigoDoTerritorio]);
     $('#legenda').css('visibility', 'visible');
 }
@@ -372,8 +372,8 @@ function territorioClickMover(posicaoJogador, nomeDoTerritorio) {
         var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
         _componenteAcaoTurno.turnoMoverEscolheuSaida(nomeDoTerritorio, indiceCor);
         this.tocarSom(this, 'vamosLa.wav');
-    } else if (_territorioAlvoMover == null && 
-               _territorios.temFronteira(nomeDoTerritorio, _territorioMovimento)) {
+    } else if (_territorioAlvoMover == null &&
+        _territorios.temFronteira(nomeDoTerritorio, _territorioMovimento)) {
         _territorioAlvoMover = nomeDoTerritorio;
         _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
         var indiceCor = _labelTerritorios[nomeDoTerritorio].posicaoJogador;
@@ -386,9 +386,9 @@ function territorioClickMover(posicaoJogador, nomeDoTerritorio) {
         _sliderMoverTropas.fechar();
         _componenteAcaoTurno.turnoMover(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
     }
-    
+
     if (_territorioAlvoMover != null && _territorioMovimento != null) {
-        _sliderMoverTropas.inicia(1, _territorios.quantidadeDeTropaDoTerritorio(_territorioMovimento)-1);
+        _sliderMoverTropas.inicia(1, _territorios.quantidadeDeTropaDoTerritorio(_territorioMovimento) - 1);
         var posicao = _territorios.posicaoHTML(_territorioAlvoMover);
         _sliderMoverTropas.alteraPosicionamentoNoHTML(posicao);
     } else {
@@ -407,8 +407,7 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                 // TODO: Nome do jogador.
                 _componenteAcaoTurno.turnoAtacar(_posicaoJogador == _posicaoJogadorDaVez, posicaoJogador);
                 _componenteAcaoTurno.escondeBtn1Atacar();
-            }
-            else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
+            } else if (_territorios.territorioNaoEhDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez)) {
                 _territorios.pintarGruposTerritorios();
                 _territorioAlvoAtaque = nomeDoTerritorio;
                 _territorios.focaNoTerritorioAlvoEAdjacentesDoJogador(nomeDoTerritorio, _posicaoJogadorDaVez);
@@ -419,19 +418,18 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio));
 
                 var posicao = _territorios.posicaoHTML(_territorioAlvoAtaque);
-                $('#popupBtnAtacar').offset({ top: posicao.top+21, left: posicao.left-8 });
-            }
-            else if (_territorioAlvoAtaque != null) {
+                $('#popupBtnAtacar').offset({top: posicao.top + 21, left: posicao.left - 8});
+            } else if (_territorioAlvoAtaque != null) {
                 var quantidadeDeTropasNoTerritorio = _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio);
                 if (quantidadeDeTropasNoTerritorio > 1 &&
                     _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoAtaque)) {
                     var indiceTerritorio = _territoriosAtacante.indexOf(nomeDoTerritorio);
                     if (indiceTerritorio == -1) {
-                        this.tocarSom(this, 'simSenhor_' + (Math.floor(Math.random()*4)+1) + '.wav');
+                        this.tocarSom(this, 'simSenhor_' + (Math.floor(Math.random() * 4) + 1) + '.wav');
                         _territoriosAtacante.push(nomeDoTerritorio);
                         _territorios.aumentaBrilhoTerritorio(nomeDoTerritorio);
-                        _componenteAcaoTurno.turnoAtacarAdicionaAtacante(_posicaoJogador, 
-                            nomeDoTerritorio, 
+                        _componenteAcaoTurno.turnoAtacarAdicionaAtacante(_posicaoJogador,
+                            nomeDoTerritorio,
                             quantidadeDeTropasNoTerritorio);
                     } else {
                         _territoriosAtacante.splice(indiceTerritorio, 1);
@@ -459,13 +457,13 @@ function appwar_exibirPainelEntrar() {
     var html = "<input id=\"inputUsuario\" type=\"text\"";
     html += "class=\"input-block-level\"";
     html += "placeholder=\"Usu&aacute;rio\" />";
-    
+
     html += "<input id=\"inputSenha\" type=\"password\"";
     html += "class=\"input-block-level\"";
     html += "placeholder=\"Senha\" />";
-    
+
     html += "<button class=\"btn btn-large btn-default\" onclick=\"appwar_entrar();\">Entrar</button>";
-    
+
     $('#pre_content').html(html);
     $('#abaEntrar').attr('class', 'active');
     $('#abaRegistrar').attr('class', '');
@@ -475,17 +473,17 @@ function appwar_exibirPainelRegistrar() {
     var html = "<input id=\"inputUsuario\" type=\"text\"";
     html += "class=\"input-block-level\"";
     html += "placeholder=\"Usu&aacute;rio\" />";
-    
+
     html += "<input id=\"inputSenha\" type=\"password\"";
     html += "class=\"input-block-level\"";
     html += "placeholder=\"Senha\" />";
-    
+
     html += "<input id=\"inputEmail\" type=\"text\"";
     html += "class=\"input-block-level\"";
     html += "placeholder=\"Email\" />";
-    
+
     html += "<button class=\"btn btn-large btn-default\" onclick=\"appwar_registrar();\">Registrar</button>";
-    
+
     $('#pre_content').html(html);
     $('#abaEntrar').attr('class', '');
     $('#abaRegistrar').attr('class', 'active');
@@ -493,7 +491,7 @@ function appwar_exibirPainelRegistrar() {
 
 function emailValido(email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    if( !emailReg.test(email)) return false;
+    if (!emailReg.test(email)) return false;
     else return true;
 }
 
@@ -524,48 +522,48 @@ function appwar_recarregarPagina() {
 
 function appwar_processaMsg_msg_chat_geral(msgParams) {
     if (!_jogadorEstaEmJogo) this.tocarSom(this, 'mensagem.mp3');
-    
+
     var texto = "<b>" + msgParams.usuario + "</b> diz:<br/>" + msgParams.texto;
     _chatGeral.escreve(texto);
 }
 
 function iniciarControleDeAudio() {
-    var audioSlider  = $('#audioSlider');
+    var audioSlider = $('#audioSlider');
     var audioSliderTooltip = $('.audioSliderTooltip');
     var audioPlayer = $('#audioPlayer').get(0);
 
     audioSliderTooltip.hide();
 
     audioSlider.slider({
-            value: 20,
-            min: 0,
-            max: 100,
-            range: 'min',
-            animate: true,
-            step: 1,
-            start: function(e, ui) {
-                audioSliderTooltip.fadeIn('fast');
-            },
-            slide: function(e, ui) {
-                var valor = ui.value;
-                var volume = $('.audioPlayerVolume');
+        value: 20,
+        min: 0,
+        max: 100,
+        range: 'min',
+        animate: true,
+        step: 1,
+        start: function (e, ui) {
+            audioSliderTooltip.fadeIn('fast');
+        },
+        slide: function (e, ui) {
+            var valor = ui.value;
+            var volume = $('.audioPlayerVolume');
 
-                audioSliderTooltip.css('left', valor).text(valor);
-                if (valor <= 5) { 
-                    volume.css('background-position', '0 0');
-                } else if (valor <= 25) {
-                    volume.css('background-position', '0 -25px');
-                } else if (valor <= 75) {
-                    volume.css('background-position', '0 -50px');
-                } else {
-                    volume.css('background-position', '0 -75px');
-                }
-
-                audioPlayer.volume = ui.value / 100.0;
-            },
-            stop: function(e, ui) {
-                audioSliderTooltip.fadeOut('fast');
+            audioSliderTooltip.css('left', valor).text(valor);
+            if (valor <= 5) {
+                volume.css('background-position', '0 0');
+            } else if (valor <= 25) {
+                volume.css('background-position', '0 -25px');
+            } else if (valor <= 75) {
+                volume.css('background-position', '0 -50px');
+            } else {
+                volume.css('background-position', '0 -75px');
             }
+
+            audioPlayer.volume = ui.value / 100.0;
+        },
+        stop: function (e, ui) {
+            audioSliderTooltip.fadeOut('fast');
+        }
     });
 }
 
@@ -583,19 +581,19 @@ function tocarSom(el, soundfile) {
     //    if(el.mp3.paused) el.mp3.play();
     //    else el.mp3.pause();
     //} else {
-        el.mp3 = new Audio("/sons/" + soundfile);
-        el.mp3.volume = volume;
-        el.mp3.play();
+    el.mp3 = new Audio("/sons/" + soundfile);
+    el.mp3.volume = volume;
+    el.mp3.play();
     //}
 }
 
 function tocarSomDeFundo(el) {
     if (el.mp3) {
-        if(el.mp3.paused) el.mp3.play();
+        if (el.mp3.paused) el.mp3.play();
         else el.mp3.pause();
     } else {
         el.mp3 = new Audio("/sons/lux_aeterna.mp3");
-        el.mp3.addEventListener('ended', function() {
+        el.mp3.addEventListener('ended', function () {
             this.currentTime = 0;
             this.play();
         }, false);
@@ -605,12 +603,12 @@ function tocarSomDeFundo(el) {
 }
 
 function appwar_abrirRanking() {
-    var win=window.open('/ranking.html?sorts%5BposicaoNoRanking%5D=1', '_blank');
+    var win = window.open('/ranking.html?sorts%5BposicaoNoRanking%5D=1', '_blank');
     win.focus();
 }
 
 function appwar_abrirRegras() {
-    var win=window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
+    var win = window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
     win.focus();
 }
 

@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import math
-import random
 import logging
+import random
 
-from mensagens import *
-from turno import *
-from tipoAcaoTurno import *
-from territorio import *
 from carta import *
+from mensagens import *
 from objetivos import *
 from pontuacao import *
+from territorio import *
+from tipoAcaoTurno import *
+from turno import *
 
 
 class Jogo(object):

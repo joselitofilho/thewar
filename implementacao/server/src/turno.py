@@ -1,10 +1,9 @@
-import time
-
-from tipoAcaoTurno import *
 from timeout import *
+from tipoAcaoTurno import *
+
 
 class Turno(object):
-    TIMEOUT = (2*60) + 4
+    TIMEOUT = (2 * 60) + 4
 
     def __init__(self):
         self.numero = 1
@@ -14,11 +13,11 @@ class Turno(object):
         self.gruposTerritorio = []
 
         self.reiniciaVariaveisExtras()
-        
+
         self.trocouCartas = False
 
         self.loopTimeout = None
-   
+
     def reiniciaVariaveisExtras(self):
         self.reiniciaVariaveisExtrasGruposTerritorios()
         self.reiniciaVariaveisExtrasMoverAposConquistar()
@@ -28,7 +27,7 @@ class Turno(object):
 
         # Atributo utilizado para o turno: distribuir tropas para os grupos de territorios.
         self.grupoTerritorioAtual = None
-   
+
     def reiniciaVariaveisExtrasMoverAposConquistar(self):
         # Atributos utilizado para o turno: mover tropas apos conquistar territorio.
         self.tropasParaMoverAposAtaque = 0
@@ -41,12 +40,13 @@ class Turno(object):
 
         self.loopTimeout = Timeout(self.TIMEOUT, funcTimeout)
         self.loopTimeout.start()
-    
+
     def paraTimeout(self):
         try:
             self.loopTimeout.para()
         except:
-            print "Thread foi morta com excecao!"
+            print
+            "Thread foi morta com excecao!"
 
         del self.loopTimeout
         self.loopTimeout = None

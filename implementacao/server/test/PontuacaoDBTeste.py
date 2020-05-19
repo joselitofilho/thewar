@@ -4,11 +4,13 @@
 import os
 import shutil
 import unittest
+
 from src.JogadorRanking import *
 from src.pontuacaodb import *
 
+
 class PontuacaoDBTeste(unittest.TestCase):
-   
+
     def setUp(self):
         try:
             os.remove('wartest.db')
@@ -24,7 +26,7 @@ class PontuacaoDBTeste(unittest.TestCase):
         pontuacaoDBOEsperado.quantidadeDePartidas = 3
         pontuacaoDBOEsperado.quantidadeDeVitorias = 2
         pontuacaoDBOEsperado.quantidadeDerrotas = 0
-        
+
         # Operação.
         pontuacaoDB = PontuacaoDB('wartest.db')
         pontuacaoDBO = pontuacaoDB.pontuacaoDBODoUsuario("Joselito")
@@ -54,9 +56,9 @@ class PontuacaoDBTeste(unittest.TestCase):
         jogadorRanking2 = JogadorRanking(2, "kellymineiro", 200, 1, 1, 0, 100)
         jogadorRanking3 = JogadorRanking(3, "Katryne", 0, 1, 0, 0, 0)
         rankingEsperado = [
-           jogadorRanking1,
-           jogadorRanking2,
-           jogadorRanking3
+            jogadorRanking1,
+            jogadorRanking2,
+            jogadorRanking3
         ]
 
         # Operação.
@@ -68,6 +70,7 @@ class PontuacaoDBTeste(unittest.TestCase):
 
     def tearDown(self):
         os.remove('wartest.db')
+
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()

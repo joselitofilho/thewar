@@ -1,11 +1,11 @@
 var jogowar = gpscheck || {};
 jogowar.mapa = gpscheck.mapa || {};
 
-jogowar.mapa.Mapa = function() {
+jogowar.mapa.Mapa = function () {
 
     _mapaGoogle = null;
 
-    this.inicia = function(mapaDiv, lat, lng, zoom) {
+    this.inicia = function (mapaDiv, lat, lng, zoom) {
         var mapOptions = {
             center: new google.maps.LatLng(lat, lng),
             zoom: zoom,
@@ -26,7 +26,7 @@ jogowar.mapa.Mapa = function() {
         mapaDiv.style.backgroundColor = "transparent";
     };
 
-    this.alteraEstilo = function(estilo) {
+    this.alteraEstilo = function (estilo) {
         if (_mapaGoogle) {
             var styledMap = new google.maps.StyledMapType(estilo, {name: "GuerraMap"});
             _mapaGoogle.mapTypes.set('guerra_map_style', styledMap);

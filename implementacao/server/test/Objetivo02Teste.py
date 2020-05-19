@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+
 from src.objetivos import *
+
 
 class Objetivo02Teste(unittest.TestCase):
 
@@ -15,16 +17,16 @@ class Objetivo02Teste(unittest.TestCase):
         self.jogador6 = JogadorDoJogo("J6", 5, False)
 
         self.jogadores = {
-            0: self.jogador1, 
+            0: self.jogador1,
             1: self.jogador2,
-            2: self.jogador3, 
-            3: self.jogador4,  
-            4: self.jogador5, 
+            2: self.jogador3,
+            3: self.jogador4,
+            4: self.jogador5,
             5: self.jogador6
         }
-        
+
         self.codigosTerritorios_2 = [
-            CodigoTerritorio.Brasil, 
+            CodigoTerritorio.Brasil,
             CodigoTerritorio.Argentina
         ]
         self.codigosTerritorios_24 = [
@@ -35,7 +37,7 @@ class Objetivo02Teste(unittest.TestCase):
             CodigoTerritorio.India, CodigoTerritorio.Inglaterra, CodigoTerritorio.Japao, CodigoTerritorio.Labrador,
             CodigoTerritorio.Islandia, CodigoTerritorio.Mexico, CodigoTerritorio.Moscou, CodigoTerritorio.Omsk
         ]
-    
+
     # Cenário:
     #   * Jogador1 tem o objetivo 02;
     #   * Jogador1 eliminou o jogador2.
@@ -44,13 +46,13 @@ class Objetivo02Teste(unittest.TestCase):
     def test_DadoQueOJogador1EliminouOJogador2_EntaoJogador1VenceOJogo(self):
         # Preparacao.
         self.jogador1.jogadoresDestruidos = [1]
-        
+
         # Operacao.
         venceu = Objetivo02().completou(self.jogador1, self.jogadores)
-        
+
         # Verificacao.
         self.assertTrue(venceu)
-    
+
     # Cenário:
     #   * Jogador1 tem o objetivo 02;
     #   * Jogador2 não doi eliminado do jogo.
@@ -59,47 +61,49 @@ class Objetivo02Teste(unittest.TestCase):
     def test_DadoQueOJogador2NaoFoiEliminadoDoJogo_EntaoJogador1NaoVenceOJogo(self):
         # Preparação.
         self.jogador1.jogadoresDestruidos = []
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador1, self.jogadores)
-        
+
         # Verificação.
         self.assertFalse(venceu)
-        
+
     # Cenário:
     #   * Jogador1 tem o objetivo 02;
     #   * Jogador2 foi eliminado mas não foi pelo Jogador1;
     #   * Jogador1 tem 2 territorios.
     #
     # Critério: Não deve vencer o jogo.
-    def test_DadoQueOJogador2FoiEliminadoMasNaoFoiPeloJogador1_DadoJogador1Tem2Territorios_EntaoJogador1NaoVenceOJogo(self):
+    def test_DadoQueOJogador2FoiEliminadoMasNaoFoiPeloJogador1_DadoJogador1Tem2Territorios_EntaoJogador1NaoVenceOJogo(
+            self):
         # Preparação.
         self.jogador1.jogadoresDestruidos = []
         self.jogador1.iniciaTerritorios(self.codigosTerritorios_2)
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador1, self.jogadores)
-        
+
         # Verificação.
         self.assertFalse(venceu)
-        
+
     # Cenário:
     #   * Jogador1 tem o objetivo 02;
     #   * Jogador2 foi eliminado mas não foi pelo Jogador1;
     #   * Jogador1 tem 24 territorios.
     #
     # Critério: Deve vencer o jogo.
-    def test_DadoQueOJogador2FoiEliminadoMasNaoFoiPeloJogador1_DadoJogador1Tem24Territorios_EntaoJogador1VenceOJogo(self):
+    def test_DadoQueOJogador2FoiEliminadoMasNaoFoiPeloJogador1_DadoJogador1Tem24Territorios_EntaoJogador1VenceOJogo(
+            self):
         # Preparação.
         self.jogador1.jogadoresDestruidos = []
         self.jogador1.iniciaTerritorios(self.codigosTerritorios_24)
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador1, self.jogadores)
-        
+
         # Verificação.
         self.assertTrue(venceu)
-        
+
     # Cenário:
     #   * Jogador1 tem o objetivo 02;
     #   * Jogador2 não está no jogo;
@@ -110,12 +114,12 @@ class Objetivo02Teste(unittest.TestCase):
         # Preparação.
         self.jogador1.jogadoresDestruidos = []
         self.jogador1.iniciaTerritorios(self.codigosTerritorios_2)
-        
+
         del self.jogadores[1]
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador1, self.jogadores)
-        
+
         # Verificação.
         self.assertFalse(venceu)
 
@@ -129,15 +133,15 @@ class Objetivo02Teste(unittest.TestCase):
         # Preparação.
         self.jogador1.jogadoresDestruidos = []
         self.jogador1.iniciaTerritorios(self.codigosTerritorios_24)
-        
+
         del self.jogadores[1]
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador1, self.jogadores)
-        
+
         # Verificação.
         self.assertTrue(venceu)
-        
+
     # Cenário:
     #   * Jogador2 tem o objetivo 02;
     #   * Jogador2 tem 2 territorios.
@@ -147,13 +151,13 @@ class Objetivo02Teste(unittest.TestCase):
         # Preparação.
         self.jogador2.jogadoresDestruidos = []
         self.jogador2.iniciaTerritorios(self.codigosTerritorios_2)
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador2, self.jogadores)
-        
+
         # Verificação.
         self.assertFalse(venceu)
-        
+
     # Cenário:
     #   * Jogador6 tem o objetivo 02;
     #   * Jogador6 tem 24 territorios.
@@ -163,9 +167,9 @@ class Objetivo02Teste(unittest.TestCase):
         # Preparação.
         self.jogador2.jogadoresDestruidos = []
         self.jogador2.iniciaTerritorios(self.codigosTerritorios_24)
-        
+
         # Operação.
         venceu = Objetivo02().completou(self.jogador2, self.jogadores)
-        
+
         # Verificação.
         self.assertTrue(venceu)

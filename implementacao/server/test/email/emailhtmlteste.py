@@ -7,7 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 fromaddr = 'guerra@meutabuleiro.net'
-toaddrs  = ['brunomaomeh@gmail.com', 'toymak3r@gmail.com', 'joselitofilhoo@gmail.com']
+toaddrs = ['brunomaomeh@gmail.com', 'toymak3r@gmail.com', 'joselitofilhoo@gmail.com']
 subject = 'Python email'
 
 # Create message container - the correct MIME type is multipart/alternative.
@@ -47,6 +47,6 @@ password = 'guerra1234qwer'
 # The actual mail send
 server = smtplib.SMTP('smtp.gmail.com:587')
 server.starttls()
-server.login(username,password)
+server.login(username, password)
 server.sendmail(fromaddr, toaddrs, msg.as_string())
 server.quit()
