@@ -558,7 +558,7 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         const infos = msgParams.infoJogadores[i];
         const title = "Nome: " + infos.usuario + '\n' +
             "Total de território: " + infos.total_territorios + "\n" +
-            "Total de catas território: " + infos.total_cartas_territorio;
+            "Total de cartas território: " + infos.total_cartas_territorio;
         $('#menu_jogador' + infos.posicao).prop('title', title);
     }
 }
