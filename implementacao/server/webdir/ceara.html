@@ -1,328 +1,334 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>JogoWar</title>
-        
-        <link rel="icon" type="image/png" href="imagens/ico.png" />
-        
-        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>JogoWar</title>
 
-        <!-- Bootstrap -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!---->
+    <link href="imagens/ico.png" rel="icon" type="image/png"/>
 
-        <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
 
-        <!-- Audio Player -->
-        <link href="css/audioPlayer.css" rel="stylesheet">
-        <!---->
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!---->
 
-        <link href="css/app.css" rel="stylesheet">
-        <link href="css/mouse_cursor.css" rel="stylesheet">
-        <link href="css/label_tropas.css" rel="stylesheet">
-        <link href="css/cores.css" rel="stylesheet">
-        <link href="css/sala.css" rel="stylesheet">
-        <link href="css/jogo.css" rel="stylesheet">
-        <link href="css/war/cartas_objetivos.css" rel="stylesheet">
-        <link href="css/war/cartas_territorios.css" rel="stylesheet">
-    </head>
-    <body>
-        <!-- Registrar / Entrar -->
-        <div id="painelRegistrarOuEntrar">
-            <div class="form-signin">
-                <h2 class="form-signin-heading">Bem-vindo</h2>
-                <ul class="nav nav-tabs">
-                    <li id="abaEntrar" class="active"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
-                    <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
+    <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
+
+    <!-- Audio Player -->
+    <link href="css/audioPlayer.css" rel="stylesheet">
+    <!---->
+
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/mouse_cursor.css" rel="stylesheet">
+    <link href="css/label_tropas.css" rel="stylesheet">
+    <link href="css/cores.css" rel="stylesheet">
+    <link href="css/sala.css" rel="stylesheet">
+    <link href="css/jogo.css" rel="stylesheet">
+    <link href="css/war/cartas_objetivos.css" rel="stylesheet">
+    <link href="css/war/cartas_territorios.css" rel="stylesheet">
+</head>
+<body>
+<!-- Registrar / Entrar -->
+<div id="painelRegistrarOuEntrar">
+    <div class="form-signin">
+        <h2 class="form-signin-heading">Bem-vindo</h2>
+        <ul class="nav nav-tabs">
+            <li class="active" id="abaEntrar"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
+            <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
+        </ul>
+        <br/>
+        <div id="pre_content">
+            <input class="input-block-level" id="inputUsuario"
+                   placeholder="Usu&aacute;rio"
+                   type="text"/>
+            <input class="input-block-level" id="inputSenha"
+                   placeholder="Senha"
+                   type="password"/>
+            <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+        </div>
+    </div>
+</div>
+<!---->
+
+<div class="alert alert-info" id="alerta">
+    <div id="alerta_texto"></div>
+</div>
+
+<div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
+    <span id="po_titulo">Carta objetivo</span>
+
+    <div class="po_content">
+        <div class="carta_objetivo" id="cartaObjetivo"></div>
+    </div>
+
+    <div class="bloqueador_tela" id="po_fundo"></div>
+</div>
+
+<div id="painel_cartas_territorios">
+    <div class="pct_content">
+        <div id="cartasTerritorios">
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio1"
+                 onclick="selecionarCartaTerritorio(1);"></div>
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio2"
+                 onclick="selecionarCartaTerritorio(2);"></div>
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio3"
+                 onclick="selecionarCartaTerritorio(3);"></div>
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio4"
+                 onclick="selecionarCartaTerritorio(4);"></div>
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio5"
+                 onclick="selecionarCartaTerritorio(5);"></div>
+        </div>
+    </div>
+
+    <div class="pct_controles">
+        <div class="pct_botoes">
+            <button class="btn btn-default" onclick="appwar_trocaCartasTerritorios();">Trocar cartas</button>
+            <span id="pct_valorDaTroca">Valor da troca: 4</span>
+        </div>
+    </div>
+
+    <div class="bloqueador_tela" id="pct_fundo" onclick="appwar_fechaPainelCartasTerritorios();"></div>
+</div>
+
+<div id="sala">
+    <div class="topo">
+        <div class="menu">
+            <button class="btn_criar_sala" onclick="_sala.cria($('#sala_nomeParaCriar').val());"></button>
+            <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
+        </div>
+        <div class="st_jogador"></div>
+    </div>
+    <input class="form-control" id="sala_nomeParaCriar"
+           placeholder="Digite o nome da sala."
+           type="text"/>
+
+    <div id="sala_content">
+        <!--
+         NOTE: As salas são geradas dinâmicamentes.
+        -->
+    </div> <!-- sala_content -->
+</div>
+<div id="geral">
+
+    <div id="jogo">
+        <div id="menu_jogadores">
+            <ul>
+                <li class="cor_vermelha">
+                    <a class="cor_vermelha" href="javascript:void(0)" id="jogador1"></a>
+                    <div id="qtdTerritorio0">0</div>
+                </li>
+                <li class="cor_azul">
+                    <a class="cor_azul" href="javascript:void(0)" id="jogador2"></a>
+                    <div id="qtdTerritorio1">0</div>
+                </li>
+                <li class="cor_verde">
+                    <a class="cor_verde" href="javascript:void(0)" id="jogador3"></a>
+                    <div id="qtdTerritorio2">0</div>
+                </li>
+                <li class="cor_preto">
+                    <a class="cor_preto" href="javascript:void(0)" id="jogador4"></a>
+                    <div id="qtdTerritorio3">0</div>
+                </li>
+                <li class="cor_branco">
+                    <a class="cor_branco" href="javascript:void(0)" id="jogador5"></a>
+                    <div id="qtdTerritorio4">0</div>
+                </li>
+                <li class="cor_amarelo">
+                    <a class="cor_amarelo" href="javascript:void(0)" id="jogador6"></a>
+                    <div id="qtdTerritorio5">0</div>
+                </li>
+            </ul>
+        </div><!-- div: menu_jogadores -->
+
+        <div id="mapa"></div>
+
+        <section>
+            <span class="audioSliderTooltip"></span>
+            <div id="audioSlider"></div>
+            <span class="audioPlayerVolume"></span>
+            <audio autoplay id="audioPlayer"></audio>
+        </section>
+
+        <div id="info_turno">
+            <div id="it_titulo">Distribuir tropas</div>
+            <div id="it_sub_titulo">Globais</div>
+            <div id="it_info">Tropas restantes:</div>
+        </div>
+
+        <div id="barra_tempo">
+            <div class="barra_de_progresso">
+                <div id="barra"></div>
+            </div>
+            <div id="tempo_restante"></div>
+        </div>
+
+        <div id="controles">
+            <div id="chat_do_jogo">
+                <textarea class="form-control" id="ct_mensagens" readonly></textarea>
+                <input class="form-control" id="ct_texto"
+                       onkeypress="return ct_texto_onkeypress(event);"
+                       placeholder="Digite sua mensagem aqui."
+                       type="text"/>
+                <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
+            </div>
+
+            <div id="acoes_botoes">
+                <ul>
+                    <li>
+                        <button class="btn btn-default" onclick="atacar();">
+                            <img alt="Atacar" src="imagens/tanque.png" width="40"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
+                            <img alt="Cartas territ&oacute;rios" src="imagens/btnVerCartas.png" width="40"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-default" onclick="_painelObjetivo.abre();">
+                            <img alt="Objetivo" src="imagens/btnObjetivo.png" width="40"/>
+                        </button>
+                    </li>
                 </ul>
-                <br/>
-                <div id="pre_content">
-                    <input id="inputUsuario" type="text" 
-                        class="input-block-level" 
-                        placeholder="Usu&aacute;rio" />
-                    <input id="inputSenha" type="password" 
-                        class="input-block-level" 
-                        placeholder="Senha" />
-                    <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
+            </div>
+
+            <div id="dados">
+                <div id="dadosAtaque">
+                    <div class="dado dado_ataque" id="da1"></div>
+                    <div class="dado dado_ataque" id="da2"></div>
+                    <div class="dado dado_ataque" id="da3"></div>
+                </div>
+                <div id="dadosDefesa">
+                    <div class="dado dado_defesa" id="dd1"></div>
+                    <div class="dado dado_defesa" id="dd2"></div>
+                    <div class="dado dado_defesa" id="dd3"></div>
                 </div>
             </div>
+        </div><!-- div: controles -->
+
+        <div id="btnFinalizarTurno" onclick="finalizarTurno();">
+            <div>Feito</div>
         </div>
-        <!---->
-        
-        <div id="alerta" class="alert alert-info">
-            <div id="alerta_texto"></div>
-        </div>
 
-        <div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
-            <span id="po_titulo">Carta objetivo</span>
+        <div id="jogo_sair" onclick="jogo_sair();"></div>
+    </div>
 
-            <div class="po_content">
-                <div id="cartaObjetivo" class="carta_objetivo"></div>
-            </div>
-            
-            <div id="po_fundo" class="bloqueador_tela"></div>
-        </div>
-        
-        <div id="painel_cartas_territorios">
-            <div class="pct_content">
-                <div id="cartasTerritorios">
-                    <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(1);"></div>
-                    <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(2);"></div>
-                    <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(3);"></div>
-                    <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(4);"></div>
-                    <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia" onclick="selecionarCartaTerritorio(5);"></div>
-                </div>
-            </div>
+    <div id="ganhou_carta"></div>
+</div> <!-- div: jogo -->
 
-            <div class="pct_controles">
-                <div class="pct_botoes">
-                    <button class="btn btn-default" onclick="appwar_trocaCartasTerritorios();">Trocar cartas</button>
-                    <span id="pct_valorDaTroca">Valor da troca: 4</span>
-                </div>
-            </div>
-            
-            <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
-        </div>
-        
-        <div id="sala">
-            <div class="topo">
-                <div class="menu">
-                    <button class="btn_criar_sala" onclick="_sala.cria($('#sala_nomeParaCriar').val());"></button>
-                    <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
-                </div>
-                <div class="st_jogador"></div>
-            </div>
-            <input id="sala_nomeParaCriar" type="text" 
-                class="form-control" 
-                placeholder="Digite o nome da sala." />
+<div id="bloqueador_tela"></div>
+<div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
 
-            <div id="sala_content">
-                <!--
-                 NOTE: As salas são geradas dinâmicamentes.
-                -->
-            </div> <!-- sala_content -->
-        </div>
-        <div id="geral">
-            
-            <div id="jogo">
-                <div id="menu_jogadores">
-                    <ul>
-                        <li class="cor_vermelha">
-                            <a id="jogador1" class="cor_vermelha" href="javascript:void(0)"></a>
-                            <div id="qtdTerritorio0">0</div>
-                        </li>
-                        <li class="cor_azul">
-                            <a id="jogador2" class="cor_azul" href="javascript:void(0)"></a>
-                            <div id="qtdTerritorio1">0</div>
-                        </li>
-                        <li class="cor_verde">
-                            <a id="jogador3" class="cor_verde" href="javascript:void(0)"></a>
-                            <div id="qtdTerritorio2">0</div>
-                        </li>
-                        <li class="cor_preto">
-                            <a id="jogador4" class="cor_preto" href="javascript:void(0)"></a>
-                            <div id="qtdTerritorio3">0</div>
-                        </li>
-                        <li class="cor_branco">
-                            <a id="jogador5" class="cor_branco" href="javascript:void(0)"></a>
-                            <div id="qtdTerritorio4">0</div>
-                        </li>
-                        <li class="cor_amarelo">
-                            <a id="jogador6" class="cor_amarelo" href="javascript:void(0)"></a>
-                            <div id="qtdTerritorio5">0</div>
-                        </li>
-                    </ul>
-                </div><!-- div: menu_jogadores -->
-                
-                <div id="mapa"></div>
-                
-                <section>
-                    <span class="audioSliderTooltip"></span>
-                    <div id="audioSlider"></div>
-                    <span class="audioPlayerVolume"></span>
-                    <audio id="audioPlayer" autoplay></audio>
-                </section>
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+<!---->
 
-                <div id="info_turno">
-                    <div id="it_titulo">Distribuir tropas</div>
-                    <div id="it_sub_titulo">Globais</div>
-                    <div id="it_info">Tropas restantes: </div>
-                </div>
+<!-- jQuery -->
+<!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!---->
 
-                <div id="barra_tempo">
-                    <div class="barra_de_progresso">
-                        <div id="barra"></div>
-                    </div>
-                    <div id="tempo_restante"></div>
-                </div>
+<!-- Bootstrap -->
+<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!---->
 
-                <div id="controles">
-                    <div id="chat_do_jogo">
-                        <textarea id="ct_mensagens" class="form-control" readonly></textarea>
-                        <input id="ct_texto" type="text" 
-                            class="form-control" 
-                            placeholder="Digite sua mensagem aqui."
-                            onkeypress="return ct_texto_onkeypress(event);" />
-                        <button class="btn btn-default" onclick="jogo_enviaMsgChatDoJogo();">Enviar</button>
-                    </div>
+<!--Here is jQuery UI added from CDN
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
 
-                    <div id="acoes_botoes">
-                        <ul>
-                            <li>
-                                <button class="btn btn-default" onclick="atacar();">
-                                    <img width="40" src="imagens/tanque.png" alt="Atacar" />
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                                    <img width="40" src="imagens/btnVerCartas.png" alt="Cartas territ&oacute;rios" />
-                                </button>
-                            </li>
-                            <li>
-                                <button class="btn btn-default" onclick="_painelObjetivo.abre();">
-                                    <img width="40" src="imagens/btnObjetivo.png" alt="Objetivo" />
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                     
-                    <div id="dados">
-                        <div id="dadosAtaque">
-                            <div id="da1" class="dado dado_ataque"></div>
-                            <div id="da2" class="dado dado_ataque"></div>
-                            <div id="da3" class="dado dado_ataque"></div>
-                        </div>
-                        <div id="dadosDefesa">
-                            <div id="dd1" class="dado dado_defesa"></div>
-                            <div id="dd2" class="dado dado_defesa"></div>
-                            <div id="dd3" class="dado dado_defesa"></div>
-                        </div>
-                    </div>
-                </div><!-- div: controles -->
-                
-                <div id="btnFinalizarTurno" onclick="finalizarTurno();">
-                    <div>Feito</div>
-                </div>
-                
-                <div id="jogo_sair" onclick="jogo_sair();"></div>
-            </div>
+<!-- Shortcut -->
+<script src="js/shortcut.js" type="text/javascript"></script>
+<!---->
 
-            <div id="ganhou_carta"></div>
-        </div> <!-- div: jogo -->
+<!-- AudioPlayer -->
+<script src="audioPlayer/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="audioPlayer/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+<!---->
 
-        <div id="bloqueador_tela"></div>
-        <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
+<!-- Crypto-js -->
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+<!---->
 
-        <!-- Google Maps -->
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
-        <!---->
+<!-- Coordenada dos mapas -->
+<!-- Sul -->
+<script src="js/war/ceara/coordenadasmapa/barro.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/farias-brito.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/juazeiro-do-norte.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/chapada-do-araripe.js" type="text/javascript"></script>
+<!---->
 
-        <!-- jQuery -->
-        <!--<script src="https://code.jquery.com/jquery.js"></script> (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <!---->
-        
-        <!-- Bootstrap -->
-        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-        <!---->
+<!-- Sertao dos Inhamuns -->
+<script src="js/war/ceara/coordenadasmapa/aiuaba.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/parambu.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/catarina.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/taua.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/crateus.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/independencia.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/catunda.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/senador-pompeu.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/poranga.js" type="text/javascript"></script>
+<!---->
 
-        <!--Here is jQuery UI added from CDN
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+<!-- Noroeste -->
+<script src="js/war/ceara/coordenadasmapa/croata.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/ibiapina.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/uruoca.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/miraima.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/sobral.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/carire.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/reriutaba.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/varjota.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/ipu.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/tejucuoca.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/caucaia.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/uruburetama.js" type="text/javascript"></script>
+<!---->
 
-	    <!-- Shortcut -->
-        <script type="text/javascript" src="js/shortcut.js"></script>
-        <!---->
+<!-- Norte -->
+<script src="js/war/ceara/coordenadasmapa/granja.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/camocim.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/jericoacoara.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/acarau.js" type="text/javascript"></script>
+<!---->
 
-        <!-- AudioPlayer -->
-        <script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
-        <!---->
-        
-        <!-- Crypto-js -->
-        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
-        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
-        <!---->
+<!-- Sertão Central -->
+<script src="js/war/ceara/coordenadasmapa/pentecoste.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/paramoti.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/itatira.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/choro.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/guaramiranga.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/itapiuna.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/quixada.js" type="text/javascript"></script>
+<!---->
 
-        <!-- Coordenada dos mapas -->
-        <!-- Sul -->
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/barro.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/farias-brito.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/juazeiro-do-norte.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/chapada-do-araripe.js"></script>
-        <!---->
+<!-- Litoral Leste -->
+<script src="js/war/ceara/coordenadasmapa/jaguaribe.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/iracema.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/beberibe.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/aracati.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/quixere.js" type="text/javascript"></script>
+<script src="js/war/ceara/coordenadasmapa/morada-nova.js" type="text/javascript"></script>
+<!---->
 
-        <!-- Sertao dos Inhamuns -->
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/aiuaba.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/parambu.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/catarina.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/taua.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/crateus.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/independencia.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/catunda.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/senador-pompeu.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/poranga.js"></script>
-        <!---->
-        
-        <!-- Noroeste -->
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/croata.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/ibiapina.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/uruoca.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/miraima.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/sobral.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/carire.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/reriutaba.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/varjota.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/ipu.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/tejucuoca.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/caucaia.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/uruburetama.js"></script>
-        <!---->
-        
-        <!-- Norte -->
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/granja.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/camocim.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/jericoacoara.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/acarau.js"></script>
-        <!---->
-        
-        <!-- Sertão Central -->
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/pentecoste.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/paramoti.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/itatira.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/choro.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/guaramiranga.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/itapiuna.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/quixada.js"></script>
-        <!---->
-        
-        <!-- Litoral Leste -->
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/jaguaribe.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/iracema.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/beberibe.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/aracati.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/quixere.js"></script>
-        <script type="text/javascript" src="js/war/ceara/coordenadasmapa/morada-nova.js"></script>
-        <!---->
+<!-- Do sistema -->
+<script src="js/libs/namespace.js" type="text/javascript"></script>
+<script src="js/websocket/websocket.js" type="text/javascript"></script>
+<script src="js/cookie.js" type="text/javascript"></script>
+<script src="js/mensagens.js" type="text/javascript"></script>
+<script src="js/label.js" type="text/javascript"></script>
+<script src="js/comunicacao.js" type="text/javascript"></script>
+<script src="js/mapa.js" type="text/javascript"></script>
 
-        <!-- Do sistema -->
-        <script type="text/javascript" src="js/libs/namespace.js"></script>
-        <script type="text/javascript" src="js/websocket/websocket.js"></script>
-        <script type="text/javascript" src="js/cookie.js"></script>
-        <script type="text/javascript" src="js/mensagens.js"></script>
-        <script type="text/javascript" src="js/label.js"></script>
-        <script type="text/javascript" src="js/comunicacao.js"></script>
-        <script type="text/javascript" src="js/mapa.js"></script>
-        
-        <script type="text/javascript" src="js/war/util.js"></script>
-        <script type="text/javascript" src="js/war/ceara/territorios.js"></script>
-        <script type="text/javascript" src="js/war/painelObjetivo.js"></script>
-        <script type="text/javascript" src="js/war/chatjogo.js"></script>
-        <script type="text/javascript" src="js/war/jogo.js"></script>
-        <script type="text/javascript" src="js/war/sala.js"></script>
-        <script type="text/javascript" src="js/war/appwar.js"></script>
-        <script type="text/javascript" src="js/war/ceara/main.js"></script>
-        <!---->
-    </body>
+<script src="js/war/util.js" type="text/javascript"></script>
+<script src="js/war/ceara/territorios.js" type="text/javascript"></script>
+<script src="js/war/painelObjetivo.js" type="text/javascript"></script>
+<script src="js/war/chatjogo.js" type="text/javascript"></script>
+<script src="js/war/jogo.js" type="text/javascript"></script>
+<script src="js/war/sala.js" type="text/javascript"></script>
+<script src="js/war/appwar.js" type="text/javascript"></script>
+<script src="js/war/ceara/main.js" type="text/javascript"></script>
+<!---->
+</body>
 </html>

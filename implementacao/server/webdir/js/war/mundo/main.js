@@ -10,34 +10,34 @@ function iniciarApp() {
     mapa.inicia(divMapa, 25.0, 10.0, 2);
 
     var estiloDoMapa = [
-    {
-        "featureType": "water",
-        "stylers": [{ "visibility": "off"}]
-    },
-    {
-        "featureType": "landscape",
-        "elementType": "geometry",
-        "stylers": [{ "visibility": "off" }]
-    },
-    {
-        "featureType": "landscape.natural.landcover",
-        "elementType": "geometry",
-        "stylers": [{ "visibility": "off" }]
-    },
-    {
-        "featureType": "administrative",
-        "stylers": [{ "visibility": "off" }]
-    }
+        {
+            "featureType": "water",
+            "stylers": [{"visibility": "off"}]
+        },
+        {
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [{"visibility": "off"}]
+        },
+        {
+            "featureType": "landscape.natural.landcover",
+            "elementType": "geometry",
+            "stylers": [{"visibility": "off"}]
+        },
+        {
+            "featureType": "administrative",
+            "stylers": [{"visibility": "off"}]
+        }
     ];
     mapa.alteraEstilo(estiloDoMapa);
     //this.tocarSomDeFundo(divMapa);
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
-    
-    _mapaGoogle.setOptions({ draggableCursor : "url(../../../imagens/mouse/padrao.png), auto" })
+
+    _mapaGoogle.setOptions({draggableCursor: "url(../../../imagens/mouse/padrao.png), auto"})
 }
 
-(function(){
+(function () {
     iniciarApp();
 })();

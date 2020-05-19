@@ -32,16 +32,16 @@
 
 #painel_vitoria .conteudo ul {
     position: absolute;
-    top:485px;
-    left:164px;
-    list-style-type:none;
+    top: 485px;
+    left: 164px;
+    list-style-type: none;
     font-size: 17px;
     font-weight: bold;
 }
 
 #painel_vitoria .conteudo ul li a {
-    color:#4D2E14;
-    text-decoration:underline;
+    color: #4D2E14;
+    text-decoration: underline;
 }
 
 #painel_vitoria .conteudo #pv_pontos {

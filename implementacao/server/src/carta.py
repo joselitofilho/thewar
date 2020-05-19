@@ -1,16 +1,19 @@
 from territorio import *
 
+
 class CartaForma:
     Bola = "Bola"
     Quadrado = "Quadrado"
     Triangulo = "Triangulo"
     Todas = "Todas"
 
+
 class CartaCor:
     Azul = "Azul"
     Amarela = "Amarela"
     Vermelha = "Vermelha"
     Todas = "Todas"
+
 
 class CartasTerritorio(object):
     Coringa = "Coringa"
@@ -65,18 +68,19 @@ class CartasTerritorio(object):
         todas.append(CartaTerritorio(CodigoTerritorio.Tchita, CartaForma.Triangulo, CartaCor.Vermelha))
         todas.append(CartaTerritorio(CodigoTerritorio.Vietna, CartaForma.Triangulo, CartaCor.Vermelha))
         todas.append(CartaTerritorio(CodigoTerritorio.Vladivostok, CartaForma.Bola, CartaCor.Azul))
-        
+
         # Oceania
         todas.append(CartaTerritorio(CodigoTerritorio.Australia, CartaForma.Triangulo, CartaCor.Vermelha))
         todas.append(CartaTerritorio(CodigoTerritorio.Borneo, CartaForma.Quadrado, CartaCor.Amarela))
         todas.append(CartaTerritorio(CodigoTerritorio.NovaGuine, CartaForma.Bola, CartaCor.Azul))
         todas.append(CartaTerritorio(CodigoTerritorio.Sumatra, CartaForma.Quadrado, CartaCor.Amarela))
-        
+
         # 2 cartas Coringa
         todas.append(CartaTerritorio(CartasTerritorio.Coringa, CartaForma.Todas, CartaCor.Todas))
         todas.append(CartaTerritorio(CartasTerritorio.Coringa, CartaForma.Todas, CartaCor.Todas))
 
         return todas
+
 
 class CartaTerritorio(object):
     def __init__(self, codigoTerritorio, forma, cor):

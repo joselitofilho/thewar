@@ -12,12 +12,12 @@ function iniciarApp() {
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
-        
+
     iniciarControleDeAudio();
 
     _sala = new jogos.war.Sala();
 }
 
-(function(){
+(function () {
     iniciarApp();
 })();

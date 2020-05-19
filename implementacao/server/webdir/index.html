@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0">
-    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
-    <META HTTP-EQUIV="expires" CONTENT="-1">
+    <meta content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0" http-equiv="cache-control">
+    <META CONTENT="no-cache" HTTP-EQUIV="pragma">
+    <META CONTENT="-1" HTTP-EQUIV="expires">
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
     <title>Guerra</title>
 
     <meta content='jogos, games, guerra, war, meutabuleiro, tabuleiro, board' name='keywords'>
@@ -21,7 +21,7 @@
     <meta content='Use toda sua inteligência e estratégia para eliminar seus adversários conquistando os territórios e continentes nesta emocionante guerra no tabuleiro.'
           itemprop='description'>
 
-    <link rel="icon" type="image/png" href="imagens/ico.png"/>
+    <link href="imagens/ico.png" rel="icon" type="image/png"/>
 
     <!-- Google Analytics -->
     <script>
@@ -84,11 +84,11 @@
     <link href="css/chat.css" rel="stylesheet">
 
 
-    <script type="text/javascript" src="js/libs/namespace.js"></script>
-    <script type="text/javascript" src="js/websocket/websocket.js"></script>
-    <script type="text/javascript" src="js/cookie.js"></script>
-    <script type="text/javascript" src="js/mensagens.js"></script>
-    <script type="text/javascript" src="js/comunicacao.js"></script>
+    <script src="js/libs/namespace.js" type="text/javascript"></script>
+    <script src="js/websocket/websocket.js" type="text/javascript"></script>
+    <script src="js/cookie.js" type="text/javascript"></script>
+    <script src="js/mensagens.js" type="text/javascript"></script>
+    <script src="js/comunicacao.js" type="text/javascript"></script>
 </head>
 <body>
 <!-- Facebook - Inicio -->
@@ -138,9 +138,9 @@
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- guerra.meutabuleiro.com rodapé -->
     <ins class="adsbygoogle"
-         style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-6816702413600662"
-         data-ad-slot="3992107535"></ins>
+         data-ad-slot="3992107535"
+         style="display:inline-block;width:728px;height:90px"></ins>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
@@ -152,19 +152,19 @@
     <div class="form-signin">
         <h2 class="form-signin-heading">Bem-vindo</h2>
         <ul class="nav nav-tabs">
-            <li id="abaEntrar" class="active"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
+            <li class="active" id="abaEntrar"><a href="javascript:appwar_exibirPainelEntrar();">Entrar</a></li>
             <li id="abaRegistrar"><a href="javascript:appwar_exibirPainelRegistrar();">Registrar</a></li>
         </ul>
         <br/>
         <div id="pre_content">
-            <input id="inputUsuario" type="text"
-                   class="input-block-level"
-                   placeholder="Usu&aacute;rio" maxlength="15"
-                   onkeypress="return inputFormLogin_onkeypress(event);"/>
-            <input id="inputSenha" type="password"
-                   class="input-block-level"
+            <input class="input-block-level" id="inputUsuario"
+                   maxlength="15"
+                   onkeypress="return inputFormLogin_onkeypress(event);" placeholder="Usu&aacute;rio"
+                   type="text"/>
+            <input class="input-block-level" id="inputSenha"
+                   onkeypress="return inputFormLogin_onkeypress(event);"
                    placeholder="Senha"
-                   onkeypress="return inputFormLogin_onkeypress(event);"/>
+                   type="password"/>
             <button class="btn btn-large btn-default" onclick="appwar_entrar();">Entrar</button>
             <!--<fb:login-button></fb:login-button>-->
         </div>
@@ -172,13 +172,13 @@
 </div>
 <!---->
 
-<div id="alerta" class="alert alert-info">
+<div class="alert alert-info" id="alerta">
     <div id="alerta_texto"></div>
 </div>
 
 <div id="painel_vitoria">
     <div class="conteudo">
-        <div id="pv_foto" class="imagem-soldado imagem-soldado-padrao"></div>
+        <div class="imagem-soldado imagem-soldado-padrao" id="pv_foto"></div>
         <div class="texto"><h1 id="pv_vencedor"></h1>
             <h2> venceu a partida!</h2></div>
         <ul>
@@ -188,17 +188,17 @@
         <div id="pv_pontos">400</div>
     </div>
 
-    <div id="pv_fundo" class="bloqueador_tela" onclick="jogo_fechaPainelVitoria();"></div>
+    <div class="bloqueador_tela" id="pv_fundo" onclick="jogo_fechaPainelVitoria();"></div>
 </div>
 
 <div id="painel_objetivo" onclick="_painelObjetivo.fecha();">
     <span id="po_titulo">Carta objetivo</span>
 
     <div class="po_content">
-        <div id="cartaObjetivo" class="carta_objetivo"></div>
+        <div class="carta_objetivo" id="cartaObjetivo"></div>
     </div>
 
-    <div id="po_fundo" class="bloqueador_tela"></div>
+    <div class="bloqueador_tela" id="po_fundo"></div>
 </div>
 
 <div id="painel_cartas_territorios">
@@ -206,20 +206,20 @@
 
     <div class="pct_content">
         <div id="cartasTerritorios">
-            <div id="cartaTerritorio1" class="carta_territorio carta_territorio_vazia"
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio1"
                  onclick="selecionarCartaTerritorio(1);"></div>
-            <div id="cartaTerritorio2" class="carta_territorio carta_territorio_vazia"
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio2"
                  onclick="selecionarCartaTerritorio(2);"></div>
-            <div id="cartaTerritorio3" class="carta_territorio carta_territorio_vazia"
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio3"
                  onclick="selecionarCartaTerritorio(3);"></div>
-            <div id="cartaTerritorio4" class="carta_territorio carta_territorio_vazia"
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio4"
                  onclick="selecionarCartaTerritorio(4);"></div>
-            <div id="cartaTerritorio5" class="carta_territorio carta_territorio_vazia"
+            <div class="carta_territorio carta_territorio_vazia" id="cartaTerritorio5"
                  onclick="selecionarCartaTerritorio(5);"></div>
         </div>
     </div>
 
-    <div id="pct_fundo" class="bloqueador_tela" onclick="appwar_fechaPainelCartasTerritorios();"></div>
+    <div class="bloqueador_tela" id="pct_fundo" onclick="appwar_fechaPainelCartasTerritorios();"></div>
 </div>
 
 <div id="sala">
@@ -227,24 +227,24 @@
     <!-- INICIO FORMULARIO BOTAO PAYPAL -->
     <div class="btn-paypal">
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+            <input name="cmd" type="hidden" value="_s-xclick">
+            <input name="encrypted" type="hidden" value="-----BEGIN PKCS7-----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-----END PKCS7-----
                 ">
-            <input type="image" src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_LG.gif" border="0"
-                   name="submit" alt="PayPal - A maneira mais fácil e segura de efetuar pagamentos online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+            <input alt="PayPal - A maneira mais fácil e segura de efetuar pagamentos online!" border="0" name="submit"
+                   src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_LG.gif" type="image">
+            <img alt="" border="0" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1">
         </form>
     </div>
     <!-- FINAL FORMULARIO BOTAO PAYPAL -->
 
     <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
     <div class="btn-pagseguro">
-        <form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
+        <form action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post" target="pagseguro">
             <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
-            <input type="hidden" name="receiverEmail" value="joselitofilhoo@gmail.com"/>
-            <input type="hidden" name="currency" value="BRL"/>
-            <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/95x45-doar.gif"
-                   name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!"/>
+            <input name="receiverEmail" type="hidden" value="joselitofilhoo@gmail.com"/>
+            <input name="currency" type="hidden" value="BRL"/>
+            <input alt="Pague com PagSeguro - é rápido, grátis e seguro!" name="submit"
+                   src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/95x45-doar.gif" type="image"/>
         </form>
     </div>
     <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
@@ -264,9 +264,9 @@
     </div> <!-- sala_content -->
     <div id="sala_boxCriarSala">
         <button class="btn_fechar" onclick="_sala.fechaBoxCriarSala();"></button>
-        <input id="sala_nomeParaCriar" type="text"
-               class="form-control"
-               placeholder="Digite o nome da sala." maxlength="10"/>
+        <input class="form-control" id="sala_nomeParaCriar"
+               maxlength="10"
+               placeholder="Digite o nome da sala." type="text"/>
 
         <button class="btn_criar"
                 onclick="_sala.cria($('#sala_nomeParaCriar').val()); _sala.fechaBoxCriarSala();"></button>
@@ -274,10 +274,10 @@
     <div id="chat_geral">
         <div class="titulo"></div>
         <div id="cg_mensagens"></div>
-        <input id="cg_texto" type="text"
-               class="form-control"
+        <input class="form-control" id="cg_texto"
+               onkeypress="return cg_texto_onkeypress(event);"
                placeholder="Digite sua mensagem aqui."
-               onkeypress="return cg_texto_onkeypress(event);"/>
+               type="text"/>
         <!-- Adsense -->
         <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
         <!-- guerra.meutabuleiro -->
@@ -307,34 +307,34 @@
         <div class="legenda-grupo-territorio legenda-gt-africa"></div>
         <div id="menu_jogadores">
             <ul>
-                <li id="menu_jogador0" class="mj_vermelho">
+                <li class="mj_vermelho" id="menu_jogador0">
                     <div class="jogador_sala_vermelho"></div>
-                    <a id="jogador1" class="cor_vermelha" href="javascript:void(0);"></a>
+                    <a class="cor_vermelha" href="javascript:void(0);" id="jogador1"></a>
                     <span id="qtdTerritorio0">0</span>
                 </li>
-                <li id="menu_jogador1" class="mj_azul">
+                <li class="mj_azul" id="menu_jogador1">
                     <div class="jogador_sala_azul"></div>
-                    <a id="jogador2" class="cor_azul" href="javascript:void(0);"></a>
+                    <a class="cor_azul" href="javascript:void(0);" id="jogador2"></a>
                     <span id="qtdTerritorio1">0</span>
                 </li>
-                <li id="menu_jogador2" class="mj_verde">
+                <li class="mj_verde" id="menu_jogador2">
                     <div class="jogador_sala_verde"></div>
-                    <a id="jogador3" class="cor_verde" href="javascript:void(0);"></a>
+                    <a class="cor_verde" href="javascript:void(0);" id="jogador3"></a>
                     <span id="qtdTerritorio2">0</span>
                 </li>
-                <li id="menu_jogador3" class="mj_preto">
+                <li class="mj_preto" id="menu_jogador3">
                     <div class="jogador_sala_preto"></div>
-                    <a id="jogador4" class="cor_preto" href="javascript:void(0);"></a>
+                    <a class="cor_preto" href="javascript:void(0);" id="jogador4"></a>
                     <span id="qtdTerritorio3">0</span>
                 </li>
-                <li id="menu_jogador4" class="mj_branco">
+                <li class="mj_branco" id="menu_jogador4">
                     <div class="jogador_sala_branco"></div>
-                    <a id="jogador5" class="cor_branco" href="javascript:void(0);"></a>
+                    <a class="cor_branco" href="javascript:void(0);" id="jogador5"></a>
                     <span id="qtdTerritorio4">0</span>
                 </li>
-                <li id="menu_jogador5" class="mj_amarelo">
+                <li class="mj_amarelo" id="menu_jogador5">
                     <div class="jogador_sala_amarelo"></div>
-                    <a id="jogador6" class="cor_amarelo" href="javascript:void(0);"></a>
+                    <a class="cor_amarelo" href="javascript:void(0);" id="jogador6"></a>
                     <span id="qtdTerritorio5">0</span>
                 </li>
             </ul>
@@ -346,19 +346,19 @@
             <span class="audioSliderTooltip"></span>
             <div id="audioSlider"></div>
             <span class="audioPlayerVolume"></span>
-            <audio id="audioPlayer" autoplay></audio>
+            <audio autoplay id="audioPlayer"></audio>
         </section>
 
         <div id="acoes_botoes">
             <ul>
                 <li>
                     <button class="btn btn-default" onclick="appwar_abrePainelCartasTerritorios();">
-                        <img width="33" src="imagens/jogo/btnVerCartas.png" alt="Cartas territ&oacute;rios"/>
+                        <img alt="Cartas territ&oacute;rios" src="imagens/jogo/btnVerCartas.png" width="33"/>
                     </button>
                 </li>
                 <li>
                     <button class="btn btn-default" onclick="_painelObjetivo.abre();">
-                        <img width="33" src="imagens/jogo/btnObjetivo.png" alt="Objetivo"/>
+                        <img alt="Objetivo" src="imagens/jogo/btnObjetivo.png" width="33"/>
                     </button>
                 </li>
             </ul>
@@ -374,27 +374,27 @@
                 <div id="btnAcao2"></div>
 
                 <div class="timeline">
-                    <div id="turno1" class="turno turno-padrao"></div>
-                    <div id="turno2" class="turno turno-padrao"></div>
-                    <div id="turno3" class="turno turno-padrao"></div>
-                    <div id="turno4" class="turno turno-padrao"></div>
+                    <div class="turno turno-padrao" id="turno1"></div>
+                    <div class="turno turno-padrao" id="turno2"></div>
+                    <div class="turno turno-padrao" id="turno3"></div>
+                    <div class="turno turno-padrao" id="turno4"></div>
                 </div>
             </div>
         </div>
 
         <div id="quantidade_tropas">
             <div class="rb_quantidade_tropa">
-                <div id="quantidade_tropa1" class="rb-tab rb-tab-active" data-value="1">
+                <div class="rb-tab rb-tab-active" data-value="1" id="quantidade_tropa1">
                     <div class="rb-spot">
                         <span class="rb-txt">1</span>
                     </div>
                 </div>
-                <div id="quantidade_tropa5" class="rb-tab" data-value="5">
+                <div class="rb-tab" data-value="5" id="quantidade_tropa5">
                     <div class="rb-spot">
                         <span class="rb-txt">5</span>
                     </div>
                 </div>
-                <div id="quantidade_tropa10" class="rb-tab" data-value="10">
+                <div class="rb-tab" data-value="10" id="quantidade_tropa10">
                     <div class="rb-spot">
                         <span class="rb-txt">10</span>
                     </div>
@@ -413,11 +413,11 @@
             <div class="controle">
                 <div class="btn-min" onclick="_sliderMoverTropas.minimo();"></div>
                 <div class="valores">
-                    <div id="smt_itemEsquerda" class="item item-esquerda"
-                         unselectable="on" onclick="_sliderMoverTropas.esquerda();"></div>
-                    <div id="smt_itemAtivo" unselectable="on" class="item item-ativo"></div>
-                    <div id="smt_itemDireita" class="item item-direita"
-                         unselectable="on" onclick="_sliderMoverTropas.direita();"></div>
+                    <div class="item item-esquerda" id="smt_itemEsquerda"
+                         onclick="_sliderMoverTropas.esquerda();" unselectable="on"></div>
+                    <div class="item item-ativo" id="smt_itemAtivo" unselectable="on"></div>
+                    <div class="item item-direita" id="smt_itemDireita"
+                         onclick="_sliderMoverTropas.direita();" unselectable="on"></div>
                 </div>
                 <div class="btn-max" onclick="_sliderMoverTropas.maximo();"></div>
             </div>
@@ -436,10 +436,10 @@
         <div id="chat_do_jogo">
             <div class="titulo"></div>
             <div id="cj_mensagens"></div>
-            <input id="ct_texto" type="text"
-                   class="form-control"
+            <input class="form-control" id="ct_texto"
+                   onkeypress="return ct_texto_onkeypress(event);"
                    placeholder="Digite sua mensagem aqui."
-                   onkeypress="return ct_texto_onkeypress(event);"/>
+                   type="text"/>
         </div>
 
         <div class="jogadores">
@@ -467,23 +467,23 @@
 <!---->
 
 <!-- Bootstrap -->
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <!---->
 
 <!--Here is jQuery UI added from CDN
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
 
 <!-- jnotify -->
-<script type="text/javascript" src="jnotify/jNotify.jquery.js"></script>
+<script src="jnotify/jNotify.jquery.js" type="text/javascript"></script>
 <!---->
 
 <!-- Shortcut -->
-<script type="text/javascript" src="js/shortcut.js"></script>
+<script src="js/shortcut.js" type="text/javascript"></script>
 <!---->
 
 <!-- AudioPlayer -->
-<script type="text/javascript" src="audioPlayer/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="audioPlayer/jquery-ui-1.8.21.custom.min.js"></script>
+<script src="audioPlayer/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="audioPlayer/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
 <!---->
 
 <!-- Crypto-js -->
@@ -495,92 +495,92 @@
 
 <!-- Coordenada dos mapas -->
 <!-- America do Sul -->
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/argentina.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/brasil.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/chile.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/colombia.js"></script>
+<script src="js/war/mundo/coordenadasmapa/argentina.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/brasil.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/chile.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/colombia.js" type="text/javascript"></script>
 <!---->
 
 <!-- America do Norte -->
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/alaska.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/california.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/groelandia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/labrador.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/mackenzie.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/mexico.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-york.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/ottawa.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/vancouver.js"></script>
+<script src="js/war/mundo/coordenadasmapa/alaska.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/california.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/groelandia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/labrador.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/mackenzie.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/mexico.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/nova-york.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/ottawa.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/vancouver.js" type="text/javascript"></script>
 <!---->
 
 <!-- Africa -->
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/africa-do-sul.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/argelia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/congo.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/egito.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/madagascar.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/sudao.js"></script>
+<script src="js/war/mundo/coordenadasmapa/africa-do-sul.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/argelia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/congo.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/egito.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/madagascar.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/sudao.js" type="text/javascript"></script>
 <!---->
 
 <!-- Oceania -->
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/australia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/borneo.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/nova-guine.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/sumatra.js"></script>
+<script src="js/war/mundo/coordenadasmapa/australia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/borneo.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/nova-guine.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/sumatra.js" type="text/javascript"></script>
 <!---->
 
 <!-- Asia -->
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/aral.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/china.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/dudinka.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/india.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/japao.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/mongolia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/omsk.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/oriente-medio.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/siberia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/tchita.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/vietna.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/vladivostok.js"></script>
+<script src="js/war/mundo/coordenadasmapa/aral.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/china.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/dudinka.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/india.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/japao.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/mongolia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/omsk.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/oriente-medio.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/siberia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/tchita.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/vietna.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/vladivostok.js" type="text/javascript"></script>
 <!---->
 
 <!-- Europa -->
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/alemanha.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/inglaterra.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/islandia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/portugal.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/polonia.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/moscou.js"></script>
-<script type="text/javascript" src="js/war/mundo/coordenadasmapa/suecia.js"></script>
+<script src="js/war/mundo/coordenadasmapa/alemanha.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/inglaterra.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/islandia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/portugal.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/polonia.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/moscou.js" type="text/javascript"></script>
+<script src="js/war/mundo/coordenadasmapa/suecia.js" type="text/javascript"></script>
 <!---->
 
 <!-- Do sistema -->
-<script type="text/javascript" src="js/cor.js"></script>
-<script type="text/javascript" src="slider/slider.js"></script>
-<script type="text/javascript" src="js/label.js"></script>
-<script type="text/javascript" src="js/mapa.js"></script>
+<script src="js/cor.js" type="text/javascript"></script>
+<script src="slider/slider.js" type="text/javascript"></script>
+<script src="js/label.js" type="text/javascript"></script>
+<script src="js/mapa.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="js/war/util.js"></script>
-<script type="text/javascript" src="js/war/base64.min.js"></script>
-<script type="text/javascript" src="js/war/mundo/territorios.js"></script>
-<script type="text/javascript" src="js/war/painelVitoria.js"></script>
-<script type="text/javascript" src="js/war/painelObjetivo.js"></script>
-<script type="text/javascript" src="js/war/listausuarios.js"></script>
-<script type="text/javascript" src="js/war/chatgeral.js"></script>
-<script type="text/javascript" src="js/war/chatjogo.js"></script>
-<script type="text/javascript" src="js/war/acaoTurno.js"></script>
-<script type="text/javascript" src="js/war/jogo.js"></script>
-<script type="text/javascript" src="js/war/sala.js"></script>
-<script type="text/javascript" src="js/war/appwar.js"></script>
-<script type="text/javascript" src="js/war/mundo/main.js"></script>
+<script src="js/war/util.js" type="text/javascript"></script>
+<script src="js/war/base64.min.js" type="text/javascript"></script>
+<script src="js/war/mundo/territorios.js" type="text/javascript"></script>
+<script src="js/war/painelVitoria.js" type="text/javascript"></script>
+<script src="js/war/painelObjetivo.js" type="text/javascript"></script>
+<script src="js/war/listausuarios.js" type="text/javascript"></script>
+<script src="js/war/chatgeral.js" type="text/javascript"></script>
+<script src="js/war/chatjogo.js" type="text/javascript"></script>
+<script src="js/war/acaoTurno.js" type="text/javascript"></script>
+<script src="js/war/jogo.js" type="text/javascript"></script>
+<script src="js/war/sala.js" type="text/javascript"></script>
+<script src="js/war/appwar.js" type="text/javascript"></script>
+<script src="js/war/mundo/main.js" type="text/javascript"></script>
 <!---->
 </body>
 
 <!-- Não armazenar o cache -->
 <head>
-    <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0">
-    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
-    <META HTTP-EQUIV="expires" CONTENT="-1">
+    <meta content="no-store, no-cache, must-revalidate, Post-Check=0, Pre-Check=0" http-equiv="cache-control">
+    <META CONTENT="no-cache" HTTP-EQUIV="pragma">
+    <META CONTENT="-1" HTTP-EQUIV="expires">
 </head>
 <!---->
 </html>

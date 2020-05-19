@@ -1,10 +1,10 @@
 var jogowar = jogowar || {};
 jogowar.war = jogowar.war || {};
 
-jogowar.war.ChatJogo = function(area) {
+jogowar.war.ChatJogo = function (area) {
     this.util = new jogos.war.Util();
 
-    this.escreveColorido = function(texto, indiceCor) {
+    this.escreveColorido = function (texto, indiceCor) {
         if (indiceCor == -1) texto = texto.fontcolor("#494949"); // Servidor.
         else if (indiceCor == 0) texto = texto.fontcolor("#841D0F");
         else if (indiceCor == 1) texto = texto.fontcolor("#2621A8"); // #262165
@@ -17,7 +17,7 @@ jogowar.war.ChatJogo = function(area) {
         this.escreve(texto);
     };
 
-    this.escreve = function(texto) {
+    this.escreve = function (texto) {
         texto = this.util.substituiURLPorHTMLLinks(texto);
         area.append(texto + '</br>');
         area.scrollTop(
@@ -25,11 +25,11 @@ jogowar.war.ChatJogo = function(area) {
         );
     };
 
-    this.limpa = function() {
+    this.limpa = function () {
         area.text('');
     };
 
-    this.colocaTropa = function(usuario, territorio, quantidade) {
+    this.colocaTropa = function (usuario, territorio, quantidade) {
         var texto = '<i>Servidor: ' +
             usuario + ' colocou ';
         if (quantidade > 1)
@@ -40,32 +40,32 @@ jogowar.war.ChatJogo = function(area) {
         //this.escreve(texto);
     };
 
-    this.ataque = function(jogadorAtaque, territoriosDoAtaque,
-            jogadorDefesa, territorioDaDefesa) {
+    this.ataque = function (jogadorAtaque, territoriosDoAtaque,
+                            jogadorDefesa, territorioDaDefesa) {
         var territoriosDoAtaqueTexto = territoriosDoAtaque[0].codigo;
         for (i = 1; i < territoriosDoAtaque.length - 1; i++)
             territoriosDoAtaqueTexto += ', ' + territoriosDoAtaque[i].codigo;
 
         if (territoriosDoAtaque.length > 1)
-            territoriosDoAtaqueTexto += ' e ' + territoriosDoAtaque[territoriosDoAtaque.length-1].codigo;
+            territoriosDoAtaqueTexto += ' e ' + territoriosDoAtaque[territoriosDoAtaque.length - 1].codigo;
 
-        var texto  = 'Servidor: ' +
+        var texto = 'Servidor: ' +
             jogadorAtaque + ' atacou ' +
             jogadorDefesa +
             ' no território ' +
             territorioDaDefesa.codigo;
         if (territoriosDoAtaque.length > 1) {
             texto += ' dos territórios ' +
-            territoriosDoAtaqueTexto;
+                territoriosDoAtaqueTexto;
         } else {
             texto += ' do território ' +
-            territoriosDoAtaqueTexto;
+                territoriosDoAtaqueTexto;
         }
         texto += '.';
         //this.escreve(texto);
     };
 
-    this.moveu = function(jogador, doTerritorio, paraOTerritorio, quantidade) {
+    this.moveu = function (jogador, doTerritorio, paraOTerritorio, quantidade) {
         var texto = 'Servidor: ';
         texto += jogador + ' moveu ' + quantidade;
         if (quantidade > 1) texto += ' exércitos';
@@ -75,20 +75,20 @@ jogowar.war.ChatJogo = function(area) {
         //this.escreve(texto);
     };
 
-    this.conquistouTerritorio = function(jogador, territorio) {
+    this.conquistouTerritorio = function (jogador, territorio) {
         var texto = 'Servidor: ';
         texto += jogador + ' conquistou o território ' + territorio + '.';
         //this.escreve(texto);
     };
 
-    this.entrouNoJogo = function(jogador, olheiro) {
+    this.entrouNoJogo = function (jogador, olheiro) {
         var texto = '<i><b>Servidor</b>: ';
         if (olheiro) texto += jogador + ' está assintindo a partida.';
         else texto += jogador + ' voltou para o jogo.</i>';
         this.escreveColorido(texto, -1);
     };
 
-    this.saiuDoJogo = function(jogador, olheiro) {
+    this.saiuDoJogo = function (jogador, olheiro) {
         var texto = '<i><b>Servidor</b>: ';
         if (olheiro) texto += jogador + ' não está mais assistindo a partida.';
         else texto += jogador + ' saiu do jogo.</i>';

@@ -232,7 +232,7 @@ jogos.war.ComponenteAcaoTurno = function () {
         this.turnoAtacarAlteraTerritorioAtacante(jogadorAtaque.posicao);
 
         // Atualizando quantidade de territórios.
-        this.quantidadeDeTropasAtacante = {}
+        this.quantidadeDeTropasAtacante = {};
         for (i = 0; i < territoriosDoAtaque.length; i++) {
             this.quantidadeDeTropasAtacante[territoriosDoAtaque[i].codigo] = territoriosDoAtaque[i].quantidadeDeTropas;
         }

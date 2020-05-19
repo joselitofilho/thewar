@@ -2,7 +2,7 @@
     cursor: pointer;
     width: 205px;
     height: 69px;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 9px;
 }
 
@@ -13,7 +13,11 @@
     background: url('slider-btn-min.png') no-repeat;
     margin-right: -4px;
 }
-#slider-mover-tropas .btn-min:hover {background: url('slider-btn-min-hover.png') no-repeat;}
+
+#slider-mover-tropas .btn-min:hover {
+    background: url('slider-btn-min-hover.png') no-repeat;
+}
+
 #slider-mover-tropas .btn-max {
     float: left;
     width: 37px;
@@ -21,7 +25,10 @@
     background: url('slider-btn-max.png') no-repeat;
     margin-left: -4px;
 }
-#slider-mover-tropas .btn-max:hover {background: url('slider-btn-max-hover.png') no-repeat;}
+
+#slider-mover-tropas .btn-max:hover {
+    background: url('slider-btn-max-hover.png') no-repeat;
+}
 
 #slider-mover-tropas .valores {
     position: relative;
@@ -31,6 +38,7 @@
     background: url('fundo-slider.png') no-repeat;
     z-index: 1;
 }
+
 #slider-mover-tropas .item {
     float: left;
     color: #A67E60;
@@ -49,14 +57,17 @@
     -ms-user-select: none;
     user-select: none;
 }
+
 #slider-mover-tropas .item-esquerda {
     width: 44px;
     padding-left: 8px;
 }
+
 #slider-mover-tropas .item-ativo {
     width: 52px;
     color: #E9BD9B;
 }
+
 #slider-mover-tropas .item-direita {
     width: 35px;
 }
@@ -66,9 +77,25 @@
 }
 
 #slider-mover-tropas .botoes div {
-    width: 76px; height: 24px;
+    width: 76px;
+    height: 24px;
 }
-#slider-mover-tropas .btn-cancelar {float:left;background: url('slider-btn-cancelar.png') no-repeat;}
-#slider-mover-tropas .btn-cancelar:hover {background: url('slider-btn-cancelar-hover.png') no-repeat;}
-#slider-mover-tropas .btn-mover {float:right;background: url('slider-btn-mover.png') no-repeat;padding-right:8px;}
-#slider-mover-tropas .btn-mover:hover {background: url('slider-btn-mover-hover.png') no-repeat;}
+
+#slider-mover-tropas .btn-cancelar {
+    float: left;
+    background: url('slider-btn-cancelar.png') no-repeat;
+}
+
+#slider-mover-tropas .btn-cancelar:hover {
+    background: url('slider-btn-cancelar-hover.png') no-repeat;
+}
+
+#slider-mover-tropas .btn-mover {
+    float: right;
+    background: url('slider-btn-mover.png') no-repeat;
+    padding-right: 8px;
+}
+
+#slider-mover-tropas .btn-mover:hover {
+    background: url('slider-btn-mover-hover.png') no-repeat;
+}

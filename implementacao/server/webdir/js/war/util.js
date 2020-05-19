@@ -1,35 +1,35 @@
 var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
-jogos.war.Util = function() {
-    this.dataAtualFormatada = function() {
+jogos.war.Util = function () {
+    this.dataAtualFormatada = function () {
         var date = new Date();
-        var year    = date.getFullYear();
-        var month   = date.getMonth();
-        var day     = date.getDate();
-        var hour    = date.getHours();
-        var minute  = date.getMinutes();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
         var seconds = date.getSeconds();
 
-        return day+"/"+month+"/"+year+" "+hour+":"+minute;
+        return day + "/" + month + "/" + year + " " + hour + ":" + minute;
     };
 
-    this.substituiURLPorHTMLLinks = function(texto) {
+    this.substituiURLPorHTMLLinks = function (texto) {
         var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var urls = texto.match(exp);
         if (urls) {
             for (i = 0; i < urls.length; i++) {
                 if (this.temImagemNaURL(urls[i]))
-                    texto = texto.replace(urls[i],"<object data='"+urls[i]+"'></object>"); 
+                    texto = texto.replace(urls[i], "<object data='" + urls[i] + "'></object>");
                 else
-                    texto = texto.replace(urls[i],"<a href='"+urls[i]+"' target='_blank'>"+urls[i]+"</a>"); 
+                    texto = texto.replace(urls[i], "<a href='" + urls[i] + "' target='_blank'>" + urls[i] + "</a>");
             }
         }
 
         return texto;
     };
 
-    this.temImagemNaURL = function(texto) {
+    this.temImagemNaURL = function (texto) {
         if (/(jpg|gif|png)$/.test(texto)) {
             return true;
         }
@@ -48,18 +48,18 @@ function utilTerritorio_polygonFadein(codigoTerritorio, polygon, milliseconds, c
     if (listaFadeinPoligono[codigoTerritorio] == null) {
         var opacidadeAtual = Number(polygon.fillOpacity);
         var inc = (MAX_ALPHA - MIN_ALPHA) / (milliseconds / 50.0);
-        fadein = setInterval(function() {
+        fadein = setInterval(function () {
             opacidadeAtual += inc;
 
-            if(opacidadeAtual >= MAX_ALPHA) {
+            if (opacidadeAtual >= MAX_ALPHA) {
                 clearInterval(listaFadeinPoligono[codigoTerritorio]);
                 listaFadeinPoligono[codigoTerritorio] = null;
                 delete listaFadeinPoligono[codigoTerritorio];
-                if(typeof(callback) == 'function')
+                if (typeof (callback) == 'function')
                     callback();
                 return;
             }
-            
+
             polygon.setOptions({'fillOpacity': Math.min(MAX_ALPHA, Number(opacidadeAtual))});
         }, 50);
 
@@ -68,17 +68,17 @@ function utilTerritorio_polygonFadein(codigoTerritorio, polygon, milliseconds, c
 }
 
 function utilTerritorio_polygonFadeout(codigoTerritorio, polygon, milliseconds, callback) {
-    if (listaFadeoutPoligono[codigoTerritorio] == null ) {
+    if (listaFadeoutPoligono[codigoTerritorio] == null) {
         var opacidadeAtual = Number(polygon.fillOpacity);
         var inc = (MAX_ALPHA - MIN_ALPHA) / (milliseconds / 50.0);
-        fadeout = setInterval(function() {            
+        fadeout = setInterval(function () {
             opacidadeAtual -= inc;
 
-            if(opacidadeAtual <= MIN_ALPHA) {
+            if (opacidadeAtual <= MIN_ALPHA) {
                 clearInterval(listaFadeoutPoligono[codigoTerritorio]);
                 listaFadeoutPoligono[codigoTerritorio] = null;
                 delete listaFadeoutPoligono[codigoTerritorio];
-                if(typeof(callback) == 'function')
+                if (typeof (callback) == 'function')
                     callback();
                 return;
             }
@@ -89,25 +89,25 @@ function utilTerritorio_polygonFadeout(codigoTerritorio, polygon, milliseconds, 
         listaFadeoutPoligono[codigoTerritorio] = fadeout;
     }
 }
- 
+
 function utilRetiraAcento(palavra) {
     var caracteresInvalidos = 'àèìòùâêîôûäëïöüáéíóúãõÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÁÉÍÓÚÃÕ';
-    var caracteresValidos =   'aeiouaeiouaeiouaeiouaoAEIOUAEIOUAEIOUAEIOUAO';
-    
-    for (i=0; i < caracteresInvalidos.length; i++) {
+    var caracteresValidos = 'aeiouaeiouaeiouaeiouaoAEIOUAEIOUAEIOUAEIOUAO';
+
+    for (i = 0; i < caracteresInvalidos.length; i++) {
         if (palavra.indexOf(caracteresInvalidos.charAt(i)) != -1) {
             nova = caracteresValidos.charAt(i);
             palavra = palavra.replace(caracteresInvalidos.charAt(i), nova);
         }
     }
-    
+
     var acento = "\"'´`^¨~";
-    for (i=0; i < acento.length; i++) {
+    for (i = 0; i < acento.length; i++) {
         if (palavra.indexOf(acento.charAt(i)) != -1) {
             nova = caracteresValidos.charAt(i);
             palavra = palavra.replace(acento.charAt(i), '');
         }
     }
-    
+
     return palavra;
 }

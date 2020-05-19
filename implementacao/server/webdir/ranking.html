@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>Guerra - Ranking</title>
-        
-        <link rel="icon" type="image/png" href="imagens/ico.png" />
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>Guerra - Ranking</title>
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/bootstrap-2.3.2.min.css" />
+    <link href="imagens/ico.png" rel="icon" type="image/png"/>
 
-        <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/jquery.dynatable.css" />    
-        <script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery.dynatable.js'></script>
-                
-        <script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/highcharts.js'></script>
-    </head>
-    <body>
-        <table id="ranking-table" class="table table-bordered">
-            <thead>
-                <th data-dynatable-sorts="posicaoNoRanking" data-dynatable-column="posicaoNoRanking" class="dynatable-head">Posi&ccedil;&atilde;o</th>
-                <th data-dynatable-column="nome" class="dynatable-head">Nome</th>
-                <th data-dynatable-column="pontos" class="dynatable-head">Pontos</th>
-                <th data-dynatable-column="quantidadeDePartidas" class="dynatable-head">Partidas</th>
-                <th data-dynatable-column="quantidadeDeVitorias" class="dynatable-head">Vit&oacute;rias</th>
-                <th data-dynatable-column="quantidadeDestruido" class="dynatable-head">Destru&iacute;do</th>
-                <th data-dynatable-column="eficiencia" class="dynatable-head">Efici&ecirc;ncia %</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://s3.amazonaws.com/dynatable-docs-assets/css/bootstrap-2.3.2.min.css" media="all"
+          rel="stylesheet"/>
 
-        <script type="text/javascript" src="js/websocket/websocket.js"></script>
-        <script type="text/javascript" src="js/mensagens.js"></script>
-        <script type="text/javascript" src="js/comunicacao.js"></script>
+    <link href="https://s3.amazonaws.com/dynatable-docs-assets/css/jquery.dynatable.css" media="all" rel="stylesheet"/>
+    <script src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery.dynatable.js' type='text/javascript'></script>
 
-        <script>
-            //$('#ranking-table').dynatable();
-            _libwebsocketRanking = new gpscheck.comunicacao.GPSWebSocket(8080);
+    <script src='https://s3.amazonaws.com/dynatable-docs-assets/js/highcharts.js' type='text/javascript'></script>
+</head>
+<body>
+<table class="table table-bordered" id="ranking-table">
+    <thead>
+    <th class="dynatable-head" data-dynatable-column="posicaoNoRanking" data-dynatable-sorts="posicaoNoRanking">Posi&ccedil;&atilde;o</th>
+    <th class="dynatable-head" data-dynatable-column="nome">Nome</th>
+    <th class="dynatable-head" data-dynatable-column="pontos">Pontos</th>
+    <th class="dynatable-head" data-dynatable-column="quantidadeDePartidas">Partidas</th>
+    <th class="dynatable-head" data-dynatable-column="quantidadeDeVitorias">Vit&oacute;rias</th>
+    <th class="dynatable-head" data-dynatable-column="quantidadeDestruido">Destru&iacute;do</th>
+    <th class="dynatable-head" data-dynatable-column="eficiencia">Efici&ecirc;ncia %</th>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
-            function posAberturaSocket(msg) {
-                rankingMsg = comunicacao_ranking();
-                _libwebsocketRanking.enviarObjJson(rankingMsg);
+<script src="js/websocket/websocket.js" type="text/javascript"></script>
+<script src="js/mensagens.js" type="text/javascript"></script>
+<script src="js/comunicacao.js" type="text/javascript"></script>
+
+<script>
+    //$('#ranking-table').dynatable();
+    _libwebsocketRanking = new gpscheck.comunicacao.GPSWebSocket(8080);
+
+    function posAberturaSocket(msg) {
+        rankingMsg = comunicacao_ranking();
+        _libwebsocketRanking.enviarObjJson(rankingMsg);
+    }
+
+    function posRecebimentoMensagemServidor(msg) {
+        var jsonMensagem = JSON.parse(msg);
+        $('#ranking-table').dynatable({
+            dataset: {
+                records: jsonMensagem.params
             }
-            function posRecebimentoMensagemServidor(msg) {
-                var jsonMensagem = JSON.parse(msg);
-                $('#ranking-table').dynatable({
-                    dataset: {
-                        records: jsonMensagem.params
-                    }
-                });
-            }
+        });
+    }
 
-            _libwebsocketRanking.FOnOpen(posAberturaSocket);
-            _libwebsocketRanking.FOnMessage(posRecebimentoMensagemServidor);
-            _libwebsocketRanking.iniciar();
-        </script>
-    </body>
+    _libwebsocketRanking.FOnOpen(posAberturaSocket);
+    _libwebsocketRanking.FOnMessage(posRecebimentoMensagemServidor);
+    _libwebsocketRanking.iniciar();
+</script>
+</body>
 </html>

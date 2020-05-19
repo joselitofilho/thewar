@@ -9,11 +9,11 @@ def ler_csv():
         ranking = []
         for coluna in leitor:
             patente = {
-                    "level": coluna[0],
-                    "name": coluna[1],
-                    "xp": coluna[2],
-                    "level_up": coluna[3]
-                  }
+                "level": coluna[0],
+                "name": coluna[1],
+                "xp": coluna[2],
+                "level_up": coluna[3]
+            }
             ranking.append(patente)
     return ranking
 

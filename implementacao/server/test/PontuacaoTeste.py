@@ -4,10 +4,12 @@
 import os
 import shutil
 import unittest
+
 from src.pontuacao import *
 
+
 class PontuacaoTeste(unittest.TestCase):
-   
+
     def setUp(self):
         try:
             os.remove('wartest.db')
@@ -21,9 +23,9 @@ class PontuacaoTeste(unittest.TestCase):
         quemDestruiuQuem = {
             '1': ['2', '3', '4']
         }
-        pontuacao = Pontuacao('1', 
-            ['1','2','3','4'], quemDestruiuQuem,
-            'wartest.db')
+        pontuacao = Pontuacao('1',
+                              ['1', '2', '3', '4'], quemDestruiuQuem,
+                              'wartest.db')
 
         # Operação.
         pontosExtra = pontuacao.contabilizaPontosExtra('1')
@@ -33,6 +35,7 @@ class PontuacaoTeste(unittest.TestCase):
 
     def tearDown(self):
         os.remove('wartest.db')
+
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()

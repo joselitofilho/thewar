@@ -1,23 +1,39 @@
 .mouse_colocar_tropa,
-.mouse_colocar_tropa * {cursor: url('../imagens/mouse/colocar_tropa.png') 16 16, pointer; }
+.mouse_colocar_tropa * {
+    cursor: url('../imagens/mouse/colocar_tropa.png') 16 16, pointer;
+}
 
 .mouse_alvo,
-.mouse_alvo * {cursor: url('../imagens/mouse/alvo.png') 16 16, pointer;}
+.mouse_alvo * {
+    cursor: url('../imagens/mouse/alvo.png') 16 16, pointer;
+}
 
 .mouse_trocar_cartas,
-.mouse_trocar_cartas * {cursor: url('../imagens/mouse/trocar_cartas.png') 31 27, pointer;}
+.mouse_trocar_cartas * {
+    cursor: url('../imagens/mouse/trocar_cartas.png') 31 27, pointer;
+}
 
 .mouse_atacar,
-.mouse_atacar * {cursor: url('../imagens/mouse/atacar.png'), pointer;}
+.mouse_atacar * {
+    cursor: url('../imagens/mouse/atacar.png'), pointer;
+}
 
 .mouse_mover_tropas_para_fora,
-.mouse_mover_tropas_para_fora * {cursor: url('../imagens/mouse/mover_tropas_para_fora.png') 16 16, pointer;}
+.mouse_mover_tropas_para_fora * {
+    cursor: url('../imagens/mouse/mover_tropas_para_fora.png') 16 16, pointer;
+}
 
 .mouse_mover_tropas_para_dentro,
-.mouse_mover_tropas_para_dentro * {cursor: url('../imagens/mouse/mover_tropas_para_dentro.png') 16 16, pointer;}
+.mouse_mover_tropas_para_dentro * {
+    cursor: url('../imagens/mouse/mover_tropas_para_dentro.png') 16 16, pointer;
+}
 
 .mouse_finalizar,
-.mouse_finalizar * {cursor: url('../imagens/mouse/finalizar.png') 16 16, pointer;}
+.mouse_finalizar * {
+    cursor: url('../imagens/mouse/finalizar.png') 16 16, pointer;
+}
 
 .mouse_padrao,
-.mouse_padrao * {cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;}
+.mouse_padrao * {
+    cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
+}

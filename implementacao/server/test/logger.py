@@ -6,6 +6,6 @@ if __name__ == '__main__':
     logging.info('Finished')
 
     try:
-        a = 1/0
+        a = 1 / 0
     except Exception:
         logging.exception("IEI")

@@ -1,9 +1,11 @@
 from jogador import *
 from mensagens import *
 
+
 class EstadoDaSala:
     sala_criada = "sala_criada"
     jogo_em_andamento = "jogo_em_andamento"
+
 
 class Sala(object):
     def __init__(self, nome):
@@ -11,9 +13,10 @@ class Sala(object):
         self.proximaPosicao = 0
         self.jogadores = {}
         self.dono = None
-    
-        print "Sala[" + str(self.id) + "] criada."
-    
+
+        print
+        "Sala[" + str(self.id) + "] criada."
+
     def salaEstaCheia(self):
         return len(self.jogadores) == 6;
 
@@ -23,7 +26,7 @@ class Sala(object):
         if not self.salaEstaCheia() and posicao == -1:
             posicao = self.proximaPosicao
             self.verificaDono(posicao)
-       
+
             jogador = JogadorDaSala(usuario, posicao, (self.dono == posicao and posicao > -1))
             self.jogadores[posicao] = jogador
 
@@ -34,9 +37,9 @@ class Sala(object):
                 "entrou_ou_saiu": 1,
                 "jogador": jogador
             }
-            infoSalaMsg = InfoSala(self.id, 
-                    EstadoDaSala.sala_criada,
-                    self.jogadores.values(), extra)
+            infoSalaMsg = InfoSala(self.id,
+                                   EstadoDaSala.sala_criada,
+                                   self.jogadores.values(), extra)
             return infoSalaMsg
 
         return None
@@ -47,9 +50,9 @@ class Sala(object):
         if posicao > -1:
             jogador = self.jogadores[posicao]
             self.jogadores.pop(posicao)
-            
+
             self.defineProximaPosicao()
-            
+
             extra = {
                 "entrou_ou_saiu": 0,
                 "jogador": jogador
@@ -60,8 +63,8 @@ class Sala(object):
                 self.escolheNovoDono()
 
             infoSalaMsg = InfoSala(self.id,
-                    EstadoDaSala.sala_criada,
-                    self.jogadores.values(), extra)
+                                   EstadoDaSala.sala_criada,
+                                   self.jogadores.values(), extra)
             return infoSalaMsg
 
         return None
@@ -75,7 +78,7 @@ class Sala(object):
                 posicao = k
 
         return posicao
-            
+
     def alteraPosicao(self, usuario, novaPosicao):
         retorno = None
 
@@ -93,9 +96,9 @@ class Sala(object):
 
                 if jogador.dono:
                     self.dono = novaPosicao
-                        
+
                 retorno = AlteraPosicaoNaSala(self.id, self.jogadores[novaPosicao], posicaoAtual)
-                        
+
                 self.defineProximaPosicao()
 
         return retorno
@@ -114,16 +117,15 @@ class Sala(object):
                 self.jogadores[pos].dono = True
                 break
 
-                    
     def defineProximaPosicao(self):
         for i in range(6):
             proximaPosicao = i % 6
             if proximaPosicao not in self.jogadores.keys():
                 self.proximaPosicao = proximaPosicao
                 break
-        
+
     def vazia(self):
         return len(self.jogadores) == 0
-    
-    #def __del__(self):
+
+    # def __del__(self):
     #    del self.jogadores
