@@ -456,7 +456,7 @@ function insignias_levelByXp(xp) {
     if (xp > 0) {
         for (var i = 0; i < _insignias.length; ++i) {
             if (xp <= parseInt(_insignias[i].xp)) {
-                level = j - 1;
+                level = i - 1;
                 break;
             }
         }
