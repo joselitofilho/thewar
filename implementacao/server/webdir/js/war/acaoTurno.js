@@ -124,8 +124,6 @@ jogos.war.ComponenteAcaoTurno = function () {
         this.jogadorDaVez = jogadorDaVez;
         this.quantidadeDeTropasAtacante = {};
 
-        this.resetarQuantidadeTropas();
-
         $('#acoes_turno .info #titulo').html('Atacar');
 
         var conteudo = "";
@@ -438,6 +436,18 @@ jogos.war.ComponenteAcaoTurno = function () {
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function () {
             if (ehOJogadorDaVez) finalizarTurno();
         });
+
+        if (ehOJogadorDaVez) {
+            if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais ||
+                tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio ||
+                tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+                this.exibeQuantidadeTropas();
+            } else {
+                this.escondeQuantidadeTropas();
+            }
+        } else {
+            this.escondeQuantidadeTropas();
+        }
     };
 
     this.atualizaQuantidadeDeTropasAtacante = function () {
@@ -532,7 +542,14 @@ jogos.war.ComponenteAcaoTurno = function () {
         $('#popupBtnAtacar').css('visibility', 'visible');
     };
 
-    this.resetarQuantidadeTropas = function () {
+    this.escondeQuantidadeTropas = function () {
+        $('#quantidade_tropas').css('visibility', 'hidden');
+        $("#quantidade_tropas").find(".rb-tab-active").removeClass("rb-tab-active");
+        $("#quantidade_tropa1").addClass("rb-tab-active");
+    };
+
+    this.exibeQuantidadeTropas = function () {
+        $('#quantidade_tropas').css('visibility', 'visible');
         $("#quantidade_tropas").find(".rb-tab-active").removeClass("rb-tab-active");
         $("#quantidade_tropa1").addClass("rb-tab-active");
     };

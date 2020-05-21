@@ -39,8 +39,8 @@
 
 #barra_tempo {
     position: absolute;
-    top: 676px;
-    left: 337px;
+    top: 628px;
+    left: 280px;
     width: 417px;
     height: 49px;
     color: #FFF;
@@ -121,62 +121,6 @@
     position: relative;
     text-align: center;
     top: 26px;
-}
-
-#menu_jogadores {
-    position: absolute;
-    top: 490px;
-    width: 213px;
-    height: 289px;
-    background: url('../imagens/jogo/fundo-6-jogadores.png') no-repeat;
-    z-index: 999;
-}
-
-#menu_jogadores ul {
-    padding: 0px;
-    margin-top: 14px;
-    margin-left: 23px;
-    list-style: none;
-}
-
-#menu_jogadores ul li {
-    display: inline;
-    width: 189px;
-    height: 46px;
-    display: inline-block;
-    border-radius: 0 0 4px 4px;
-    font-size: 16px;
-    margin-bottom: -5px;
-}
-
-#menu_jogadores ul li div {
-    float: left;
-    width: 42px;
-    height: 42px;
-}
-
-#menu_jogadores ul li a {
-    position: relative;
-    top: 10px;
-    width: 123px;
-    height: 26px;
-    float: left;
-    padding: 2px;
-    border-radius: 0 8px 8px 0;
-    -moz-box-shadow: inset 0 0 10px #000000;
-    -webkit-box-shadow: inset 0 0px 10px #000000;
-    box-shadow: inset 0 0 10px #000000;
-    text-decoration: none;
-}
-
-#menu_jogadores ul li span {
-    position: relative;
-    top: 12px;
-    left: -22px;
-    width: 20px;
-    display: inline-block;
-    text-align: center;
-    text-shadow: black 0.1em 0.1em 0.2em;
 }
 
 #qtdTerritorio0 {
@@ -276,7 +220,7 @@
     position: absolute;
     width: 234px;
     height: 32px;
-    top: 730px;
+    top: 768px;
     left: 395px;
     background: url('../imagens/legenda-rodape.png');
     text-align: center;
@@ -301,8 +245,8 @@
 }
 
 .legenda-gt-amdosul {
-    top: 626px;
-    left: 316px;
+    top: 575px;
+    left: 121px;
     background-position: 0 0;
     width: 126px;
     height: 47px;
@@ -343,7 +287,7 @@
 #popupBtnAtacar {
     position: absolute;
     visibility: hidden;
-    width: 125px;
+    width: 56px;
     height: 54px;
     background: url('../imagens/jogo/btn-atacar2.png') 0 0 no-repeat;
     cursor: pointer;

@@ -29,7 +29,7 @@ $ easy_install redis
 $ apt-get install screen
 ```
 
-###### Ferramenta para edição de mapas:
+### Ferramenta para edição de mapas:
     - http://www.birdtheme.org/useful/v3tool.html
     - http://www.birdtheme.org/useful/editkmlfilev3.php?lake=Aral%2C+Black+and+Caspian+Sea
     - Plotar pontos: http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/encodeForm.html
@@ -40,5 +40,5 @@ $ apt-get install screen
     - drop-shadow: http://css3gen.com/box-shadow/
     - linear-gradient: http://www.css3factory.com/linear-gradients/
 
-###### Sons:
+### Sons:
     - http://www.freesound.org/

@@ -1,0 +1,29 @@
+.info_territorios_ico {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+}
+
+.info_territorios_vermelho {
+    background: url('../imagens/info_territorios.png') 0px 0px no-repeat;
+}
+
+.info_territorios_azul {
+    background: url('../imagens/info_territorios.png') -14px 0px no-repeat;
+}
+
+.info_territorios_verde {
+    background: url('../imagens/info_territorios.png') -28px 0px no-repeat;
+}
+
+.info_territorios_preta {
+    background: url('../imagens/info_territorios.png') -42px 0px no-repeat;
+}
+
+.info_territorios_branca {
+    background: url('../imagens/info_territorios.png') -56px 0px no-repeat;
+}
+
+.info_territorios_amarela {
+    background: url('../imagens/info_territorios.png') -70px 0px no-repeat;
+}

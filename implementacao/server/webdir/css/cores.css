@@ -9,7 +9,6 @@
 }
 
 .cor_azul {
-    /*background: #262165;*/
     background: #2621A8;
     color: #FFF;
 }
@@ -20,18 +19,17 @@
 }
 
 .cor_preto {
-    /*background: #282423;*/
     background: #1A191E;
     color: #FFF;
 }
 
 .cor_branco {
-    background: #F8F7E9;
+    background: #bdbdbd;
     color: #444;
 }
 
 .cor_amarelo {
-    background: #DFE136;
+    background: #CABF45;
     color: #444;
 }
 

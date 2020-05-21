@@ -71,7 +71,7 @@ class PontuacaoDB(object):
 
         conn.close()
 
-        return ranking
+        return {'ranking': ranking}
 
     def pontosDoUsuario(self, usuario):
         pontos = None
