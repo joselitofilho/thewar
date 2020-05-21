@@ -57,7 +57,7 @@
             let r = jsonMensagem.params.ranking[i];
             r.level = "<div class='insignia_size insignias_x40_nv0'></div>";
             if (r.pontos > 0) {
-                r.level = "<div class='insignia_size insignias_x40_nv" + insignias_levelByXp(r.pontos) + "'></div>";
+                r.level = "<div class='insignia_size insignias_x40_nv" + ranking_levelByXp(r.pontos) + "'></div>";
             }
             rank.push(r);
         }

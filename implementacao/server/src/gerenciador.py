@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import json
 import traceback
 
+from badges import *
 from jogador import *
 from jogo import *
 from mensagens import *
@@ -201,14 +203,17 @@ class GerenciadorPrincipal(object):
 
         # TODO: Implementar mecanismo de cache.
         infoUsuario = {"nome": usuario}
-        ranking = PontuacaoDB().ranking()['ranking']
-        for r in ranking:
+        ranking = PontuacaoDB().ranking()
+        for r in ranking['ranking']:
             if r.nome == usuario:
                 infoUsuario = r
                 break
+        badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
+        ranking['badges'] = Badges().ler_csv(badges_path)
 
         if infoUsuario:
             self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(infoUsuario))
+            self.enviaMsgParaTodos(TipoMensagem.ranking, ranking)
 
     def clienteDesconectou(self, cliente):
         usuario = self.jogadores[cliente]

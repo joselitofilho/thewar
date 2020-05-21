@@ -28,6 +28,8 @@ class Jogo(object):
 
         self.olheiros = {}
 
+        self.jogadorQueComecou = -1
+
         self.ordemJogadores = self.jogadores.keys()
         # Indice que aponta para a fila da ordem dos jogador.
         self.indiceOrdemJogadores = None
@@ -52,9 +54,9 @@ class Jogo(object):
         self.pontuacaoPelaVitoria = 0
 
     def faseI_Inicia(self):
-        jogadorQueComeca = self.faseI_DefinirQuemComeca()
+        self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
-        return JogoFaseI(jogadorQueComeca, territoriosDosJogadores)
+        return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
         numeroAleatorio = random.randint(0, len(self.jogadores) - 1)
@@ -156,14 +158,15 @@ class Jogo(object):
         infoJogadores = []
         #  Monta a lista das informações dos jogadores
         for j in self.jogadores.values():
-            # Verifica se o jogador ainda esta conectado.
-            if j.posicao in self.clientes.keys():
-                infoJogadores.append({
-                    "usuario": j.usuario,
-                    "posicao": j.posicao,
-                    "total_territorios": len(j.territorios),
-                    "total_cartas_territorio": len(j.cartasTerritorio),
-                })
+            infoJogadores.append({
+                "usuario": j.usuario,
+                "posicao": j.posicao,
+                "total_territorios": len(j.territorios),
+                "total_cartas_territorio": len(j.cartasTerritorio),
+                "esta_na_sala": j.posicao in self.clientes.keys()
+            })
+
+        jogadorQueComecou = self.jogadorQueComecou
 
         acao = None
         # Preencher os dados da acao
@@ -175,9 +178,9 @@ class Jogo(object):
                 else:
                     turno.quantidadeDeTropas = 3
             territoriosDosJogadores = self.listaDeTerritoriosDosJogadores()
-            acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno,
-                                               numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                               turno.quantidadeDeTropas, territoriosDosJogadores, infoJogadores)
+            acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante,
+                                               valorDaTroca, turno.quantidadeDeTropas, territoriosDosJogadores,
+                                               infoJogadores, jogadorQueComecou)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             turno.grupoTerritorioAtual = None
             for grupo in turno.gruposTerritorio:
@@ -185,30 +188,27 @@ class Jogo(object):
                 break
             if turno.quantidadeDeTropas == 0:
                 turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
-            acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno,
-                                                       numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                                       turno.quantidadeDeTropas, turno.grupoTerritorioAtual,
-                                                       infoJogadores)
+            acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante,
+                                                       valorDaTroca, turno.quantidadeDeTropas,
+                                                       turno.grupoTerritorioAtual, infoJogadores, jogadorQueComecou)
         elif tipoAcaoDoTurno == TipoAcaoTurno.trocar_cartas:
-            acao = AcaoTrocarCartas(tipoAcaoDoTurno,
-                                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                    (len(jogador.cartasTerritorio) >= 5), infoJogadores)
+            acao = AcaoTrocarCartas(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
+                                    (len(jogador.cartasTerritorio) >= 5), infoJogadores, jogadorQueComecou)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
-            acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno,
-                                                     numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                                     turno.quantidadeDeTropas, infoJogadores)
+            acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante,
+                                                     valorDaTroca, turno.quantidadeDeTropas, infoJogadores,
+                                                     jogadorQueComecou)
         elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
             ganhador = {
                 "usuario": jogador.usuario,
                 "pontos": self.pontuacaoPelaVitoria
             }
 
-            acao = AcaoJogoTerminou(tipoAcaoDoTurno,
-                                    numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                    jogador.objetivo, ganhador, infoJogadores)
+            acao = AcaoJogoTerminou(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
+                                    jogador.objetivo, ganhador, infoJogadores, jogadorQueComecou)
         else:
-            acao = AcaoTurno(tipoAcaoDoTurno,
-                             numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores)
+            acao = AcaoTurno(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
+                             infoJogadores, jogadorQueComecou)
         return acao
 
     def todosJogaram(self):
@@ -865,14 +865,13 @@ class Jogo(object):
 
         # Prepara as informacoes.
         for j in self.jogadores.values():
-            # Verifica se o jogador ainda esta conectado.
-            if j.posicao in self.clientes.keys():
-                listaJogadoresInfoCurta.append({
-                    "usuario": j.usuario,
-                    "posicao": j.posicao,
-                    "total_territorios": len(j.territorios),
-                    "total_cartas_territorio": len(j.cartasTerritorio),
-                })
+            listaJogadoresInfoCurta.append({
+                "usuario": j.usuario,
+                "posicao": j.posicao,
+                "total_territorios": len(j.territorios),
+                "total_cartas_territorio": len(j.cartasTerritorio),
+                "esta_na_sala": j.posicao in self.clientes.keys()
+            })
 
             territoriosDosJogadores.append({
                 "territorios": j.territorios,
@@ -899,14 +898,13 @@ class Jogo(object):
                         total_territorios = len(j.territorios)
                         total_cartas_territorio = len(j.cartasTerritorio)
 
-                    # Verifica se o jogador ainda esta conectado.
-                    if j.posicao in self.clientes.keys():
-                        listaJogadoresInfoCurta.append({
-                            "usuario": j.usuario,
-                            "posicao": j.posicao,
-                            "total_territorios": len(j.territorios),
-                            "total_cartas_territorio": len(j.cartasTerritorio),
-                        })
+                    listaJogadoresInfoCurta.append({
+                        "usuario": j.usuario,
+                        "posicao": j.posicao,
+                        "total_territorios": len(j.territorios),
+                        "total_cartas_territorio": len(j.cartasTerritorio),
+                        "esta_na_sala": j.posicao in self.clientes.keys()
+                    })
 
                     territoriosDosJogadores.append({
                         "territorios": j.territorios,
