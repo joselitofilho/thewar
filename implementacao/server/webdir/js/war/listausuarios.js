@@ -9,7 +9,7 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
         for (i = 0; i < this.lista.length; i++) {
             conteudo = "<div class='item'>";
             // conteudo += "<div class='foto imagem-soldado imagem-soldado-padrao'></div>";
-            conteudo += "<div class='foto insignia_size insignias_x40_nv" + insignias_levelByXp(this.lista[i].pontos) + "'></div>";
+            conteudo += "<div class='foto insignia_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div>";
             conteudo += "<div class='infos'>";
             conteudo += "<div class='nome'>" + this.lista[i].nome + "</div>";
             conteudo += "<div>";
@@ -20,10 +20,6 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
             conteudo += "</div>"; // item.
             _conteudoDaLista.append(conteudo);
         }
-    };
-
-    this.getLista = function() {
-        return this.lista;
     };
 
     this.ordenaLista = function (chave) {

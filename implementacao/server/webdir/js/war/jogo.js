@@ -17,8 +17,6 @@ function jogo_preparaElementosHtml() {
         $(elemento).css('visibility', 'hidden');
     });
 
-    _menuJogadores.preencheElementoHtml();
-
     $('#bloqueador_tela').css('visibility', 'hidden');
     $('#geral').css('visibility', 'visible');
     $('#jogo').css('visibility', 'visible');
@@ -237,6 +235,14 @@ function processarMsg_carrega_jogo(msgParams) {
     processarMsg_cartas_territorios(msgParams.cartasTerritorio);
 
     _posicaoJogadorDaVez = msgParams.jogadorDaVez;
+
+    for (let i = 0; i < 6; i++) {
+        if (i === _posicaoJogadorDaVez) {
+            $('#menu_jogador' + i).css({'margin-top': '-7px'});
+        } else {
+            $('#menu_jogador' + i).css({'margin-top': '0px'});
+        }
+    }
 }
 
 function processarMsg_carrega_jogo_olheiro(msgParams) {
@@ -392,20 +398,7 @@ function processarMsg_entrou_no_jogo(msgParams) {
             );
         }
 
-        const listaUsuariosLogados = _listaUsuarios.getLista();
-        $("#menu_jogador" + posicaoJogador + "_insignia").attr('class', 'menu_jogadores_box_badge');
-        for (var j = 0; j < listaUsuariosLogados.length; ++j) {
-            if (listaUsuariosLogados[j].nome === infos.usuario) {
-                $("#menu_jogador" + infos.posicao + "_insignia")
-                    .addClass("insignia_size insignias_x40_nv" + insignias_levelByXp(listaUsuariosLogados[j].pontos));
-                break;
-            }
-        }
-
-        $("#jogador" + (posicaoJogador + 1)).html(infos.usuario);
         $("#jogador" + (posicaoJogador + 1)).removeClass("text_through");
-        $("#menu_jogador" + posicaoJogador + "_info_cartas").html(infos.total_territorios);
-        $("#menu_jogador" + posicaoJogador + "_info_territorios").html(infos.total_cartas_territorio);
     }
 }
 
@@ -438,24 +431,6 @@ function processarMsg_turno(msgParams) {
     _infoJogadorDaVezDoTurno = msgParams.vezDoJogador;
     _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
     $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
-
-    const listaUsuariosLogados = _listaUsuarios.getLista();
-    for (var i = 0; i < msgParams.infoJogadores.length; i++) {
-        var infos = msgParams.infoJogadores[i];
-
-        $("#menu_jogador" + infos.posicao + "_insignia").attr('class', 'menu_jogadores_box_badge');
-        for (var j = 0; j < listaUsuariosLogados.length; ++j) {
-            if (listaUsuariosLogados[j].nome === infos.usuario) {
-                $("#menu_jogador" + infos.posicao + "_insignia")
-                    .addClass("insignia_size insignias_x40_nv" + insignias_levelByXp(listaUsuariosLogados[j].pontos));
-                break;
-            }
-        }
-
-        $("#jogador" + (infos.posicao + 1)).html(infos.usuario);
-        $("#menu_jogador" + infos.posicao + "_info_cartas").html(infos.total_territorios);
-        $("#menu_jogador" + infos.posicao + "_info_territorios").html(infos.total_cartas_territorio);
-    }
 
     var tempoTotal = Number(msgParams.tempoRestante);
     jogo_iniciaBarraDeProgresso(tempoTotal);
@@ -588,17 +563,17 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
-    for (i = 0; i < msgParams.infoJogadores.length; i++) {
+    _menuJogadores.posicionaElementos(msgParams.jogadorQueComecou, msgParams.infoJogadores);
+    for (let i = 0; i < msgParams.infoJogadores.length; i++) {
         const infos = msgParams.infoJogadores[i];
         const title = "Nome: " + infos.usuario + '\n' +
             "Total de território: " + infos.total_territorios + "\n" +
             "Total de cartas território: " + infos.total_cartas_territorio;
         $('#menu_jogador' + infos.posicao).prop('title', title);
-
-        if (i == Number(msgParams.vezDoJogador.posicao)) {
-            $('#menu_jogador' + infos.posicao).css({'margin-top' : '-7px'});
+        if (infos.posicao === msgParams.vezDoJogador.posicao) {
+            $('#menu_jogador' + infos.posicao).css({'margin-top': '-7px'});
         } else {
-            $('#menu_jogador' + infos.posicao).css({'margin-top' : '0px'});
+            $('#menu_jogador' + infos.posicao).css({'margin-top': '0px'});
         }
     }
 }

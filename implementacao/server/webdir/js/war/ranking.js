@@ -1,3 +1,4 @@
+_ranking = [];
 _insignias = [
     {
         "level": "0",
@@ -451,7 +452,7 @@ _insignias = [
     }
 ];
 
-function insignias_levelByXp(xp) {
+function ranking_levelByXp(xp) {
     var level = 0;
     if (xp > 0) {
         for (var i = 0; i < _insignias.length; ++i) {
@@ -462,4 +463,9 @@ function insignias_levelByXp(xp) {
         }
     }
     return level;
+}
+
+function ranking_processaMsg(params) {
+    _ranking = params['ranking'];
+    _insignias = params['badges'];
 }

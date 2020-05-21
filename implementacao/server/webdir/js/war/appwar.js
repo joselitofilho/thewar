@@ -140,7 +140,7 @@ function posAberturaSocket(valor) {
 }
 
 function posRecebimentoMensagemServidor(valor) {
-    console.log('Recebeu msg ' + valor);
+    // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
     var jsonMensagem = JSON.parse(valor);
     if (jsonMensagem.tipo == TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);
@@ -190,6 +190,8 @@ function posRecebimentoMensagemServidor(valor) {
         appwar_processaMsg_usuario_desconectou(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.jogador_destruido) {
         jogo_processaMsg_jogador_destruido(jsonMensagem.params);
+    } else if (jsonMensagem.tipo == TipoMensagem.ranking) {
+        ranking_processaMsg(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }
@@ -575,7 +577,7 @@ function tocarSom(el, soundfile) {
     var el = $('#audioPlayer').get(0);
     var volume = $('#audioSlider').slider('value') / 100.0;
 
-    console.log('Tocando som: ' + soundfile);
+    // console.log('[DEBUG]', 'Tocando som: ' + soundfile);
 
     //if (el.mp3) {
     //    if(el.mp3.paused) el.mp3.play();
