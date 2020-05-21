@@ -1,0 +1,141 @@
+#menu_jogadores {
+    position: absolute;
+    top: 668px;
+    left: 242px;
+    width: 538px;
+    height: 118px;
+    background: url('../imagens/jogo/fundo-6-jogadores-horizontal.png') no-repeat;
+    z-index: 999;
+}
+
+.menu_jogadores_grid2x2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.menu_jogadores_grid {
+    width: 517px;
+    height: 82px;
+    padding: 0px;
+    padding-top: 18px;
+    padding-left: 25px;
+}
+
+.menu_jogadores_box {
+    margin-right: 4px;
+    width: 78px;
+    height: 82px;
+    text-align: center;
+    background: #fff;
+}
+
+.menu_jogadores_box_title {
+    height: 24px;
+}
+
+.menu_jogadores_box_badge_circle {
+    diplay: block;
+    margin: -22px 0px 3px 20px;
+    vertical-align: middle;
+    width: 34px;
+    height: 34px;
+    background-color: rgba(70, 70, 70, 0.3);
+    border: 2px solid white;
+    border-radius: 50%;
+    -webkit-filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.3));
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5), 0 0px 5px rgba(0, 0, 0, 0.15),
+    0 0px 4px rgba(0, 0, 0, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.menu_jogadores_box_badge {
+    margin: -24px 0px 0px 18px;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.3));
+}
+
+.menu_jogadores_box_name {
+    display: inline-block;
+    padding: 1px 4px;
+    width: 70px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.menu_jogadores_box_infos {
+    margin: 0px 6px 6px 6px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.menu_jogadores_box_info_item {
+    width: 33px;
+    height: 14px;
+}
+
+.menu_jogadores_box_info_item img {
+    width: 14px;
+    height: 14px;
+}
+
+.menu_jogadores_box_info_item span {
+    height: 14px;
+    text-align: center;
+}
+
+.text_through {
+    text-decoration: line-through;
+}
+
+/*#menu_jogadores ul {*/
+/*    padding: 0px;*/
+/*    margin-top: 14px;*/
+/*    margin-left: 23px;*/
+/*    list-style: none;*/
+/*}*/
+
+/*#menu_jogadores ul li {*/
+/*    display: inline;*/
+/*    width: 189px;*/
+/*    height: 46px;*/
+/*    display: inline-block;*/
+/*    border-radius: 0 0 4px 4px;*/
+/*    font-size: 16px;*/
+/*    margin-bottom: -5px;*/
+/*}*/
+
+/*#menu_jogadores ul li div {*/
+/*    float: left;*/
+/*    width: 42px;*/
+/*    height: 42px;*/
+/*}*/
+
+/*#menu_jogadores ul li a {*/
+/*    position: relative;*/
+/*    top: 10px;*/
+/*    width: 123px;*/
+/*    height: 26px;*/
+/*    float: left;*/
+/*    padding: 2px;*/
+/*    border-radius: 0 8px 8px 0;*/
+/*    -moz-box-shadow: inset 0 0 10px #000000;*/
+/*    -webkit-box-shadow: inset 0 0px 10px #000000;*/
+/*    box-shadow: inset 0 0 10px #000000;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*#menu_jogadores ul li span {*/
+/*    position: relative;*/
+/*    top: 12px;*/
+/*    left: -22px;*/
+/*    width: 20px;*/
+/*    display: inline-block;*/
+/*    text-align: center;*/
+/*    text-shadow: black 0.1em 0.1em 0.2em;*/
+/*}*/

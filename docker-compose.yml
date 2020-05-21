@@ -5,9 +5,11 @@ services:
     image: ricardogpsf/jogowar:v1
     volumes:
       - .:/opt/app
+    working_dir: /opt/app
     ports:
       - "8080:8080"
       - "9092:9092"
+    command: /bin/bash -c "cd implementacao/server/ && ./start_game.sh"
     networks:
       - jogowar-network
     stdin_open: true

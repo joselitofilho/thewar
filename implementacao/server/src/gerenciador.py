@@ -201,7 +201,7 @@ class GerenciadorPrincipal(object):
 
         # TODO: Implementar mecanismo de cache.
         infoUsuario = {"nome": usuario}
-        ranking = PontuacaoDB().ranking()
+        ranking = PontuacaoDB().ranking()['ranking']
         for r in ranking:
             if r.nome == usuario:
                 infoUsuario = r
@@ -335,7 +335,7 @@ class GerenciadorPrincipal(object):
 
         # TODO: Implementar mecanismo de cache.
         infoUsuarios = []
-        ranking = PontuacaoDB().ranking()
+        ranking = PontuacaoDB().ranking()['ranking']
         for r in ranking:
             if r.nome in self.jogadores.values():
                 infoUsuarios.append(r)

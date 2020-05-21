@@ -1,6 +1,7 @@
 var _chatJogo = new jogowar.war.ChatJogo($('#cj_mensagens'));
 var _sliderMoverTropas = new jogos.war.Slider($('#slider-mover-tropas'));
 var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
+var _menuJogadores = new jogos.war.MenuJogadores();
 
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
@@ -15,6 +16,9 @@ function jogo_preparaElementosHtml() {
     $('#sala #sala_content').children().each(function (i, elemento) {
         $(elemento).css('visibility', 'hidden');
     });
+
+    _menuJogadores.preencheElementoHtml();
+
     $('#bloqueador_tela').css('visibility', 'hidden');
     $('#geral').css('visibility', 'visible');
     $('#jogo').css('visibility', 'visible');
@@ -340,7 +344,8 @@ function processarMsg_colocar_tropa_na_troca_de_cartas_territorios(msgParams) {
 
 function processarMsg_entrou_no_jogo(msgParams) {
     var posicaoJogador = Number(msgParams.posicao);
-    var usuario = msgParams.usuario;
+    var infos = msgParams;
+    var usuario = infos.usuario;
 
     if (posicaoJogador > -1) {
         if (usuario != _usuario) _chatJogo.entrouNoJogo(usuario, (posicaoJogador == 7));
@@ -387,15 +392,28 @@ function processarMsg_entrou_no_jogo(msgParams) {
             );
         }
 
-        $("#jogador" + (posicaoJogador + 1)).html(usuario);
+        const listaUsuariosLogados = _listaUsuarios.getLista();
+        $("#menu_jogador" + posicaoJogador + "_insignia").attr('class', 'menu_jogadores_box_badge');
+        for (var j = 0; j < listaUsuariosLogados.length; ++j) {
+            if (listaUsuariosLogados[j].nome === infos.usuario) {
+                $("#menu_jogador" + infos.posicao + "_insignia")
+                    .addClass("insignia_size insignias_x40_nv" + insignias_levelByXp(listaUsuariosLogados[j].pontos));
+                break;
+            }
+        }
+
+        $("#jogador" + (posicaoJogador + 1)).html(infos.usuario);
+        $("#jogador" + (posicaoJogador + 1)).removeClass("text_through");
+        $("#menu_jogador" + posicaoJogador + "_info_cartas").html(infos.total_territorios);
+        $("#menu_jogador" + posicaoJogador + "_info_territorios").html(infos.total_cartas_territorio);
     }
 }
 
 function processarMsg_saiu_do_jogo(msgParams) {
     this.tocarSom(this, "saindo.wav");
 
-    var posicaoJogador = Number(msgParams.posicao) + 1;
-    $("#jogador" + posicaoJogador).html("");
+    const posicaoJogador = Number(msgParams.posicao);
+    $("#jogador" + (posicaoJogador + 1)).addClass("text_through");
 
     _chatJogo.saiuDoJogo(msgParams.usuario, (posicaoJogador == 7));
 
@@ -420,6 +438,24 @@ function processarMsg_turno(msgParams) {
     _infoJogadorDaVezDoTurno = msgParams.vezDoJogador;
     _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
     $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
+
+    const listaUsuariosLogados = _listaUsuarios.getLista();
+    for (var i = 0; i < msgParams.infoJogadores.length; i++) {
+        var infos = msgParams.infoJogadores[i];
+
+        $("#menu_jogador" + infos.posicao + "_insignia").attr('class', 'menu_jogadores_box_badge');
+        for (var j = 0; j < listaUsuariosLogados.length; ++j) {
+            if (listaUsuariosLogados[j].nome === infos.usuario) {
+                $("#menu_jogador" + infos.posicao + "_insignia")
+                    .addClass("insignia_size insignias_x40_nv" + insignias_levelByXp(listaUsuariosLogados[j].pontos));
+                break;
+            }
+        }
+
+        $("#jogador" + (infos.posicao + 1)).html(infos.usuario);
+        $("#menu_jogador" + infos.posicao + "_info_cartas").html(infos.total_territorios);
+        $("#menu_jogador" + infos.posicao + "_info_territorios").html(infos.total_cartas_territorio);
+    }
 
     var tempoTotal = Number(msgParams.tempoRestante);
     jogo_iniciaBarraDeProgresso(tempoTotal);
@@ -531,7 +567,6 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, msgParams.tipoAcao);
 
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
-        console.log(msgParams.vezDoJogador);
         _componenteAcaoTurno.turnoDistribuirTopasGlobais(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
     } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         var strGrupoTerritorio = msgParams.grupoTerritorio;
@@ -553,13 +588,18 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
-    console.log('jogo_alteraInfoTurno::infoJogadores', msgParams.infoJogadores);
     for (i = 0; i < msgParams.infoJogadores.length; i++) {
         const infos = msgParams.infoJogadores[i];
         const title = "Nome: " + infos.usuario + '\n' +
             "Total de território: " + infos.total_territorios + "\n" +
             "Total de cartas território: " + infos.total_cartas_territorio;
         $('#menu_jogador' + infos.posicao).prop('title', title);
+
+        if (i == Number(msgParams.vezDoJogador.posicao)) {
+            $('#menu_jogador' + infos.posicao).css({'margin-top' : '-7px'});
+        } else {
+            $('#menu_jogador' + infos.posicao).css({'margin-top' : '0px'});
+        }
     }
 }
 
@@ -723,6 +763,7 @@ function jogo_removeElementosHtml() {
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#slider-mover-tropas').css('visibility', 'hidden');
+    $('#quantidade_tropas').css('visibility', 'hidden');
     $('#geral').css('visibility', 'hidden');
     $('#jogo').css('visibility', 'hidden');
     $('#it_sub_titulo').css('visibility', 'hidden');

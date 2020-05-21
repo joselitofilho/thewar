@@ -6,6 +6,7 @@ import re
 import signal
 import sys
 import traceback
+import os
 
 import banco
 import gerenciador
@@ -14,6 +15,7 @@ from autobahn.twisted.websocket import WebSocketServerFactory, \
     listenWS
 from mensagens import *
 from pontuacaodb import *
+from badges import *
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -87,8 +89,9 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 "# ", jsonMsg
                 self.sendMessage(jsonMsg)
             elif mensagem.tipo == TipoMensagem.ranking:
-                pontuacaoDB = PontuacaoDB()
-                ranking = pontuacaoDB.ranking()
+                ranking = PontuacaoDB().ranking()
+                badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
+                ranking['badges'] = Badges().ler_csv(badges_path)
 
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.ranking, ranking), default=lambda o: o.__dict__)
                 print

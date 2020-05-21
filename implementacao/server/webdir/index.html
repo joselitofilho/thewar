@@ -76,13 +76,16 @@
     <link href="css/listaUsuariosLobby.css" rel="stylesheet">
     <link href="css/sala.css" rel="stylesheet">
     <link href="css/acoesTurno.css" rel="stylesheet">
+    <link href="css/insignias_x40.css" rel="stylesheet">
+    <link href="css/info_cartas.css" rel="stylesheet">
+    <link href="css/info_territorios.css" rel="stylesheet">
     <link href="css/jogo.css" rel="stylesheet">
+    <link href="css/jogo_menu_jogadores.css" rel="stylesheet">
     <link href="css/quantidade_tropas.css" rel="stylesheet">
     <link href="css/painel_vitoria.css" rel="stylesheet">
     <link href="css/war/cartas_objetivos.css" rel="stylesheet">
     <link href="css/war/cartas_territorios.css" rel="stylesheet">
     <link href="css/chat.css" rel="stylesheet">
-
 
     <script src="js/libs/namespace.js" type="text/javascript"></script>
     <script src="js/websocket/websocket.js" type="text/javascript"></script>
@@ -305,40 +308,12 @@
         <div class="legenda-grupo-territorio legenda-gt-asia"></div>
         <div class="legenda-grupo-territorio legenda-gt-oceania"></div>
         <div class="legenda-grupo-territorio legenda-gt-africa"></div>
+
         <div id="menu_jogadores">
-            <ul>
-                <li class="mj_vermelho" id="menu_jogador0">
-                    <div class="jogador_sala_vermelho"></div>
-                    <a class="cor_vermelha" href="javascript:void(0);" id="jogador1"></a>
-                    <span id="qtdTerritorio0">0</span>
-                </li>
-                <li class="mj_azul" id="menu_jogador1">
-                    <div class="jogador_sala_azul"></div>
-                    <a class="cor_azul" href="javascript:void(0);" id="jogador2"></a>
-                    <span id="qtdTerritorio1">0</span>
-                </li>
-                <li class="mj_verde" id="menu_jogador2">
-                    <div class="jogador_sala_verde"></div>
-                    <a class="cor_verde" href="javascript:void(0);" id="jogador3"></a>
-                    <span id="qtdTerritorio2">0</span>
-                </li>
-                <li class="mj_preto" id="menu_jogador3">
-                    <div class="jogador_sala_preto"></div>
-                    <a class="cor_preto" href="javascript:void(0);" id="jogador4"></a>
-                    <span id="qtdTerritorio3">0</span>
-                </li>
-                <li class="mj_branco" id="menu_jogador4">
-                    <div class="jogador_sala_branco"></div>
-                    <a class="cor_branco" href="javascript:void(0);" id="jogador5"></a>
-                    <span id="qtdTerritorio4">0</span>
-                </li>
-                <li class="mj_amarelo" id="menu_jogador5">
-                    <div class="jogador_sala_amarelo"></div>
-                    <a class="cor_amarelo" href="javascript:void(0);" id="jogador6"></a>
-                    <span id="qtdTerritorio5">0</span>
-                </li>
-            </ul>
-        </div><!-- div: menu_jogadores -->
+            <div class="menu_jogadores_grid2x2 menu_jogadores_grid">
+                <!-- Código gerado -->
+            </div>
+        </div>
 
         <div id="mapa"></div>
 
@@ -562,10 +537,12 @@
 
 <script src="js/war/util.js" type="text/javascript"></script>
 <script src="js/war/base64.min.js" type="text/javascript"></script>
+<script src="js/war/insignias.js" type="text/javascript"></script>
 <script src="js/war/mundo/territorios.js" type="text/javascript"></script>
 <script src="js/war/painelVitoria.js" type="text/javascript"></script>
 <script src="js/war/painelObjetivo.js" type="text/javascript"></script>
 <script src="js/war/listausuarios.js" type="text/javascript"></script>
+<script src="js/war/menuJogadores.js" type="text/javascript"></script>
 <script src="js/war/chatgeral.js" type="text/javascript"></script>
 <script src="js/war/chatjogo.js" type="text/javascript"></script>
 <script src="js/war/acaoTurno.js" type="text/javascript"></script>

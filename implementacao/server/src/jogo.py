@@ -870,6 +870,8 @@ class Jogo(object):
                 listaJogadoresInfoCurta.append({
                     "usuario": j.usuario,
                     "posicao": j.posicao,
+                    "total_territorios": len(j.territorios),
+                    "total_cartas_territorio": len(j.cartasTerritorio),
                 })
 
             territoriosDosJogadores.append({
@@ -886,16 +888,24 @@ class Jogo(object):
                 olheiro = False
                 self.clientes[k] = cliente
 
+                total_territorios = 0
+                total_cartas_territorio = 0
                 listaJogadoresInfoCurta = []
                 territoriosDosJogadores = []
 
                 # Enviar lista dos jogadores
                 for j in self.jogadores.values():
+                    if j.posicao == k:
+                        total_territorios = len(j.territorios)
+                        total_cartas_territorio = len(j.cartasTerritorio)
+
                     # Verifica se o jogador ainda esta conectado.
                     if j.posicao in self.clientes.keys():
                         listaJogadoresInfoCurta.append({
                             "usuario": j.usuario,
                             "posicao": j.posicao,
+                            "total_territorios": len(j.territorios),
+                            "total_cartas_territorio": len(j.cartasTerritorio),
                         })
 
                     territoriosDosJogadores.append({
@@ -903,7 +913,8 @@ class Jogo(object):
                         "posicao": j.posicao
                     })
 
-                self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, posicao))
+                self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo,
+                                       EntrouNoJogo(usuario, posicao, total_territorios, total_cartas_territorio))
 
                 jogador = self.jogadores[posicao];
                 self.enviaMsgParaCliente(TipoMensagem.carrega_jogo,
@@ -921,7 +932,7 @@ class Jogo(object):
 
         if olheiro:
             self.olheiros[usuario] = cliente
-            self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, 7))
+            self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo, EntrouNoJogo(usuario, 7, 0, 0))
 
             self.enviaMsgParaCliente(TipoMensagem.carrega_jogo_olheiro,
                                      CarregaJogoOlheiro(self.posicaoJogadorDaVez,

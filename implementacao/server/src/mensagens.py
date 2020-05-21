@@ -94,9 +94,11 @@ class CartaObjetivo(object):
 
 
 class EntrouNoJogo(object):
-    def __init__(self, usuario, posicao):
+    def __init__(self, usuario, posicao, total_territorios, total_cartas_territorio):
         self.usuario = usuario
         self.posicao = posicao
+        self.total_territorios = total_territorios
+        self.total_cartas_territorio = total_cartas_territorio
 
 
 class SaiuDoJogo(object):
