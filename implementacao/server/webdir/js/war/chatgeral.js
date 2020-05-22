@@ -4,11 +4,22 @@ jogos.war = jogos.war || {};
 jogos.war.ChatGeral = function (area) {
     this.util = new jogos.war.Util();
 
-    this.escreve = function (texto, indiceCor) {
-        texto = this.util.substituiURLPorHTMLLinks(texto);
+    this.escreve = function (params, indiceCor) {
+        let texto;
+        if (indiceCor === -1) {
+            texto = "<i><b>Servidor:</b> " + msg + "</i>";
+        } else {
+            texto = "<b>" + params.usuario + "</b> diz:<br/>" + params.texto;
+        }
 
-        if (indiceCor == -1) texto = texto.fontcolor("#494949"); // Servidor.
-        else texto = texto.fontcolor("#453122");
+        texto = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, texto);
+
+        if (indiceCor === -1) {
+            texto = texto.fontcolor("#494949");
+        } // Servidor.
+        else {
+            texto = texto.fontcolor("#453122");
+        }
 
         area.append(texto + '<br/>');
         area.scrollTop(
@@ -17,10 +28,7 @@ jogos.war.ChatGeral = function (area) {
     };
 
     this.servidorDiz = function (msg) {
-        var texto = '<i><b>Servidor:</b> ';
-        texto += msg;
-        texto += "</i>";
-        this.escreve(texto, -1);
+        this.escreve({usuario: 'Servidor', texto: msg}, -1);
     };
 
     this.limpa = function () {
@@ -28,7 +36,7 @@ jogos.war.ChatGeral = function (area) {
     };
 
     this.boasVindas = function () {
-        texto = '<b>Seja bem-vindo ao servidor principal!</b>';
+        let texto = '<b>Seja bem-vindo ao servidor principal!</b>';
         texto = texto.fontcolor("#453122");
         area.append(texto + '<br/>');
         area.scrollTop(
@@ -37,12 +45,12 @@ jogos.war.ChatGeral = function (area) {
     };
 
     this.usuarioConectou = function (jogador) {
-        msg = jogador + ' acabou de entrar.';
+        const msg = jogador + ' acabou de entrar.';
         this.servidorDiz(msg);
     };
 
     this.usuarioDesconectou = function (jogador) {
-        msg = jogador + ' saiu.';
+        const msg = jogador + ' saiu.';
         this.servidorDiz(msg);
     };
 };

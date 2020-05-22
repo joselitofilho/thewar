@@ -2,12 +2,10 @@ var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
 jogos.war.ComponenteAcaoTurno = function () {
-    var ehOJogadorDaVez = false;
-    var jogadorDaVez = '';
-
-    var quantidadeDeTropasAtacante = {};
-
-    var obrigatorio = false;
+    this.ehOJogadorDaVez = false;
+    this.jogadorDaVez = '';
+    this.quantidadeDeTropasAtacante = {};
+    this.obrigatorio = false;
 
     this.alteraTimelineJogadorDaVez = function (tipoAcao, jogadorDaVez) {
         $('#acoes_turno .timeline #turno1').attr('class', 'turno turno-padrao');
@@ -398,6 +396,18 @@ jogos.war.ComponenteAcaoTurno = function () {
         $('#btnAcao2').attr('class', '');
 
         if (ehOJogadorDaVez) {
+            if (tipoAcao === TipoAcaoTurno.distribuir_tropas_globais ||
+                tipoAcao === TipoAcaoTurno.distribuir_tropas_grupo_territorio ||
+                tipoAcao === TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+                this.exibeQuantidadeTropas();
+            } else {
+                this.escondeQuantidadeTropas();
+            }
+        } else {
+            this.escondeQuantidadeTropas();
+        }
+
+        if (ehOJogadorDaVez) {
             if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', '');
@@ -436,18 +446,6 @@ jogos.war.ComponenteAcaoTurno = function () {
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function () {
             if (ehOJogadorDaVez) finalizarTurno();
         });
-
-        if (ehOJogadorDaVez) {
-            if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais ||
-                tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio ||
-                tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
-                this.exibeQuantidadeTropas();
-            } else {
-                this.escondeQuantidadeTropas();
-            }
-        } else {
-            this.escondeQuantidadeTropas();
-        }
     };
 
     this.atualizaQuantidadeDeTropasAtacante = function () {

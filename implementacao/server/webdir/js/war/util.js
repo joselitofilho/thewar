@@ -14,6 +14,12 @@ jogos.war.Util = function () {
         return day + "/" + month + "/" + year + " " + hour + ":" + minute;
     };
 
+    this.substituiMarcacoes = function (listaUsuarios, usuarioQueEnviou, texto) {
+        texto = this.substituiURLPorHTMLLinks(texto);
+        texto = this.substituiComandos(listaUsuarios, usuarioQueEnviou, texto);
+        return texto;
+    };
+
     this.substituiURLPorHTMLLinks = function (texto) {
         var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var urls = texto.match(exp);
@@ -30,11 +36,16 @@ jogos.war.Util = function () {
     };
 
     this.temImagemNaURL = function (texto) {
-        if (/(jpg|gif|png)$/.test(texto)) {
-            return true;
-        }
+        return (/(jpg|gif|png)$/.test(texto));
+    };
 
-        return false;
+    this.substituiComandos = function (listaUsuarios, usuarioQueEnviou, texto) {
+        if (listaUsuarios[usuarioQueEnviou]) {
+            const level = ranking_levelByXp(listaUsuarios[usuarioQueEnviou].pontos);
+            const exp = /:rank/g;
+            texto = texto.replace(exp, "<div class='comando_rank insignia_size insignias_x40_nv" + level + "'></div>");
+        }
+        return texto;
     };
 };
 

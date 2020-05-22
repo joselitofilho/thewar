@@ -2,12 +2,23 @@ var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
 jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
-    _conteudoDaLista = $('#lista_usuarios .conteudo');
+    this.getLista = function() {
+        return this.lista;
+    };
+
+    this.getMapaLista = function() {
+        const mapa = {};
+        for (let i = 0; i < this.lista.length; ++i) {
+            mapa[this.lista[i].nome] = this.lista[i];
+        }
+        return mapa;
+    };
 
     this.preencheElementoHtml = function () {
-        _conteudoDaLista.html('');
+        const conteudoDaLista = $('#lista_usuarios .conteudo');
+        conteudoDaLista.html('');
         for (i = 0; i < this.lista.length; i++) {
-            conteudo = "<div class='item'>";
+            let conteudo = "<div class='item'>";
             // conteudo += "<div class='foto imagem-soldado imagem-soldado-padrao'></div>";
             conteudo += "<div class='foto insignia_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div>";
             conteudo += "<div class='infos'>";
@@ -18,7 +29,7 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
             conteudo += "<div>";
             conteudo += "</div>"; // infos.
             conteudo += "</div>"; // item.
-            _conteudoDaLista.append(conteudo);
+            conteudoDaLista.append(conteudo);
         }
     };
 
