@@ -32,58 +32,31 @@
     height: 400px;
 }
 
-.carta_objetivo_1 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") 0px 0px no-repeat;
-}
+.carta_objetivo_1 { background: url("../../imagens/cartasObjetivo_sprite.png") 0px 0px no-repeat; }
 
-.carta_objetivo_2 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -300px 0px no-repeat;
-}
+.carta_objetivo_2 { background: url("../../imagens/cartasObjetivo_sprite.png") -300px 0px no-repeat; }
 
-.carta_objetivo_3 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -600px 0px no-repeat;
-}
+.carta_objetivo_3 { background: url("../../imagens/cartasObjetivo_sprite.png") -600px 0px no-repeat; }
 
-.carta_objetivo_4 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -900px 0px no-repeat;
-}
+.carta_objetivo_4 { background: url("../../imagens/cartasObjetivo_sprite.png") -900px 0px no-repeat; }
 
-.carta_objetivo_5 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -1200px 0px no-repeat;
-}
+.carta_objetivo_5 { background: url("../../imagens/cartasObjetivo_sprite.png") -1200px 0px no-repeat; }
 
-.carta_objetivo_6 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -1500px 0px no-repeat;
-}
+.carta_objetivo_6 { background: url("../../imagens/cartasObjetivo_sprite.png") -1500px 0px no-repeat; }
 
-.carta_objetivo_7 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -1800px 0px no-repeat;
-}
+/* 18 territórios com 2 tropas em cada. */
+/*.carta_objetivo_7 { background: url("../../imagens/cartasObjetivo_sprite.png") -1800px 0px no-repeat; }*/
 
-.carta_objetivo_8 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -2100px 0px no-repeat;
-}
+.carta_objetivo_7 { background: url("../../imagens/cartasObjetivo_sprite.png") -2100px 0px no-repeat; }
 
-.carta_objetivo_9 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -2400px 0px no-repeat;
-}
+.carta_objetivo_8 { background: url("../../imagens/cartasObjetivo_sprite.png") -2400px 0px no-repeat; }
 
-.carta_objetivo_10 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -2700px 0px no-repeat;
-}
+.carta_objetivo_9 { background: url("../../imagens/cartasObjetivo_sprite.png") -2700px 0px no-repeat; }
 
-.carta_objetivo_11 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -3000px 0px no-repeat;
-}
+.carta_objetivo_10 { background: url("../../imagens/cartasObjetivo_sprite.png") -3000px 0px no-repeat; }
 
-.carta_objetivo_12 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -3300px 0px no-repeat;
-}
+.carta_objetivo_11 { background: url("../../imagens/cartasObjetivo_sprite.png") -3300px 0px no-repeat; }
 
-.carta_objetivo_13 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -3600px 0px no-repeat;
-}
+.carta_objetivo_12 { background: url("../../imagens/cartasObjetivo_sprite.png") -3600px 0px no-repeat; }
 
-.carta_objetivo_14 {
-    background: url("../../imagens/cartasObjetivo_sprite.png") -3900px 0px no-repeat;
-}
+.carta_objetivo_13 { background: url("../../imagens/cartasObjetivo_sprite.png") -3900px 0px no-repeat; }
