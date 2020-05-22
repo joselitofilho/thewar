@@ -6,35 +6,29 @@ jogowar.war.ChatJogo = function (area) {
 
     this.escreve = function (params, indiceCor) {
         let textoUsuarioDiz;
-        if (indiceCor === -1) {
-            textoUsuarioDiz = "<i><b>Servidor:</b></i>";
-        } else {
+        if (indiceCor !== -1) {
             textoUsuarioDiz = "<b>" + params.usuario + "</b> diz:";
+            if (indiceCor === 0) {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#841D0F");
+            } else if (indiceCor === 1) {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#2621A8"); // #262165
+            } else if (indiceCor === 2) {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#436C4B");
+            } else if (indiceCor === 3) {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#282423");
+            } else if (indiceCor === 4) {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#F8F7E9");
+            } else if (indiceCor === 5) {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#DFE136");
+            } else {
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#453122");
+            }
+            this.escreveNoComponente(textoUsuarioDiz);
         }
-
-        if (indiceCor === -1) { // Servidor.
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#494949");
-        } else if (indiceCor === 0) {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#841D0F");
-        } else if (indiceCor === 1) {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#2621A8"); // #262165
-        } else if (indiceCor === 2) {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#436C4B");
-        } else if (indiceCor === 3) {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#282423");
-        } else if (indiceCor === 4) {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#F8F7E9");
-        } else if (indiceCor === 5) {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#DFE136");
-        } else {
-            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#453122");
-        }
-
-        this.escreveNoComponente(textoUsuarioDiz);
 
         let textoMsg = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, params.texto);
         if (indiceCor === -1) { // Servidor.
-            textoMsg = "<i>" + textoMsg + "</i>";
+            textoMsg = "<i><b>Servidor:</b>&nbsp;" + textoMsg + "</i>";
             textoMsg = textoMsg.fontcolor("#494949");
         } else {
             textoMsg = textoMsg.fontcolor("#453122");
@@ -124,7 +118,7 @@ jogowar.war.ChatJogo = function (area) {
         if (olheiro) {
             texto = jogador + ' não está mais assistindo a partida.';
         } else {
-            texto = jogador + ' saiu do jogo.';
+            texto = jogador + ' saiu da sala.';
         }
         this.escreve({usuario: 'Servidor', texto: texto}, -1);
     };

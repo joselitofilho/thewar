@@ -7,7 +7,7 @@ jogos.war.ChatGeral = function (area) {
     this.escreve = function (params, indiceCor) {
         let texto;
         if (indiceCor === -1) {
-            texto = "<i><b>Servidor:</b> " + msg + "</i>";
+            texto = "<i><b>Servidor:</b>&nbsp;" + params.texto + "</i>";
         } else {
             texto = "<b>" + params.usuario + "</b> diz:<br/>" + params.texto;
         }
