@@ -1,13 +1,12 @@
 #quantidade_tropas {
     position: absolute;
     padding: 4px;
-    top: 149px;
+    top: 91px;
     left: 50%;
-    margin-left: -26px;
+    margin-left: 60px;
     width: 119px;
     max-width: 420px;
     height: 42px;
-    z-index: 999;
     color: #FFD1AC;
     border-radius: .75em;
     -webkit-filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, .3));

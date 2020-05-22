@@ -274,6 +274,7 @@ function appwar_abrePainelCartasTerritorios() {
 }
 
 function appwar_fechaPainelCartasTerritorios() {
+    $('#acoes_turno').css('z-index', '999');
     $('#painel_cartas_territorios').css('visibility', 'hidden');
     $('#pct_fundo').css('visibility', 'hidden');
     if (_turno.tipoAcao == TipoAcaoTurno.trocar_cartas) {
@@ -525,8 +526,7 @@ function appwar_recarregarPagina() {
 function appwar_processaMsg_msg_chat_geral(msgParams) {
     if (!_jogadorEstaEmJogo) this.tocarSom(this, 'mensagem.mp3');
 
-    var texto = "<b>" + msgParams.usuario + "</b> diz:<br/>" + msgParams.texto;
-    _chatGeral.escreve(texto);
+    _chatGeral.escreve(msgParams);
 }
 
 function iniciarControleDeAudio() {

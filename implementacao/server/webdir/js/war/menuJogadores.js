@@ -61,8 +61,8 @@ jogos.war.MenuJogadores = function () {
             }
 
             $("#jogador" + (infos.posicao + 1)).html(infos.usuario);
-            $("#menu_jogador" + infos.posicao + "_info_cartas").html(infos.total_territorios);
-            $("#menu_jogador" + infos.posicao + "_info_territorios").html(infos.total_cartas_territorio);
+            $("#menu_jogador" + infos.posicao + "_info_territorios").html(infos.total_territorios);
+            $("#menu_jogador" + infos.posicao + "_info_cartas").html(infos.total_cartas_territorio);
 
             $("#jogador" + (infos.posicao + 1)).removeClass("text_through");
             if (!infos.esta_na_sala) {

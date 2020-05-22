@@ -28,3 +28,7 @@
 #cg_mensagens object {
     max-width: 265px;
 }
+
+.comando_rank {
+    display: inline-block;
+}

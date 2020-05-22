@@ -4,25 +4,53 @@ jogowar.war = jogowar.war || {};
 jogowar.war.ChatJogo = function (area) {
     this.util = new jogos.war.Util();
 
-    this.escreveColorido = function (texto, indiceCor) {
-        if (indiceCor == -1) texto = texto.fontcolor("#494949"); // Servidor.
-        else if (indiceCor == 0) texto = texto.fontcolor("#841D0F");
-        else if (indiceCor == 1) texto = texto.fontcolor("#2621A8"); // #262165
-        else if (indiceCor == 2) texto = texto.fontcolor("#436C4B");
-        else if (indiceCor == 3) texto = texto.fontcolor("#282423");
-        else if (indiceCor == 4) texto = texto.fontcolor("#F8F7E9");
-        else if (indiceCor == 5) texto = texto.fontcolor("#DFE136");
-        else texto = texto.fontcolor("#453122");
+    this.escreve = function (params, indiceCor) {
+        let textoUsuarioDiz;
+        if (indiceCor === -1) {
+            textoUsuarioDiz = "<i><b>Servidor:</b></i>";
+        } else {
+            textoUsuarioDiz = "<b>" + params.usuario + "</b> diz:";
+        }
 
-        this.escreve(texto);
+        if (indiceCor === -1) { // Servidor.
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#494949");
+        } else if (indiceCor === 0) {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#841D0F");
+        } else if (indiceCor === 1) {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#2621A8"); // #262165
+        } else if (indiceCor === 2) {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#436C4B");
+        } else if (indiceCor === 3) {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#282423");
+        } else if (indiceCor === 4) {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#F8F7E9");
+        } else if (indiceCor === 5) {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#DFE136");
+        } else {
+            textoUsuarioDiz = textoUsuarioDiz.fontcolor("#453122");
+        }
+
+        this.escreveNoComponente(textoUsuarioDiz);
+
+        let textoMsg = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, params.texto);
+        if (indiceCor === -1) { // Servidor.
+            textoMsg = "<i>" + textoMsg + "</i>";
+            textoMsg = textoMsg.fontcolor("#494949");
+        } else {
+            textoMsg = textoMsg.fontcolor("#453122");
+        }
+        this.escreveNoComponente(textoMsg);
     };
 
-    this.escreve = function (texto) {
-        texto = this.util.substituiURLPorHTMLLinks(texto);
+    this.escreveNoComponente = function (texto) {
         area.append(texto + '</br>');
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
+    };
+
+    this.escreveNoLog = function (texto) {
+        console.log('[SALA]', texto);
     };
 
     this.limpa = function () {
@@ -37,7 +65,7 @@ jogowar.war.ChatJogo = function (area) {
         else
             texto += quantidade + ' exército';
         texto += ' no território ' + territorio + '.</i>';
-        //this.escreve(texto);
+        this.escreveNoLog(texto);
     };
 
     this.ataque = function (jogadorAtaque, territoriosDoAtaque,
@@ -62,7 +90,7 @@ jogowar.war.ChatJogo = function (area) {
                 territoriosDoAtaqueTexto;
         }
         texto += '.';
-        //this.escreve(texto);
+        this.escreveNoLog(texto);
     };
 
     this.moveu = function (jogador, doTerritorio, paraOTerritorio, quantidade) {
@@ -72,26 +100,32 @@ jogowar.war.ChatJogo = function (area) {
         else texto += ' exército';
         texto += ' do território ' + doTerritorio;
         texto += ' para o território ' + paraOTerritorio + '.';
-        //this.escreve(texto);
+        this.escreveNoLog(texto);
     };
 
     this.conquistouTerritorio = function (jogador, territorio) {
         var texto = 'Servidor: ';
         texto += jogador + ' conquistou o território ' + territorio + '.';
-        //this.escreve(texto);
+        this.escreveNoLog(texto);
     };
 
     this.entrouNoJogo = function (jogador, olheiro) {
-        var texto = '<i><b>Servidor</b>: ';
-        if (olheiro) texto += jogador + ' está assintindo a partida.';
-        else texto += jogador + ' voltou para o jogo.</i>';
-        this.escreveColorido(texto, -1);
+        let texto;
+        if (olheiro) {
+            texto = jogador + ' está assintindo a partida.';
+        } else {
+            texto = jogador + ' voltou para o jogo.';
+        }
+        this.escreve({usuario: 'Servidor', texto: texto}, -1);
     };
 
     this.saiuDoJogo = function (jogador, olheiro) {
-        var texto = '<i><b>Servidor</b>: ';
-        if (olheiro) texto += jogador + ' não está mais assistindo a partida.';
-        else texto += jogador + ' saiu do jogo.</i>';
-        this.escreveColorido(texto, -1);
+        let texto;
+        if (olheiro) {
+            texto = jogador + ' não está mais assistindo a partida.';
+        } else {
+            texto = jogador + ' saiu do jogo.';
+        }
+        this.escreve({usuario: 'Servidor', texto: texto}, -1);
     };
 };

@@ -435,7 +435,7 @@ function processarMsg_turno(msgParams) {
     var tempoTotal = Number(msgParams.tempoRestante);
     jogo_iniciaBarraDeProgresso(tempoTotal);
 
-    jogo_alteraInfoTurno(msgParams.tipoAcao, msgParams);
+    jogo_alteraInfoTurno(msgParams);
 
     if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         processarMsg_turno_distribuir_tropas_globais(msgParams);
@@ -461,9 +461,11 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
 
-    for (i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
-        var territorioDosJogadores = msgParams.territoriosDosJogadores[i];
-        _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+    if (msgParams.territoriosDosJogadores) {
+        for (let i = 0; i < msgParams.territoriosDosJogadores.length; i++) {
+            const territorioDosJogadores = msgParams.territoriosDosJogadores[i];
+            _territorios.atualizaTerritorios(territorioDosJogadores.territorios, territorioDosJogadores.posicao);
+        }
     }
 
     _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropas);
@@ -523,27 +525,25 @@ function processarMsg_turno_jogo_terminou(msgParams) {
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
     this.tocarSom(this, 'mensagem.mp3');
-
-    var posicao = msgParams.jogador.posicao;
-    var textoUsuario = "<b>" + msgParams.jogador.usuario + "</b> diz: ";
-    _chatJogo.escreveColorido(textoUsuario, posicao);
-    _chatJogo.escreveColorido(msgParams.texto, 999);
+    _chatJogo.escreve({usuario: msgParams.jogador.usuario, texto: msgParams.texto}, msgParams.jogador.posicao);
 }
 
 /* Informações dos turnos */
-function jogo_alteraInfoTurno(tipoAcao, msgParams) {
+function jogo_alteraInfoTurno(msgParams) {
+    const tipoAcao = msgParams.tipoAcao;
+
     $('#it_sub_titulo').css('visibility', 'hidden');
     $('#acoes_turno .info #extra').css('visibility', 'hidden');
 
     var posicaoJogador = Number(msgParams.vezDoJogador.posicao) + 1;
     var ehOJogadorDaVez = msgParams.vezDoJogador.posicao == _posicaoJogador;
 
-    _componenteAcaoTurno.alteraTimelineJogadorDaVez(msgParams.tipoAcao, posicaoJogador);
-    _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, msgParams.tipoAcao);
+    _componenteAcaoTurno.alteraTimelineJogadorDaVez(tipoAcao, posicaoJogador);
+    _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, tipoAcao);
 
-    if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+    if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
         _componenteAcaoTurno.turnoDistribuirTopasGlobais(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+    } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         var strGrupoTerritorio = msgParams.grupoTerritorio;
         if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
         else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
@@ -552,14 +552,14 @@ function jogo_alteraInfoTurno(tipoAcao, msgParams) {
             msgParams.vezDoJogador.usuario,
             msgParams.quantidadeDeTropas,
             strGrupoTerritorio);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.trocar_cartas) {
+    } else if (tipoAcao == TipoAcaoTurno.trocar_cartas) {
         _componenteAcaoTurno.turnoTrocarCartas(ehOJogadorDaVez,
             msgParams.vezDoJogador.usuario, msgParams.obrigatorio);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+    } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
         _componenteAcaoTurno.turnoDistribuirTopasPorTroca(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
+    } else if (tipoAcao == TipoAcaoTurno.atacar) {
         _componenteAcaoTurno.turnoAtacar(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
+    } else if (tipoAcao == TipoAcaoTurno.mover) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
