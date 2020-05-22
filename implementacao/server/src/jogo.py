@@ -112,7 +112,7 @@ class Jogo(object):
         return listaTerritoriosPorJogador
 
     def faseI_DefinirObjetivos(self):
-        objetivos = range(0, 14)
+        objetivos = range(0, 13)
         random.shuffle(objetivos)
         random.shuffle(objetivos)
         random.shuffle(objetivos)

@@ -4,34 +4,24 @@ from territorio import *
 
 class FabricaObjetivo(object):
     def cria(self, codigo):
-        if codigo == 0:
-            return Objetivo01()
-        elif codigo == 1:
-            return Objetivo02()
-        elif codigo == 2:
-            return Objetivo03()
-        elif codigo == 3:
-            return Objetivo04()
-        elif codigo == 4:
-            return Objetivo05()
-        elif codigo == 5:
-            return Objetivo06()
-        elif codigo == 6:
-            return Objetivo07()
-        elif codigo == 7:
-            return Objetivo08()
-        elif codigo == 8:
-            return Objetivo09()
-        elif codigo == 9:
-            return Objetivo10()
-        elif codigo == 10:
-            return Objetivo11()
-        elif codigo == 11:
-            return Objetivo12()
-        elif codigo == 12:
-            return Objetivo13()
-        elif codigo == 13:
-            return Objetivo14()
+        mapaObjetivos = {
+            0: Objetivo01(),
+            1: Objetivo02(),
+            2: Objetivo03(),
+            3: Objetivo04(),
+            4: Objetivo05(),
+            5: Objetivo06(),
+            # 6: Objetivo07(), // 18 territores com 2 tropas em cada.
+            6: Objetivo08(),
+            7: Objetivo09(),
+            8: Objetivo10(),
+            9: Objetivo11(),
+            10: Objetivo12(),
+            11: Objetivo13(),
+            12: Objetivo14(),
+        }
+
+        return mapaObjetivos[codigo]
 
 
 class Objetivo(object):
