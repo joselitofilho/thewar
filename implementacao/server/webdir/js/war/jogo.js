@@ -525,7 +525,12 @@ function processarMsg_turno_jogo_terminou(msgParams) {
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
     this.tocarSom(this, 'mensagem.mp3');
-    _chatJogo.escreve({usuario: msgParams.jogador.usuario, texto: msgParams.texto}, msgParams.jogador.posicao);
+    console.log('ZEEEE', msgParams);
+    let indiceCor = msgParams.jogador.posicao;
+    if (indiceCor === -1) {
+        indiceCor = 999;
+    }
+    _chatJogo.escreve({usuario: msgParams.jogador.usuario, texto: msgParams.texto}, indiceCor);
 }
 
 /* Informações dos turnos */
