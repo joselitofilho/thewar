@@ -69,7 +69,7 @@ function jogo_jogaDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
             _animarDadosReferencia = setInterval(animarDados, 50);
             setTimeout(function () {
                 pararAnimacaoDosDados(msgParams);
-            }, 2000);
+            }, 1000);
         }
     } catch (ex) {
         console.log("Error in fnTimer:\n" + ex);
@@ -306,7 +306,7 @@ function processarMsg_atacar(msgParams) {
         var me = this;
         setTimeout(function () {
             me.jogo_iniciaAnimacaoBatalha(msgParams);
-        }, 1500);
+        }, 750);
     } else jogo_iniciaAnimacaoBatalha(msgParams);
 }
 
