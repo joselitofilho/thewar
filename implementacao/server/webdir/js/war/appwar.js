@@ -140,7 +140,7 @@ function posAberturaSocket(valor) {
 }
 
 function posRecebimentoMensagemServidor(valor) {
-    // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
+    console.log('[DEBUG]', 'Recebeu MSG ' + valor);
     var jsonMensagem = JSON.parse(valor);
     if (jsonMensagem.tipo == TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);

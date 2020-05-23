@@ -81,6 +81,7 @@
     <link href="css/label_tropas.css?ver=1.1" rel="stylesheet">
     <link href="css/cores.css?ver=1.1" rel="stylesheet">
     <link href="css/listaUsuariosLobby.css?ver=1.1" rel="stylesheet">
+    <link href="css/listaLogJogo.css?ver=1.1" rel="stylesheet">
     <link href="css/sala.css?ver=1.1" rel="stylesheet">
     <link href="css/acoesTurno.css?ver=1.1" rel="stylesheet">
     <link href="css/insignias_x40.css?ver=1.1" rel="stylesheet">
@@ -417,15 +418,20 @@
     <div id="lado_direito_jogo">
         <div id="chat_do_jogo">
             <div class="titulo"></div>
-            <div id="cj_mensagens"></div>
+            <div id="cj_mensagens">
+                <!-- NOTE: Conteúdo gerada dinamicamente. -->
+            </div>
             <input class="form-control" id="ct_texto"
                    onkeypress="return ct_texto_onkeypress(event);"
                    placeholder="Digite sua mensagem aqui."
                    type="text"/>
         </div>
 
-        <div class="jogadores">
+        <div id="logs_do_jogo">
             <div class="titulo"><p class="titulo_text">LOG DA PARTIDA</p></div>
+            <div id="lj_mensagens">
+                <!-- NOTE: Conteúdo gerada dinamicamente. -->
+            </div>
         </div>
 
     </div><!-- div: lado_direito_jogo -->
