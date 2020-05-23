@@ -101,7 +101,23 @@
     width: 280px;
     height: 16px;
     margin-left: 4px;
-    background: url('../imagens/jogo/titulo-jogadores.png') no-repeat;
+    background: url('../imagens/jogo/titulo-log-partida.png') no-repeat;
+    text-align: center;
+}
+
+#lado_direito_jogo .titulo_text {
+    font-size: 10px;
+    font-family: "wartorn";
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #d9cec1 10%, #876850 80%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
 #btnFinalizarTurno {
