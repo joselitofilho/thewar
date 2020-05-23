@@ -2,6 +2,18 @@ var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
 jogos.war.Util = function () {
+    const _comandos = {
+        lista: ["rank", "bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "joker1"],
+        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_size insignias_x40_nv{level}'></div>"},
+        bial1: {regex: /:bial1/g, html: "<img src='../imagens/memes/bial1.jpeg'></img>"},
+        bial2: {regex: /:bial2/g, html: "<img src='../imagens/memes/bial2.jpeg'></img>"},
+        bial3: {regex: /:bial3/g, html: "<img src='../imagens/memes/bial3.jpeg'></img>"},
+        bial4: {regex: /:bial4/g, html: "<img src='../imagens/memes/bial4.jpeg'></img>"},
+        capitao1: {regex: /:capitao1/g, html: "<img src='../imagens/memes/capitao1.jpeg'></img>"},
+        capitao2: {regex: /:capitao2/g, html: "<img src='../imagens/memes/capitao2.jpeg'></img>"},
+        joker1: {regex: /:joker1/g, html: "<img src='../imagens/memes/joker1.jpeg'></img>"}
+    };
+
     this.dataAtualFormatada = function () {
         var date = new Date();
         var year = date.getFullYear();
@@ -15,6 +27,9 @@ jogos.war.Util = function () {
     };
 
     this.substituiMarcacoes = function (listaUsuarios, usuarioQueEnviou, texto) {
+        if (texto.includes(":comandos")) {
+            return "Memes disponíveis --> " + ":" + Array.from(_comandos.lista).join(', :');
+        }
         texto = this.substituiURLPorHTMLLinks(texto);
         texto = this.substituiComandos(listaUsuarios, usuarioQueEnviou, texto);
         return texto;
@@ -41,9 +56,22 @@ jogos.war.Util = function () {
 
     this.substituiComandos = function (listaUsuarios, usuarioQueEnviou, texto) {
         if (listaUsuarios[usuarioQueEnviou]) {
+            const cmd = _comandos["rank"];
             const level = ranking_levelByXp(listaUsuarios[usuarioQueEnviou].pontos);
-            const exp = /:rank/g;
-            texto = texto.replace(exp, "<div class='comando_rank insignia_size insignias_x40_nv" + level + "'></div>");
+            const elemento = cmd.html.replace("{level}", level);
+            texto = texto.replace(cmd.regex, elemento);
+        }
+        for (let i = 1; i <= 4; ++i) {
+            const cmd = _comandos["bial" + i];
+            texto = texto.replace(cmd.regex, cmd.html);
+        }
+        for (let i = 1; i <= 2; ++i) {
+            const cmd = _comandos["capitao" + i];
+            texto = texto.replace(cmd.regex, cmd.html);
+        }
+        for (let i = 1; i <= 1; ++i) {
+            const cmd = _comandos["joker" + i];
+            texto = texto.replace(cmd.regex, cmd.html);
         }
         return texto;
     };

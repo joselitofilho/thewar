@@ -26,11 +26,12 @@ jogowar.war.ChatJogo = function (area) {
             this.escreveNoComponente(textoUsuarioDiz);
         }
 
-        let textoMsg = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, params.texto);
+        let textoMsg = params.texto;
         if (indiceCor === -1) { // Servidor.
             textoMsg = "<i><b>Servidor:</b>&nbsp;" + textoMsg + "</i>";
             textoMsg = textoMsg.fontcolor("#494949");
         } else {
+            textoMsg = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, params.texto);
             textoMsg = textoMsg.fontcolor("#453122");
         }
         this.escreveNoComponente(textoMsg);
