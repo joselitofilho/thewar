@@ -527,7 +527,6 @@ function processarMsg_turno_jogo_terminou(msgParams) {
 
 function jogo_processaMsg_msg_chat_jogo(msgParams) {
     this.tocarSom(this, 'mensagem.mp3');
-    console.log('ZEEEE', msgParams);
     let indiceCor = msgParams.jogador.posicao;
     if (indiceCor === -1) {
         indiceCor = 999;
