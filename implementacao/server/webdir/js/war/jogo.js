@@ -1,4 +1,4 @@
-var _chatJogo = new jogowar.war.ChatJogo($('#cj_mensagens'));
+var _chatJogo = new jogowar.war.ChatJogo($('#cj_mensagens'), $('#lj_mensagens'));
 var _sliderMoverTropas = new jogos.war.Slider($('#slider-mover-tropas'));
 var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
 var _menuJogadores = new jogos.war.MenuJogadores();

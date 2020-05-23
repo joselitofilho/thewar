@@ -1,7 +1,7 @@
 var jogowar = jogowar || {};
 jogowar.war = jogowar.war || {};
 
-jogowar.war.ChatJogo = function (area) {
+jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
     this.util = new jogos.war.Util();
 
     this.escreve = function (params, indiceCor) {
@@ -38,28 +38,33 @@ jogowar.war.ChatJogo = function (area) {
     };
 
     this.escreveNoComponente = function (texto) {
-        area.append(texto + '</br>');
-        area.scrollTop(
-            area[0].scrollHeight - area.height()
+        chatAreaJogadores.append(texto + '</br>');
+        chatAreaJogadores.scrollTop(
+            chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height() + 250 /*Tamanho das imagens dentro do chat*/
         );
     };
 
     this.escreveNoLog = function (texto) {
         console.log('[SALA]', texto);
+        chatAreaLogs.append(texto + '</br>');
+        chatAreaLogs.scrollTop(
+            chatAreaLogs[0].scrollHeight - chatAreaLogs.height()
+        );
     };
 
     this.limpa = function () {
-        area.text('');
+        chatAreaJogadores.text('');
     };
 
     this.colocaTropa = function (usuario, territorio, quantidade) {
-        var texto = '<i>Servidor: ' +
+        var texto = '' +
             usuario + ' colocou ';
         if (quantidade > 1)
             texto += quantidade + ' exércitos';
         else
             texto += quantidade + ' exército';
-        texto += ' no território ' + territorio + '.</i>';
+        texto += ' no território ' + territorio
+        texto += '.';
         this.escreveNoLog(texto);
     };
 
@@ -72,7 +77,7 @@ jogowar.war.ChatJogo = function (area) {
         if (territoriosDoAtaque.length > 1)
             territoriosDoAtaqueTexto += ' e ' + territoriosDoAtaque[territoriosDoAtaque.length - 1].codigo;
 
-        var texto = 'Servidor: ' +
+        var texto = '' +
             jogadorAtaque + ' atacou ' +
             jogadorDefesa +
             ' no território ' +
@@ -89,18 +94,20 @@ jogowar.war.ChatJogo = function (area) {
     };
 
     this.moveu = function (jogador, doTerritorio, paraOTerritorio, quantidade) {
-        var texto = 'Servidor: ';
+        var texto = '';
         texto += jogador + ' moveu ' + quantidade;
         if (quantidade > 1) texto += ' exércitos';
         else texto += ' exército';
         texto += ' do território ' + doTerritorio;
-        texto += ' para o território ' + paraOTerritorio + '.';
+        texto += ' para o território ' + paraOTerritorio
+        texto += '.';
         this.escreveNoLog(texto);
     };
 
     this.conquistouTerritorio = function (jogador, territorio) {
-        var texto = 'Servidor: ';
-        texto += jogador + ' conquistou o território ' + territorio + '.';
+        var texto = '';
+        texto += jogador + ' conquistou o território ' + territorio;
+        texto += '.';
         this.escreveNoLog(texto);
     };
 
