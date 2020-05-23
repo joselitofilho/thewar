@@ -9,10 +9,9 @@ jogos.war.ChatGeral = function (area) {
         if (indiceCor === -1) {
             texto = "<i><b>Servidor:</b>&nbsp;" + params.texto + "</i>";
         } else {
-            texto = "<b>" + params.usuario + "</b> diz:<br/>" + params.texto;
+            texto = "<b>" + params.usuario + "</b> diz:<br/>";
+            texto += this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, params.texto);
         }
-
-        texto = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, texto);
 
         if (indiceCor === -1) {
             texto = texto.fontcolor("#494949");
