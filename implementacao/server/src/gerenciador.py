@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import json
+import os
 import traceback
 
 from badges import *
@@ -203,13 +203,11 @@ class GerenciadorPrincipal(object):
 
         # TODO: Implementar mecanismo de cache.
         infoUsuario = {"nome": usuario}
-        ranking = PontuacaoDB().ranking()
+        ranking = self.ranking()
         for r in ranking['ranking']:
             if r.nome == usuario:
                 infoUsuario = r
                 break
-        badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
-        ranking['badges'] = Badges().ler_csv(badges_path)
 
         if infoUsuario:
             self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(infoUsuario))
@@ -299,6 +297,12 @@ class GerenciadorPrincipal(object):
             self.salas[idSala] = gerenciadorSala
             self.usuarioPorSala[usuario] = idSala
 
+    def ranking(self):
+        ranking = PontuacaoDB().ranking()
+        badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
+        ranking['badges'] = Badges().ler_csv(badges_path)
+        return ranking
+
     def fechaSala(self, idSala):
         idSala = str(idSala)
         print
@@ -327,6 +331,8 @@ class GerenciadorPrincipal(object):
 
         self.fechaSala(idJogo)
 
+        self.enviaMsgParaTodos(TipoMensagem.ranking, self.ranking())
+
     def enviaMsgLobbyParaCliente(self, cliente):
         # Envia a lista de salas para o cliente.
         infoSalas = []
@@ -340,8 +346,8 @@ class GerenciadorPrincipal(object):
 
         # TODO: Implementar mecanismo de cache.
         infoUsuarios = []
-        ranking = PontuacaoDB().ranking()['ranking']
-        for r in ranking:
+        ranking = self.ranking()
+        for r in ranking['ranking']:
             if r.nome in self.jogadores.values():
                 infoUsuarios.append(r)
         self.enviaMsgParaCliente(TipoMensagem.lobby,
