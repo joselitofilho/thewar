@@ -5,6 +5,7 @@ var _menuJogadores = new jogos.war.MenuJogadores();
 
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
+    _chatJogo.boasVindas();
 
     _jogadorEstaEmJogo = true;
 
@@ -94,7 +95,7 @@ function jogo_iniciaAnimacaoBatalha(msgParams) {
     for (i = 0; i < territoriosDoAtaque.length; i++) {
         codigoTerritorios.push(territoriosDoAtaque[i].codigo);
     }
-    if (_posicaoJogador != _posicaoJogadorDaVez) {
+    if (_posicaoJogador !== _posicaoJogadorDaVez) {
         _territorios.pintarGruposTerritorios();
         _territorios.focaNosTerritorios(codigoTerritorios);
     }
@@ -139,14 +140,14 @@ function jogo_efetuaAtaque(msgParams) {
             labelTerritorioAtaque.perdeuTropas(diferencaDeQuantidade);
         labelTerritorioAtaque.alteraQuantiadeDeTropas("" + territoriosDoAtaque[i].quantidadeDeTropas);
 
-        if (territoriosDoAtaque[i].quantidadeDeTropas == 1) temTerritorioInvalido = true;
+        if (territoriosDoAtaque[i].quantidadeDeTropas === 1) temTerritorioInvalido = true;
         if (territoriosDoAtaque[i].quantidadeDeTropas > 1) {
             fazSentidoMoverAposConquistar = true;
             quantidadeDeTropasDosTerritoriosDoAtaque += territoriosDoAtaque[i].quantidadeDeTropas - 1;
         }
     }
 
-    if (_posicaoJogador == _posicaoJogadorDaVez) {
+    if (_posicaoJogador === _posicaoJogadorDaVez) {
         _componenteAcaoTurno.exibeBtn1Atacar();
         _jaPodeAtacar = true;
     }
@@ -171,16 +172,16 @@ function jogo_efetuaAtaque(msgParams) {
 
     // Computando ações após conquista de territorio. 
     if (msgParams.conquistouTerritorio) {
+        this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random() * 6) + 1) + '.wav');
+
         _chatJogo.conquistouTerritorio(
             msgParams.jogadorAtaque.usuario,
             msgParams.territorioDaDefesa.codigo);
 
-        this.tocarSom(this, 'conquistar_' + (Math.floor(Math.random() * 6) + 1) + '.wav');
-
         setTimeout(function () {
             _componenteAcaoTurno.turnoAtacarConquistouTerritorio(
                 msgParams.jogadorAtaque.usuario,
-                msgParams.jogadorAtaque.usuario == _usuario,
+                msgParams.jogadorAtaque.usuario === _usuario,
                 msgParams.territorioDaDefesa.codigo);
         }, 1000);
 
@@ -194,7 +195,7 @@ function jogo_efetuaAtaque(msgParams) {
             _turno["tipoAcao"] = TipoAcaoTurno.mover_apos_conquistar_territorio;
             _territorioConquistado = msgParams.territorioDaDefesa.codigo;
 
-            if (_posicaoJogador == _posicaoJogadorDaVez) {
+            if (_posicaoJogador === _posicaoJogadorDaVez) {
                 if (quantidadeDeTropasDosTerritoriosDoAtaque > 2) {
                     quantidadeDeTropasDosTerritoriosDoAtaque = 2;
                 }
@@ -279,11 +280,11 @@ function processarMsg_carta_objetivo(msgParams) {
 }
 
 function processarMsg_colocar_tropa(msgParams) {
-    _chatJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
-
     this.tocarSom(this, 'colocarTropa.wav');
 
-    if (msgParams.jogador != _usuario) {
+    _chatJogo.colocaTropa(msgParams.jogador, msgParams.territorio.codigo, msgParams.quantidade);
+
+    if (msgParams.jogador !== _usuario) {
         _territorios.pintarGruposTerritorios();
         _territorios.focaNosTerritorios([msgParams.territorio.codigo]);
     }
@@ -292,15 +293,15 @@ function processarMsg_colocar_tropa(msgParams) {
 
     _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropasRestante);
 
-    if ((msgParams.quantidadeDeTropasRestante == 0) &&
-        (msgParams.jogador == _usuario)) {
+    if ((msgParams.quantidadeDeTropasRestante === 0) &&
+        (msgParams.jogador === _usuario)) {
         finalizarTurno();
     }
 }
 
 function processarMsg_atacar(msgParams) {
     _componenteAcaoTurno.escondeBtn1Atacar();
-    if (msgParams.jogadorDefesa.usuario == _usuario) {
+    if (msgParams.jogadorDefesa.usuario === _usuario) {
         this.tocarSom(this, "ohno.mp3");
 
         var me = this;
@@ -311,12 +312,12 @@ function processarMsg_atacar(msgParams) {
 }
 
 function processarMsg_mover(msgParams) {
+    this.tocarSom(this, 'positivo_' + (Math.floor(Math.random() * 4) + 1) + '.wav');
+
     _chatJogo.moveu(msgParams.jogador,
         msgParams.doTerritorioObj.codigo,
         msgParams.paraOTerritorioObj.codigo,
         msgParams.quantidade);
-
-    this.tocarSom(this, 'positivo_' + (Math.floor(Math.random() * 4) + 1) + '.wav');
 
     var doTerritorio = msgParams.doTerritorioObj;
     _labelTerritorios[doTerritorio.codigo].alteraQuantiadeDeTropas("" + doTerritorio.quantidadeDeTropas);
@@ -324,15 +325,15 @@ function processarMsg_mover(msgParams) {
     var paraOTerritorio = msgParams.paraOTerritorioObj;
     _labelTerritorios[paraOTerritorio.codigo].alteraQuantiadeDeTropas("" + paraOTerritorio.quantidadeDeTropas);
 
-    if (_posicaoJogador != _posicaoJogadorDaVez) {
+    if (_posicaoJogador !== _posicaoJogadorDaVez) {
         _territorios.pintarGruposTerritorios();
         _territorios.focaNosTerritorios([doTerritorio.codigo, paraOTerritorio.codigo]);
     }
 
     _jaPodeMover = true;
 
-    if (_posicaoJogador == _posicaoJogadorDaVez &&
-        _turno.tipoAcao != TipoAcaoTurno.mover_apos_conquistar_territorio) {
+    if (_posicaoJogador === _posicaoJogadorDaVez &&
+        _turno.tipoAcao !== TipoAcaoTurno.mover_apos_conquistar_territorio) {
         _territorios.pintarGruposTerritorios();
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(_posicaoJogadorDaVez);
         _territorioAlvoMover = null;
@@ -354,16 +355,16 @@ function processarMsg_entrou_no_jogo(msgParams) {
     var usuario = infos.usuario;
 
     if (posicaoJogador > -1) {
-        if (usuario != _usuario) _chatJogo.entrouNoJogo(usuario, (posicaoJogador == 7));
+        if (usuario !== _usuario) _chatJogo.entrouNoJogo(usuario, (posicaoJogador === 7));
 
-        if (_posicaoJogador == -1) {
+        if (_posicaoJogador === -1) {
             $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
             $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
             _posicaoJogador = posicaoJogador;
             appwar_alterarTituloDaPagina(usuario);
 
             // Olheiro.
-            if (posicaoJogador == 7) {
+            if (posicaoJogador === 7) {
                 jNotify(
                     "Este jogo já está em andamento. Você poderá apenas assistí-lo.",
                     {
@@ -380,7 +381,7 @@ function processarMsg_entrou_no_jogo(msgParams) {
                     }
                 );
             }
-        } else if (posicaoJogador == 7) {
+        } else if (posicaoJogador === 7) {
             jNotify(
                 usuario + " está assistindo a partida.",
                 {
@@ -408,9 +409,9 @@ function processarMsg_saiu_do_jogo(msgParams) {
     const posicaoJogador = Number(msgParams.posicao);
     $("#jogador" + (posicaoJogador + 1)).addClass("text_through");
 
-    _chatJogo.saiuDoJogo(msgParams.usuario, (posicaoJogador == 7));
+    _chatJogo.saiuDoJogo(msgParams.usuario, (posicaoJogador === 7));
 
-    if (msgParams.usuario == _usuario) {
+    if (msgParams.usuario === _usuario) {
         _territorios.limpa();
         appwar_limparVariaveis();
     }
@@ -439,25 +440,27 @@ function processarMsg_turno(msgParams) {
 
     jogo_alteraInfoTurno(msgParams);
 
-    if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+    if (msgParams.tipoAcao === TipoAcaoTurno.distribuir_tropas_globais) {
+        _chatJogo.distrubuirTropasGlobais(msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
         processarMsg_turno_distribuir_tropas_globais(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+    } else if (msgParams.tipoAcao === TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.trocar_cartas) {
+    } else if (msgParams.tipoAcao === TipoAcaoTurno.trocar_cartas) {
         processarMsg_turno_trocar_cartas(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+    } else if (msgParams.tipoAcao === TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+        _chatJogo.trocouCartasTerritorio(msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
         processarMsg_turno_distribuir_tropas_globais(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.atacar) {
+    } else if (msgParams.tipoAcao === TipoAcaoTurno.atacar) {
         processarMsg_turno_atacar(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.mover) {
+    } else if (msgParams.tipoAcao === TipoAcaoTurno.mover) {
         processarMsg_turno_mover(msgParams);
-    } else if (msgParams.tipoAcao == TipoAcaoTurno.jogo_terminou) {
+    } else if (msgParams.tipoAcao === TipoAcaoTurno.jogo_terminou) {
         processarMsg_turno_jogo_terminou(msgParams);
     }
 }
 
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
-    if (_posicaoJogador == _posicaoJogadorDaVez) {
+    if (_posicaoJogador === _posicaoJogadorDaVez) {
         this.tocarSom(this, "buzina.mp3");
     } else {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
@@ -477,7 +480,7 @@ function processarMsg_turno_distribuir_tropas_globais(msgParams) {
 }
 
 function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
-    if (_posicaoJogador == _posicaoJogadorDaVez) {
+    if (_posicaoJogador === _posicaoJogadorDaVez) {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
 
@@ -485,14 +488,18 @@ function processarMsg_turno_distribuir_tropas_grupo_territorio(msgParams) {
 
     _territorios.pintarGruposTerritorios();
     _territorios.manterFocoNoGrupo(msgParams.grupoTerritorio);
+
+    _chatJogo.distrubuirTropasGrupoTerritorio(msgParams.vezDoJogador.usuario, msgParams.grupoTerritorio, msgParams.quantidadeDeTropas);
 }
 
 function processarMsg_turno_trocar_cartas(msgParams) {
     this.tocarSom(this, "turnoTrocarCarta.mp3");
 
-    if (msgParams.obrigatorio && (_posicaoJogador == msgParams.vezDoJogador.posicao)) {
+    if (msgParams.obrigatorio && (_posicaoJogador === msgParams.vezDoJogador.posicao)) {
         _componenteAcaoTurno.btnVerCartasClick(true);
     }
+
+    _chatJogo.verificandoTroca(msgParams.vezDoJogador.usuario);
 }
 
 function processarMsg_turno_atacar(msgParams) {
@@ -502,9 +509,11 @@ function processarMsg_turno_atacar(msgParams) {
     _territorioConquistado = null;
     _territorios.pintarGruposTerritorios();
 
-    if (_posicaoJogador == msgParams.vezDoJogador.posicao) {
+    if (_posicaoJogador === msgParams.vezDoJogador.posicao) {
         _territorios.escureceTodosOsTerritoriosDoJogador(msgParams.vezDoJogador.posicao);
     }
+
+    _chatJogo.estaAtacando(msgParams.vezDoJogador.usuario);
 }
 
 function processarMsg_turno_mover(msgParams) {
@@ -513,15 +522,17 @@ function processarMsg_turno_mover(msgParams) {
 
     _territorios.pintarGruposTerritorios();
 
-    if (_posicaoJogador == msgParams.vezDoJogador.posicao) {
+    if (_posicaoJogador === msgParams.vezDoJogador.posicao) {
         _territorios.escureceTodosOsTerritoriosExcetoDoJogador(msgParams.vezDoJogador.posicao);
     }
+
+    _chatJogo.estaMovendo(msgParams.vezDoJogador.usuario);
 }
 
 function processarMsg_turno_jogo_terminou(msgParams) {
     this.tocarSom(this, 'venceuJogo.wav');
     var textoVencedor = msgParams.ganhador.usuario;
-    if (msgParams.ganhador.usuario == _usuario) textoVencedor = "Você";
+    if (msgParams.ganhador.usuario === _usuario) textoVencedor = "Você";
     _painelVitoria.abre(textoVencedor, msgParams.ganhador.pontos, msgParams.objetivo);
 }
 
@@ -542,30 +553,30 @@ function jogo_alteraInfoTurno(msgParams) {
     $('#acoes_turno .info #extra').css('visibility', 'hidden');
 
     var posicaoJogador = Number(msgParams.vezDoJogador.posicao) + 1;
-    var ehOJogadorDaVez = msgParams.vezDoJogador.posicao == _posicaoJogador;
+    var ehOJogadorDaVez = msgParams.vezDoJogador.posicao === _posicaoJogador;
 
     _componenteAcaoTurno.alteraTimelineJogadorDaVez(tipoAcao, posicaoJogador);
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, tipoAcao);
 
-    if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+    if (tipoAcao === TipoAcaoTurno.distribuir_tropas_globais) {
         _componenteAcaoTurno.turnoDistribuirTopasGlobais(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
-    } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+    } else if (tipoAcao === TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
         var strGrupoTerritorio = msgParams.grupoTerritorio;
-        if (strGrupoTerritorio == "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
-        else if (strGrupoTerritorio == "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
+        if (strGrupoTerritorio === "AmericaDoNorte") strGrupoTerritorio = "Am. do Norte";
+        else if (strGrupoTerritorio === "AmericaDoSul") strGrupoTerritorio = "Am. do Sul";
 
         _componenteAcaoTurno.turnoDistribuirTopasContinente(ehOJogadorDaVez,
             msgParams.vezDoJogador.usuario,
             msgParams.quantidadeDeTropas,
             strGrupoTerritorio);
-    } else if (tipoAcao == TipoAcaoTurno.trocar_cartas) {
+    } else if (tipoAcao === TipoAcaoTurno.trocar_cartas) {
         _componenteAcaoTurno.turnoTrocarCartas(ehOJogadorDaVez,
             msgParams.vezDoJogador.usuario, msgParams.obrigatorio);
-    } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+    } else if (tipoAcao === TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
         _componenteAcaoTurno.turnoDistribuirTopasPorTroca(ehOJogadorDaVez, msgParams.vezDoJogador.usuario, msgParams.quantidadeDeTropas);
-    } else if (tipoAcao == TipoAcaoTurno.atacar) {
+    } else if (tipoAcao === TipoAcaoTurno.atacar) {
         _componenteAcaoTurno.turnoAtacar(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
-    } else if (tipoAcao == TipoAcaoTurno.mover) {
+    } else if (tipoAcao === TipoAcaoTurno.mover) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
