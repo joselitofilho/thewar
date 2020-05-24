@@ -80,6 +80,10 @@ jogos.war.Sala = function () {
         return html;
     };
 
+    this.atualizaPontuacao = function(ranking) {
+        _listaUsuarios.atualizaPontuacao(ranking);
+    };
+
     this.adicionaElementoHtml = function (id) {
         var html = this.criaElementoHtml(id);
         $('#sala_content').append(html);

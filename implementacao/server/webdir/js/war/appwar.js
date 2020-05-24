@@ -192,6 +192,7 @@ function posRecebimentoMensagemServidor(valor) {
         jogo_processaMsg_jogador_destruido(jsonMensagem.params);
     } else if (jsonMensagem.tipo == TipoMensagem.ranking) {
         ranking_processaMsg(jsonMensagem.params);
+        _sala.atualizaPontuacao(_ranking);
     } else if (jsonMensagem.tipo == TipoMensagem.erro) {
         processarMsg_erro();
     }

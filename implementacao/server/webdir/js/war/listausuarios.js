@@ -2,11 +2,11 @@ var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
 jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
-    this.getLista = function() {
+    this.getLista = function () {
         return this.lista;
     };
 
-    this.getMapaLista = function() {
+    this.getMapaLista = function () {
         const mapa = {};
         for (let i = 0; i < this.lista.length; ++i) {
             mapa[this.lista[i].nome] = this.lista[i];
@@ -58,14 +58,34 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
     this.remove = function (usuario) {
         var pos = -1;
         for (var i = 0; i < this.lista.length; i++)
-            if (this.lista[i].nome == usuario) {
+            if (this.lista[i].nome === usuario) {
                 pos = i;
                 break;
             }
-        if (pos != -1) {
+        if (pos !== -1) {
             this.lista.splice(pos, 1);
         }
         this.ordenaLista("nome");
         this.preencheElementoHtml();
+    };
+
+    this.atualizaPontuacao = function (ranking) {
+        const mapaRanking = {};
+        for (let i = 0; i < ranking.length; ++i) {
+            mapaRanking[ranking[i].nome] = ranking[i];
+        }
+        let teveMudanca = false;
+        for (let i = 0; i < this.lista.length; ++i) {
+            const l = this.lista[i];
+            if (this.lista[i].posicaoNoRanking !== mapaRanking[l.nome].posicaoNoRanking ||
+                this.lista[i].pontos !== mapaRanking[l.nome].pontos) {
+                this.lista[i].posicaoNoRanking = mapaRanking[l.nome].posicaoNoRanking;
+                this.lista[i].pontos = mapaRanking[l.nome].pontos;
+                teveMudanca = true;
+            }
+        }
+        if (teveMudanca) {
+            this.preencheElementoHtml();
+        }
     };
 };

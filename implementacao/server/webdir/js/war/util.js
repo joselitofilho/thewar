@@ -35,7 +35,7 @@ jogos.war.Util = function () {
     };
 
     this.substituiMarcacoes = function (listaUsuarios, usuarioQueEnviou, texto) {
-        if (texto.includes(":comandos")) {
+        if (texto.includes(":comandos") || texto.includes(":memes")) {
             return "Memes disponíveis --> " + ":" + Array.from(_comandos.lista).join(', :');
         }
         texto = this.substituiURLPorHTMLLinks(texto);
