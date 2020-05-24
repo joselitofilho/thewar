@@ -46,9 +46,6 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
 
     this.escreveNoLog = function (texto) {
         chatAreaLogs.append(texto + '</br>');
-        chatAreaLogs.scrollTop(
-            chatAreaLogs[0].scrollHeight - chatAreaLogs.height()
-        );
     };
 
     this.limpa = function () {
