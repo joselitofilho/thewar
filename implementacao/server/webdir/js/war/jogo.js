@@ -71,7 +71,7 @@ function jogo_jogaDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
             _animarDadosReferencia = setInterval(animarDados, 50);
             setTimeout(function () {
                 pararAnimacaoDosDados(msgParams);
-            }, 1000);
+            }, 250);
         }
     } catch (ex) {
         console.log("Error in fnTimer:\n" + ex);
@@ -636,7 +636,8 @@ var _loopTempoRestante = null;
 var _timeoutTempoRestante = null;
 
 function jogo_iniciaBarraDeProgresso(tempoTotal) {
-    var minutosTotal = 2.0 * 60.0;
+    // TODO: minutosTotal também deveria vir do servidor.
+    var minutosTotal = 1.5 * 60.0;
 
     if (_loopTempoRestante != null || _timeoutTempoRestante != null) {
         clearInterval(_loopTempoRestante);
