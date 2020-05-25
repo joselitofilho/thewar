@@ -3,7 +3,7 @@ from tipoAcaoTurno import *
 
 
 class Turno(object):
-    TIMEOUT = (2 * 60) + 4
+    TIMEOUT = (1.5 * 60) + 4
 
     def __init__(self):
         self.numero = 1
