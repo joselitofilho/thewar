@@ -445,26 +445,27 @@ jogos.war.ComponenteAcaoTurno = function () {
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function () {
             if (ehOJogadorDaVez) {
-                if (tipoAcao === TipoAcaoTurno.atacar) {
-                    Swal.fire({
-                        title: 'Gostaria de encerrar o ataque?',
-                        text: "",
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonColor: '#453122',
-                        cancelButtonColor: '#888',
-                        confirmButtonText: 'Sim',
-                        cancelButtonText: 'Cancelar',
-                        timerProgressBar: true,
-                        timer: 5000,
-                    }).then((result) => {
-                        if (result.value) {
-                            finalizarTurno();
-                        }
-                    });
-                } else {
-                    finalizarTurno();
-                }
+                // if (tipoAcao === TipoAcaoTurno.atacar) {
+                //     Swal.fire({
+                //         title: 'Gostaria de encerrar o ataque?',
+                //         text: "",
+                //         icon: 'question',
+                //         showCancelButton: true,
+                //         confirmButtonColor: '#453122',
+                //         cancelButtonColor: '#888',
+                //         confirmButtonText: 'Sim',
+                //         cancelButtonText: 'Cancelar',
+                //         timerProgressBar: true,
+                //         timer: 5000,
+                //     }).then((result) => {
+                //         if (result.value) {
+                //             finalizarTurno();
+                //         }
+                //     });
+                // } else {
+                //     finalizarTurno();
+                // }
+                finalizarTurno();
             }
         });
     };
