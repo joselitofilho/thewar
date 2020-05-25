@@ -4,6 +4,10 @@ jogos.war = jogos.war || {};
 jogos.war.ChatGeral = function (area) {
     this.util = new jogos.war.Util();
 
+    this.handleQuestionAnswerCallback = function (texto) {
+        sala_enviaMsg(texto);
+    };
+
     this.escreve = function (params, indiceCor) {
         const mensagemServidor = (indiceCor === -1);
 

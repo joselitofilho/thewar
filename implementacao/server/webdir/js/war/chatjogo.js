@@ -4,6 +4,22 @@ jogowar.war = jogowar.war || {};
 jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
     this.util = new jogos.war.Util();
 
+    this.handleQuestionAnswerCallback = function (texto) {
+        jogo_enviaMsg(texto);
+    };
+
+    this.ativar = function () {
+        this.ativo = true;
+    };
+
+    this.desativar = function () {
+        this.ativo = false;
+    };
+
+    this.estaAtivo = function () {
+        return this.ativo || false;
+    };
+
     this.escreve = function (params, indiceCor) {
         let textoUsuarioDiz;
         if (indiceCor !== -1) {
@@ -65,12 +81,12 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
         );
     };
 
-    this.distrubuirTropasGlobais = function(jogador, quantidade) {
+    this.distrubuirTropasGlobais = function (jogador, quantidade) {
         const texto = jogador + ' está distribuindo ' + quantidade + ' exércitos pelo mundo.';
         this.escreveNoLog(texto);
     };
 
-    this.distrubuirTropasGrupoTerritorio = function(jogador, grupo, quantidade) {
+    this.distrubuirTropasGrupoTerritorio = function (jogador, grupo, quantidade) {
         const texto = jogador + ' está distribuindo ' + quantidade + ' exércitos no continente ' + grupo + '.';
         this.escreveNoLog(texto);
     };
@@ -128,22 +144,22 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
         this.escreveNoLog(texto);
     };
 
-    this.trocouCartasTerritorio = function(jogador, quantidade) {
+    this.trocouCartasTerritorio = function (jogador, quantidade) {
         const texto = jogador + ' trocou suas cartas territórios por ' + quantidade + ' exércitos.';
         this.escreveNoLog(texto);
     };
 
-    this.verificandoTroca = function(jogador) {
+    this.verificandoTroca = function (jogador) {
         const texto = jogador + ' está no turno troca de cartas.';
         this.escreveNoLog(texto);
     };
 
-    this.estaAtacando = function(jogador) {
+    this.estaAtacando = function (jogador) {
         const texto = jogador + ' está no turno atacar.';
         this.escreveNoLog(texto);
     };
 
-    this.estaMovendo = function(jogador) {
+    this.estaMovendo = function (jogador) {
         const texto = jogador + ' está no turno mover.';
         this.escreveNoLog(texto);
     };

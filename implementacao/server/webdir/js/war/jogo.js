@@ -6,6 +6,7 @@ var _menuJogadores = new jogos.war.MenuJogadores();
 function jogo_preparaElementosHtml() {
     _chatJogo.limpa();
     _chatJogo.boasVindas();
+    _chatJogo.ativar();
 
     _jogadorEstaEmJogo = true;
 
@@ -612,14 +613,17 @@ function jogo_aumentaQuantidadeDeTerritorioDoJogador(posicao) {
 
 /* Chat */
 function ct_texto_onkeypress(event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode === 13) {
         jogo_enviaMsgChatDoJogo();
     }
     return true;
 }
 
 function jogo_enviaMsgChatDoJogo() {
-    var texto = $('#ct_texto').val();
+    jogo_enviaMsg($('#ct_texto').val());
+}
+
+function jogo_enviaMsg(texto) {
     if (texto.length > 0) {
         $('#ct_texto').val('');
         msg = comunicacao_MsgChatJogo(texto);
@@ -739,6 +743,8 @@ function jogo_fechaPainelVitoria() {
 }
 
 function jogo_removeElementosHtml() {
+    _chatJogo.desativar();
+
     _componenteAcaoTurno.escondeBtn1Atacar();
     $('#dados .dado').each(function (i, elemento) {
         $(elemento).css('visibility', 'hidden');

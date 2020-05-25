@@ -80,7 +80,7 @@ jogos.war.Sala = function () {
         return html;
     };
 
-    this.atualizaPontuacao = function(ranking) {
+    this.atualizaPontuacao = function (ranking) {
         _listaUsuarios.atualizaPontuacao(ranking);
     };
 
@@ -261,17 +261,23 @@ function appwar_alteraPosicaoSala(sala, posicao) {
 
 /* Chat */
 function cg_texto_onkeypress(event) {
-    if (event.keyCode == 13) {
-        jogo_enviaMsgChatGeral();
+    if (event.keyCode === 13) {
+        sala_enviaMsgChatGeral();
     }
     return true;
 }
 
-function jogo_enviaMsgChatGeral() {
+function sala_enviaMsgChatGeral() {
     var texto = $('#cg_texto').val();
+    sala_enviaMsg(texto);
+}
+
+function sala_enviaMsg(texto) {
     if (texto.length > 0) {
-        $('#cg_texto').val('');
-        msg = comunicacao_MsgChatGeral(texto);
-        _libwebsocket.enviarObjJson(msg);
+        if (texto.length > 0) {
+            $('#cg_texto').val('');
+            msg = comunicacao_MsgChatGeral(texto);
+            _libwebsocket.enviarObjJson(msg);
+        }
     }
 }
