@@ -408,24 +408,24 @@ jogos.war.ComponenteAcaoTurno = function () {
         }
 
         if (ehOJogadorDaVez) {
-            if (tipoAcao == TipoAcaoTurno.distribuir_tropas_globais) {
+            if (tipoAcao === TipoAcaoTurno.distribuir_tropas_globais) {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', '');
-            } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
+            } else if (tipoAcao === TipoAcaoTurno.distribuir_tropas_grupo_territorio) {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', '');
-            } else if (tipoAcao == TipoAcaoTurno.trocar_cartas) {
+            } else if (tipoAcao === TipoAcaoTurno.trocar_cartas) {
                 $('#btnAcao1').css('visibility', 'visible');
                 $('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-ver-cartas');
                 $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
-            } else if (tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
+            } else if (tipoAcao === TipoAcaoTurno.distribuir_tropas_troca_de_cartas) {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', '');
-            } else if (tipoAcao == TipoAcaoTurno.atacar) {
+            } else if (tipoAcao === TipoAcaoTurno.atacar) {
                 //$('#btnAcao1').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-atacar');
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
-            } else if (tipoAcao == TipoAcaoTurno.mover) {
+            } else if (tipoAcao === TipoAcaoTurno.mover) {
                 $('#btnAcao1').attr('class', '');
                 $('#btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
             }
@@ -444,7 +444,28 @@ jogos.war.ComponenteAcaoTurno = function () {
 
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
         $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function () {
-            if (ehOJogadorDaVez) finalizarTurno();
+            if (ehOJogadorDaVez) {
+                if (tipoAcao === TipoAcaoTurno.atacar) {
+                    Swal.fire({
+                        title: 'Gostaria de encerrar o ataque?',
+                        text: "",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#453122',
+                        cancelButtonColor: '#888',
+                        confirmButtonText: 'Sim',
+                        cancelButtonText: 'Cancelar',
+                        timerProgressBar: true,
+                        timer: 5000,
+                    }).then((result) => {
+                        if (result.value) {
+                            finalizarTurno();
+                        }
+                    });
+                } else {
+                    finalizarTurno();
+                }
+            }
         });
     };
 
@@ -525,7 +546,9 @@ jogos.war.ComponenteAcaoTurno = function () {
             $('#acoes_turno #btnAcao2').attr('class', 'sprite-btn-acoes sprite-btn-acoes-turno-prosseguir');
             $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').unbind('click');
             $('#acoes_turno .sprite-btn-acoes-turno-prosseguir').click(function () {
-                if (ehOJogadorDaVez) finalizarTurno();
+                if (ehOJogadorDaVez) {
+                    finalizarTurno();
+                }
             });
         }
     };
