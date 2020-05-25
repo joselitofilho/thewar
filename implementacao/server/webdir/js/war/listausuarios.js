@@ -49,7 +49,7 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
 
     this.adiciona = function (info) {
         for (var i = 0; i < this.lista.length; i++)
-            if (this.lista[i].nome == info.nome) return;
+            if (this.lista[i].nome === info.nome) return;
         this.lista.push(info);
         this.ordenaLista("nome");
         this.preencheElementoHtml();
@@ -70,22 +70,24 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
     };
 
     this.atualizaPontuacao = function (ranking) {
-        const mapaRanking = {};
-        for (let i = 0; i < ranking.length; ++i) {
-            mapaRanking[ranking[i].nome] = ranking[i];
-        }
-        let teveMudanca = false;
-        for (let i = 0; i < this.lista.length; ++i) {
-            const l = this.lista[i];
-            if (this.lista[i].posicaoNoRanking !== mapaRanking[l.nome].posicaoNoRanking ||
-                this.lista[i].pontos !== mapaRanking[l.nome].pontos) {
-                this.lista[i].posicaoNoRanking = mapaRanking[l.nome].posicaoNoRanking;
-                this.lista[i].pontos = mapaRanking[l.nome].pontos;
-                teveMudanca = true;
+        if (this.lista) {
+            const mapaRanking = {};
+            for (let i = 0; i < ranking.length; ++i) {
+                mapaRanking[ranking[i].nome] = ranking[i];
             }
-        }
-        if (teveMudanca) {
-            this.preencheElementoHtml();
+            let teveMudanca = false;
+            for (let i = 0; i < this.lista.length; ++i) {
+                const l = this.lista[i];
+                if (this.lista[i].posicaoNoRanking !== mapaRanking[l.nome].posicaoNoRanking ||
+                    this.lista[i].pontos !== mapaRanking[l.nome].pontos) {
+                    this.lista[i].posicaoNoRanking = mapaRanking[l.nome].posicaoNoRanking;
+                    this.lista[i].pontos = mapaRanking[l.nome].pontos;
+                    teveMudanca = true;
+                }
+            }
+            if (teveMudanca) {
+                this.preencheElementoHtml();
+            }
         }
     };
 };

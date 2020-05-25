@@ -1,9 +1,19 @@
 var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
+function util_handleQuestionAnswer(pergunta, resposta) {
+    const texto = "Minha resposta é \"" + resposta + "\" para a pergunta \"" + pergunta + "\"";
+    if (_chatJogo && _chatJogo.estaAtivo()) {
+        _chatJogo.handleQuestionAnswerCallback(texto);
+    } else if (_chatGeral) {
+        _chatGeral.handleQuestionAnswerCallback(texto);
+    }
+}
+
 jogos.war.Util = function () {
+
     const _comandos = {
-        lista: ["bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "discord", "joker1", "rank", "whatsapp"],
+        lista: ["bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "discord", "joker1", "pergunta", "rank", "whatsapp"],
         bial1: {regex: /:bial1/g, html: "<img src='../imagens/memes/bial1.jpeg'/>"},
         bial2: {regex: /:bial2/g, html: "<img src='../imagens/memes/bial2.jpeg'/>"},
         bial3: {regex: /:bial3/g, html: "<img src='../imagens/memes/bial3.jpeg'/>"},
@@ -14,8 +24,22 @@ jogos.war.Util = function () {
             regex: /:discord/g,
             html: '<a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>'
         },
-        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_size insignias_x40_nv{level}'></div>"},
         joker1: {regex: /:joker1/g, html: "<img src='../imagens/memes/joker1.jpeg'/>"},
+        pergunta: {
+            // regex: /:pergunta/g,
+            regex: /:pergunta(\w+|\W+)*\?(\w+|\W+)*,(\w+|\W+)*/gm,
+            html:
+                '<div class="question_box">' +
+                '    <div class="question_text">' +
+                '        <p>{pergunta}</p>' +
+                '    </div>' +
+                '    <div class="question_options">' +
+                '        <button onClick="util_handleQuestionAnswer(\'{pergunta}\', \'{resposta_positiva}\')">{resposta_positiva}</button>' +
+                '        <button onClick="util_handleQuestionAnswer(\'{pergunta}\', \'{resposta_negativa}\')">{resposta_negativa}</button>' +
+                '    </div>' +
+                '</div>'
+        },
+        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_size insignias_x40_nv{level}'></div>"},
         whatsapp: {
             regex: /:whatsapp/g,
             html: '<a href=\"https://chat.whatsapp.com/DjRwmsDjKJUEUh9HLyFky2\" target=\"_blank\" rel=\"noopener noreferrer\"><img height=\"64px\" src=\"../../imagens/social/whatsapp.png\" /></a>'
@@ -35,8 +59,23 @@ jogos.war.Util = function () {
     };
 
     this.substituiMarcacoes = function (listaUsuarios, usuarioQueEnviou, texto) {
-        if (texto.includes(":comandos") || texto.includes(":memes")) {
+        if (texto.match(/:comandos/) || texto.match(/:memes/)) {
             return "Memes disponíveis --> " + ":" + Array.from(_comandos.lista).join(', :');
+        } else {
+            const cmdKey = "pergunta";
+            const cmd = _comandos[cmdKey];
+            const match = texto.match(cmd.regex);
+            if (match !== null) {
+                texto = match[0].trim();
+                const textoSplit = texto.split('?');
+                const pergunta = textoSplit[0].replace(':' + cmdKey, '').trim() + '?';
+                const opcoes = textoSplit[1].split(',');
+                texto = cmd.html
+                    .replace(/{pergunta}/g, pergunta)
+                    .replace(/{resposta_positiva}/g, opcoes[0].trim())
+                    .replace(/{resposta_negativa}/g, opcoes[1].trim());
+                return texto;
+            }
         }
         texto = this.substituiURLPorHTMLLinks(texto);
         texto = this.substituiComandos(listaUsuarios, usuarioQueEnviou, texto);
@@ -54,7 +93,6 @@ jogos.war.Util = function () {
                     texto = texto.replace(urls[i], "<a href='" + urls[i] + "' target='_blank'>" + urls[i] + "</a>");
             }
         }
-
         return texto;
     };
 

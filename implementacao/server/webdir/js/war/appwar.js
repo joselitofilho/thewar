@@ -142,58 +142,58 @@ function posAberturaSocket(valor) {
 function posRecebimentoMensagemServidor(valor) {
     // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
     var jsonMensagem = JSON.parse(valor);
-    if (jsonMensagem.tipo == TipoMensagem.registrar) {
+    if (jsonMensagem.tipo === TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.entrar) {
+    } else if (jsonMensagem.tipo === TipoMensagem.entrar) {
         processarMsg_entrar(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.lobby) {
+    } else if (jsonMensagem.tipo === TipoMensagem.lobby) {
         processarMsg_lobby(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.criar_sala) {
+    } else if (jsonMensagem.tipo === TipoMensagem.criar_sala) {
         processarMsg_criar_sala(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.info_sala) {
+    } else if (jsonMensagem.tipo === TipoMensagem.info_sala) {
         processarMsg_info_sala(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.fechar_sala) {
+    } else if (jsonMensagem.tipo === TipoMensagem.fechar_sala) {
         processarMsg_fechar_sala(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.altera_posicao_na_sala) {
+    } else if (jsonMensagem.tipo === TipoMensagem.altera_posicao_na_sala) {
         processarMsg_altera_posicao_na_sala(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.jogo_fase_I) {
+    } else if (jsonMensagem.tipo === TipoMensagem.jogo_fase_I) {
         processarMsg_jogo_fase_I(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.carta_objetivo) {
+    } else if (jsonMensagem.tipo === TipoMensagem.carta_objetivo) {
         processarMsg_carta_objetivo(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.colocar_tropa) {
+    } else if (jsonMensagem.tipo === TipoMensagem.colocar_tropa) {
         processarMsg_colocar_tropa(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.turno) {
+    } else if (jsonMensagem.tipo === TipoMensagem.turno) {
         processarMsg_turno(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.atacar) {
+    } else if (jsonMensagem.tipo === TipoMensagem.atacar) {
         processarMsg_atacar(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.mover) {
+    } else if (jsonMensagem.tipo === TipoMensagem.mover) {
         processarMsg_mover(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.cartas_territorios) {
+    } else if (jsonMensagem.tipo === TipoMensagem.cartas_territorios) {
         processarMsg_cartas_territorios(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios) {
+    } else if (jsonMensagem.tipo === TipoMensagem.colocar_tropa_na_troca_de_cartas_territorios) {
         processarMsg_colocar_tropa_na_troca_de_cartas_territorios(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.entrou_no_jogo) {
+    } else if (jsonMensagem.tipo === TipoMensagem.entrou_no_jogo) {
         processarMsg_entrou_no_jogo(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.saiu_do_jogo) {
+    } else if (jsonMensagem.tipo === TipoMensagem.saiu_do_jogo) {
         processarMsg_saiu_do_jogo(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.carrega_jogo) {
+    } else if (jsonMensagem.tipo === TipoMensagem.carrega_jogo) {
         processarMsg_carrega_jogo(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.carrega_jogo_olheiro) {
+    } else if (jsonMensagem.tipo === TipoMensagem.carrega_jogo_olheiro) {
         processarMsg_carrega_jogo_olheiro(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_jogo) {
+    } else if (jsonMensagem.tipo === TipoMensagem.msg_chat_jogo) {
         jogo_processaMsg_msg_chat_jogo(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.msg_chat_geral) {
+    } else if (jsonMensagem.tipo === TipoMensagem.msg_chat_geral) {
         appwar_processaMsg_msg_chat_geral(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.usuario_conectou) {
+    } else if (jsonMensagem.tipo === TipoMensagem.usuario_conectou) {
         appwar_processaMsg_usuario_conectou(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.usuario_desconectou) {
+    } else if (jsonMensagem.tipo === TipoMensagem.usuario_desconectou) {
         appwar_processaMsg_usuario_desconectou(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.jogador_destruido) {
+    } else if (jsonMensagem.tipo === TipoMensagem.jogador_destruido) {
         jogo_processaMsg_jogador_destruido(jsonMensagem.params);
-    } else if (jsonMensagem.tipo == TipoMensagem.ranking) {
+    } else if (jsonMensagem.tipo === TipoMensagem.ranking) {
         ranking_processaMsg(jsonMensagem.params);
         _sala.atualizaPontuacao(_ranking);
-    } else if (jsonMensagem.tipo == TipoMensagem.erro) {
+    } else if (jsonMensagem.tipo === TipoMensagem.erro) {
         processarMsg_erro();
     }
 }
@@ -617,7 +617,7 @@ function appwar_abrirRegras() {
 }
 
 function inputFormLogin_onkeypress(event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode === 13) {
         appwar_entrar();
     }
     return true;
