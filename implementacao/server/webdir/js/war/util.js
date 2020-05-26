@@ -17,12 +17,12 @@ jogos.war.Util = function () {
             "bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "discord", "funeral1", "funeral2", "funeral3",
             "joker1", "pergunta", "rank", "whatsapp"
         ],
-        bial1: {regex: /:bial1/g, html: "<img src='../imagens/memes/bial1.jpeg'/>"},
-        bial2: {regex: /:bial2/g, html: "<img src='../imagens/memes/bial2.jpeg'/>"},
-        bial3: {regex: /:bial3/g, html: "<img src='../imagens/memes/bial3.jpeg'/>"},
-        bial4: {regex: /:bial4/g, html: "<img src='../imagens/memes/bial4.jpeg'/>"},
-        capitao1: {regex: /:capitao1/g, html: "<img src='../imagens/memes/capitao1.jpeg'/>"},
-        capitao2: {regex: /:capitao2/g, html: "<img src='../imagens/memes/capitao2.jpeg'/>"},
+        bial1: {regex: /:bial1/g, html: "<img class='meme' src='../imagens/memes/bial1.jpeg'/>"},
+        bial2: {regex: /:bial2/g, html: "<img class='meme' src='../imagens/memes/bial2.jpeg'/>"},
+        bial3: {regex: /:bial3/g, html: "<img class='meme' src='../imagens/memes/bial3.jpeg'/>"},
+        bial4: {regex: /:bial4/g, html: "<img class='meme' src='../imagens/memes/bial4.jpeg'/>"},
+        capitao1: {regex: /:capitao1/g, html: "<img class='meme' src='../imagens/memes/capitao1.jpeg'/>"},
+        capitao2: {regex: /:capitao2/g, html: "<img class='meme' src='../imagens/memes/capitao2.jpeg'/>"},
         discord: {
             regex: /:discord/g,
             html: '<a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>'
@@ -30,7 +30,7 @@ jogos.war.Util = function () {
         funeral1: {
             regex: /:funeral1/g,
             html:
-                '<audio style="width:100%;" controls><source src="../../sons/funeral1.mp3" type="audio/mpeg">' +
+                '<audio class="meme meme_audio" controls><source src="../../sons/funeral1.mp3" type="audio/mpeg">' +
                 '    Your browser does not support the audio element.' +
                 '</audio>',
             sound: 'funeral1.mp3'
@@ -38,7 +38,7 @@ jogos.war.Util = function () {
         funeral2: {
             regex: /:funeral2/g,
             html:
-                '<audio style="width:100%;" controls><source src="../../sons/funeral2.mp3" type="audio/mpeg">' +
+                '<audio class="meme meme_audio" controls><source src="../../sons/funeral2.mp3" type="audio/mpeg">' +
                 '    Your browser does not support the audio element.' +
                 '</audio>',
             sound: 'funeral2.mp3'
@@ -46,14 +46,14 @@ jogos.war.Util = function () {
         funeral3: {
             regex: /:funeral3/g,
             html:
-                '<audio style="width:100%;" controls><source src="../../sons/funeral3.mp3" type="audio/mpeg">' +
+                '<audio class="meme meme_audio" controls><source src="../../sons/funeral3.mp3" type="audio/mpeg">' +
                 '    Your browser does not support the audio element.' +
-                '</audio>',
+                '</audio>' +
+                '<img class="meme" src="../imagens/memes/funeral3.gif"/>',
             sound: 'funeral3.mp3'
         },
-        joker1: {regex: /:joker1/g, html: "<img src='../imagens/memes/joker1.jpeg'/>"},
+        joker1: {regex: /:joker1/g, html: "<img class='meme' src='../imagens/memes/joker1.jpeg'/>"},
         pergunta: {
-            // regex: /:pergunta/g,
             regex: /:pergunta(\w+|\W+)*\?(\w+|\W+)*,(\w+|\W+)*/gm,
             html:
                 '<div class="question_box">' +
