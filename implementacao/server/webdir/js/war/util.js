@@ -13,7 +13,10 @@ function util_handleQuestionAnswer(pergunta, resposta) {
 jogos.war.Util = function () {
 
     const _comandos = {
-        lista: ["bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "discord", "joker1", "pergunta", "rank", "whatsapp"],
+        lista: [
+            "bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "discord", "funeral1", "funeral2", "funeral3",
+            "joker1", "pergunta", "rank", "whatsapp"
+        ],
         bial1: {regex: /:bial1/g, html: "<img src='../imagens/memes/bial1.jpeg'/>"},
         bial2: {regex: /:bial2/g, html: "<img src='../imagens/memes/bial2.jpeg'/>"},
         bial3: {regex: /:bial3/g, html: "<img src='../imagens/memes/bial3.jpeg'/>"},
@@ -23,6 +26,30 @@ jogos.war.Util = function () {
         discord: {
             regex: /:discord/g,
             html: '<a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>'
+        },
+        funeral1: {
+            regex: /:funeral1/g,
+            html:
+                '<audio controls><source src="../../sons/funeral1.mp3" type="audio/mpeg">' +
+                '    Your browser does not support the audio element.' +
+                '</audio>',
+            sound: 'funeral1.mp3'
+        },
+        funeral2: {
+            regex: /:funeral2/g,
+            html:
+                '<audio controls><source src="../../sons/funeral2.mp3" type="audio/mpeg">' +
+                '    Your browser does not support the audio element.' +
+                '</audio>',
+            sound: 'funeral2.mp3'
+        },
+        funeral3: {
+            regex: /:funeral3/g,
+            html:
+                '<audio controls><source src="../../sons/funeral3.mp3" type="audio/mpeg">' +
+                '    Your browser does not support the audio element.' +
+                '</audio>',
+            sound: 'funeral3.mp3'
         },
         joker1: {regex: /:joker1/g, html: "<img src='../imagens/memes/joker1.jpeg'/>"},
         pergunta: {
@@ -111,6 +138,13 @@ jogos.war.Util = function () {
                     texto = texto.replace(cmd.regex, elemento);
                 }
             } else {
+                if (cmdKey === "funeral1" ||
+                    cmdKey === "funeral2" ||
+                    cmdKey === "funeral3") {
+                    if (texto.match(cmd.regex)) {
+                        tocarSom(this, cmd.sound);
+                    }
+                }
                 texto = texto.replace(cmd.regex, cmd.html);
             }
         }
