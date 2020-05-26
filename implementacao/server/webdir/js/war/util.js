@@ -30,7 +30,7 @@ jogos.war.Util = function () {
         funeral1: {
             regex: /:funeral1/g,
             html:
-                '<audio controls><source src="../../sons/funeral1.mp3" type="audio/mpeg">' +
+                '<audio style="width:100%;" controls><source src="../../sons/funeral1.mp3" type="audio/mpeg">' +
                 '    Your browser does not support the audio element.' +
                 '</audio>',
             sound: 'funeral1.mp3'
@@ -38,7 +38,7 @@ jogos.war.Util = function () {
         funeral2: {
             regex: /:funeral2/g,
             html:
-                '<audio controls><source src="../../sons/funeral2.mp3" type="audio/mpeg">' +
+                '<audio style="width:100%;" controls><source src="../../sons/funeral2.mp3" type="audio/mpeg">' +
                 '    Your browser does not support the audio element.' +
                 '</audio>',
             sound: 'funeral2.mp3'
@@ -46,7 +46,7 @@ jogos.war.Util = function () {
         funeral3: {
             regex: /:funeral3/g,
             html:
-                '<audio controls><source src="../../sons/funeral3.mp3" type="audio/mpeg">' +
+                '<audio style="width:100%;" controls><source src="../../sons/funeral3.mp3" type="audio/mpeg">' +
                 '    Your browser does not support the audio element.' +
                 '</audio>',
             sound: 'funeral3.mp3'
