@@ -133,11 +133,10 @@
             badge.images = "<div class='insignia_size insignias_x40_nv" + badge.level + "'></div>";
             badges.push(badge);
         }
-        console.log(badges);
         $('#ranking-badges').dynatable({
             dataset: {
-                perPageDefault: 2,
-                perPageOptions: [2, 5, 10],
+                perPageDefault: 10,
+                perPageOptions: [],
                 records: badges.reverse()
             }
         });
