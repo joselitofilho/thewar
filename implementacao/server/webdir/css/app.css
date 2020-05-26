@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "wartorn";
+    src: url("../fonts/wartorn/WARTORN_.TTF");
+}
+
 * {
     margin: 0;
     padding: 0;

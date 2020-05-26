@@ -18,33 +18,81 @@
     <!-- Bagdes -->
     <link href="css/insignias_x40.css?ver=1.3" rel="stylesheet">
     <!---->
+
+    <!-- Donations -->
+    <link href="css/ranking.css?ver=1.3" rel="stylesheet">
+    <!---->
 </head>
 <body>
-<div class="container">
-    <table class="table table-striped table-bordered" id="ranking-table">
-        <thead>
-        <th class="dynatable-head insignia_size" data-dynatable-column="level"></th>
-        <th class="dynatable-head" data-dynatable-column="posicaoNoRanking" data-dynatable-sorts="posicaoNoRanking">Posi&ccedil;&atilde;o</th>
-        <th class="dynatable-head" data-dynatable-column="nome">Nome</th>
-        <th class="dynatable-head" data-dynatable-column="pontos">Pontos</th>
-        <th class="dynatable-head" data-dynatable-column="quantidadeDePartidas">Partidas</th>
-        <th class="dynatable-head" data-dynatable-column="quantidadeDeVitorias">Vit&oacute;rias</th>
-        <th class="dynatable-head" data-dynatable-column="quantidadeDestruido">Destru&iacute;do</th>
-        <th class="dynatable-head" data-dynatable-column="eficiencia">Efici&ecirc;ncia %</th>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div id="donations">
+    <h1>Donations</h1>
+    <p class="center">Nós te ajudamos a se divertir e desopilar um pouco?<br> Você pode nos ajudar com o desenvolvimento
+        do jogo fazendo uma doação:</p>
+    <div class="donation-options">
+        <div>
+            PayPal
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                <input type="hidden" name="cmd" value="_donations"/>
+                <input type="hidden" name="business" value="FCTSRPCEPSUUG"/>
+                <input type="hidden" name="item_name" value="PayPal"/>
+                <input type="hidden" name="currency_code" value="BRL"/>
+                <input class="donation-ico" type="image" src="imagens/donation_paypal.png" border="0" name="submit"
+                       title="PayPal - The safer, easier way to pay online!"
+                       alt="Faça doações com o botão do PayPal"/>
+                <img alt="" border="0" src="https://www.paypal.com/pt_BR/i/scr/pixel.gif" width="1" height="1"/>
+            </form>
+        </div>
+        <div>
+            PagSeguro
+            <form action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post" target="_blank">
+                <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+                <input name="receiverEmail" type="hidden" value="joselitofilhoo@gmail.com"/>
+                <input name="currency" type="hidden" value="BRL"/>
+                <input class="donation-ico" alt="Pague com PagSeguro - é rápido, grátis e seguro!" name="submit"
+                       src="imagens/donation_pagseguro.png" type="image"/>
+            </form>
+        </div>
+        <div>
+            NuBank
+            <div><img class="donation-ico" src="imagens/donation_nubank.png"/></div>
+        </div>
+    </div>
 </div>
-<div class="container">
-    <table class="table table-striped table-bordered" id="ranking-badges">
-        <thead>
-        <th class="dynatable-head insignia_size" data-dynatable-column="images"></th>
-        <th class="dynatable-head" data-dynatable-column="xp">Pontos</th>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+
+<div id="ranking">
+    <h1>Ranking</h1>
+    <div class="container">
+        <table class="table table-bordered" id="ranking-players">
+            <thead>
+            <th class="dynatable-head insignia_size" data-dynatable-column="level"></th>
+            <th class="dynatable-head" data-dynatable-column="posicaoNoRanking" data-dynatable-sorts="posicaoNoRanking">
+                Posi&ccedil;&atilde;o
+            </th>
+            <th class="dynatable-head" data-dynatable-column="nome">Nome</th>
+            <th class="dynatable-head" data-dynatable-column="pontos">Pontos</th>
+            <th class="dynatable-head" data-dynatable-column="quantidadeDePartidas">Partidas</th>
+            <th class="dynatable-head" data-dynatable-column="quantidadeDeVitorias">Vit&oacute;rias</th>
+            <th class="dynatable-head" data-dynatable-column="quantidadeDestruido">Destru&iacute;do</th>
+            <th class="dynatable-head" data-dynatable-column="eficiencia">Efici&ecirc;ncia %</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="levels">
+    <h1>Levels</h1>
+    <div class="container">
+        <table class="table table-bordered" id="ranking-badges">
+            <thead>
+            <th class="dynatable-head insignia_size" data-dynatable-column="images">level</th>
+            <th class="dynatable-head" data-dynatable-column="xp">Pontos</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="js/websocket/websocket.js?ver=1.3" type="text/javascript"></script>
@@ -72,7 +120,7 @@
             }
             rank.push(r);
         }
-        $('#ranking-table').dynatable({
+        $('#ranking-players').dynatable({
             dataset: {
                 records: rank
             }
@@ -85,8 +133,11 @@
             badge.images = "<div class='insignia_size insignias_x40_nv" + badge.level + "'></div>";
             badges.push(badge);
         }
+        console.log(badges);
         $('#ranking-badges').dynatable({
             dataset: {
+                perPageDefault: 2,
+                perPageOptions: [2, 5, 10],
                 records: badges.reverse()
             }
         });

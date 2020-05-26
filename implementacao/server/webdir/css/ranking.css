@@ -1,0 +1,124 @@
+@font-face {
+    font-family: "wartorn";
+    src: url("../fonts/wartorn/WARTORN_.TTF");
+}
+
+html, body {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    color: #eee;
+    background-color: #876850;
+    font-family: 'PT Sans', sans-serif;
+}
+
+h1 {
+    position: relative;
+    /*margin-top: 3em;*/
+    padding-top: 3em;
+    font-size: 1.75em;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "wartorn";
+}
+
+h1::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 43.75rem;
+    height: .25em;
+    margin-top: -2em;
+    margin-left: -21.875rem;
+    border-radius: .125em;
+    background-color: #eee;
+}
+
+p {
+    max-width: 51.625rem;
+    margin: 1.875em auto;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.5625em;
+    text-align: left;
+}
+
+p.center {
+    text-align: center;
+}
+
+.donation-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: space-evenly;
+    max-width: 43.75rem;
+    margin: auto;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.donation-ico {
+    margin-top: 8px;
+    height: 150px;
+}
+
+/* dynatable */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+    color: #453122;
+}
+
+th {
+    background-color: #453122;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+}
+
+td, th {
+    padding: 1em 1.5em;
+    text-align: left;
+}
+
+tbody th {
+    background-color: #2ea879;
+}
+
+tbody tr:nth-child(n) {
+    background-color: #fff;
+    transition: all .125s ease-in-out;
+}
+
+tbody tr:hover {
+    background-color: rgba(69, 49, 34, .3)
+}
+
+.dynatable-active-page {
+    background: #453122;
+    border-radius: 5px;
+    color: #fff;
+}
+
+thead a {
+    color: #fff;
+    text-decoration: none;
+}
+
+thead a:hover, thead a:focus {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.dynatable-pagination-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.dynatable-pagination-links a:hover {
+    color: #999;
+    text-decoration: none;
+}
