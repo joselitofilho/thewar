@@ -31,7 +31,7 @@ jogowar.mapa.Mapa = function () {
             var styledMap = new google.maps.StyledMapType(estilo, {name: "GuerraMap"});
             _mapaGoogle.mapTypes.set('guerra_map_style', styledMap);
             _mapaGoogle.setMapTypeId('guerra_map_style');
-            $("#mapa.gm-style").parent().css({"background-color": "rgba(0,0,0,0)"});
+            $(".gm-style").parent().css({"background-color": "rgba(0,0,0,0)"});
         }
     };
 };
