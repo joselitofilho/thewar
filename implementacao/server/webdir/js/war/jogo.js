@@ -25,6 +25,8 @@ function jogo_preparaElementosHtml() {
     $('#dados .dado').each(function (i, elemento) {
         $(elemento).css('visibility', 'visible');
     });
+
+    $(".gm-style").parent().css({"background-color": "rgba(0,0,0,0)"});
 }
 
 function animarDados() {
