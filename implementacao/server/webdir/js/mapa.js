@@ -20,6 +20,7 @@ jogowar.mapa.Mapa = function () {
             streetViewControl: false,
             scrollwheel: false,
             overviewMapControl: false,
+            fullscreenControl: false,
         };
 
         _mapaGoogle = new google.maps.Map(mapaDiv, mapOptions);
