@@ -14,8 +14,14 @@ jogos.war.Util = function () {
 
     const _comandos = {
         lista: [
-            "bial1", "bial2", "bial3", "bial4", "capitao1", "capitao2", "discord", "funeral1", "funeral2", "funeral3",
-            "joker1", "pergunta", "rank", "whatsapp"
+            "bial1", "bial2", "bial3", "bial4",
+            "capitao1", "capitao2",
+            "discord",
+            "funeral1", "funeral2", "funeral3",
+            "joker1",
+            "pergunta",
+            "rank",
+            "whatsapp"
         ],
         bial1: {regex: /:bial1/g, html: "<img class='meme' src='../imagens/memes/bial1.jpeg'/>"},
         bial2: {regex: /:bial2/g, html: "<img class='meme' src='../imagens/memes/bial2.jpeg'/>"},
