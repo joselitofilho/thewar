@@ -2,10 +2,6 @@ var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
 jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
-    this.getLista = function () {
-        return this.lista;
-    };
-
     this.getMapaLista = function () {
         const mapa = {};
         for (let i = 0; i < this.lista.length; ++i) {
@@ -18,16 +14,20 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
         const conteudoDaLista = $('#lista_usuarios .conteudo');
         conteudoDaLista.html('');
         for (i = 0; i < this.lista.length; i++) {
+            const doador = this.lista[i].doador || false;
             let conteudo = "<div class='item'>";
             // conteudo += "<div class='foto imagem-soldado imagem-soldado-padrao'></div>";
             conteudo += "<div class='foto insignia_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div>";
             conteudo += "<div class='infos'>";
-            conteudo += "<div class='nome'>" + this.lista[i].nome + "</div>";
-            conteudo += "<div>";
-            conteudo += "<div class='trofeu'></div>";
-            conteudo += "<div class='pontos'>" + this.lista[i].posicaoNoRanking + "º | " + this.lista[i].pontos + " pts</div>";
-            conteudo += "<div>";
+            conteudo += "    <div class='nome'>" + this.lista[i].nome + "</div>";
+            conteudo += "    <div>";
+            conteudo += "        <div class='trofeu'></div>";
+            conteudo += "        <div class='pontos'>" + this.lista[i].posicaoNoRanking + "º | " + this.lista[i].pontos + " pts</div>";
+            conteudo += "    </div>";
             conteudo += "</div>"; // infos.
+            if (doador) {
+                conteudo += "<div class='box_crown sala_menu_jogadores_box_crown'></div>";
+            }
             conteudo += "</div>"; // item.
             conteudoDaLista.append(conteudo);
         }
@@ -82,6 +82,30 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
                     this.lista[i].pontos !== mapaRanking[l.nome].pontos) {
                     this.lista[i].posicaoNoRanking = mapaRanking[l.nome].posicaoNoRanking;
                     this.lista[i].pontos = mapaRanking[l.nome].pontos;
+                    teveMudanca = true;
+                }
+            }
+            if (teveMudanca) {
+                this.preencheElementoHtml();
+            }
+        }
+    };
+
+    this.atualizaDoadores = function (doadores) {
+        this.doadores = doadores;
+        const nomeDoadores = doadores.map(d => d['nome']);
+        if (this.lista) {
+            let teveMudanca = false;
+            for (let i = 0; i < this.lista.length; ++i) {
+                const l = this.lista[i];
+                const doador = nomeDoadores.includes(l.nome);
+                if (this.lista[i].doador) {
+                    if (this.lista[i].doador !== doador) {
+                        this.lista[i].doador = doador;
+                        teveMudanca = true;
+                    }
+                } else {
+                    this.lista[i].doador = doador;
                     teveMudanca = true;
                 }
             }

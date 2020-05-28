@@ -2,6 +2,7 @@ var TipoMensagem = {
     entrar: "Entrar",
     registrar: "Registrar",
     ranking: "Ranking",
+    doacoes: "Doacoes",
     lobby: "Lobby",
     erro: "Erro",
     criar_sala: "CriarSala",

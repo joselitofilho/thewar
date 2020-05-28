@@ -7,6 +7,7 @@ if [ ! -f "$FILE" ]; then
 	python ../database_update1.py
 	python ../database_update2.py
 	python ../database_update2.1.py
+	python ../database_update3.py
 fi
 echo "Starting server..."
 python ./src/server.py &

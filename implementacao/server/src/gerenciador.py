@@ -10,6 +10,7 @@ from jogador import *
 from jogo import *
 from mensagens import *
 from pontuacaodb import *
+from doacaodb import *
 from sala import *
 
 
@@ -212,6 +213,9 @@ class GerenciadorPrincipal(object):
         if infoUsuario:
             self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(infoUsuario))
             self.enviaMsgParaTodos(TipoMensagem.ranking, ranking)
+
+        doacoes = DoacaoDB().doadores()
+        self.enviaMsgParaTodos(TipoMensagem.doacoes, doacoes)
 
     def clienteDesconectou(self, cliente):
         usuario = self.jogadores[cliente]
