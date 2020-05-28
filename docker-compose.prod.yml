@@ -7,7 +7,8 @@ services:
       - ./implementacao/server:/app
     ports:
       - "8080:8080"
-    command: /app/start_game.sh
+    command: /app/start_game.prod.sh
+
   nginx:
     image: nginx:1.17.9
     volumes:
