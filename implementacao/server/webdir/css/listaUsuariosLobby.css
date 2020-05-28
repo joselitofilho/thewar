@@ -25,33 +25,46 @@
 }
 
 #lista_usuarios .conteudo .item {
-    margin-left: 2px;
+    display: flex;
+    flex-direction: row;
+    margin: 2px auto;
     width: 351px;
+    max-width: 351px;
     height: 59px;
     background: url('../imagens/lobby/bg-item-lista-jogadores.png') no-repeat;
 }
 
+#lista_usuarios .conteudo .item .grow1 {
+    flex-grow: 1;
+    width: 40px;
+    height: 40px;
+}
+
+#lista_usuarios .conteudo .item .grow6 {
+    flex-grow: 6;
+}
+
 #lista_usuarios .conteudo .item .foto {
     position: relative;
+    margin: 0 auto;
     top: 5px;
-    left: 5px;
     width: 42px;
     height: 42px;
 }
 
 #lista_usuarios .conteudo .item .infos {
-    position: relative;
-    top: -35px;
-    left: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 50px;
 }
 
 #lista_usuarios .conteudo .item .nome {
     margin-left: 4px;
     color: #4D2E14;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
-
 
 #lista_usuarios .conteudo .item .trofeu {
     float: left;
@@ -62,8 +75,16 @@
 
 #lista_usuarios .conteudo .item .pontos {
     float: left;
-    color: #4D2E14;
+    color: #d9cec1;
     margin-left: 4px;
-    margin-top: -3px;
-    font-size: 14px;
+    margin-top: -2px;
+    font-size: 16px;
+    text-shadow: 2px 1px #4D2E14;
+}
+
+.sala_menu_jogadores_box_crown {
+    position: relative;
+    margin: 0 auto;
+    top: 12px;
+    vertical-align: middle;
 }
