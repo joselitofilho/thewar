@@ -11,10 +11,12 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
     };
 
     this.preencheElementoHtml = function () {
+        const nomeDoadores = this.doadores.map(d => d['nome']) || [];
         const conteudoDaLista = $('#lista_usuarios .conteudo');
         conteudoDaLista.html('');
         for (i = 0; i < this.lista.length; i++) {
-            const doador = this.lista[i].doador || false;
+            // const doador = this.lista[i].doador || false;
+            const doador = nomeDoadores.includes(this.lista[i].nome) || false;
             let conteudo = "<div class='item'>";
             // conteudo += "<div class='foto imagem-soldado imagem-soldado-padrao'></div>";
             conteudo += "<div class='foto insignia_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div>";
@@ -93,25 +95,6 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
 
     this.atualizaDoadores = function (doadores) {
         this.doadores = doadores;
-        const nomeDoadores = doadores.map(d => d['nome']);
-        if (this.lista) {
-            let teveMudanca = false;
-            for (let i = 0; i < this.lista.length; ++i) {
-                const l = this.lista[i];
-                const doador = nomeDoadores.includes(l.nome);
-                if (this.lista[i].doador) {
-                    if (this.lista[i].doador !== doador) {
-                        this.lista[i].doador = doador;
-                        teveMudanca = true;
-                    }
-                } else {
-                    this.lista[i].doador = doador;
-                    teveMudanca = true;
-                }
-            }
-            if (teveMudanca) {
-                this.preencheElementoHtml();
-            }
-        }
+        this.preencheElementoHtml();
     };
 };
