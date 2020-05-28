@@ -2,36 +2,37 @@ import json
 
 
 class TipoMensagem:
-    entrar = "Entrar"
-    registrar = "Registrar"
-    ranking = "Ranking"
-    lobby = "Lobby"
-    erro = "Erro"
-    criar_sala = "CriarSala"
-    info_sala = "InfoSala"
-    sair_da_sala = "SairDaSala"
-    fechar_sala = "FecharSala"
-    iniciar_partida = "IniciarPartida"
-    jogo_fase_I = "JogoFaseI"
-    carta_objetivo = "CartaObjetivo"
-    turno = "Turno"
-    finalizar_turno = "FinalizarTurno"
-    colocar_tropa = "ColocarTropa"
+    altera_posicao_na_sala = "AlteraPosicaoNaSala"
     atacar = "Atacar"
-    mover = "Mover"
-    moverAposConquistarTerritorio = "MoverAposConquistarTerritorio"
-    cartas_territorio = "CartasTerritorio"
-    trocar_cartas_territorio = "TrocarCartasTerritorio"
-    colocar_tropa_na_troca_de_cartas_territorios = "ColocarTropaNaTrocaDeCartasTerritorios"
-    entrou_no_jogo = "EntrouNoJogo"
-    saiu_do_jogo = "SaiuDoJogo"
     carrega_jogo = "CarregaJogo"
     carrega_jogo_olheiro = "CarregaJogoOlheiro"
-    altera_posicao_na_sala = "AlteraPosicaoNaSala"
+    carta_objetivo = "CartaObjetivo"
+    cartas_territorio = "CartasTerritorio"
+    colocar_tropa = "ColocarTropa"
+    colocar_tropa_na_troca_de_cartas_territorios = "ColocarTropaNaTrocaDeCartasTerritorios"
+    criar_sala = "CriarSala"
+    doacoes = "Doacoes"
+    entrar = "Entrar"
+    entrou_no_jogo = "EntrouNoJogo"
+    erro = "Erro"
+    fechar_sala = "FecharSala"
+    finalizar_turno = "FinalizarTurno"
+    iniciar_partida = "IniciarPartida"
+    info_sala = "InfoSala"
     jogador_destruido = "JogadorDestruido"
+    jogo_fase_I = "JogoFaseI"
     jogo_interrompido = "JogoInterrompido"
-    msg_chat_jogo = "MsgChatJogo"
+    lobby = "Lobby"
+    mover = "Mover"
+    moverAposConquistarTerritorio = "MoverAposConquistarTerritorio"
     msg_chat_geral = "MsgChatGeral"
+    msg_chat_jogo = "MsgChatJogo"
+    ranking = "Ranking"
+    registrar = "Registrar"
+    sair_da_sala = "SairDaSala"
+    saiu_do_jogo = "SaiuDoJogo"
+    trocar_cartas_territorio = "TrocarCartasTerritorio"
+    turno = "Turno"
     usuario_conectou = "UsuarioConectou"
     usuario_desconectou = "UsuarioDesconectou"
 
@@ -164,14 +165,16 @@ class AcaoTrocarCartas(AcaoTurno):
 class AcaoDistribuirTropasTrocaDeCartas(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas,
                  infoJogadores, jogadorQueComecou):
-        AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores, jogadorQueComecou)
+        AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
+                           jogadorQueComecou)
         self.quantidadeDeTropas = quantidadeDeTropas
 
 
 class AcaoJogoTerminou(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, objetivo, ganhador,
                  infoJogadores, jogadorQueComecou):
-        AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores, jogadorQueComecou)
+        AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
+                           jogadorQueComecou)
         self.objetivo = objetivo
         self.ganhador = ganhador
 

@@ -193,6 +193,9 @@ function posRecebimentoMensagemServidor(valor) {
     } else if (jsonMensagem.tipo === TipoMensagem.ranking) {
         ranking_processaMsg(jsonMensagem.params);
         _sala.atualizaPontuacao(_ranking);
+    } else if (jsonMensagem.tipo === TipoMensagem.doacoes) {
+        doacoes_processaMsg(jsonMensagem.params);
+        _sala.atualizaDoadores(_doadores);
     } else if (jsonMensagem.tipo === TipoMensagem.erro) {
         processarMsg_erro();
     }

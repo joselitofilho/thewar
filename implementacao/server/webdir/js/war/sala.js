@@ -84,6 +84,10 @@ jogos.war.Sala = function () {
         _listaUsuarios.atualizaPontuacao(ranking);
     };
 
+    this.atualizaDoadores = function (doadores) {
+        _listaUsuarios.atualizaDoadores(doadores);
+    };
+
     this.adicionaElementoHtml = function (id) {
         var html = this.criaElementoHtml(id);
         $('#sala_content').append(html);
@@ -112,7 +116,7 @@ jogos.war.Sala = function () {
     };
 };
 
-_listaUsuarios = new jogos.war.ListaUsuarios($('#lista_usuarios'));
+_listaUsuarios = new jogos.war.ListaUsuarios();
 
 // --------------------------------------------------------------------------------
 // Processando mensagens recebidas do servidor.

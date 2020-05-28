@@ -13,11 +13,17 @@ jogos.war.MenuJogadores = function () {
         "info_cartas_preta", "info_cartas_branca", "info_cartas_amarela"];
 
     this.preencheElementoHtml = function (jogadoresDaSala) {
+        const nomeDoadores = _doadores.map(d => d['nome']) || [];
+
         menuJogadores = $('#menu_jogadores .menu_jogadores_grid');
         menuJogadores.html('');
         for (let p = 0; p < jogadoresDaSala.length; ++p) {
             const i = jogadoresDaSala[p].posicao;
+            const doador = nomeDoadores.includes(jogadoresDaSala[p].usuario) || false;
             conteudo = "<div id='menu_jogador" + i + "' class='menu_jogadores_box'>";
+            if (doador) {
+                conteudo += "<div id='menu_jogador" + i + "_coroa' class='box_crown jogo_menu_jogadores_box_crown' title='Doador'></div>";
+            }
             conteudo += "    <div class='menu_jogadores_box_title " + cores[i] + "'></div>";
             conteudo += "    <div id='menu_jogador" + i + "_insignia' class='menu_jogadores_box_badge'></div>";
             conteudo += "    <div id='jogador" + (i + 1) + "' class='menu_jogadores_box_name'>-</div>";
