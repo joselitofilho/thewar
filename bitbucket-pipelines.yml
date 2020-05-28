@@ -1,4 +1,3 @@
-image: atlassian/rsync-deploy:0.4.2
 pipelines:
   branches:
     master:
