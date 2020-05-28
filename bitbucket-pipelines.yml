@@ -3,14 +3,13 @@ pipelines:
   branches:
     master:
       - step:
-        name: Deploy to Production
-        deployment: production
-        trigger: manual
-        script:
-          - ./deploy-to-production
+          name: Deploy to Production
+          deployment: production
+          script:
+            - ./deploy-to-production
       - step:
-        name: Restart server
-        deployment: production
-        trigger: manual
-        script:
-          - ssh $DEPLOY_HOST "cd $REMOTE_PATH && ./after_deploy"
+          name: Restart server
+          deployment: production
+          trigger: manual
+          script:
+            - ssh $DEPLOY_HOST "cd $REMOTE_PATH && ./after_deploy"
