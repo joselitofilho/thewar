@@ -11,4 +11,4 @@ pipelines:
           deployment: restart-services
           trigger: manual
           script:
-            - ssh $DEPLOY_HOST "cd $REMOTE_PATH && ./after_deploy"
+            - ssh $DEPLOY_HOST "cd $DEPLOY_REMOTE_PATH && ./after_deploy"
