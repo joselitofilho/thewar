@@ -13,4 +13,4 @@ pipelines:
         deployment: production
         trigger: manual
         script:
-          - ssh $DEPLOY_HOST "cd $REMOTE_PATH/implementacao && ./after_deploy"
+          - ssh $DEPLOY_HOST "cd $REMOTE_PATH && ./after_deploy"
