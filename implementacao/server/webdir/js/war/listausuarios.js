@@ -17,20 +17,23 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
         for (i = 0; i < this.lista.length; i++) {
             // const doador = this.lista[i].doador || false;
             const doador = nomeDoadores.includes(this.lista[i].nome) || false;
-            let conteudo = "<div class='item'>";
-            // conteudo += "<div class='foto imagem-soldado imagem-soldado-padrao'></div>";
-            conteudo += "<div class='foto insignia_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div>";
-            conteudo += "<div class='infos'>";
+            let conteudo =
+                "<div class='item'>";
+            conteudo += "<div class='grow1'><div class='foto insignia_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div></div>";
+            conteudo += "<div class='grow6 infos'>";
             conteudo += "    <div class='nome'>" + this.lista[i].nome + "</div>";
             conteudo += "    <div>";
             conteudo += "        <div class='trofeu'></div>";
             conteudo += "        <div class='pontos'>" + this.lista[i].posicaoNoRanking + "º | " + this.lista[i].pontos + " pts</div>";
             conteudo += "    </div>";
             conteudo += "</div>"; // infos.
+            conteudo += "<div class='grow1'>";
             if (doador) {
-                conteudo += "<div class='box_crown sala_menu_jogadores_box_crown'></div>";
+                conteudo += "    <div class='box_crown sala_menu_jogadores_box_crown' title='Doador'></div>";
             }
-            conteudo += "</div>"; // item.
+            conteudo += "</div>";
+            conteudo +=
+                "</div>"; // item.
             conteudoDaLista.append(conteudo);
         }
     };
