@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  jogowar:
+    image: ricardogpsf/jogowar:v1
+    volumes:
+      - ./implementacao/server:/app
+    ports:
+      - "8080:8080"
+    command: /app/start_game.sh
+  nginx:
+    image: nginx:1.17.9
+    volumes:
+      - ./nginx/reverse-proxy.conf:/etc/nginx/conf.d/reverse-proxy.conf
+    ports:
+      - "80:80"
+
