@@ -4,12 +4,12 @@ pipelines:
     master:
       - step:
           name: Deploy to Production
-          deployment: production
+          deployment: sync-files
           script:
             - ./deploy-to-production
       - step:
           name: Restart server
-          deployment: production
+          deployment: restart-services
           trigger: manual
           script:
             - ssh $DEPLOY_HOST "cd $REMOTE_PATH && ./after_deploy"
