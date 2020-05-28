@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sed -i "s/GOOGLE_MAPS_KEY_TO_BE_REPLACED/$GOOGLE_MAPS_KEY/g" $BITBUCKET_CLONE_DIR/implementacao/server/webdir/index.html
+
+rsync -zrSlh --stats $BITBUCKET_CLONE_DIR/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_REMOTE_PATH
