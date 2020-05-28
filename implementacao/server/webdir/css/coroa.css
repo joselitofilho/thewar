@@ -1,17 +1,35 @@
+/*.box_crown {*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    background: url('../imagens/coroa_40.png') 0px 0px no-repeat;*/
+/*}*/
+
+/*.jogo_menu_jogadores_box_crown {*/
+/*    float: left;*/
+/*    margin: -27px 0px 0px 19px;*/
+/*    vertical-align: middle;*/
+/*}*/
+
+/*.sala_menu_jogadores_box_crown {*/
+/*    float: right;*/
+/*    margin: -60px 16px 0px 0px;*/
+/*    vertical-align: middle;*/
+/*}*/
+
 .box_crown {
     width: 40px;
     height: 40px;
-    background: url('../imagens/coroa_40.png') 0px 0px no-repeat;
+    background: url('../imagens/coroa_flat_40.png') 0px 0px no-repeat;
 }
 
 .jogo_menu_jogadores_box_crown {
     float: left;
-    margin: -27px 0px 0px 19px;
+    margin: -21px 0px 0px -11px;
     vertical-align: middle;
 }
 
 .sala_menu_jogadores_box_crown {
     float: right;
-    margin: -60px 16px 0px 0px;
+    margin: -51px 16px 0px 0px;
     vertical-align: middle;
 }
