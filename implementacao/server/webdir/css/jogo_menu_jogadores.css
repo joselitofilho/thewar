@@ -5,7 +5,7 @@
     width: 538px;
     height: 118px;
     background: url('../imagens/jogo/fundo-6-jogadores-horizontal.png') no-repeat;
-    z-index: 1000;
+    z-index: 999;
 }
 
 .menu_jogadores_grid2x2 {

@@ -45,7 +45,7 @@
     height: 49px;
     color: #FFF;
     background: url('../imagens/jogo/bg-barra-tempo.png') no-repeat;
-    z-index: 999;
+    z-index: 998;
 }
 
 .barra_de_progresso {

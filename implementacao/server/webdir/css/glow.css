@@ -1,0 +1,229 @@
+.glow {
+    position: relative;
+    top: -66px;
+    left: -16px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    -webkit-animation: glow 15s linear 0s infinite forwards;
+    background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598');
+    background-size: contain;
+}
+
+.particles {
+    position: relative;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+
+}
+
+.rotate {
+    position: relative;
+    top: calc(50% - 5px);
+    left: calc(50% - 5px);
+    width: 10px;
+    height: 10px;
+}
+
+.angle {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.size {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.position {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.pulse {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.particle {
+    position: relative;
+    top: calc(50% - 5px);
+    left: calc(50% - 5px);
+    width: 30px;
+    height: 30px;
+    /*   background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598'); */
+    background: url('http://www.officialpsds.com/images/thumbs/shine-light-bright-psd43123.png');
+
+    background-size: contain;
+}
+
+.rotate {
+    -webkit-animation: rotate 20s linear 0s infinite alternate;
+}
+
+.pulse {
+    -webkit-animation: pulse 1.5s linear 0s infinite alternate;
+}
+
+
+@-webkit-keyframes glow {
+    0% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(150%) saturate(50%) hue-rotate(0deg) opacity(100%);
+
+    }
+    25% {
+        transform: scale(0.8) rotate(90deg);
+        filter: brightness(100%) saturate(50%) hue-rotate(50deg) opacity(100%);
+    }
+    50% {
+        transform: scale(1) rotate(180deg);
+        filter: brightness(100%) saturate(100%) hue-rotate(0deg) opacity(100%);
+    }
+    75% {
+        transform: scale(0.8) rotate(270deg);
+        filter: brightness(100%) saturate(50%) hue-rotate(50deg) opacity(100%);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        filter: brightness(150%) saturate(100%) hue-rotate(0deg) opacity(100%);
+
+    }
+}
+
+@-webkit-keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes angle {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes size {
+    0% {
+        -webkit-transform: scale(.2);
+    }
+    100% {
+        -webkit-transform: scale(.6);
+    }
+}
+
+@-webkit-keyframes position {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: translate3d(100px, 100px, 0);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale(1);
+    }
+    100% {
+        -webkit-transform: scale(.5);
+    }
+}
+
+@-webkit-keyframes particle {
+    from {
+        transform: scale(1);
+        filter: brightness(200%) hue-rotate(0deg);
+
+    }
+    to {
+        transform: scale(1.1);
+        filter: brightness(100%) hue-rotate(50deg);
+
+    }
+}
+
+
+.rotate .angle:nth-child(1) {
+    /* change the angle every 2 seconds */
+    -webkit-animation: angle 10s steps(5) 0s infinite;
+}
+
+.rotate .angle:nth-child(1) .size {
+    /* change the size of the particle every 2 seconds */
+    -webkit-animation: size 10s steps(5) 0s infinite;
+}
+
+.rotate .angle:nth-child(1) .particle {
+    /* animate the glow and change the color every 2 seconds */
+    -webkit-animation: particle 6s linear infinite alternate;
+}
+
+.rotate .angle:nth-child(1) .position {
+    /* animate the fly out of the particle and its fade out at the end */
+    -webkit-animation: position 2s linear 0s infinite;
+}
+
+
+.rotate .angle:nth-child(2) {
+    /* change the angle every 2 seconds */
+    -webkit-animation: angle 4.95s steps(3) -1.65s infinite;
+}
+
+.rotate .angle:nth-child(2) .size {
+    /* change the size of the particle every 2 seconds */
+    -webkit-animation: size 4.95s steps(3) -1.65s infinite alternate;
+}
+
+.rotate .angle:nth-child(2) .particle {
+    /* animate the glow and change the color every 2 seconds */
+    -webkit-animation: particle 4.95s linear -3.3s infinite alternate;
+}
+
+.rotate .angle:nth-child(2) .position {
+    /* animate the fly out of the particle and its fade out at the end */
+    -webkit-animation: position 1.65s linear 0s infinite;
+}
+
+
+.rotate .angle:nth-child(3) {
+    /* change the angle every 2 seconds */
+    -webkit-animation: angle 13.76s steps(8) -6.88s infinite;
+}
+
+.rotate .angle:nth-child(3) .size {
+    /* change the size of the particle every 2 seconds */
+    -webkit-animation: size 6.88s steps(4) -5.16s infinite alternate;
+}
+
+.rotate .angle:nth-child(3) .particle {
+    /* animate the glow and change the color every 2 seconds */
+    -webkit-animation: particle 5.16s linear -1.72 infinite alternate;
+}
+
+.rotate .angle:nth-child(3) .position {
+    /* animate the fly out of the particle and its fade out at the end */
+    -webkit-animation: position 1.72s linear 0s infinite;
+}
+
+.rotate .angle:nth-child(5) .position {
+    /* animate the fly out of the particle and its fade out at the end */
+    -webkit-animation: position 2.45s linear 0s infinite;
+}
