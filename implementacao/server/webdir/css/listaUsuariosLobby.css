@@ -22,7 +22,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
-    padding-bottom: 12px;
+    padding-bottom: 16px;
 }
 
 #lista_usuarios .conteudo .item {

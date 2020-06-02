@@ -20,11 +20,16 @@ jogos.war.MenuJogadores = function () {
         for (let p = 0; p < jogadoresDaSala.length; ++p) {
             const i = jogadoresDaSala[p].posicao;
             const doador = nomeDoadores.includes(jogadoresDaSala[p].usuario) || false;
+            const cpu = jogadoresDaSala[p].tipo === "cpu";
             conteudo = "<div id='menu_jogador" + i + "' class='menu_jogadores_box'>";
             if (doador) {
                 conteudo += "<div id='menu_jogador" + i + "_coroa' class='box_crown jogo_menu_jogadores_box_crown' title='Doador'></div>";
             }
-            conteudo += "    <div class='menu_jogadores_box_title " + cores[i] + "'></div>";
+            conteudo += "    <div class='menu_jogadores_box_title " + cores[i] + "'>";
+            if (cpu) {
+                conteudo += '    <svg id="menu_jogador' + i + '_cpu_svg" style="width: 24px; height: 24px;" viewBox="0 0 24 24"><path fill="currentColor" d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z" /></svg>';
+            }
+            conteudo += "    </div>";
             conteudo += "    <div id='menu_jogador" + i + "_insignia' class='menu_jogadores_box_badge'></div>";
             conteudo += "    <div id='jogador" + (i + 1) + "' class='menu_jogadores_box_name'>-</div>";
             conteudo += "    <div class='menu_jogadores_grid2x2 menu_jogadores_box_infos'>";
@@ -42,15 +47,18 @@ jogos.war.MenuJogadores = function () {
         }
     };
 
-    this.posicionaElementos = function (jogadorQueComecou, jogadoresDaSala) {
-        let corte = jogadorQueComecou;
-        for (let i = 0; i < jogadoresDaSala.length; i++) {
-            if (jogadoresDaSala[i].posicao === jogadorQueComecou) {
-                corte = i;
-                break;
+    this.posicionaElementos = function (jogadorQueComecou, ordemJogadores, jogadoresDaSala) {
+        const corte = ordemJogadores.indexOf(jogadorQueComecou);
+        const novaOrdemJogadores = ordemJogadores.slice(corte).concat(ordemJogadores.slice(0, corte));
+        const jogadoresNaOrdem = [];
+        for (let p = 0; p < novaOrdemJogadores.length; ++p) {
+            for (let i = 0; i < jogadoresDaSala.length; i++) {
+                if (jogadoresDaSala[i].posicao === novaOrdemJogadores[p]) {
+                    jogadoresNaOrdem.push(jogadoresDaSala[i]);
+                    break;
+                }
             }
         }
-        const jogadoresNaOrdem = jogadoresDaSala.slice(corte).concat(jogadoresDaSala.slice(0, corte));
 
         this.preencheElementoHtml(jogadoresNaOrdem);
 

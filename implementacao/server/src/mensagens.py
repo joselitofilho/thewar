@@ -3,6 +3,7 @@ import json
 
 class TipoMensagem:
     altera_posicao_na_sala = "AlteraPosicaoNaSala"
+    altera_tipo_posicao_na_sala = "AlteraTipoPosicaoNaSala"
     atacar = "Atacar"
     carrega_jogo = "CarregaJogo"
     carrega_jogo_olheiro = "CarregaJogoOlheiro"
@@ -126,7 +127,7 @@ class CarregaJogoOlheiro(object):
 
 class AcaoTurno(object):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
-                 jogadorQueComecou):
+                 jogadorQueComecou, ordemJogadores):
         self.tipoAcao = tipoAcao
         self.numeroDoTurno = numeroDoTurno
         self.vezDoJogador = infoJogadorDaVez
@@ -134,47 +135,48 @@ class AcaoTurno(object):
         self.valorDaTroca = valorDaTroca
         self.infoJogadores = infoJogadores
         self.jogadorQueComecou = jogadorQueComecou
+        self.ordemJogadores = ordemJogadores
 
 
 class AcaoDistribuirTropasGlobais(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas,
-                 territoriosDosJogadores, infoJogadores, jogadorQueComecou):
+                 territoriosDosJogadores, infoJogadores, jogadorQueComecou, ordemJogadores):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
-                           jogadorQueComecou)
+                           jogadorQueComecou, ordemJogadores)
         self.quantidadeDeTropas = quantidadeDeTropas
         self.territoriosDosJogadores = territoriosDosJogadores
 
 
 class AcaoDistribuirTropasGrupoTerritorio(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas,
-                 grupoTerritorio, infoJogadores, jogadorQueComecou):
+                 grupoTerritorio, infoJogadores, jogadorQueComecou, ordemJogadores):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
-                           jogadorQueComecou)
+                           jogadorQueComecou, ordemJogadores)
         self.quantidadeDeTropas = quantidadeDeTropas
         self.grupoTerritorio = grupoTerritorio
 
 
 class AcaoTrocarCartas(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, obrigatorio,
-                 infoJogadores, jogadorQueComecou):
+                 infoJogadores, jogadorQueComecou, ordemJogadores):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
-                           jogadorQueComecou)
+                           jogadorQueComecou, ordemJogadores)
         self.obrigatorio = obrigatorio
 
 
 class AcaoDistribuirTropasTrocaDeCartas(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, quantidadeDeTropas,
-                 infoJogadores, jogadorQueComecou):
+                 infoJogadores, jogadorQueComecou, ordemJogadores):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
-                           jogadorQueComecou)
+                           jogadorQueComecou, ordemJogadores)
         self.quantidadeDeTropas = quantidadeDeTropas
 
 
 class AcaoJogoTerminou(AcaoTurno):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, objetivo, ganhador,
-                 infoJogadores, jogadorQueComecou):
+                 infoJogadores, jogadorQueComecou, ordemJogadores):
         AcaoTurno.__init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
-                           jogadorQueComecou)
+                           jogadorQueComecou, ordemJogadores)
         self.objetivo = objetivo
         self.ganhador = ganhador
 

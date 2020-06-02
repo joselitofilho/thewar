@@ -583,7 +583,7 @@ function jogo_alteraInfoTurno(msgParams) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
-    _menuJogadores.posicionaElementos(msgParams.jogadorQueComecou, msgParams.infoJogadores);
+    _menuJogadores.posicionaElementos(msgParams.jogadorQueComecou, msgParams.ordemJogadores, msgParams.infoJogadores);
     for (let i = 0; i < msgParams.infoJogadores.length; i++) {
         const infos = msgParams.infoJogadores[i];
         const title = "Nome: " + infos.usuario + '\n' +

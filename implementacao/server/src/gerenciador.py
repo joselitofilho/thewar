@@ -3,14 +3,16 @@
 
 import json
 import os
+import random
 import traceback
 
 from badges import *
+from doacaodb import *
+from ia.iafactory import *
 from jogador import *
 from jogo import *
 from mensagens import *
 from pontuacaodb import *
-from doacaodb import *
 from sala import *
 
 
@@ -32,6 +34,20 @@ class GerenciadorSala(object):
                 infoSalaMsg = self.sala.adiciona(usuario)
                 self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
                 self.jogadoresDaSala = self.sala.jogadores.values()
+        else:
+            self.jogo.adiciona(cliente, usuario)
+
+    def entra_posicao(self, cliente, usuario, posicao):
+        self.jogadores[cliente] = usuario
+
+        if self.jogo == None:
+            if self.sala != None:
+                infoSalaMsg = self.sala.adiciona(usuario)
+                self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+                self.jogadoresDaSala = self.sala.jogadores.values()
+                # TODO: VIP
+                alteraPosicaoNaSalaMsg = self.sala.alteraPosicao(usuario, posicao)
+                self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, alteraPosicaoNaSalaMsg)
         else:
             self.jogo.adiciona(cliente, usuario)
 
@@ -59,23 +75,48 @@ class GerenciadorSala(object):
             del self.jogadores[cliente]
         except:
             traceback.print_exc()
-            print
-            "[ERROR]", "Nao foi possivel desconectar o cliente ", cliente
+            print "[ERROR]", "Nao foi possivel desconectar o cliente ", cliente
 
     def iniciaPartida(self):
-        if len(self.sala.jogadores) >= 3 and self.jogo == None:
+        quantidade_jogadores_na_sala = 0
+        for k, v in self.sala.jogadores.iteritems():
+            jogadorDaSala = self.sala.jogadores[k]
+            if jogadorDaSala.tipo != TipoJogador.desabilitado:
+                quantidade_jogadores_na_sala = quantidade_jogadores_na_sala + 1
+        if quantidade_jogadores_na_sala >= 3 and self.jogo == None:
+            self.jogadoresDaSala = self.sala.jogadores
             tempJogadoresDaSala = self.sala.jogadores
 
             jogadoresDoJogo = {}
             clientes = {}
+            cpus = {}
+
+            cpu_factory = IAFactory()
+            sufixos = []
+            for i in range(10, 99):
+                sufixos.append(str(i))
+            random.shuffle(sufixos)
+
             for k, v in tempJogadoresDaSala.iteritems():
                 jogadorDaSala = tempJogadoresDaSala[k]
-                jogadoresDoJogo[k] = JogadorDoJogo(
-                    jogadorDaSala.usuario,
-                    jogadorDaSala.posicao,
-                    jogadorDaSala.dono)
-                clientes[jogadorDaSala.posicao] = self.socketDoUsuario(jogadorDaSala.usuario)
-            self.jogo = Jogo(self.nome, jogadoresDoJogo, clientes, self)
+                if jogadorDaSala.tipo != TipoJogador.desabilitado:
+                    cpu = None
+                    usuario = jogadorDaSala.usuario
+                    posicao = jogadorDaSala.posicao
+                    if jogadorDaSala.tipo == TipoJogador.cpu:
+                        cpu = cpu_factory.random()(sufixo=sufixos[posicao])
+                        usuario = cpu.usuario
+                    jogadoresDoJogo[k] = JogadorDoJogo(
+                        usuario,
+                        posicao,
+                        jogadorDaSala.dono,
+                        jogadorDaSala.tipo)
+                    if jogadorDaSala.tipo == TipoJogador.humano:
+                        clientes[jogadorDaSala.posicao] = self.socketDoUsuario(jogadorDaSala.usuario)
+                    elif cpu and jogadorDaSala.tipo == TipoJogador.cpu:
+                        cpu.jogador_ref(jogadoresDoJogo[k])
+                        cpus[usuario] = cpu
+            self.jogo = Jogo(self.nome, jogadoresDoJogo, cpus, clientes, self)
 
             # Distribui os territorios e define quem comeca.
             jogoFaseIMsg = self.jogo.faseI_Inicia()
@@ -84,13 +125,9 @@ class GerenciadorSala(object):
             # Envia a carta objetivo para cada jogador individualmente.
             cartasObjetivos = self.jogo.faseI_DefinirObjetivos()
             for i in range(len(jogadoresDoJogo)):
-                jsonMsg = json.dumps(Mensagem(
-                    TipoMensagem.carta_objetivo,
-                    CartaObjetivo(cartasObjetivos[i])), default=lambda o: o.__dict__)
-                print
-                "# ", jsonMsg
                 posicaoJogador = self.jogo.ordemJogadores[i]
-                clientes[posicaoJogador].sendMessage(jsonMsg)
+                self.jogo.enviaMsgParaJogador(TipoMensagem.carta_objetivo, CartaObjetivo(cartasObjetivos[i]),
+                                              jogadoresDoJogo[posicaoJogador])
 
             self.estado = EstadoDaSala.jogo_em_andamento
 
@@ -115,7 +152,15 @@ class GerenciadorSala(object):
                 alteraPosicaoNaSalaMsg = self.sala.alteraPosicao(usuario, novaPosicao)
                 self.enviaMsgParaTodos(TipoMensagem.altera_posicao_na_sala, alteraPosicaoNaSalaMsg)
             else:
-                self.entra(cliente, usuario)
+                novaPosicao = mensagem.params['novaPosicao']
+                self.entra_posicao(cliente, usuario, novaPosicao)
+
+        elif mensagem.tipo == TipoMensagem.altera_tipo_posicao_na_sala:
+            if self.estaDentro(usuario):
+                posicao = mensagem.params['posicao']
+                infoSalaMsg = self.sala.alteraTipoPosicao(usuario, posicao)
+                if infoSalaMsg:
+                    self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
         elif self.jogo != None:
             if mensagem.tipo == TipoMensagem.colocar_tropa:
@@ -178,6 +223,11 @@ class GerenciadorSala(object):
             if v == usuario:
                 return k
         return None
+
+    def jogadores_da_sala(self):
+        if self.sala:
+            self.jogadoresDaSala = self.sala.jogadores
+        return self.jogadoresDaSala
 
     def enviaMsgParaTodos(self, tipo, params):
         self.gerenciadorPrincipal.enviaMsgParaTodos(tipo, params)
@@ -264,6 +314,12 @@ class GerenciadorPrincipal(object):
 
             gerenciadorSala.requisicao(cliente, usuario, mensagem)
             self.usuarioPorSala[usuario] = idSala
+        elif mensagem.tipo == TipoMensagem.altera_tipo_posicao_na_sala:
+            # Usuario esta em uma sala.
+            if usuario in self.usuarioPorSala.keys():
+                idSala = mensagem.params['sala']
+                gerenciadorSala = self.salas[idSala]
+                gerenciadorSala.requisicao(cliente, usuario, mensagem)
         elif mensagem.tipo == TipoMensagem.sair_da_sala:
             if usuario in self.usuarioPorSala.keys():
                 gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
@@ -343,7 +399,7 @@ class GerenciadorPrincipal(object):
         for gerenciadorSala in self.salas.values():
             info = {
                 "sala": gerenciadorSala.nome,
-                "jogadores": gerenciadorSala.jogadoresDaSala,
+                "jogadores": gerenciadorSala.jogadores_da_sala(),
                 "estado": gerenciadorSala.estado
             }
             infoSalas.append(info)

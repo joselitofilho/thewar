@@ -1,18 +1,26 @@
 from territorio import *
 
 
+class TipoJogador:
+    humano = "human"
+    cpu = "cpu"
+    desabilitado = "disable"
+
+
 class JogadorDaSala(object):
-    def __init__(self, usuario, posicao, dono):
+    def __init__(self, usuario, posicao, dono, tipo=TipoJogador.humano):
         self.usuario = usuario
         self.posicao = posicao
         self.dono = dono
+        self.tipo = tipo
 
 
 class JogadorDoJogo(object):
-    def __init__(self, usuario, posicao, dono):
+    def __init__(self, usuario, posicao, dono, tipo):
         self.usuario = usuario
         self.posicao = posicao
         self.dono = dono
+        self.tipo = tipo
         self.objetivo = -1
 
         self.territorios = []

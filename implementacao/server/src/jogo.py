@@ -14,7 +14,7 @@ from turno import *
 
 
 class Jogo(object):
-    def __init__(self, nome, jogadores, clientes=None, gerenciador=None):
+    def __init__(self, nome, jogadores, cpus, clientes=None, gerenciador=None):
         logging.basicConfig(filename='log/jogo_' + nome + '.log', level=logging.DEBUG)
         random.seed()
 
@@ -25,12 +25,15 @@ class Jogo(object):
 
         self.clientes = clientes
         self.jogadores = jogadores
+        self.cpus = cpus
 
         self.olheiros = {}
 
         self.jogadorQueComecou = -1
 
         self.ordemJogadores = self.jogadores.keys()
+        random.shuffle(self.ordemJogadores)
+
         # Indice que aponta para a fila da ordem dos jogador.
         self.indiceOrdemJogadores = None
         # Posicao do jogador que esta jogando no momento.
@@ -53,14 +56,14 @@ class Jogo(object):
 
         self.pontuacaoPelaVitoria = 0
 
+        self.estaAtacando = False
+
     def faseI_Inicia(self):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
-        numeroAleatorio = random.randint(0, len(self.jogadores) - 1)
-        numeroAleatorio = random.randint(0, len(self.jogadores) - 1)
         numeroAleatorio = random.randint(0, len(self.jogadores) - 1)
         self.cabecaDaFila = numeroAleatorio
         self.indiceOrdemJogadores = self.cabecaDaFila
@@ -70,8 +73,6 @@ class Jogo(object):
 
     def faseI_DistribuirTerritorios(self):
         territorios = list(CodigoTerritorio.Lista)
-        random.shuffle(territorios)
-        random.shuffle(territorios)
         random.shuffle(territorios)
 
         listaTerritoriosPorJogador = []
@@ -102,6 +103,8 @@ class Jogo(object):
             for j in range(inicio, fim):
                 territoriosJogador_i.append(territorios[j])
 
+            print
+            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadores[self.posicaoJogadorDaVez].iniciaTerritorios(territoriosJogador_i)
             listaTerritoriosPorJogador.append(
                 TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
@@ -114,8 +117,6 @@ class Jogo(object):
     def faseI_DefinirObjetivos(self):
         objetivos = range(0, 13)
         random.shuffle(objetivos)
-        random.shuffle(objetivos)
-        random.shuffle(objetivos)
 
         objetivoPorJogadores = []
         for i in range(len(self.jogadores)):
@@ -127,8 +128,6 @@ class Jogo(object):
 
     def iniciaTurnos(self):
         self.cartasTerritorioDoBaralho = list(CartasTerritorio.Todas())
-        random.shuffle(self.cartasTerritorioDoBaralho)
-        random.shuffle(self.cartasTerritorioDoBaralho)
         random.shuffle(self.cartasTerritorioDoBaralho)
         self.cartasTerritorioDescartadas = []
 
@@ -161,12 +160,14 @@ class Jogo(object):
             infoJogadores.append({
                 "usuario": j.usuario,
                 "posicao": j.posicao,
+                "tipo": j.tipo,
                 "total_territorios": len(j.territorios),
                 "total_cartas_territorio": len(j.cartasTerritorio),
-                "esta_na_sala": j.posicao in self.clientes.keys()
+                "esta_na_sala": j.posicao in self.clientes.keys() if j.tipo == TipoJogador.humano else True
             })
 
         jogadorQueComecou = self.jogadorQueComecou
+        ordemJogadores = self.ordemJogadores
 
         acao = None
         # Preencher os dados da acao
@@ -180,7 +181,7 @@ class Jogo(object):
             territoriosDosJogadores = self.listaDeTerritoriosDosJogadores()
             acao = AcaoDistribuirTropasGlobais(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante,
                                                valorDaTroca, turno.quantidadeDeTropas, territoriosDosJogadores,
-                                               infoJogadores, jogadorQueComecou)
+                                               infoJogadores, jogadorQueComecou, ordemJogadores)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             turno.grupoTerritorioAtual = None
             for grupo in turno.gruposTerritorio:
@@ -190,14 +191,16 @@ class Jogo(object):
                 turno.quantidadeDeTropas = GrupoTerritorio.BonusPorGrupo[turno.grupoTerritorioAtual]
             acao = AcaoDistribuirTropasGrupoTerritorio(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante,
                                                        valorDaTroca, turno.quantidadeDeTropas,
-                                                       turno.grupoTerritorioAtual, infoJogadores, jogadorQueComecou)
+                                                       turno.grupoTerritorioAtual, infoJogadores, jogadorQueComecou,
+                                                       ordemJogadores)
         elif tipoAcaoDoTurno == TipoAcaoTurno.trocar_cartas:
             acao = AcaoTrocarCartas(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                    (len(jogador.cartasTerritorio) >= 5), infoJogadores, jogadorQueComecou)
+                                    (len(jogador.cartasTerritorio) >= 5), infoJogadores, jogadorQueComecou,
+                                    ordemJogadores)
         elif tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             acao = AcaoDistribuirTropasTrocaDeCartas(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante,
                                                      valorDaTroca, turno.quantidadeDeTropas, infoJogadores,
-                                                     jogadorQueComecou)
+                                                     jogadorQueComecou, ordemJogadores)
         elif tipoAcaoDoTurno == TipoAcaoTurno.jogo_terminou:
             ganhador = {
                 "usuario": jogador.usuario,
@@ -205,10 +208,10 @@ class Jogo(object):
             }
 
             acao = AcaoJogoTerminou(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                                    jogador.objetivo, ganhador, infoJogadores, jogadorQueComecou)
+                                    jogador.objetivo, ganhador, infoJogadores, jogadorQueComecou, ordemJogadores)
         else:
             acao = AcaoTurno(tipoAcaoDoTurno, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca,
-                             infoJogadores, jogadorQueComecou)
+                             infoJogadores, jogadorQueComecou, ordemJogadores)
         return acao
 
     def todosJogaram(self):
@@ -219,18 +222,22 @@ class Jogo(object):
         ok = False
         for i in range(len(self.ordemJogadores)):
             self.indiceOrdemJogadores = (self.indiceOrdemJogadores + 1) % len(self.ordemJogadores)
+            print
+            'indiceOrdemJogadores', self.indiceOrdemJogadores
             self.posicaoJogadorDaVez = self.ordemJogadores[self.indiceOrdemJogadores]
+            print
+            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadorDaVezConquistouTerritorio = False
 
             # Verifica se o jogador esta logado na sala e nao foi destruido.
             # TODO: Retirar essa dependencia de self.clientes...
-            if self.posicaoJogadorDaVez in self.clientes.keys():
-                if not comVerificacaoExtra:
-                    ok = True
-                    break
-                elif len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
-                    ok = True
-                    break
+            # if self.posicaoJogadorDaVez in self.clientes.keys():
+            if not comVerificacaoExtra:
+                ok = True
+                break
+            elif len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
+                ok = True
+                break
 
         if not ok and self.gerenciador != None:
             self.gerenciador.jogoTerminou(self.nome)
@@ -533,7 +540,8 @@ class Jogo(object):
 
         if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.atacar:
-                if jogador.temOsTerritorios(dosTerritorios) and not jogador.temTerritorio(paraOTerritorio):
+                if not self.estaAtacando and jogador.temOsTerritorios(dosTerritorios) and not jogador.temTerritorio(paraOTerritorio):
+                    self.estaAtacando = True
                     temErro = False
 
                     # Recuperando territorio da defesa.
@@ -666,7 +674,9 @@ class Jogo(object):
                         temErro = True
 
                     if temErro:
-                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket.sendMessage(jsonMsg))
+                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+
+                    self.estaAtacando = False
 
     def defesaVenceu(self, i, territoriosDoAtaque, jogador):
         pos = i
@@ -817,9 +827,8 @@ class Jogo(object):
         return turno.trocouCartas
 
     def jogarDado(self):
+        # TODO: VIP
         dado = [1, 2, 3, 4, 5, 6]
-        random.shuffle(dado)
-        random.shuffle(dado)
         random.shuffle(dado)
         return dado[0]
 
@@ -832,8 +841,6 @@ class Jogo(object):
     def pegaUmaCartaTerritorioDoBaralho(self):
         if len(self.cartasTerritorioDoBaralho) == 0:
             self.cartasTerritorioDoBaralho = list(self.cartasTerritorioDescartadas)
-            random.shuffle(self.cartasTerritorioDoBaralho)
-            random.shuffle(self.cartasTerritorioDoBaralho)
             random.shuffle(self.cartasTerritorioDoBaralho)
             self.cartasTerritorioDescartadas = []
 
@@ -868,9 +875,10 @@ class Jogo(object):
             listaJogadoresInfoCurta.append({
                 "usuario": j.usuario,
                 "posicao": j.posicao,
+                "tipo": j.tipo,
                 "total_territorios": len(j.territorios),
                 "total_cartas_territorio": len(j.cartasTerritorio),
-                "esta_na_sala": j.posicao in self.clientes.keys()
+                "esta_na_sala": j.posicao in self.clientes.keys() if j.tipo == TipoJogador.humano else True
             })
 
             territoriosDosJogadores.append({
@@ -901,9 +909,10 @@ class Jogo(object):
                     listaJogadoresInfoCurta.append({
                         "usuario": j.usuario,
                         "posicao": j.posicao,
+                        "tipo": j.tipo,
                         "total_territorios": len(j.territorios),
                         "total_cartas_territorio": len(j.cartasTerritorio),
-                        "esta_na_sala": j.posicao in self.clientes.keys()
+                        "esta_na_sala": j.posicao in self.clientes.keys() if j.tipo == TipoJogador.humano else True
                     })
 
                     territoriosDosJogadores.append({
@@ -986,13 +995,31 @@ class Jogo(object):
         self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo,
                                MsgChatJogo({"usuario": usuario, "posicao": posicao}, texto))
 
+    def montaMsg(self, tipoMensagem, params):
+        return json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         try:
-            jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+            jsonMsg = self.montaMsg(tipoMensagem, params)
             logging.debug("JSON: " + jsonMsg)
             cliente.sendMessage(jsonMsg)
         except Exception:
             logging.exception("Nao foi possivel enviar a mensagem para o cliente - JSON: " + jsonMsg)
+
+    def enviaMsgParaCPU(self, tipoMensagem, params, cpu):
+        try:
+            jsonMsg = self.montaMsg(tipoMensagem, params)
+            logging.debug("JSON: " + jsonMsg)
+            cpu.processa_msg(self, jsonMsg)
+        except Exception:
+            logging.exception("Nao foi possivel enviar a mensagem para o cliente - JSON: " + jsonMsg)
+
+    def enviaMsgParaJogador(self, tipoMensagem, params, jogador):
+        posicao = jogador.posicao
+        if self.jogadores[posicao].tipo == TipoJogador.humano:
+            self.enviaMsgParaCliente(tipoMensagem, params, self.clientes[posicao])
+        elif self.jogadores[posicao].tipo == TipoJogador.cpu:
+            self.enviaMsgParaCPU(tipoMensagem, params, self.cpus[jogador.usuario])
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
         try:
@@ -1003,6 +1030,8 @@ class Jogo(object):
             for socket in self.olheiros.values():
                 logging.debug("Enviando para olheiro " + str(socket))
                 socket.sendMessage(jsonMsg)
+            for jogadorCpu in self.cpus.values():
+                jogadorCpu.processa_msg(self, jsonMsg)
             logging.debug("JSON: " + jsonMsg)
         except Exception:
             logging.exception("Nao foi possivel enviar a mensagem para todos os clientes - JSON: " + jsonMsg)

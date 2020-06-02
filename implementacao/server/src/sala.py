@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from jogador import *
 from mensagens import *
 
@@ -44,6 +45,74 @@ class Sala(object):
 
         return None
 
+    def adiciona_cpu(self, posicao):
+        jogadorDaPosicao = self.jogadorDaPosicao(posicao)
+        if not self.salaEstaCheia() and not jogadorDaPosicao:
+            jogador = JogadorDaSala('Computador', posicao, False, TipoJogador.cpu)
+            self.jogadores[posicao] = jogador
+
+            self.defineProximaPosicao()
+
+            extra = {
+                "entrou_ou_saiu": 1,
+                "jogador": jogador
+            }
+            infoSalaMsg = InfoSala(self.id,
+                                   EstadoDaSala.sala_criada,
+                                   self.jogadores.values(), extra)
+            return infoSalaMsg
+
+        return None
+
+    def desabilita_posicao(self, posicao, atualizando_posicao):
+        jogadorDaPosicao = self.jogadorDaPosicao(posicao)
+        if atualizando_posicao:
+            if jogadorDaPosicao and jogadorDaPosicao.tipo == TipoJogador.cpu:
+                jogador = JogadorDaSala('-', posicao, False, TipoJogador.desabilitado)
+                self.jogadores[posicao] = jogador
+
+                self.defineProximaPosicao()
+
+                extra = {
+                    "entrou_ou_saiu": 0,
+                    "jogador": jogador
+                }
+                infoSalaMsg = InfoSala(self.id,
+                                       EstadoDaSala.sala_criada,
+                                       self.jogadores.values(), extra)
+                return infoSalaMsg
+        else:
+            if not self.salaEstaCheia() and not jogadorDaPosicao:
+                jogador = JogadorDaSala('-', posicao, False, TipoJogador.desabilitado)
+                self.jogadores[posicao] = jogador
+
+                self.defineProximaPosicao()
+
+                extra = {
+                    "entrou_ou_saiu": 0,
+                    "jogador": jogador
+                }
+                infoSalaMsg = InfoSala(self.id,
+                                       EstadoDaSala.sala_criada,
+                                       self.jogadores.values(), extra)
+                return infoSalaMsg
+
+        return None
+
+    def habilita_posicao(self, posicao):
+        jogadorDaPosicao = self.jogadorDaPosicao(posicao)
+        if jogadorDaPosicao and jogadorDaPosicao.tipo == TipoJogador.desabilitado:
+            self.jogadores.pop(posicao)
+
+            self.defineProximaPosicao()
+
+            infoSalaMsg = InfoSala(self.id,
+                                   EstadoDaSala.sala_criada,
+                                   self.jogadores.values(), None)
+            return infoSalaMsg
+
+        return None
+
     def remove(self, usuario):
         posicao = self.posicaoDoUsuario(usuario)
 
@@ -60,7 +129,8 @@ class Sala(object):
 
             if jogador.dono:
                 self.dono = None
-                self.escolheNovoDono()
+                if not self.escolheNovoDono():
+                    self.jogadores.clear()
 
             infoSalaMsg = InfoSala(self.id,
                                    EstadoDaSala.sala_criada,
@@ -78,6 +148,15 @@ class Sala(object):
                 posicao = k
 
         return posicao
+
+    def jogadorDaPosicao(self, posicao):
+        jogador = None
+
+        for k, v in self.jogadores.iteritems():
+            if k == posicao:
+                jogador = v
+
+        return jogador
 
     def alteraPosicao(self, usuario, novaPosicao):
         retorno = None
@@ -103,6 +182,22 @@ class Sala(object):
 
         return retorno
 
+    def alteraTipoPosicao(self, usuario, posicao):
+        posicaoUsuario = self.posicaoDoUsuario(usuario)
+        jogadorUsuario = self.jogadores[posicaoUsuario]
+        if jogadorUsuario.dono:
+            jogadorDaPosicao = self.jogadorDaPosicao(posicao)
+            if jogadorDaPosicao:
+                if jogadorDaPosicao.tipo == TipoJogador.cpu:
+                    return self.desabilita_posicao(posicao, True)
+                elif jogadorDaPosicao.tipo == TipoJogador.desabilitado:
+                    return self.habilita_posicao(posicao)
+            else:
+                # return self.adiciona_cpu(posicao)
+                return self.desabilita_posicao(posicao, False)
+
+        return None
+
     def verificaDono(self, posicao):
         if self.dono == None:
             self.dono = posicao
@@ -113,9 +208,11 @@ class Sala(object):
                 self.jogadores[pos].dono = False
 
             for pos in self.jogadores.keys():
-                self.dono = pos
-                self.jogadores[pos].dono = True
-                break
+                if self.jogadores[pos].tipo == TipoJogador.humano:
+                    self.dono = pos
+                    self.jogadores[pos].dono = True
+                    return True
+        return False
 
     def defineProximaPosicao(self):
         for i in range(6):
