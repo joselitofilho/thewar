@@ -10,4 +10,4 @@ if [ ! -f "$FILE" ]; then
 	python ../database_update3.py
 fi
 echo "Starting server..."
-python ./src/server.py && tail -F ./log/server.log
+PYTHONPATH=. python ./src/server.py && tail -F ./log/server.log
