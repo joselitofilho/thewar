@@ -10,4 +10,4 @@ if [ ! -f "$FILE" ]; then
 	python ../database_update3.py
 fi
 echo "Starting server..."
-python src/server.py
+PYTHONPATH=. python src/server.py

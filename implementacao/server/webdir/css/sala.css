@@ -37,66 +37,6 @@
     margin-bottom: 10px;
 }
 
-#sala .box {
-    max-width: 814px;
-    height: 66px;
-    margin: 0;
-    background: url('../imagens/lobby/itemSala/bg-box.png') no-repeat;
-}
-
-#sala .box-heading {
-    position: absolute;
-    color: #4d2e14;
-    font-weight: bold;
-    padding-top: 20px;
-    padding-left: 20px;
-}
-
-#sala h3 {
-    margin-top: 0px;
-}
-
-#sala ul {
-    padding: 0px;
-    margin: 0px;
-    list-style: none;
-    text-align: center;
-}
-
-#sala ul li {
-    display: inline;
-    padding-right: 30px;
-}
-
-#sala ul li div {
-    width: 42px;
-    height: 42px;
-    display: inline-block;
-    cursor: pointer;
-}
-
-#sala ul li span {
-    position: absolute;
-    width: 84px;
-    margin-left: -63px;
-    margin-top: 40px;
-    text-align: center;
-    color: #4d2e14;
-    font-weight: bold;
-}
-
-#sala ul li a:link,
-#sala ul li a:visited,
-#sala ul li a:active {
-    text-decoration: none;
-}
-
-#sala .sala_posicoes {
-    position: absolute;
-    margin-top: 6px;
-    margin-left: 195px;
-}
-
 .jogador_sala_vermelho {
     background: url('../imagens/soldados.png') 0px 0px no-repeat;
 }
@@ -133,52 +73,14 @@
 
 .sc_bloqueador {
     position: absolute;
-    margin-top: 4px;
-    width: 806px;
-    height: 58px;
+    margin-top: -90px;
+    margin-left: -8px;
+    width: calc(100% - 16px);
+    height: 90px;
     background-color: rgba(0, 0, 0, 0.4);
-    margin-left: 4px;
-}
-
-.menu .btn_ranking {
-    width: 116px;
-    height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -788px no-repeat;
-    border: 0;
-
-}
-
-.menu .btn_ranking:hover {
-    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -823px no-repeat;
-}
-
-#sala .btn_criar_sala {
-    width: 116px;
-    height: 31px;
-    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -320px no-repeat;
-    border: 0;
-
-}
-
-#sala .btn_criar_sala:hover {
-    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -284px no-repeat;
-}
-
-#sala .btn_regras {
-    width: 25px;
-    height: 28px;
-    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -33px no-repeat;
-    border: 0;
-}
-
-#sala .btn_regras:hover {
-    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px 0px no-repeat;
 }
 
 #sala .btn_entrar {
-    float: right;
-    margin-right: 10px;
-    margin-top: 15px;
     width: 72px;
     height: 31px;
     background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -392px no-repeat;
@@ -190,9 +92,6 @@
 }
 
 #sala .btn_reentrar {
-    float: right;
-    margin-right: 10px;
-    margin-top: 17px;
     width: 79px;
     height: 31px;
     background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -608px no-repeat;
@@ -204,9 +103,6 @@
 }
 
 #sala .btn_assistir {
-    float: right;
-    margin-right: 10px;
-    margin-top: 17px;
     width: 72px;
     height: 31px;
     background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -102px no-repeat;
@@ -218,8 +114,6 @@
 }
 
 #sala .btn_iniciar_partida {
-    float: right;
-    margin-top: 17px;
     width: 117px;
     height: 31px;
     background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -464px no-repeat;
@@ -232,10 +126,6 @@
 }
 
 #sala .btn_sair {
-    float: right;
-    margin-left: 5px;
-    margin-right: 10px;
-    margin-top: 17px;
     width: 54px;
     height: 31px;
     background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -680px no-repeat;
@@ -292,4 +182,134 @@
 
 #sala_boxCriarSala .btn_fechar:hover {
     background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -190px no-repeat;
+}
+
+/**/
+/**/
+/**/
+
+#sala_content .sala_box {
+    border: 4px ridge #6f4923;
+    background: rgba(139, 126, 106, .40);
+    margin: 4px;
+    padding: 8px 8px 0 8px;
+}
+
+#sala_content .sala_header {
+    display: flex;
+}
+
+#sala_content .sala_titulo {
+    flex: 1;
+    color: #4d2e14;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#sala_content .sala_menu {
+}
+
+#sala_content .sala_content_grid {
+    display: flex;
+    justify-content: space-around;
+    padding: 0px;
+    height: auto;
+}
+
+#sala_content .sala_jogador_box {
+    margin: 8px 0px;
+    width: auto;
+    height: auto;
+    text-align: center;
+    background: #fff;
+    box-shadow: 6px 6px 18px 0px rgba(0, 0, 0, .3);
+}
+
+.sala_jogador_tipo {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.sala_jogador_tipo svg {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+}
+
+.sala_jogador_tipo_svg {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+}
+
+.sala_jogador_tipo_humano {
+    width: 32px;
+    height: 32px;
+}
+
+.sala_jogador_tipo_humano_preto {
+    background-color: #1A191E;
+    mask: url('../imagens/soldier.svg') no-repeat center / contain;
+    -webkit-mask: url('../imagens/soldier.svg') no-repeat center / contain;
+}
+
+.sala_jogador_tipo_humano_branco {
+    background-color: white;
+    mask: url('../imagens/soldier.svg') no-repeat center / contain;
+    -webkit-mask: url('../imagens/soldier.svg') no-repeat center / contain;
+}
+
+.sala_jogador_box_name {
+    display: inline-block;
+    padding: 8px;
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: bold;
+    color: #4d2e14;
+}
+
+#sala_content .hidden_player_kind {
+    display: none;
+}
+
+/**/
+/**/
+/**/
+
+#sala .btn_criar_sala {
+    width: 116px;
+    height: 31px;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -320px no-repeat;
+    border: 0;
+
+}
+
+#sala .btn_criar_sala:hover {
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -284px no-repeat;
+}
+
+.menu .btn_ranking {
+    width: 116px;
+    height: 31px;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -788px no-repeat;
+    border: 0;
+
+}
+
+.menu .btn_ranking:hover {
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -823px no-repeat;
+}
+
+#sala .btn_regras {
+    width: 25px;
+    height: 28px;
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -33px no-repeat;
+    border: 0;
+}
+
+#sala .btn_regras:hover {
+    background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px 0px no-repeat;
 }

@@ -29,6 +29,7 @@
     height: 82px;
     text-align: center;
     background: #fff;
+    box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, .3);
 }
 
 .menu_jogadores_box_title {

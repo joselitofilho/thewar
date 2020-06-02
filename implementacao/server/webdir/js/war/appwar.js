@@ -140,7 +140,7 @@ function posAberturaSocket(valor) {
 }
 
 function posRecebimentoMensagemServidor(valor) {
-    // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
+    console.log('[DEBUG]', 'Recebeu MSG ' + valor);
     var jsonMensagem = JSON.parse(valor);
     if (jsonMensagem.tipo === TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);
@@ -239,7 +239,7 @@ function finalizarTurno() {
 }
 
 function atacar() {
-    if (_posicaoJogadorDaVez == _posicaoJogador) {
+    if (_posicaoJogadorDaVez === _posicaoJogador) {
         var territorios = [];
         var qtdDadosDefesa = _territorios.quantidadeDeTropaDoTerritorio(_territorioAlvoAtaque);
         var qtdDadosAtaque = 0;
@@ -259,6 +259,7 @@ function atacar() {
         // TODO: Desabilitar quando a idéia estiver mais amadurecida...
         //_mapaGoogle.fitBounds(bounds);
 
+        console.log('_jaPodeAtacar', _jaPodeAtacar, qtdDadosDefesa, qtdDadosAtaque);
         if (qtdDadosDefesa > 0 && qtdDadosAtaque > 0 && _jaPodeAtacar) {
             _jaPodeAtacar = false;
             var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);

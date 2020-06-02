@@ -92,6 +92,14 @@ function comunicacao_alteraPosicaoNaSala(sala, posicao) {
         });
 }
 
+function comunicacao_alteraTipoPosicaoSala(sala, posicao) {
+    return new Mensagem(TipoMensagem.altera_tipo_posicao_na_sala,
+        {
+            sala: sala,
+            posicao: posicao
+        });
+}
+
 function comunicacao_MsgChatJogo(texto) {
     return new Mensagem(TipoMensagem.msg_chat_jogo,
         {
