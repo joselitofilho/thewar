@@ -1,5 +1,5 @@
 import json
-
+from src.turno import *
 
 class TipoMensagem:
     altera_posicao_na_sala = "AlteraPosicaoNaSala"
@@ -132,6 +132,7 @@ class AcaoTurno(object):
         self.numeroDoTurno = numeroDoTurno
         self.vezDoJogador = infoJogadorDaVez
         self.tempoRestante = tempoRestante
+        self.timeoutSemTolerancia = Turno.TIMEOUT_SEM_TOLERANCIA
         self.valorDaTroca = valorDaTroca
         self.infoJogadores = infoJogadores
         self.jogadorQueComecou = jogadorQueComecou

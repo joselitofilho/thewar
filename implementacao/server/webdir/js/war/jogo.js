@@ -438,8 +438,9 @@ function processarMsg_turno(msgParams) {
     _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
     $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
 
-    var tempoTotal = Number(msgParams.tempoRestante);
-    jogo_iniciaBarraDeProgresso(tempoTotal);
+    const tempoTotal = Number(msgParams.tempoRestante);
+    const timeoutSemTolerancia = Number(msgParams.timeoutSemTolerancia);
+    jogo_iniciaBarraDeProgresso(tempoTotal, timeoutSemTolerancia);
 
     jogo_alteraInfoTurno(msgParams);
 
@@ -637,9 +638,9 @@ function jogo_enviaMsg(texto) {
 var _loopTempoRestante = null;
 var _timeoutTempoRestante = null;
 
-function jogo_iniciaBarraDeProgresso(tempoTotal) {
+function jogo_iniciaBarraDeProgresso(tempoTotal, timeoutSemTolerancia) {
     // TODO: minutosTotal também deveria vir do servidor.
-    var minutosTotal = 1.5 * 60.0;
+    const minutosTotal = timeoutSemTolerancia;
 
     if (_loopTempoRestante != null || _timeoutTempoRestante != null) {
         clearInterval(_loopTempoRestante);
