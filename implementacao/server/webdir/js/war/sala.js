@@ -52,11 +52,17 @@ jogos.war.Sala = function () {
         $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "hidden_player_kind");
     };
 
-    this.preencheJogador = function (sala, posicao, usuario, tipo) {
+    this.preencheJogador = function (sala, posicao, usuario, tipo, dono) {
         if (sala === _salaDoJogador) {
             $("#jogador" + (posicao + 1)).html(usuario);
         }
         $("#sala" + sala + "_jogador" + (posicao + 1)).html(usuario);
+
+        if (dono) {
+            $('#sala' + sala + '_jogador' + (posicao + 1)).css('text-decoration', 'underline');
+        } else {
+            $('#sala' + sala + '_jogador' + (posicao + 1)).css('text-decoration', '');
+        }
 
         if (tipo === 'disable') {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').addClass("hidden_player_kind");
@@ -190,7 +196,7 @@ function processarMsg_info_sala(msgParams) {
                 let posicaoJogador = Number(jog.posicao);
                 let usuario = jog.usuario;
                 let tipo = jog.tipo;
-                _sala.preencheJogador(sala, posicaoJogador, usuario, tipo);
+                _sala.preencheJogador(sala, posicaoJogador, usuario, tipo, jog.dono);
 
                 if (jog.dono && _usuario === usuario && estado === 'sala_criada') {
                     $('#btnIniciarPartida' + sala).css('visibility', 'visible');
@@ -240,13 +246,16 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
     if (msgParams) {
         if (!_jogadorEstaEmJogo) this.tocarSom(this, "entrou.mp3");
 
-        var posicaoAntigaJogador = Number(msgParams.posicaoAntiga);
-        _sala.limpaPosicao(msgParams.sala, posicaoAntigaJogador);
+        const sala = msgParams.sala;
+        const posicaoAntigaJogador = Number(msgParams.posicaoAntiga);
+        _sala.limpaPosicao(sala, posicaoAntigaJogador);
 
-        var usuario = msgParams.jogadorDaSala.usuario;
-        var novaPosicaoJogador = Number(msgParams.jogadorDaSala.posicao);
-        var tipo = msgParams.jogadorDaSala.tipo;
-        _sala.preencheJogador(msgParams.sala, novaPosicaoJogador, usuario, tipo);
+        const usuario = msgParams.jogadorDaSala.usuario;
+        const novaPosicaoJogador = Number(msgParams.jogadorDaSala.posicao);
+        const tipo = msgParams.jogadorDaSala.tipo;
+        const dono = msgParams.jogadorDaSala.dono;
+        $('#sala' + sala + '_jogador' + (posicaoAntigaJogador + 1)).css('text-decoration', '');
+        _sala.preencheJogador(msgParams.sala, novaPosicaoJogador, usuario, tipo, dono);
 
         if (_posicaoJogador === msgParams.posicaoAntiga) {
             _posicaoJogador = Number(msgParams.jogadorDaSala.posicao);
@@ -284,7 +293,7 @@ function processarMsg_lobby(msgParams) {
                 var posicaoJogador = Number(jog.posicao);
                 var usuario = jog.usuario;
                 var tipo = jog.tipo;
-                _sala.preencheJogador(sala, posicaoJogador, usuario, tipo);
+                _sala.preencheJogador(sala, posicaoJogador, usuario, tipo, jog.dono);
 
                 if (usuario === _usuario && estado === 'jogo_em_andamento') {
                     _sala.alteraBtnEntrar('reentrar', sala);
