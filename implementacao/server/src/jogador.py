@@ -1,3 +1,4 @@
+import operator
 from territorio import *
 
 
@@ -81,6 +82,40 @@ class JogadorDoJogo(object):
                 temOceania = False
         if temOceania:
             retorno.append(GrupoTerritorio.Oceania)
+
+        return retorno
+
+    def territoriosPorGrupo(self, listaGrupo, codigosTerritorios):
+        territorios = []
+        for terr in codigosTerritorios:
+            if terr in listaGrupo:
+                territorios.append(terr)
+        return territorios
+
+    def densidadePorGrupoTerritorio(self, listaGrupo, codigosTerritorios):
+        qtd = 0
+        for terr in listaGrupo:
+            if terr not in codigosTerritorios:
+                qtd = qtd + 1
+        return 100.0 - (qtd * 100.0 / len(listaGrupo))
+
+    def densidadeTodosGruposTerritorio(self):
+        retorno = {}
+
+        codigosTerritorios = []
+        for terr in self.territorios:
+            codigosTerritorios.append(terr.codigo)
+
+        retorno[GrupoTerritorio.Asia] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAsia, codigosTerritorios)
+        retorno[GrupoTerritorio.AmericaDoNorte] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAmericaDoNorte,
+                                                                              codigosTerritorios)
+        retorno[GrupoTerritorio.Europa] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaEuropa, codigosTerritorios)
+        retorno[GrupoTerritorio.Africa] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAfrica, codigosTerritorios)
+        retorno[GrupoTerritorio.AmericaDoSul] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAmericaDoSul,
+                                                                            codigosTerritorios)
+        retorno[GrupoTerritorio.Oceania] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaOceania, codigosTerritorios)
+
+        retorno = sorted(retorno.items(), key=operator.itemgetter(1), reverse=True)
 
         return retorno
 

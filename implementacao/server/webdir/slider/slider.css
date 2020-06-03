@@ -92,8 +92,8 @@
 
 #slider-mover-tropas .btn-mover {
     float: right;
-    background: url('slider-btn-mover.png') no-repeat;
     padding-right: 8px;
+    background: url('slider-btn-mover.png') no-repeat;
 }
 
 #slider-mover-tropas .btn-mover:hover {

@@ -200,10 +200,18 @@
 }
 
 #sala_content .sala_titulo {
+    display: inline-flex;
     flex: 1;
     color: #4d2e14;
     font-weight: bold;
     font-size: 24px;
+    height: 37px;
+}
+
+#sala_content .sala_titulo p {
+    color: tomato;
+    font-size: 18px;
+    line-height: 37px;
 }
 
 #sala_content .sala_menu {

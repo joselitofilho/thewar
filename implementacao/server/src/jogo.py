@@ -222,22 +222,26 @@ class Jogo(object):
         ok = False
         for i in range(len(self.ordemJogadores)):
             self.indiceOrdemJogadores = (self.indiceOrdemJogadores + 1) % len(self.ordemJogadores)
-            print
-            'indiceOrdemJogadores', self.indiceOrdemJogadores
+            print 'indiceOrdemJogadores', self.indiceOrdemJogadores
             self.posicaoJogadorDaVez = self.ordemJogadores[self.indiceOrdemJogadores]
-            print
-            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
+            print 'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadorDaVezConquistouTerritorio = False
 
-            # Verifica se o jogador esta logado na sala e nao foi destruido.
-            # TODO: Retirar essa dependencia de self.clientes...
-            # if self.posicaoJogadorDaVez in self.clientes.keys():
-            if not comVerificacaoExtra:
-                ok = True
-                break
-            elif len(self.jogadores[self.posicaoJogadorDaVez].territorios) > 0:
-                ok = True
-                break
+            jogador = self.jogadores[self.posicaoJogadorDaVez]
+            jogadorEstaOn = True
+            if jogador.tipo == TipoJogador.humano:
+                # Verifica se o jogador esta logado na sala e nao foi destruido.
+                # TODO: Se o jogador não estiver na sala, usar um BOT no lugar.
+                jogadorEstaOn = self.posicaoJogadorDaVez in self.clientes.keys()
+
+            if jogadorEstaOn:
+                if not comVerificacaoExtra:
+                    ok = True
+                    break
+                elif len(jogador.territorios) > 0:
+                    ok = True
+                    break
+
 
         if not ok and self.gerenciador != None:
             self.gerenciador.jogoTerminou(self.nome)
@@ -337,10 +341,10 @@ class Jogo(object):
     def finalizaTurno_I(self):
         turno = self.turno
         erro = True
+        jogador = self.jogadores[self.posicaoJogadorDaVez]
 
         if turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais:
             if turno.quantidadeDeTropas == 0:
-                jogador = self.jogadores[self.posicaoJogadorDaVez]
                 if len(jogador.gruposTerritorio()) > 0:
                     turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
                     turno.gruposTerritorio = list(jogador.gruposTerritorio())
@@ -361,8 +365,6 @@ class Jogo(object):
                 except Exception:
                     logging.debug("Nao tem grupo territorio para remover.")
 
-                jogador = self.jogadores[self.posicaoJogadorDaVez]
-
                 if len(turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
                         turno.tipoAcao = TipoAcaoTurno.trocar_cartas
@@ -376,7 +378,6 @@ class Jogo(object):
 
         elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             if turno.quantidadeDeTropas == 0:
-                jogador = self.jogadores[self.posicaoJogadorDaVez]
                 if len(jogador.cartasTerritorio) > 2:
                     turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
@@ -388,7 +389,6 @@ class Jogo(object):
                 erro = False
 
         elif turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
-            jogador = self.jogadores[self.posicaoJogadorDaVez]
             logging.debug("Obrigatorio passar a vez? " + str(self.obrigatorioPassarAVez))
             if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
                 if self.obrigatorioPassarAVez:
@@ -436,7 +436,7 @@ class Jogo(object):
                 self.gerenciador.jogoTerminou(self.nome)
 
         if erro:
-            self.enviaMsgParaCliente(TipoMensagem.erro, None, self.clientes[self.posicaoJogadorDaVez])
+            self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
     def finalizaTurno(self, usuario):
         posicaoJogador = -1
@@ -536,7 +536,6 @@ class Jogo(object):
         turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
-        socket = self.clientes[posicaoJogador]
 
         if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.atacar:
@@ -630,9 +629,9 @@ class Jogo(object):
                                                 jogador.cartasTerritorio.extend(jogadorDefesa.cartasTerritorio)
 
                                                 # Envia as cartas atualizadas para o cliente.
-                                                self.enviaMsgParaCliente(TipoMensagem.cartas_territorio,
+                                                self.enviaMsgParaJogador(TipoMensagem.cartas_territorio,
                                                                          jogador.cartasTerritorio,
-                                                                         self.clientes[jogador.posicao])
+                                                                         jogador)
 
                                                 # Envia para todos que o jogador foi destruido.
                                                 self.enviaMsgParaTodos(TipoMensagem.jogador_destruido,
@@ -674,7 +673,7 @@ class Jogo(object):
                         temErro = True
 
                     if temErro:
-                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                        self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
                     self.estaAtacando = False
 
@@ -692,7 +691,6 @@ class Jogo(object):
         turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
-        socket = self.clientes[posicaoJogador]
 
         if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.mover:
@@ -710,9 +708,9 @@ class Jogo(object):
                                                      doTerritorioObj, paraOTerritorioObj,
                                                      quantidade))
                     else:
-                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                        self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
                 else:
-                    self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                    self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
             elif turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
                 if jogador.temTerritorio(doTerritorio) and \
@@ -734,15 +732,14 @@ class Jogo(object):
                                                      doTerritorioObj, paraOTerritorioObj,
                                                      quantidade))
                     else:
-                        self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                        self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
                 else:
-                    self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                    self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
     def moveAposConquistarTerritorio(self, usuario, quantidade):
         turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
-        socket = self.clientes[posicaoJogador]
 
         if jogador.usuario == usuario and turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
             paraOTerritorio = turno.territorioConquistado
@@ -764,7 +761,6 @@ class Jogo(object):
         turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
-        socket = self.clientes[posicaoJogador]
 
         logging.debug("Troca de cartas territorio: " + ", ".join(cartasTerritorio))
 
@@ -780,15 +776,13 @@ class Jogo(object):
                     cartasParaTroca.append(carta)
 
             if len(cartasParaTroca) != 3:
-                self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
             else:
                 # Se chegou aqui, eh porque o jogador tem as cartas dos territorios.
 
                 # Verifica se a troca pode ser feita.
                 #   - 3 formas iguais
                 #   - 3 formas diferentes
-
-                print
 
                 podeTrocar = False
                 if cartasParaTroca[0].codigoTerritorio == CartasTerritorio.Coringa or \
@@ -805,6 +799,8 @@ class Jogo(object):
                 if podeTrocar:
                     turno.trocouCartas = True
 
+                    self.colocaTropaNaTrocaDeCartasTerritorios(posicaoJogador, cartasParaTroca)
+
                     # Envia informacao do turno.
                     turno.quantidadeDeTropas = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
                     self.numeroDaTroca += 1
@@ -813,16 +809,14 @@ class Jogo(object):
                     acaoDoTurno = self.criaAcaoDoTurno(turno)
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
-                    self.colocaTropaNaTrocaDeCartasTerritorios(posicaoJogador, cartasParaTroca)
-
                     # Remove e envia ao jogador suas cartas de territorios atualizadas.
                     for carta in cartasParaTroca:
                         jogador.removeCartaTerritorio(carta)
                         self.cartasTerritorioDescartadas.append(carta);
-                    self.enviaMsgParaCliente(TipoMensagem.cartas_territorio, jogador.cartasTerritorio,
-                                             self.clientes[self.posicaoJogadorDaVez])
+                    self.enviaMsgParaJogador(TipoMensagem.cartas_territorio, jogador.cartasTerritorio,
+                                             jogador)
                 else:
-                    self.enviaMsgParaCliente(TipoMensagem.erro, None, socket)
+                    self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
         return turno.trocouCartas
 
@@ -852,8 +846,8 @@ class Jogo(object):
             cartaTerritorio = self.pegaUmaCartaTerritorioDoBaralho()
             jogador.adicionaCartaTerritorio(cartaTerritorio)
 
-            self.enviaMsgParaCliente(TipoMensagem.cartas_territorio,
-                                     jogador.cartasTerritorio, self.clientes[self.posicaoJogadorDaVez])
+            self.enviaMsgParaJogador(TipoMensagem.cartas_territorio,
+                                     jogador.cartasTerritorio, jogador)
 
             self.jogadorDaVezConquistouTerritorio = False
 
@@ -924,16 +918,16 @@ class Jogo(object):
                                        EntrouNoJogo(usuario, posicao, total_territorios, total_cartas_territorio))
 
                 jogador = self.jogadores[posicao];
-                self.enviaMsgParaCliente(TipoMensagem.carrega_jogo,
+                self.enviaMsgParaJogador(TipoMensagem.carrega_jogo,
                                          CarregaJogo(self.posicaoJogadorDaVez,
                                                      territoriosDosJogadores,
                                                      listaJogadoresInfoCurta,
                                                      jogador.objetivo,
                                                      jogador.cartasTerritorio),
-                                         cliente)
+                                         jogador)
 
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
-                self.enviaMsgParaCliente(TipoMensagem.turno, acaoDoTurno, cliente)
+                self.enviaMsgParaJogador(TipoMensagem.turno, acaoDoTurno, jogador)
 
                 break
 
@@ -979,7 +973,7 @@ class Jogo(object):
                     for p in v.jogadoresDestruidos:
                         quemDestruiuQuem[v.usuario].append(self.jogadores[p].usuario)
 
-            pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem)
+            pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem, self.cpus)
             self.pontuacaoPelaVitoria = pontuacao.contabilizaPontuacaoDoVencedor()
             pontuacao.contabilizaPontuacaoDosQueNaoVenceram()
 
@@ -989,6 +983,13 @@ class Jogo(object):
 
     def temJogadorOnLine(self):
         return len(self.clientes) > 0
+
+    def territoriosInimigos(self, usuario):
+        territorios = []
+        for j in self.jogadores.values():
+            if j.usuario != usuario:
+                territorios = territorios + j.territorios
+        return territorios
 
     def msgChat(self, usuario, texto):
         posicao = self.posicaoDoUsuario(usuario)

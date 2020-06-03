@@ -89,6 +89,17 @@ class GrupoTerritorio:
 
     BonusPorGrupo = {Asia: 7, AmericaDoNorte: 5, Europa: 5, Africa: 3, AmericaDoSul: 2, Oceania: 2}
 
+    FronteirasContinentes = {
+        Asia: [CodigoTerritorio.Aral, CodigoTerritorio.India, CodigoTerritorio.Omsk, CodigoTerritorio.OrienteMedio,
+               CodigoTerritorio.Vietna, CodigoTerritorio.Vladivostok],
+        AmericaDoNorte: [CodigoTerritorio.Alaska, CodigoTerritorio.Groelandia, CodigoTerritorio.Mexico],
+        Europa: [CodigoTerritorio.Islandia, CodigoTerritorio.Moscou, CodigoTerritorio.Polonia,
+                 CodigoTerritorio.Portugal],
+        Africa: [CodigoTerritorio.Argelia, CodigoTerritorio.Egito],
+        AmericaDoSul: [CodigoTerritorio.Brasil, CodigoTerritorio.Colombia],
+        Oceania: [CodigoTerritorio.Borneo, CodigoTerritorio.Sumatra]
+    }
+
 
 class FronteiraTerritorio(object):
     Fronteiras = {
