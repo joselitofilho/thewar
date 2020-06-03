@@ -10,62 +10,12 @@ from src.carta import *
 from .iainterface import IAInterface
 
 
-class IALucy(IAInterface):
+class IALucy(IAInterface, object):
     def __init__(self, sufixo=''):
-        self.usuario = 'Lucy' + sufixo
-        self.jogador = None
+        super(IALucy, self).__init__('Lucy' + sufixo)
 
-        self.jogando = False
-        self.atacando = False
-
-        self.timeout = None
-        self.timeout_coloca_tropa = None
-        self.timeout_coloca_tropa_grupo_territorio = None
-        self.timeout_trocar_cartas = None
-        self.timeout_ataca = None
-        self.timeout_move_apos_conquistar_territorio = None
-        self.timeout_finaliza_turno = None
-
-    def usuario(self):
-        return self.usuario
-
-    def jogador_ref(self, value):
-        self.jogador = value
-
-    def processa_msg(self, jogo, msg):
-        mensagem = Mensagem()
-        mensagem.fromJson(msg)
-        if mensagem.tipo == TipoMensagem.turno and not self.jogando:
-            params = mensagem.params
-            if params['vezDoJogador']['usuario'] == self.usuario:
-                self.jogando = True
-                self.processa_msg_turno(self.usuario, self.jogador, jogo, params)
-        elif mensagem.tipo == TipoMensagem.atacar and self.atacando:
-            params = mensagem.params
-            if params['jogadorAtaque']['usuario'] == self.usuario:
-                self.processa_msg_atacar(self.usuario, self.jogador, jogo, params)
-
-    def processa_msg_turno(self, usuario, jogador, jogo, params):
-        if params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_globais or params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
-            self.turno_distribuir_tropas_globais(usuario, jogador, jogo, params)
-        elif params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
-            self.turno_distribuir_tropas_grupo_territorio(usuario, jogador, jogo, params)
-        elif params['tipoAcao'] == TipoAcaoTurno.trocar_cartas:
-            self.turno_trocar_cartas(usuario, jogador, jogo, params)
-        elif params['tipoAcao'] == TipoAcaoTurno.atacar:
-            self.turno_atacar(usuario, jogador, jogo)
-        elif params['tipoAcao'] == TipoAcaoTurno.mover:
-            self.timeout = Timeout(1, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-            self.timeout.start()
-
-    def turno_distribuir_tropas_globais(self, usuario, jogador, jogo, params):
-        self.timeout_coloca_tropa = Timeout(2, self.coloca_tropa,
-                                            {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
-        self.timeout_coloca_tropa.start()
-
-    def coloca_tropa(self, usuario, jogador, jogo, params):
+    def acao_coloca_tropa(self, usuario, jogador, jogo, params):
         quantidade_de_tropas = params['quantidadeDeTropas']
-
         densidades = jogador.densidadeTodosGruposTerritorio()
         grupo = None
         for densidade in densidades:
@@ -84,15 +34,9 @@ class IALucy(IAInterface):
 
         jogo.colocaTropaReq(usuario, territorio, quantidade_de_tropas)
 
-        self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-        self.timeout_finaliza_turno.start()
+        return True
 
-    def turno_distribuir_tropas_grupo_territorio(self, usuario, jogador, jogo, params):
-        self.timeout_coloca_tropa_grupo_territorio = Timeout(2, self.coloca_tropa_grupo_territorio,
-                                            {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
-        self.timeout_coloca_tropa_grupo_territorio.start()
-
-    def coloca_tropa_grupo_territorio(self, usuario, jogador, jogo, params):
+    def acao_coloca_tropa_grupo_territorio(self, usuario, jogador, jogo, params):
         grupo_territorio = params['grupoTerritorio']
         quantidade_de_tropas = params['quantidadeDeTropas']
 
@@ -102,18 +46,9 @@ class IALucy(IAInterface):
 
         jogo.colocaTropaReq(usuario, territorio, quantidade_de_tropas)
 
-        self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-        self.timeout_finaliza_turno.start()
+        return True
 
-    def turno_distribuir_tropas_troca_de_cartas(self, usuario, jogador, jogo, params):
-        pass
-
-    def turno_trocar_cartas(self, usuario, jogador, jogo, params):
-        self.timeout_trocar_cartas = Timeout(2, self.trocar_cartas,
-                                             {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
-        self.timeout_trocar_cartas.start()
-
-    def trocar_cartas(self, usuario, jogador, jogo, params):
+    def acao_trocar_cartas(self, usuario, jogador, jogo, params):
         minhas_cartas = jogador.cartasTerritorio
         if len(minhas_cartas) >= 3:
             cartasTriangulo = []
@@ -159,32 +94,12 @@ class IALucy(IAInterface):
                         cartas_para_troca.append(cartasCoringa.pop(0).codigoTerritorio)
 
             if len(cartas_para_troca) == 3:
-                self.jogando = False
                 jogo.trocaCartasTerritorio(usuario, cartas_para_troca)
-                return
+                return False
 
-        self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-        self.timeout_finaliza_turno.start()
+        return True
 
-
-    def processa_msg_atacar(self, usuario, jogador, jogo, params):
-        conquistou_territorio = params['conquistouTerritorio']
-
-        if conquistou_territorio:
-            quantidade = min(params['territoriosDoAtaque'][0]['quantidadeDeTropas'] - 1, 1)
-            self.timeout_move_apos_conquistar_territorio = Timeout(2, self.move_apos_conquistar_territorio,
-                                                                   {'usuario': usuario, 'jogador': jogador,
-                                                                    'jogo': jogo, 'quantidade': quantidade})
-            self.timeout_move_apos_conquistar_territorio.start()
-        else:
-            self.turno_atacar(usuario, jogador, jogo)
-
-    def turno_atacar(self, usuario, jogador, jogo):
-        self.atacando = True
-        self.timeout_ataca = Timeout(2, self.ataca, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
-        self.timeout_ataca.start()
-
-    def ataca(self, usuario, jogador, jogo):
+    def acao_ataca(self, usuario, jogador, jogo):
         meus_territorios = jogador.territorios
         random.shuffle(meus_territorios)
         territoriosInimigos = jogo.territoriosInimigos(usuario)
@@ -195,21 +110,15 @@ class IALucy(IAInterface):
                     if territorio.quantidadeDeTropas >= inimigo.quantidadeDeTropas + 3 and FronteiraTerritorio.TemFronteira(
                             inimigo.codigo, territorio.codigo):
                         jogo.ataca(usuario, [territorio.codigo], inimigo.codigo)
-                        return
+                        return False
 
-        self.atacando = False
-        self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-        self.timeout_finaliza_turno.start()
+        return True
 
-    def move_apos_conquistar_territorio(self, usuario, jogador, jogo, quantidade):
+    def acao_move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
+        quantidade = min(params['territoriosDoAtaque'][0]['quantidadeDeTropas'] - 1, 1)
         jogo.moveAposConquistarTerritorio(usuario, quantidade)
 
-        self.turno_atacar(usuario, jogador, jogo)
+        return True
 
-    def turno_mover(self, jogo, params):
-        pass
-
-    def finaliza_turno(self, jogo, usuario):
-        self.atacando = False
-        self.jogando = False
-        jogo.finalizaTurno(usuario)
+    def acao_move(self, usuario, jogador, jogo):
+        return True

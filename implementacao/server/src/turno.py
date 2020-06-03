@@ -3,7 +3,8 @@ from tipoAcaoTurno import *
 
 
 class Turno(object):
-    TIMEOUT = (1.5 * 60) + 4
+    TIMEOUT_SEM_TOLERANCIA = 1.5 * 60
+    TIMEOUT = TIMEOUT_SEM_TOLERANCIA + 4
 
     def __init__(self):
         self.numero = 1
@@ -54,8 +55,8 @@ class Turno(object):
     @property
     def tempoRestante(self):
         if self.loopTimeout != None:
-            return self.TIMEOUT - self.loopTimeout.tempo - 4
-        return self.TIMEOUT - 4
+            return self.TIMEOUT_SEM_TOLERANCIA - self.loopTimeout.tempo
+        return self.TIMEOUT_SEM_TOLERANCIA
 
     def __del__(self):
         self.paraTimeout()
