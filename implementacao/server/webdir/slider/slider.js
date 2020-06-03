@@ -77,6 +77,6 @@ jogos.war.Slider = function (divSlider) {
     };
 
     this.alteraPosicionamentoNoHTML = function (posicao) {
-        divSlider.offset({top: posicao.top, left: posicao.left});
+        divSlider.offset({top: posicao.top + 30, left: posicao.left});
     };
 };

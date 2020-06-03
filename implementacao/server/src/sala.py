@@ -193,8 +193,9 @@ class Sala(object):
                 elif jogadorDaPosicao.tipo == TipoJogador.desabilitado:
                     return self.habilita_posicao(posicao)
             else:
-                # return self.adiciona_cpu(posicao)
-                return self.desabilita_posicao(posicao, False)
+                # TODO: VIP
+                return self.adiciona_cpu(posicao)
+                # return self.desabilita_posicao(posicao, False)
 
         return None
 

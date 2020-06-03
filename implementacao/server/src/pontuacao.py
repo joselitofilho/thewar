@@ -5,28 +5,31 @@ from pontuacaodb import *
 
 
 class Pontuacao(object):
-    def __init__(self, usuarioVencedor, usuarios, quemDestruiuQuem, baseDeDados='war.db'):
+    def __init__(self, usuarioVencedor, usuarios, quemDestruiuQuem, cpus, baseDeDados='war.db'):
         self.usuarioVencedor = usuarioVencedor
         self.usuarios = usuarios
         self.quemDestruiuQuem = quemDestruiuQuem
         self.baseDeDados = baseDeDados
+        self.cpus = cpus
         # TODO: Pegar o id dos usuarios e guarda-lo.
         # self.idUsuarioVencedor
         # self.idsUsuarios
 
     def contabilizaPontuacaoDoVencedor(self):
         pontos = 0
-        qtdUsuarios = len(self.usuarios)
-        if qtdUsuarios == 3:
-            pontos = 200
-        elif qtdUsuarios == 4:
-            pontos = 300
-        elif qtdUsuarios == 5:
-            pontos = 500
-        elif qtdUsuarios == 6:
-            pontos = 800
+        # TODO: Avaliar pontuação jogando contra a IA. Talvez pelo tipo dela...
+        if len(self.cpus) == 0:
+            qtdUsuarios = len(self.usuarios)
+            if qtdUsuarios == 3:
+                pontos = 200
+            elif qtdUsuarios == 4:
+                pontos = 300
+            elif qtdUsuarios == 5:
+                pontos = 500
+            elif qtdUsuarios == 6:
+                pontos = 800
 
-        pontosExtra = self.contabilizaPontosExtra(self.usuarioVencedor)
+        pontosExtra = self.contabilizaPontosExtra(self.usuarioVencedor, self.cpus)
         pontos += pontosExtra
 
         pontuacaoDB = PontuacaoDB(self.baseDeDados)
@@ -56,7 +59,7 @@ class Pontuacao(object):
                 continue
 
             destruidoPorAlguem = self.usuarioFoiDestruidoPorAlguem(usuario)
-            pontosExtra = self.contabilizaPontosExtra(usuario)
+            pontosExtra = self.contabilizaPontosExtra(usuario, self.cpus)
 
             pontuacaoDBOAtual = pontuacaoDB.pontuacaoDBODoUsuario(usuario)
             novaPontuacaoDBO = PontuacaoDBO()
@@ -87,10 +90,13 @@ class Pontuacao(object):
 
         return False
 
-    def contabilizaPontosExtra(self, usuario):
+    def contabilizaPontosExtra(self, usuario, cpus):
         pontosExtra = 0
-        for k, v in self.quemDestruiuQuem.iteritems():
+        for k, usuarios in self.quemDestruiuQuem.iteritems():
             if k == usuario:
-                pontosExtra = len(v)
+                pontosExtra = len(usuarios)
+                for cpu in cpus:
+                    if cpu in usuarios:
+                        pontosExtra = max(pontosExtra - 1, 0)
                 break
         return pontosExtra * 100

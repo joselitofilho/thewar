@@ -371,9 +371,11 @@ jogos.war.Territorios = function (mapa) {
         if (Object.keys(_poligonosTerritorios).length == 0)
             this.iniciaRegioes();
 
+        const opacity = 0.8;
+
         $.each(grupos["Asia"], function (i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
-                fillOpacity: "0.5",
+                fillOpacity: opacity,
                 fillColor: COR_PREENCHIMENTO_ASIA,
                 strokeColor: COR_BORDA_ASIA
             });
@@ -381,7 +383,7 @@ jogos.war.Territorios = function (mapa) {
 
         $.each(grupos["AmericaDoNorte"], function (i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
-                fillOpacity: "0.5",
+                fillOpacity: opacity,
                 fillColor: COR_PREENCHIMENTO_AMERICA_DO_NORTE,
                 strokeColor: COR_BORDA_AMERICA_DO_NORTE
             });
@@ -389,7 +391,7 @@ jogos.war.Territorios = function (mapa) {
 
         $.each(grupos["Europa"], function (i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
-                fillOpacity: "0.5",
+                fillOpacity: opacity,
                 fillColor: COR_PREENCHIMENTO_EUROPA,
                 strokeColor: COR_BORDA_EUROPA
             });
@@ -397,7 +399,7 @@ jogos.war.Territorios = function (mapa) {
 
         $.each(grupos["Africa"], function (i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
-                fillOpacity: "0.5",
+                fillOpacity: opacity,
                 fillColor: COR_PREENCHIMENTO_AFRICA,
                 strokeColor: COR_BORDA_AFRICA
             });
@@ -405,7 +407,7 @@ jogos.war.Territorios = function (mapa) {
 
         $.each(grupos["AmericaDoSul"], function (i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
-                fillOpacity: "0.5",
+                fillOpacity: opacity,
                 fillColor: COR_PREENCHIMENTO_AMERICA_DO_SUL,
                 strokeColor: COR_BORDA_AMERICA_DO_SUL
             });
@@ -413,7 +415,7 @@ jogos.war.Territorios = function (mapa) {
 
         $.each(grupos["Oceania"], function (i, pais) {
             _poligonosTerritorios[pais.nome].setOptions({
-                fillOpacity: "0.5",
+                fillOpacity: opacity,
                 fillColor: COR_PREENCHIMENTO_OCEANIA,
                 strokeColor: COR_BORDA_OCEANIA
             });

@@ -3,7 +3,7 @@ jogos.war = jogos.war || {};
 
 jogos.war.Sala = function () {
     this.nomeValido = function (id) {
-        if (id === "") return false;
+        if (id === "") return true;
         if (id.length > 10 ||
             id.indexOf('#') !== -1 ||
             id.indexOf('/') !== -1 ||
@@ -61,14 +61,20 @@ jogos.war.Sala = function () {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').addClass("hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_cpu_svg').attr("class", "hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "");
+
+            $('#sala_' + sala + '_titulo_info').css('display', 'none');
         } else if (tipo === 'cpu') {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').addClass("hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_cpu_svg').attr("class", "");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "hidden_player_kind");
+
+            $('#sala_' + sala + '_titulo_info').css('display', '');
         } else {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').removeClass("hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_cpu_svg').attr("class", "hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "hidden_player_kind");
+
+            $('#sala_' + sala + '_titulo_info').css('display', 'none');
         }
     };
 
@@ -81,7 +87,7 @@ jogos.war.Sala = function () {
         let html = '';
         html += '<div id="sala_' + id + '" class="sala_box">';
         html += '    <div class="sala_header">';
-        html += '        <div class="sala_titulo">#' + id + '</div>';
+        html += '        <div class="sala_titulo">#' + id + '&nbsp;<p id="sala_' + id + '_titulo_info">Jogar com o computador reduz a pontuação de vitória.</p></div>';
         html += '        <div class="sala_menu">';
         html += '            <button id="btnIniciarPartida' + id + '" class="btn_iniciar_partida" onclick="iniciarPartida();"></button>';
         // html += '            <button>Pronto</button>';

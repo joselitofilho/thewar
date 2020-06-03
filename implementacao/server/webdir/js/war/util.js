@@ -211,23 +211,5 @@ function utilTerritorio_polygonFadeout(codigoTerritorio, polygon, milliseconds, 
 }
 
 function utilRetiraAcento(palavra) {
-    var caracteresInvalidos = 'àèìòùâêîôûäëïöüáéíóúãõÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÁÉÍÓÚÃÕ';
-    var caracteresValidos = 'aeiouaeiouaeiouaeiouaoAEIOUAEIOUAEIOUAEIOUAO';
-
-    for (i = 0; i < caracteresInvalidos.length; i++) {
-        if (palavra.indexOf(caracteresInvalidos.charAt(i)) != -1) {
-            nova = caracteresValidos.charAt(i);
-            palavra = palavra.replace(caracteresInvalidos.charAt(i), nova);
-        }
-    }
-
-    var acento = "\"'´`^¨~";
-    for (i = 0; i < acento.length; i++) {
-        if (palavra.indexOf(acento.charAt(i)) != -1) {
-            nova = caracteresValidos.charAt(i);
-            palavra = palavra.replace(acento.charAt(i), '');
-        }
-    }
-
-    return palavra;
+    return palavra.replace(/[\W_]+/g," ");
 }
