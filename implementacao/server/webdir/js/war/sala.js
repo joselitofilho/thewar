@@ -53,28 +53,24 @@ jogos.war.Sala = function () {
     };
 
     this.preencheJogador = function (sala, posicao, usuario, tipo) {
-        if (sala === _salaDoJogador)
+        if (sala === _salaDoJogador) {
             $("#jogador" + (posicao + 1)).html(usuario);
+        }
         $("#sala" + sala + "_jogador" + (posicao + 1)).html(usuario);
 
         if (tipo === 'disable') {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').addClass("hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_cpu_svg').attr("class", "hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "");
-
-            $('#sala_' + sala + '_titulo_info').css('display', 'none');
         } else if (tipo === 'cpu') {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').addClass("hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_cpu_svg').attr("class", "");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "hidden_player_kind");
-
             $('#sala_' + sala + '_titulo_info').css('display', '');
         } else {
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_human_svg').removeClass("hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_cpu_svg').attr("class", "hidden_player_kind");
             $('#sala_' + sala + ' #sala_' + sala + '_jogador' + posicao + '_disable_svg').attr("class", "hidden_player_kind");
-
-            $('#sala_' + sala + '_titulo_info').css('display', 'none');
         }
     };
 
@@ -187,6 +183,7 @@ function processarMsg_info_sala(msgParams) {
             _sala.limpaSVGsDoJogador(sala, i);
         }
 
+        $('#sala_' + sala + '_titulo_info').css('display', 'none');
         for (let i = 0; i <= 5; i++) {
             if (listaJogadores[i] != null) {
                 let jog = listaJogadores[i];
@@ -280,6 +277,7 @@ function processarMsg_lobby(msgParams) {
         _sala.alteraBtnEntrar((estado === 'sala_criada') ? 'entrar' : 'assistir', sala);
         $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
 
+        $('#sala_' + sala + '_titulo_info').css('display', 'none');
         for (let i = 0; i <= 5; i++) {
             if (jogadores[i] != null) {
                 var jog = jogadores[i];
