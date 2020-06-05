@@ -30,7 +30,6 @@ function iniciarApp() {
         }
     ];
     mapa.alteraEstilo(estiloDoMapa);
-    //this.tocarSomDeFundo(divMapa);
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);

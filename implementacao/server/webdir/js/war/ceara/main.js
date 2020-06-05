@@ -8,12 +8,11 @@ function iniciarApp() {
     var divMapa = document.getElementById("mapa");
     mapa = new jogowar.mapa.Mapa();
     mapa.inicia(divMapa, -6.14707264239706, -38.7278609210449, 7);
-    //this.tocarSomDeFundo(divMapa);
 
     _territorios = new jogos.war.Territorios(_mapaGoogle);
     _territorios.inicia(territorioClickFunc, territorioMouseMoveFunc, territorioMouseOutFunc);
 
-    iniciarControleDeAudio();
+    audio_iniciarControleDeAudio();
 
     _sala = new jogos.war.Sala();
 }
