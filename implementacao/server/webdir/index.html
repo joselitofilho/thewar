@@ -52,6 +52,7 @@
 
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <!---->
 
     <!-- jnotify -->
@@ -61,12 +62,12 @@
     <!--Here is the css file you are using for your project UI included from CDN (content delivery network)
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
 
-    <!-- Audio Player -->
-    <link href="css/audioPlayer.css?ver=1.4" rel="stylesheet">
-    <!---->
-
     <!-- Slider -->
     <link href="slider/slider.css?ver=1.4" rel="stylesheet">
+    <!---->
+
+    <!-- Material-Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!---->
 
     <link href="css/glow.css?ver=1.4" rel="stylesheet">
@@ -257,17 +258,6 @@
     </div>
     <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
 
-    <div class="topo">
-        <div class="menu">
-<!--            TODO: VIP-->
-<!--            <button class="btn_criar_sala" onclick="_sala.abreBoxCriarSala();"></button>-->
-            <button class="btn_criar_sala"
-                    onclick="_sala.cria($('#sala_nomeParaCriar').val()); _sala.fechaBoxCriarSala();"></button>
-            <button class="btn_ranking" onclick="appwar_abrirRanking();"></button>
-            <button class="btn_regras" onclick="appwar_abrirRegras();"></button>
-        </div>
-        <div class="st_jogador"></div>
-    </div>
     <div id="sala_content">
         <!--
          NOTE: As salas são geradas dinâmicamentes.
@@ -324,13 +314,6 @@
         </div>
 
         <div id="mapa"></div>
-
-        <section>
-            <span class="audioSliderTooltip"></span>
-            <div id="audioSlider"></div>
-            <span class="audioPlayerVolume"></span>
-            <audio autoplay id="audioPlayer"></audio>
-        </section>
 
         <div id="acoes_botoes">
             <ul>
@@ -411,8 +394,6 @@
         </div>
 
         <div id="popupBtnAtacar" onclick="atacar();"></div>
-
-        <div id="jogo_sair" onclick="jogo_sair();"></div>
     </div> <!-- div: jogo -->
 
     <div id="lado_direito_jogo">
@@ -441,6 +422,52 @@
     <div id="legenda"></div>
 </div> <!-- div: geral -->
 
+
+<!-- Menu -->
+<div id="menu_principal">
+    <!--TODO: VIP-->
+    <!--onclick="_sala.abreBoxCriarSala();"></button>-->
+    <button id="botao_criar_sala" class="btn-menu" title="Criar sala"
+            onclick="_sala.cria($('#sala_nomeParaCriar').val()); _sala.fechaBoxCriarSala();">
+        <div class="material-icons md-36">add</div>
+    </button>
+    <button id="botao_sair" class="btn-menu" title="Sair da partida" onclick="jogo_sair();">
+        <div class="material-icons md-36">exit_to_app</div>
+    </button>
+    <button id="botao_ranking" class="btn-menu" title="Ranking" onclick="appwar_abrirRanking();">
+        <div class="material-icons md-36">military_tech</div>
+    </button>
+    <button id="botao_configuracoes" class="btn-menu" title="Configurações"
+            onclick="appwar_mostrarEsconderConfiguracoes();">
+        <div class="material-icons md-36">settings</div>
+    </button>
+    <button id="botao_ver_regras" class="btn-menu" title="Ver regras" onclick="appwar_abrirRegras();">
+        <div class="material-icons md-36">contact_support</div>
+    </button>
+</div>
+<div id="menu_configuracoes">
+    <div class="btn_fechar" onclick="appwar_mostrarEsconderConfiguracoes();"></div>
+    <div class="btns-conf-area">
+        <button id="botao_conf_audio" class="btn-conf" onclick="appwar_alteraConfiguracaoAudio();">
+            <div class="material-icons md-36">volume_up</div>
+        </button>
+        <button id="botao_conf_musica" class="btn-conf" onclick="appwar_alteraConfiguracaoMusica();">
+            <div class="material-icons md-36">music_note</div>
+        </button>
+    </div>
+    <!--    <div class="btns-conf-form">-->
+    <!--        <div class="checkbox">-->
+    <!--            <label>-->
+    <!--                <input type="checkbox" data-toggle="toggle" disabled data-onstyle="success" data-offstyle="danger" data-size="mini">-->
+    <!--                Avisar na minha vez-->
+    <!--            </label>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>
+<audio autoplay id="bgMusicPlayer"></audio>
+<audio autoplay id="audioPlayer"></audio>
+<!---->
+
 <div id="bloqueador_tela"></div>
 <div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
 
@@ -459,6 +486,7 @@
 
 <!-- Bootstrap -->
 <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!---->
 
 <!--Here is jQuery UI added from CDN

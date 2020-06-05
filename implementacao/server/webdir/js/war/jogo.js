@@ -19,6 +19,7 @@ function jogo_preparaElementosHtml() {
         $(elemento).css('visibility', 'hidden');
     });
 
+    appwar_atualizarMenuParaJogo();
     $('#bloqueador_tela').css('visibility', 'hidden');
     $('#geral').css('visibility', 'visible');
     $('#jogo').css('visibility', 'visible');
@@ -762,6 +763,7 @@ function jogo_removeElementosHtml() {
     $('.carta_territorio').each(function (i, elemento) {
         $(elemento).attr('class', 'carta_territorio carta_territorio_vazia');
     });
+    appwar_atualizarMenuParaSala();
     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
     $('#slider-mover-tropas').css('visibility', 'hidden');

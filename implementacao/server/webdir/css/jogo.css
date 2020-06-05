@@ -185,17 +185,6 @@
     z-index: 999;
 }
 
-#jogo_sair {
-    position: absolute;
-    top: 8px;
-    right: 305px;
-    width: 40px;
-    height: 40px;
-    background: url('../imagens/sair.png');
-    cursor: pointer;
-    z-index: 999;
-}
-
 #legenda {
     position: absolute;
     width: 234px;

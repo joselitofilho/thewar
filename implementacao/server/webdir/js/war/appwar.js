@@ -140,7 +140,7 @@ function posAberturaSocket(valor) {
 }
 
 function posRecebimentoMensagemServidor(valor) {
-    console.log('[DEBUG]', 'Recebeu MSG ' + valor);
+    // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
     var jsonMensagem = JSON.parse(valor);
     if (jsonMensagem.tipo === TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);
@@ -509,6 +509,8 @@ function appwar_entrar() {
     senha = base64_encode(senha.toString());
     var entrarMsg = comunicacao_entrar($('#inputUsuario').val(), senha);
     _libwebsocket.enviarObjJson(entrarMsg);
+
+    appwar_atualizarMenuParaSala();
 }
 
 function appwar_registrar() {
@@ -535,79 +537,8 @@ function appwar_processaMsg_msg_chat_geral(msgParams) {
     _chatGeral.escreve(msgParams);
 }
 
-function iniciarControleDeAudio() {
-    var audioSlider = $('#audioSlider');
-    var audioSliderTooltip = $('.audioSliderTooltip');
-    var audioPlayer = $('#audioPlayer').get(0);
-
-    audioSliderTooltip.hide();
-
-    audioSlider.slider({
-        value: 20,
-        min: 0,
-        max: 100,
-        range: 'min',
-        animate: true,
-        step: 1,
-        start: function (e, ui) {
-            audioSliderTooltip.fadeIn('fast');
-        },
-        slide: function (e, ui) {
-            var valor = ui.value;
-            var volume = $('.audioPlayerVolume');
-
-            audioSliderTooltip.css('left', valor).text(valor);
-            if (valor <= 5) {
-                volume.css('background-position', '0 0');
-            } else if (valor <= 25) {
-                volume.css('background-position', '0 -25px');
-            } else if (valor <= 75) {
-                volume.css('background-position', '0 -50px');
-            } else {
-                volume.css('background-position', '0 -75px');
-            }
-
-            audioPlayer.volume = ui.value / 100.0;
-        },
-        stop: function (e, ui) {
-            audioSliderTooltip.fadeOut('fast');
-        }
-    });
-}
-
 function appwar_alterarTituloDaPagina(str) {
     document.title = str + ' | Guerra';
-}
-
-function tocarSom(el, soundfile) {
-    var el = $('#audioPlayer').get(0);
-    var volume = $('#audioSlider').slider('value') / 100.0;
-
-    // console.log('[DEBUG]', 'Tocando som: ' + soundfile);
-
-    //if (el.mp3) {
-    //    if(el.mp3.paused) el.mp3.play();
-    //    else el.mp3.pause();
-    //} else {
-    el.mp3 = new Audio("/sons/" + soundfile);
-    el.mp3.volume = volume;
-    el.mp3.play();
-    //}
-}
-
-function tocarSomDeFundo(el) {
-    if (el.mp3) {
-        if (el.mp3.paused) el.mp3.play();
-        else el.mp3.pause();
-    } else {
-        el.mp3 = new Audio("/sons/lux_aeterna.mp3");
-        el.mp3.addEventListener('ended', function () {
-            this.currentTime = 0;
-            this.play();
-        }, false);
-        el.mp3.volume = 0.1;
-        el.mp3.play();
-    }
 }
 
 function appwar_abrirRanking() {
@@ -627,5 +558,104 @@ function inputFormLogin_onkeypress(event) {
     return true;
 }
 
+function appwar_atualizarMenuParaSala() {
+    appwar_atualizarMenu('sala');
+    audio_paraSomDeFundo();
+    // audio_escolheSomDeFundo('/sons/loop_war-drums-95-bpm.wav');
+    audio_escolheSomDeFundo('/sons/loop_civil-war-music.wav');
+    // escolheSomDeFundo('/sons/lux_aeterna.mp3');
+    // escolheSomDeFundo('http://emilcarlsson.se/assets/Avicii%20-%20The%20Nights.mp3');
+    audio_tocarSomDeFundo();
+}
 
-iniciarControleDeAudio();
+function appwar_atualizarMenuParaJogo() {
+    appwar_atualizarMenu('jogo');
+    audio_paraSomDeFundo();
+    audio_escolheSomDeFundo('');
+    // tocarSomDeFundo();
+}
+
+function appwar_atualizarMenu(contexto) {
+    if (contexto === 'sala') {
+        $('#botao_criar_sala').css('display', '');
+        $('#botao_sair').css('display', 'none');
+    } else if (contexto === 'jogo') {
+        $('#botao_criar_sala').css('display', 'none');
+        $('#botao_sair').css('display', '');
+    }
+    $('#menu_principal').css('visibility', 'visible');
+}
+
+function appwar_alteraConfiguracaoAudio() {
+    const value = $('#botao_conf_audio .material-icons').html();
+    if (value === 'volume_up') {
+        $('#botao_conf_audio .material-icons').html('volume_off');
+    } else {
+        $('#botao_conf_audio .material-icons').html('volume_up');
+    }
+}
+
+function appwar_alteraConfiguracaoMusica() {
+    const value = $('#botao_conf_musica .material-icons').html();
+    if (value === 'music_note') {
+        $('#botao_conf_musica .material-icons').html('music_off');
+        audio_paraSomDeFundo();
+    } else {
+        $('#botao_conf_musica .material-icons').html('music_note');
+        audio_tocarSomDeFundo();
+    }
+}
+
+function appwar_mostrarEsconderConfiguracoes() {
+    if ($('#menu_configuracoes').css('visibility') === 'visible') {
+        $('#menu_configuracoes').css('visibility', 'hidden');
+    } else {
+        $('#menu_configuracoes').css('visibility', 'visible');
+    }
+}
+
+function audio_iniciarControleDeAudio() {
+    $("#volume").slider({
+        min: 0,
+        max: 100,
+        value: 25,
+        range: "min",
+        slide: function (event, ui) {
+            setVolume(ui.value / 100);
+        }
+    });
+}
+
+function tocarSom(el, soundfile) {
+    var el = $('#audioPlayer').get(0);
+    var volume = $('#botao_conf_audio .material-icons').html() === 'volume_up' ? 0.5 : 0;
+    el.mp3 = new Audio("/sons/" + soundfile);
+    el.mp3.volume = volume;
+    el.mp3.play();
+}
+
+function audio_escolheSomDeFundo(filename) {
+    var bgMusicPlayer = document.getElementById('bgMusicPlayer');
+    bgMusicPlayer.src = filename;
+    if (filename !== '') {
+        bgMusicPlayer.setAttribute('loop', 'loop');
+        bgMusicPlayer.volume = $('#botao_conf_musica .material-icons').html() === 'music_note' ? 0.3 : 0;
+        bgMusicPlayer.pause();
+        bgMusicPlayer.currentTime = 0;
+    }
+}
+
+function audio_tocarSomDeFundo() {
+    var bgMusicPlayer = document.getElementById('bgMusicPlayer');
+    bgMusicPlayer.setAttribute('loop', 'loop');
+    bgMusicPlayer.volume = $('#botao_conf_musica .material-icons').html() === 'music_note' ? 0.3 : 0;
+    bgMusicPlayer.play();
+}
+
+function audio_paraSomDeFundo() {
+    var bgMusicPlayer = document.getElementById('bgMusicPlayer');
+    bgMusicPlayer.pause();
+    bgMusicPlayer.currentTime = 0;
+}
+
+audio_iniciarControleDeAudio();

@@ -11,7 +11,10 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
     };
 
     this.preencheElementoHtml = function () {
-        const nomeDoadores = this.doadores.map(d => d['nome']) || [];
+        let nomeDoadores = [];
+        if (this.doadores) {
+            nomeDoadores = this.doadores.map(d => d['nome']);
+        }
         const conteudoDaLista = $('#lista_usuarios .conteudo');
         conteudoDaLista.html('');
         for (i = 0; i < this.lista.length; i++) {
