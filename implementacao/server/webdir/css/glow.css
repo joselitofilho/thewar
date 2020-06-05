@@ -1,7 +1,7 @@
 .glow {
-    position: relative;
-    top: -66px;
-    left: -16px;
+    position: absolute;
+    top: -12px;
+    left: auto;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -11,9 +11,9 @@
 }
 
 .particles {
-    position: relative;
-    top: calc(50% - 50px);
-    left: calc(50% - 50px);
+    /*position: absolute;*/
+    /*top: calc(50% - 50px);*/
+    /*left: auto;*/
     width: 100px;
     height: 100px;
 
@@ -21,14 +21,15 @@
 
 .rotate {
     position: relative;
+    left: 50%;
     top: calc(50% - 5px);
-    left: calc(50% - 5px);
+    /*left: calc(50% - 5px);*/
     width: 10px;
     height: 10px;
 }
 
 .angle {
-    position: relative;
+    /*position: relative;*/
     top: 0;
     left: 0;
 }
