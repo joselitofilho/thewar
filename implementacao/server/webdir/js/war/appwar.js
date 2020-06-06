@@ -626,9 +626,9 @@ function audio_iniciarControleDeAudio() {
     });
 }
 
-function tocarSom(el, soundfile) {
+function tocarSom(el, soundfile, force) {
     var el = $('#audioPlayer').get(0);
-    var volume = $('#botao_conf_audio .material-icons').html() === 'volume_up' ? 0.5 : 0;
+    var volume = (force || $('#botao_conf_audio .material-icons').html() === 'volume_up') ? 0.5 : 0;
     el.mp3 = new Audio("/sons/" + soundfile);
     el.mp3.volume = volume;
     el.mp3.play();
@@ -639,7 +639,6 @@ function audio_escolheSomDeFundo(filename) {
     bgMusicPlayer.src = filename;
     if (filename !== '') {
         bgMusicPlayer.setAttribute('loop', 'loop');
-        bgMusicPlayer.volume = $('#botao_conf_musica .material-icons').html() === 'music_note' ? 0.3 : 0;
         bgMusicPlayer.pause();
         bgMusicPlayer.currentTime = 0;
     }
