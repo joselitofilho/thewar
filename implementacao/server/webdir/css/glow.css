@@ -1,6 +1,6 @@
 .glow {
     position: absolute;
-    top: -12px;
+    top: -17px;
     left: auto;
     width: 100px;
     height: 100px;
@@ -11,7 +11,7 @@
 }
 
 .particles {
-    /*position: absolute;*/
+    position: absolute;
     /*top: calc(50% - 50px);*/
     /*left: auto;*/
     width: 100px;
