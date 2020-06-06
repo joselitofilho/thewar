@@ -57,16 +57,14 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     logging.info('%s %s', usuario, self.peer)
 
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
-                    print
-                    "# ", jsonMsg
+                    print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
 
                     _gerenciadorPrincipal.clienteConectou(self, usuario)
                 else:
                     params["status"] = 0
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
-                    print
-                    "# ", jsonMsg
+                    print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.registrar:
@@ -85,8 +83,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     params["status"] = 2
 
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.registrar, params), default=lambda o: o.__dict__)
-                print
-                "# ", jsonMsg
+                print "# ", jsonMsg
                 self.sendMessage(jsonMsg)
             elif mensagem.tipo == TipoMensagem.ranking:
                 ranking = PontuacaoDB().ranking()
@@ -94,16 +91,14 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 ranking['badges'] = Badges().ler_csv(badges_path)
 
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.ranking, ranking), default=lambda o: o.__dict__)
-                print
-                "# ", jsonMsg
+                print "# ", jsonMsg
                 self.sendMessage(jsonMsg)
             else:
                 try:
                     _gerenciadorPrincipal.interpretaMensagem(self, mensagem)
                 except:
                     traceback.print_exc()
-                    print
-                    "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem
+                    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
@@ -124,14 +119,12 @@ class BroadcastServerFactory(WebSocketServerFactory):
 
     def register(self, client):
         if not client in self.clients:
-            print
-            "registered client " + client.peer
+            print "registered client " + client.peer
             self.clients.append(client)
 
     def unregister(self, client):
         if client in self.clients:
-            print
-            "unregistered client " + client.peer
+            print "unregistered client " + client.peer
             _gerenciadorPrincipal.clienteDesconectou(client)
             self.clients.remove(client)
 
@@ -139,8 +132,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
         # print "broadcasting message '%s' .." % msg
         for c in self.clients:
             c.sendMessage(msg)
-            print
-            "message sent to " + c.peer
+            print "message sent to " + c.peer
 
     def usuarioEstaConectado(self, usuario):
         return usuario in self.clientesConectados
@@ -189,8 +181,7 @@ if __name__ == '__main__':
     factory = ServerFactory("ws://localhost:8080",
                             debug=debug,
                             debugCodePaths=debug)
-    print
-    'Servido websocket iniciado na porta 8080.'
+    print 'Servido websocket iniciado na porta 8080.'
 
     factory.protocol = BroadcastServerProtocol
     factory.setProtocolOptions()
@@ -202,8 +193,7 @@ if __name__ == '__main__':
     webdir = File("./webdir")
     web = Site(webdir)
     reactor.listenTCP(9092, web)
-    print
-    'Servido web iniciado na porta 9092.'
+    print 'Servido web iniciado na porta 9092.'
 
     reactor.run()
 

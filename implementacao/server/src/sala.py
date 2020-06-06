@@ -15,8 +15,7 @@ class Sala(object):
         self.jogadores = {}
         self.dono = None
 
-        print
-        "Sala[" + str(self.id) + "] criada."
+        print "Sala[" + str(self.id) + "] criada."
 
     def salaEstaCheia(self):
         return len(self.jogadores) == 6;

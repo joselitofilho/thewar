@@ -3,7 +3,7 @@ from tipoAcaoTurno import *
 
 
 class Turno(object):
-    TIMEOUT_SEM_TOLERANCIA = 1.5 * 60
+    TIMEOUT_SEM_TOLERANCIA = 1 * 60  # TODO: Pegar isso do banco de dados.
     TIMEOUT = TIMEOUT_SEM_TOLERANCIA + 4
 
     def __init__(self):
@@ -46,8 +46,7 @@ class Turno(object):
         try:
             self.loopTimeout.para()
         except:
-            print
-            "Thread foi morta com excecao!"
+            print "Thread foi morta com excecao!"
 
         del self.loopTimeout
         self.loopTimeout = None

@@ -336,8 +336,10 @@ class GerenciadorPrincipal(object):
     def criaSala(self, cliente, usuario, mensagem):
         # TODO: VIP
         # idSala = mensagem.params['sala']
-        idSala = str(len(self.salas.keys()) + 1)
-
+        idSala = 1
+        while str(idSala) in self.salas.keys():
+            idSala = idSala + 1
+        idSala = str(idSala)
         # TODO: Validar nome.
         if idSala not in self.salas.keys() and len(idSala) > 0:
             # Usuario esta em uma sala.
