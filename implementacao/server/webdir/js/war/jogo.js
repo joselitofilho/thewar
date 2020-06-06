@@ -466,7 +466,7 @@ function processarMsg_turno(msgParams) {
 
 function processarMsg_turno_distribuir_tropas_globais(msgParams) {
     if (_posicaoJogador === _posicaoJogadorDaVez) {
-        this.tocarSom(this, "buzina.mp3");
+        this.tocarSom(this, "buzina.mp3", true);
     } else {
         this.tocarSom(this, "turnoDistribuirTropa.mp3");
     }
