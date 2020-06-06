@@ -33,14 +33,6 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
             conteudo += "<div class='grow1'>";
             if (doador) {
                 conteudo += "<div class='box_crown sala_menu_jogadores_box_crown' title='Doador'></div>";
-                // conteudo += '<div class="glow"></div>';
-                // conteudo += '<div class="particles">';
-                // conteudo += '    <div class="rotate">';
-                // conteudo += '        <div class="angle"><div class="size"><div class="position"><div class="pulse"><div class="particle"></div></div></div></div></div>';
-                // conteudo += '        <div class="angle"><div class="size"><div class="position"><div class="pulse"><div class="particle"></div></div></div></div></div>';
-                // conteudo += '        <div class="angle"><div class="size"><div class="position"><div class="pulse"><div class="particle"></div></div></div></div></div>';
-                // conteudo += '    </div>';
-                // conteudo += '</div>';
             }
             conteudo += "</div>";
             conteudo +=

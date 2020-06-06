@@ -84,15 +84,9 @@
 <div id="levels">
     <h1>Patentes</h1>
     <div class="container">
-        <table class="table table-bordered" id="ranking-badges">
-            <thead>
-            <th class="dynatable-head insignia_size" data-dynatable-column="images"></th>
-            <th class="dynatable-head" data-dynatable-column="name">Descrição</th>
-            <th class="dynatable-head" data-dynatable-column="xp">Pontos</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div id="ranking-badges">
+            <!-- Conteúdo gerado. -->
+        </div>
     </div>
 </div>
 
@@ -135,13 +129,23 @@
             badge.images = "<div class='insignia_size insignias_x40_nv" + badge.level + "'></div>";
             badges.push(badge);
         }
-        $('#ranking-badges').dynatable({
-            dataset: {
-                perPageDefault: 10,
-                perPageOptions: [10],
-                records: badges.reverse()
-            }
+
+        badges.sort(function (a, b) {
+            return a.xp < b.xp;
         });
+
+        $('#ranking-badges').html('');
+        let conteudo = '';
+        for (let i = badges.length-1; i >= 0 ; --i) {
+            const badge = badges[i];
+            conteudo = '';
+            conteudo += '<div class="insignia_linha">';
+            conteudo += badge.images;
+            conteudo += '    <div class="insignia_nome">' + badge.name + '</div>';
+            conteudo += '    <div class="insignia_xp">' + badge.xp + '</div>';
+            conteudo += '</div>';
+            $('#ranking-badges').append(conteudo);
+        }
     }
 
     _libwebsocketRanking.FOnOpen(posAberturaSocket);
