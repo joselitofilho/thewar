@@ -122,3 +122,26 @@ thead a:hover, thead a:focus {
     color: #999;
     text-decoration: none;
 }
+
+#ranking-badges {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+#ranking-badges .insignia_linha {
+    display: flex;
+    justify-content: space-between;
+}
+
+#ranking-badges .insignia_nome {
+    width: auto;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+#ranking-badges .insignia_xp {
+    line-height: 40px;
+    vertical-align: middle;
+}
