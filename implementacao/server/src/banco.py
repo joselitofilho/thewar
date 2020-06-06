@@ -19,8 +19,7 @@ class Banco(object):
         except sqlite3.Error, e:
             if self.conn:
                 self.conn.rollback()
-            print
-            "Error %s:" % e.args[0]
+            print "Error %s:" % e.args[0]
 
     def verificaCredenciaisDoUsuario(self, usuario, senha):
         retorno = False

@@ -103,8 +103,7 @@ class Jogo(object):
             for j in range(inicio, fim):
                 territoriosJogador_i.append(territorios[j])
 
-            print
-            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
+            print 'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadores[self.posicaoJogadorDaVez].iniciaTerritorios(territoriosJogador_i)
             listaTerritoriosPorJogador.append(
                 TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
