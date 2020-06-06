@@ -166,7 +166,7 @@ html, body {
 
 #menu_principal {
     display: flex;
-    position: fixed;
+    position: absolute;
     width: 1280px;
     height: 51px;
     color: white;

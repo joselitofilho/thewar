@@ -65,6 +65,10 @@ p.center {
 
 /* dynatable */
 
+.container {
+    margin: 3.875em auto;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -128,11 +132,19 @@ thead a:hover, thead a:focus {
     flex-direction: column;
     justify-content: space-evenly;
     text-align: center;
+    background: white;
+    border-radius: 4px;
+    color: #453122;
+    padding: 16px;
 }
 
 #ranking-badges .insignia_linha {
     display: flex;
     justify-content: space-between;
+}
+
+#ranking-badges .insignia_img {
+    width: 72px;
 }
 
 #ranking-badges .insignia_nome {
@@ -142,6 +154,7 @@ thead a:hover, thead a:focus {
 }
 
 #ranking-badges .insignia_xp {
+    width: 72px;
     line-height: 40px;
     vertical-align: middle;
 }
