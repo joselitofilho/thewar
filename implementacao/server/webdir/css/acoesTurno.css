@@ -85,7 +85,15 @@
     background-position: 0px 0px;
 }
 
+.dado_ataque6 {
+    background-position: -200px 0px;
+}
+
 .dado_defesa {
+    background-position: 0px -39px;
+}
+
+.dado_defesa1 {
     background-position: 0px -39px;
 }
 
