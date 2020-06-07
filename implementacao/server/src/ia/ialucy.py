@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
+import json
 
 from src.mensagens import *
 from src.territorio import *
@@ -27,12 +28,34 @@ class IALucy(IAInterface, object):
         codigosTerritorios = []
         for terr in jogador.territorios:
             codigosTerritorios.append(terr.codigo)
-        meus_territorios = jogador.territoriosPorGrupo(listaGrupo, codigosTerritorios)
+        meus_territorios_por_grupo = jogador.territoriosPorGrupo(listaGrupo, codigosTerritorios)
 
-        random.shuffle(meus_territorios)
-        territorio = meus_territorios[0]
+        meus_territorios = []
+        for terr in jogador.territorios:
+            if terr.codigo in meus_territorios_por_grupo:
+                meus_territorios.append(terr)
 
-        jogo.colocaTropaReq(usuario, territorio, quantidade_de_tropas)
+        territorios_inimigos = jogo.territoriosInimigos(usuario)
+        territorio_inimigo = None
+        meu_territorio_escolhido = None
+
+        for terr in meus_territorios:
+            for terr_inimigo in territorios_inimigos:
+                if FronteiraTerritorio.TemFronteira(terr.codigo, terr_inimigo.codigo):
+                    if territorio_inimigo:
+                        if terr_inimigo.quantidadeDeTropas < territorio_inimigo.quantidadeDeTropas:
+                            territorio_inimigo = terr_inimigo
+                            meu_territorio_escolhido = terr
+                    else:
+                        territorio_inimigo = terr_inimigo
+                        meu_territorio_escolhido = terr
+
+        if meu_territorio_escolhido:
+            territorio_codigo = meu_territorio_escolhido.codigo
+        else:
+            random.shuffle(meus_territorios_por_grupo)
+            territorio_codigo = meus_territorios_por_grupo[0]
+        jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
 
         return True
 
@@ -50,6 +73,7 @@ class IALucy(IAInterface, object):
 
     def acao_trocar_cartas(self, usuario, jogador, jogo, params):
         minhas_cartas = jogador.cartasTerritorio
+        print 'ACAO_TROCAR_CARTAS', usuario, json.dumps(minhas_cartas.__dict__)
         if len(minhas_cartas) >= 3:
             cartasTriangulo = []
             cartasQuadrado = []
@@ -107,7 +131,7 @@ class IALucy(IAInterface, object):
         for territorio in meus_territorios:
             if territorio.quantidadeDeTropas > 3:
                 for inimigo in territoriosInimigos:
-                    if territorio.quantidadeDeTropas >= inimigo.quantidadeDeTropas + 3 and FronteiraTerritorio.TemFronteira(
+                    if territorio.quantidadeDeTropas >= inimigo.quantidadeDeTropas + 2 and FronteiraTerritorio.TemFronteira(
                             inimigo.codigo, territorio.codigo):
                         jogo.ataca(usuario, [territorio.codigo], inimigo.codigo)
                         return False
