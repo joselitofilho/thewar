@@ -767,14 +767,12 @@ class Jogo(object):
                 jogador.usuario == usuario and \
                 len(cartasTerritorio) == 3:
 
-            jogador = self.jogadores[posicaoJogador]
-
             cartasParaTroca = []
             for carta in jogador.cartasTerritorio:
                 if carta.codigoTerritorio in cartasTerritorio:
                     cartasParaTroca.append(carta)
 
-            if len(cartasParaTroca) != 3:
+            if len(cartasParaTroca) < 3:
                 self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
             else:
                 # Se chegou aqui, eh porque o jogador tem as cartas dos territorios.
