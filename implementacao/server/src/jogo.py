@@ -821,9 +821,13 @@ class Jogo(object):
 
     def jogarDado(self):
         # TODO: VIP
-        dado = [1, 2, 3, 4, 5, 6]
-        random.shuffle(dado)
-        return dado[0]
+        # dado = [1, 2, 3, 4, 5, 6]
+        # random.shuffle(dado)
+        # return dado[0]
+
+        valores = [1, 2, 3, 4, 5, 6]
+        random.shuffle(valores)
+        return valores[random.randint(0, len(valores) - 1)]
 
     def calculaQuantidadeDeTropasDaTroca(self, numeroDaTroca):
         if 1 <= numeroDaTroca <= 5:
