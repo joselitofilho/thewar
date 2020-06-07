@@ -14,10 +14,10 @@ jogos.war.Util = function () {
 
     const _comandos = {
         lista: [
-            "a1",
+            "a1", "a6",
             "bial1", "bial2", "bial3", "bial4",
             "capitao1", "capitao2",
-            "d6", "discord",
+            "d1", "d6", "discord",
             "funeral1", "funeral2", "funeral3",
             "joker1",
             "pergunta",
@@ -25,12 +25,14 @@ jogos.war.Util = function () {
             "whatsapp"
         ],
         a1: {regex: /:a1/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque1'></div></div>"},
+        a6: {regex: /:a6/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque6'></div></div>"},
         bial1: {regex: /:bial1/g, html: "<img class='meme' src='../imagens/memes/bial1.jpeg'/>"},
         bial2: {regex: /:bial2/g, html: "<img class='meme' src='../imagens/memes/bial2.jpeg'/>"},
         bial3: {regex: /:bial3/g, html: "<img class='meme' src='../imagens/memes/bial3.jpeg'/>"},
         bial4: {regex: /:bial4/g, html: "<img class='meme' src='../imagens/memes/bial4.jpeg'/>"},
         capitao1: {regex: /:capitao1/g, html: "<img class='meme' src='../imagens/memes/capitao1.jpeg'/>"},
         capitao2: {regex: /:capitao2/g, html: "<img class='meme' src='../imagens/memes/capitao2.jpeg'/>"},
+        d1: {regex: /:d1/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa1'></div></div>"},
         d6: {regex: /:d6/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa6'></div></div>"},
         discord: {
             regex: /:discord/g,
