@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import random
 import json
+import random
 
+from src.carta import *
 from src.mensagens import *
 from src.territorio import *
 from src.timeout import *
 from src.tipoAcaoTurno import *
-from src.carta import *
 
 from .iainterface import IAInterface
 
@@ -38,7 +38,6 @@ class IALucy(IAInterface, object):
         territorios_inimigos = jogo.territoriosInimigos(usuario)
         territorio_inimigo = None
         meu_territorio_escolhido = None
-
         for terr in meus_territorios:
             for terr_inimigo in territorios_inimigos:
                 if FronteiraTerritorio.TemFronteira(terr.codigo, terr_inimigo.codigo):
@@ -63,17 +62,39 @@ class IALucy(IAInterface, object):
         grupo_territorio = params['grupoTerritorio']
         quantidade_de_tropas = params['quantidadeDeTropas']
 
-        meus_grupos_territorio = GrupoTerritorio.FronteirasContinentes[grupo_territorio]
-        random.shuffle(meus_grupos_territorio)
-        territorio = meus_grupos_territorio[0]
+        meus_territorios_com_fronteira = GrupoTerritorio.FronteirasContinentes[grupo_territorio]
 
-        jogo.colocaTropaReq(usuario, territorio, quantidade_de_tropas)
+        meus_territorios = []
+        for terr in jogador.territorios:
+            if terr.codigo in meus_territorios_com_fronteira:
+                meus_territorios.append(terr)
+
+        territorios_inimigos = jogo.territoriosInimigos(usuario)
+        territorio_inimigo = None
+        meu_territorio_escolhido = None
+        for terr in meus_territorios:
+            for terr_inimigo in territorios_inimigos:
+                if FronteiraTerritorio.TemFronteira(terr.codigo, terr_inimigo.codigo):
+                    if territorio_inimigo:
+                        if terr_inimigo.quantidadeDeTropas >= territorio_inimigo.quantidadeDeTropas:
+                            territorio_inimigo = terr_inimigo
+                            meu_territorio_escolhido = terr
+                    else:
+                        territorio_inimigo = terr_inimigo
+                        meu_territorio_escolhido = terr
+
+        if meu_territorio_escolhido:
+            territorio_codigo = meu_territorio_escolhido.codigo
+        else:
+            random.shuffle(meus_territorios_com_fronteira)
+            territorio_codigo = meus_territorios_com_fronteira[0]
+        jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
 
         return True
 
     def acao_trocar_cartas(self, usuario, jogador, jogo, params):
         minhas_cartas = jogador.cartasTerritorio
-        print 'ACAO_TROCAR_CARTAS', usuario, json.dumps(minhas_cartas.__dict__)
+        print 'ACAO_TROCAR_CARTAS', usuario, json.dumps(minhas_cartas, default=lambda o: o.__dict__)
         if len(minhas_cartas) >= 3:
             cartasTriangulo = []
             cartasQuadrado = []
@@ -107,7 +128,7 @@ class IALucy(IAInterface, object):
                                      cartasQuadrado[0].codigoTerritorio,
                                      cartasBola[0].codigoTerritorio]
             elif len(cartasCoringa) > 0:
-                while(len(cartas_para_troca) < 3):
+                while (len(cartas_para_troca) < 3):
                     if len(cartasTriangulo) > 0:
                         cartas_para_troca.append(cartasTriangulo.pop(0).codigoTerritorio)
                     elif len(cartasQuadrado) > 0:
