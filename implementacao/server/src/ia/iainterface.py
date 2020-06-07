@@ -57,7 +57,8 @@ class IAInterface(object):
                 self.processa_msg_atacar(self.usuario, self.jogador, jogo, params)
 
     def processa_msg_turno(self, usuario, jogador, jogo, params):
-        if params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_globais or params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
+        if params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_globais or params[
+            'tipoAcao'] == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             self.turno_distribuir_tropas_globais(usuario, jogador, jogo, params)
         elif params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             self.turno_distribuir_tropas_grupo_territorio(usuario, jogador, jogo, params)
@@ -137,3 +138,27 @@ class IAInterface(object):
 
     def finaliza_turno(self, jogo, usuario):
         jogo.finalizaTurno(usuario)
+
+    def situacao_territorios(self, usuario, jogador, jogo):
+        meus_territorios = jogador.territorios
+        territorios_inimigos = jogo.territoriosInimigos(usuario)
+
+        densidade_por_grupos = jogador.densidadeTodosGruposTerritorio()
+
+        codigos_meus_territorios = []
+        for terr in meus_territorios:
+            codigos_meus_territorios.append(terr.codigo)
+        meus_territorios_por_grupo = []
+        for grupo in GrupoTerritorio.Dicionario:
+            meus_territorios_por_grupo[grupo] = jogador.territoriosPorGrupo(GrupoTerritorio.Dicionario[grupo],
+                                                                            codigos_meus_territorios)
+
+        # FronteiraTerritorio.Fronteiras[territorio.codigo]
+        # GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.CONTINENTE]
+
+        return {
+            'meus_territorios': meus_territorios,
+            'territorios_inimigos': territorios_inimigos,
+            'densidade_por_grupos': densidade_por_grupos,
+            'meus_territorios_por_grupo': meus_territorios_por_grupo
+        }
