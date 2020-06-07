@@ -14,21 +14,24 @@ jogos.war.Util = function () {
 
     const _comandos = {
         lista: [
+            "a1",
             "bial1", "bial2", "bial3", "bial4",
             "capitao1", "capitao2",
-            "discord",
+            "d6", "discord",
             "funeral1", "funeral2", "funeral3",
             "joker1",
             "pergunta",
             "rank",
             "whatsapp"
         ],
+        a1: {regex: /:a1/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque1'></div></div>"},
         bial1: {regex: /:bial1/g, html: "<img class='meme' src='../imagens/memes/bial1.jpeg'/>"},
         bial2: {regex: /:bial2/g, html: "<img class='meme' src='../imagens/memes/bial2.jpeg'/>"},
         bial3: {regex: /:bial3/g, html: "<img class='meme' src='../imagens/memes/bial3.jpeg'/>"},
         bial4: {regex: /:bial4/g, html: "<img class='meme' src='../imagens/memes/bial4.jpeg'/>"},
         capitao1: {regex: /:capitao1/g, html: "<img class='meme' src='../imagens/memes/capitao1.jpeg'/>"},
         capitao2: {regex: /:capitao2/g, html: "<img class='meme' src='../imagens/memes/capitao2.jpeg'/>"},
+        d6: {regex: /:d6/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa6'></div></div>"},
         discord: {
             regex: /:discord/g,
             html: '<a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>'
