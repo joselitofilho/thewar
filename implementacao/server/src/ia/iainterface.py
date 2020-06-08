@@ -12,7 +12,6 @@ class IAInterface(object):
         self.usuario = usuario
         self.jogador = None
 
-        self.timeout = None
         self.timeout_coloca_tropa = None
         self.timeout_coloca_tropa_grupo_territorio = None
         self.timeout_trocar_cartas = None
@@ -70,44 +69,44 @@ class IAInterface(object):
             self.turno_mover(usuario, jogador, jogo)
 
     def turno_distribuir_tropas_globais(self, usuario, jogador, jogo, params):
-        self.timeout_coloca_tropa = Timeout(2, self.coloca_tropa,
+        self.timeout_coloca_tropa = Timeout(3, self.coloca_tropa,
                                             {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
         self.timeout_coloca_tropa.start()
 
     def coloca_tropa(self, usuario, jogador, jogo, params):
         if self.acao_coloca_tropa(usuario, jogador, jogo, params):
-            self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
+            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
             self.timeout_finaliza_turno.start()
 
     def turno_distribuir_tropas_grupo_territorio(self, usuario, jogador, jogo, params):
-        self.timeout_coloca_tropa_grupo_territorio = Timeout(2, self.coloca_tropa_grupo_territorio,
+        self.timeout_coloca_tropa_grupo_territorio = Timeout(3, self.coloca_tropa_grupo_territorio,
                                                              {'usuario': usuario, 'jogador': jogador, 'jogo': jogo,
                                                               'params': params})
         self.timeout_coloca_tropa_grupo_territorio.start()
 
     def coloca_tropa_grupo_territorio(self, usuario, jogador, jogo, params):
         if self.acao_coloca_tropa_grupo_territorio(usuario, jogador, jogo, params):
-            self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
+            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
             self.timeout_finaliza_turno.start()
 
     def turno_distribuir_tropas_troca_de_cartas(self, usuario, jogador, jogo, params):
         pass
 
     def turno_trocar_cartas(self, usuario, jogador, jogo, params):
-        self.timeout_trocar_cartas = Timeout(2, self.trocar_cartas,
+        self.timeout_trocar_cartas = Timeout(3, self.trocar_cartas,
                                              {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
         self.timeout_trocar_cartas.start()
 
     def trocar_cartas(self, usuario, jogador, jogo, params):
         if self.acao_trocar_cartas(usuario, jogador, jogo, params):
-            self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
+            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
             self.timeout_finaliza_turno.start()
 
     def processa_msg_atacar(self, usuario, jogador, jogo, params):
         conquistou_territorio = params['conquistouTerritorio']
 
         if conquistou_territorio:
-            self.timeout_move_apos_conquistar_territorio = Timeout(2, self.move_apos_conquistar_territorio,
+            self.timeout_move_apos_conquistar_territorio = Timeout(3, self.move_apos_conquistar_territorio,
                                                                    {'usuario': usuario, 'jogador': jogador,
                                                                     'jogo': jogo, 'params': params})
             self.timeout_move_apos_conquistar_territorio.start()
@@ -115,12 +114,12 @@ class IAInterface(object):
             self.turno_atacar(usuario, jogador, jogo)
 
     def turno_atacar(self, usuario, jogador, jogo):
-        self.timeout_ataca = Timeout(2, self.ataca, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
+        self.timeout_ataca = Timeout(3, self.ataca, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
         self.timeout_ataca.start()
 
     def ataca(self, usuario, jogador, jogo):
         if self.acao_ataca(usuario, jogador, jogo):
-            self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
+            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
             self.timeout_finaliza_turno.start()
 
     def move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
@@ -128,15 +127,16 @@ class IAInterface(object):
             self.turno_atacar(usuario, jogador, jogo)
 
     def turno_mover(self, usuario, jogador, jogo):
-        self.timeout_move = Timeout(2, self.move, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
+        self.timeout_move = Timeout(3, self.move, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
         self.timeout_move.start()
 
     def move(self, usuario, jogador, jogo):
         if self.acao_move(usuario, jogador, jogo):
-            self.timeout_finaliza_turno = Timeout(0.5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
+            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
             self.timeout_finaliza_turno.start()
 
     def finaliza_turno(self, jogo, usuario):
+        print "[DEBUG] BOT " + usuario + " finalizou turno"
         jogo.finalizaTurno(usuario)
 
     def situacao_territorios(self, usuario, jogador, jogo):

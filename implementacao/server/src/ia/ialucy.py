@@ -5,7 +5,6 @@ import random
 from src.carta import *
 from src.mensagens import *
 from src.territorio import *
-from src.timeout import *
 from src.tipoAcaoTurno import *
 
 from .iainterface import IAInterface
