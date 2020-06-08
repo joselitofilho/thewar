@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd implementacao/server
-
 pip install gdown
 
 if [ ! -f "memes.zip" ]; then
