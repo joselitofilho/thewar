@@ -14,74 +14,9 @@ jogos.war.Util = function () {
 
     const _comandos = {
         lista: [
-            "a1", "a6",
-            "bial1", "bial2", "bial3", "bial4",
-            "capitao1", "capitao2",
-            "d1", "d6", "discord",
-            "funeral1", "funeral2", "funeral3",
-            "joker1",
-            "pergunta",
-            "rank",
-            "whatsapp"
+            "rank"
         ],
-        a1: {regex: /:a1/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque1'></div></div>"},
-        a6: {regex: /:a6/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque6'></div></div>"},
-        bial1: {regex: /:bial1/g, html: "<img class='meme' src='../imagens/memes/bial1.jpeg'/>"},
-        bial2: {regex: /:bial2/g, html: "<img class='meme' src='../imagens/memes/bial2.jpeg'/>"},
-        bial3: {regex: /:bial3/g, html: "<img class='meme' src='../imagens/memes/bial3.jpeg'/>"},
-        bial4: {regex: /:bial4/g, html: "<img class='meme' src='../imagens/memes/bial4.jpeg'/>"},
-        capitao1: {regex: /:capitao1/g, html: "<img class='meme' src='../imagens/memes/capitao1.jpeg'/>"},
-        capitao2: {regex: /:capitao2/g, html: "<img class='meme' src='../imagens/memes/capitao2.jpeg'/>"},
-        d1: {regex: /:d1/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa1'></div></div>"},
-        d6: {regex: /:d6/g, html: "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa6'></div></div>"},
-        discord: {
-            regex: /:discord/g,
-            html: '<a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>'
-        },
-        funeral1: {
-            regex: /:funeral1/g,
-            html:
-                '<audio class="meme meme_audio" controls><source src="../../sons/funeral1.mp3" type="audio/mpeg">' +
-                '    Your browser does not support the audio element.' +
-                '</audio>',
-            sound: 'funeral1.mp3'
-        },
-        funeral2: {
-            regex: /:funeral2/g,
-            html:
-                '<audio class="meme meme_audio" controls><source src="../../sons/funeral2.mp3" type="audio/mpeg">' +
-                '    Your browser does not support the audio element.' +
-                '</audio>',
-            sound: 'funeral2.mp3'
-        },
-        funeral3: {
-            regex: /:funeral3/g,
-            html:
-                '<audio class="meme meme_audio" controls><source src="../../sons/funeral3.mp3" type="audio/mpeg">' +
-                '    Your browser does not support the audio element.' +
-                '</audio>' +
-                '<img class="meme" src="../imagens/memes/funeral3.gif"/>',
-            sound: 'funeral3.mp3'
-        },
-        joker1: {regex: /:joker1/g, html: "<img class='meme' src='../imagens/memes/joker1.jpeg'/>"},
-        pergunta: {
-            regex: /:pergunta(\w+|\W+)*\?(\w+|\W+)*,(\w+|\W+)*/gm,
-            html:
-                '<div class="question_box">' +
-                '    <div class="question_text">' +
-                '        <p>{pergunta}</p>' +
-                '    </div>' +
-                '    <div class="question_options">' +
-                '        <button onClick="util_handleQuestionAnswer(\'{pergunta}\', \'{resposta_positiva}\')">{resposta_positiva}</button>' +
-                '        <button onClick="util_handleQuestionAnswer(\'{pergunta}\', \'{resposta_negativa}\')">{resposta_negativa}</button>' +
-                '    </div>' +
-                '</div>'
-        },
-        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_size insignias_x40_nv{level}'></div>"},
-        whatsapp: {
-            regex: /:whatsapp/g,
-            html: '<a href=\"https://chat.whatsapp.com/DjRwmsDjKJUEUh9HLyFky2\" target=\"_blank\" rel=\"noopener noreferrer\"><img height=\"64px\" src=\"../../imagens/social/whatsapp.png\" /></a>'
-        },
+        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_size insignias_x40_nv{level}'></div>"}
     };
 
     this.dataAtualFormatada = function () {
@@ -93,27 +28,13 @@ jogos.war.Util = function () {
         var minute = date.getMinutes();
         var seconds = date.getSeconds();
 
-        return day + "/" + month + "/" + year + " " + hour + ":" + minute;
+        // return day + "/" + month + "/" + year + " " + hour + ":" + minute;
+        return hour + ":" + minute;
     };
 
     this.substituiMarcacoes = function (listaUsuarios, usuarioQueEnviou, texto) {
-        if (texto.match(/:comandos/) || texto.match(/:memes/)) {
+        if (texto.match(/:comandos/) || texto.match(/:memes/) || texto.match(/:help/)) {
             return "Memes disponíveis --> " + ":" + Array.from(_comandos.lista).join(', :');
-        } else {
-            const cmdKey = "pergunta";
-            const cmd = _comandos[cmdKey];
-            const match = texto.match(cmd.regex);
-            if (match !== null) {
-                texto = match[0].trim();
-                const textoSplit = texto.split('?');
-                const pergunta = textoSplit[0].replace(':' + cmdKey, '').trim() + '?';
-                const opcoes = textoSplit[1].split(',');
-                texto = cmd.html
-                    .replace(/{pergunta}/g, pergunta)
-                    .replace(/{resposta_positiva}/g, opcoes[0].trim())
-                    .replace(/{resposta_negativa}/g, opcoes[1].trim());
-                return texto;
-            }
         }
         texto = this.substituiURLPorHTMLLinks(texto);
         texto = this.substituiComandos(listaUsuarios, usuarioQueEnviou, texto);
@@ -149,13 +70,6 @@ jogos.war.Util = function () {
                     texto = texto.replace(cmd.regex, elemento);
                 }
             } else {
-                if (cmdKey === "funeral1" ||
-                    cmdKey === "funeral2" ||
-                    cmdKey === "funeral3") {
-                    if (texto.match(cmd.regex)) {
-                        tocarSom(this, cmd.sound);
-                    }
-                }
                 texto = texto.replace(cmd.regex, cmd.html);
             }
         }
@@ -216,5 +130,5 @@ function utilTerritorio_polygonFadeout(codigoTerritorio, polygon, milliseconds, 
 }
 
 function utilRetiraAcento(palavra) {
-    return palavra.replace(/[\W_]+/g," ");
+    return palavra.replace(/[\W_]+/g, " ");
 }

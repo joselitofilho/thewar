@@ -1,5 +1,10 @@
 [
   {
+    "comando": "bixovaipegar",
+    "regex": "!bixovaipegar",
+    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/bixo_vai_pegar.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
+  },
+  {
     "comando": "a1",
     "regex": "!a1",
     "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque1'></div></div>"
@@ -10,6 +15,36 @@
     "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque6'></div></div>"
   },
   {
+    "comando": "bial1",
+    "regex": "!bial1",
+    "html": "<img class='meme' src='../imagens/memes/bial1.jpeg'/>"
+  },
+  {
+    "comando": "bial2",
+    "regex": "!bial2",
+    "html": "<img class='meme' src='../imagens/memes/bial2.jpeg'/>"
+  },
+  {
+    "comando": "bial3",
+    "regex": "!bial3",
+    "html": "<img class='meme' src='../imagens/memes/bial3.jpeg'/>"
+  },
+  {
+    "comando": "bial4",
+    "regex": "!bial4",
+    "html": "<img class='meme' src='../imagens/memes/bial4.jpeg'/>"
+  },
+  {
+    "comando": "capitao1",
+    "regex": "!capitao1",
+    "html": "<img class='meme' src='../imagens/memes/capitao1.jpeg'/>"
+  },
+  {
+    "comando": "capitao2",
+    "regex": "!capitao2",
+    "html": "<img class='meme' src='../imagens/memes/capitao2.jpeg'/>"
+  },
+  {
     "comando": "d1",
     "regex": "!d1",
     "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa1'></div></div>"
@@ -18,5 +53,45 @@
     "comando": "d6",
     "regex": "!d6",
     "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa6'></div></div>"
+  },
+  {
+    "comando": "discord",
+    "regex": "!discord",
+    "html": "<a href='https://discord.gg/2Xr8TyR' target='_blank' rel='noopener noreferrer'><img height='64px' src='../../imagens/social/discord.png'/></a>"
+  },
+  {
+    "comando": "funeral1",
+    "regex": "!funeral1",
+    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/funeral1.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
+  },
+  {
+    "comando": "funeral2",
+    "regex": "!funeral2",
+    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/funeral2.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
+  },
+  {
+    "comando": "funeral3",
+    "regex": "!funeral3",
+    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/funeral3.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio><img class='meme' src='../imagens/memes/funeral3.gif'/>"
+  },
+  {
+    "comando": "joker1",
+    "regex": "!joker1",
+    "html": "<img class='meme' src='../imagens/memes/joker1.jpeg'/>"
+  },
+  {
+    "comando": "missaodada",
+    "regex": "!missaodada",
+    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/missao_dada_e_missao_cumprida.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
+  },
+  {
+    "comando": "pergunta",
+    "regex": "!pergunta(\\w+|\\W+)*\\?(\\w+|\\W+)*,(\\w+|\\W+)*",
+    "html": "<div class='question_box'><div class='question_text'><p>pergunta</p></div><div class='question_options'><button onClick='util_handleQuestionAnswer(\"pergunta\", \"respostapositiva\")'>respostapositiva</button><button onClick='util_handleQuestionAnswer(\"pergunta\", \"respostanegativa\")'>respostanegativa</button></div></div>"
+  },
+  {
+    "comando": "whatsapp",
+    "regex": "!whatsapp",
+    "html": "<a href='https://chat.whatsapp.com/DjRwmsDjKJUEUh9HLyFky2' target='_blank' rel='noopener noreferrer'><img height='64px' src='../../imagens/social/whatsapp.png' /></a>"
   }
 ]
