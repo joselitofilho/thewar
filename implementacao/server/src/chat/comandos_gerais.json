@@ -1,10 +1,5 @@
 [
   {
-    "comando": "bixovaipegar",
-    "regex": "!bixovaipegar",
-    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/bixo_vai_pegar.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
-  },
-  {
     "comando": "a1",
     "regex": "!a1",
     "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque1'></div></div>"
@@ -33,6 +28,11 @@
     "comando": "bial4",
     "regex": "!bial4",
     "html": "<img class='meme' src='../imagens/memes/bial4.jpeg'/>"
+  },
+  {
+    "comando": "bixovaipegar",
+    "regex": "!bixovaipegar",
+    "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/bixo_vai_pegar.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
   },
   {
     "comando": "capitao1",

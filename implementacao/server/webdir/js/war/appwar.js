@@ -259,7 +259,6 @@ function atacar() {
         // TODO: Desabilitar quando a idéia estiver mais amadurecida...
         //_mapaGoogle.fitBounds(bounds);
 
-        console.log('_jaPodeAtacar', _jaPodeAtacar, qtdDadosDefesa, qtdDadosAtaque);
         if (qtdDadosDefesa > 0 && qtdDadosAtaque > 0 && _jaPodeAtacar) {
             _jaPodeAtacar = false;
             var atacarMsg = comunicacao_atacar(_posicaoJogador, _territorioAlvoAtaque, _territoriosAtacante);
