@@ -8,6 +8,7 @@ if [ ! -f "$FILE" ]; then
 	python ../database_update2.py
 	python ../database_update2.1.py
 	python ../database_update3.py
+	python ../database_update4.py
 fi
 echo "Starting server..."
 PYTHONPATH=. python src/server.py
