@@ -1,5 +1,7 @@
 import json
+
 from src.turno import *
+
 
 class TipoMensagem:
     altera_posicao_na_sala = "AlteraPosicaoNaSala"
@@ -235,15 +237,17 @@ class JogoInterrompido(object):
 
 
 class MsgChatJogo(object):
-    def __init__(self, jogador, texto):
+    def __init__(self, jogador, texto, som=None):
         self.jogador = jogador
         self.texto = texto
+        self.som = som
 
 
 class MsgChatGeral(object):
-    def __init__(self, usuario, texto):
+    def __init__(self, usuario, texto, som=None):
         self.usuario = usuario
         self.texto = texto
+        self.som = som
 
 
 class UsuarioConectou(object):

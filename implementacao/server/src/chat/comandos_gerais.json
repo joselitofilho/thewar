@@ -1,0 +1,22 @@
+[
+  {
+    "comando": "a1",
+    "regex": "!a1",
+    "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque1'></div></div>"
+  },
+  {
+    "comando": "a6",
+    "regex": "!a6",
+    "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_ataque6'></div></div>"
+  },
+  {
+    "comando": "d1",
+    "regex": "!d1",
+    "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa1'></div></div>"
+  },
+  {
+    "comando": "d6",
+    "regex": "!d6",
+    "html": "<div style='display: inline-block;'><div class='dado dado_ataque dado_defesa6'></div></div>"
+  }
+]
