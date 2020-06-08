@@ -8,6 +8,8 @@ from carta import *
 from mensagens import *
 from objetivos import *
 from pontuacao import *
+from src.chat.chat import *
+from src.grupousuariosdb import *
 from territorio import *
 from tipoAcaoTurno import *
 from turno import *
@@ -58,6 +60,8 @@ class Jogo(object):
 
         self.estaAtacando = False
 
+        self.chat = Chat()
+
     def faseI_Inicia(self):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
@@ -103,7 +107,8 @@ class Jogo(object):
             for j in range(inicio, fim):
                 territoriosJogador_i.append(territorios[j])
 
-            print 'posicaoJogadorDaVez', self.posicaoJogadorDaVez
+            print
+            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadores[self.posicaoJogadorDaVez].iniciaTerritorios(territoriosJogador_i)
             listaTerritoriosPorJogador.append(
                 TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
@@ -221,9 +226,11 @@ class Jogo(object):
         ok = False
         for i in range(len(self.ordemJogadores)):
             self.indiceOrdemJogadores = (self.indiceOrdemJogadores + 1) % len(self.ordemJogadores)
-            print 'indiceOrdemJogadores', self.indiceOrdemJogadores
+            print
+            'indiceOrdemJogadores', self.indiceOrdemJogadores
             self.posicaoJogadorDaVez = self.ordemJogadores[self.indiceOrdemJogadores]
-            print 'posicaoJogadorDaVez', self.posicaoJogadorDaVez
+            print
+            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadorDaVezConquistouTerritorio = False
 
             jogador = self.jogadores[self.posicaoJogadorDaVez]
@@ -240,7 +247,6 @@ class Jogo(object):
                 elif len(jogador.territorios) > 0:
                     ok = True
                     break
-
 
         if not ok and self.gerenciador != None:
             self.gerenciador.jogoTerminou(self.nome)
@@ -538,7 +544,8 @@ class Jogo(object):
 
         if jogador.usuario == usuario:
             if turno.tipoAcao == TipoAcaoTurno.atacar:
-                if not self.estaAtacando and jogador.temOsTerritorios(dosTerritorios) and not jogador.temTerritorio(paraOTerritorio):
+                if not self.estaAtacando and jogador.temOsTerritorios(dosTerritorios) and not jogador.temTerritorio(
+                        paraOTerritorio):
                     self.estaAtacando = True
                     temErro = False
 
@@ -819,10 +826,6 @@ class Jogo(object):
 
     def jogarDado(self):
         # TODO: VIP
-        # dado = [1, 2, 3, 4, 5, 6]
-        # random.shuffle(dado)
-        # return dado[0]
-
         valores = [1, 2, 3, 4, 5, 6]
         random.shuffle(valores)
         return valores[random.randint(0, len(valores) - 1)]
@@ -994,6 +997,14 @@ class Jogo(object):
 
     def msgChat(self, usuario, texto):
         posicao = self.posicaoDoUsuario(usuario)
+        texto, comando = self.chat.interpreta_comandos(texto)
+
+        if comando and comando == Chat.KICK_COMMAND:
+            if GrupoUsuariosDB().verifica_usuario_adm(usuario):
+                cliente = self.clientes[self.posicaoDoUsuario(texto)]
+                self.gerenciador.sai(cliente)
+                texto = '[ADM] O jogador ' + texto + ' foi retirado da partida.'
+
         self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo,
                                MsgChatJogo({"usuario": usuario, "posicao": posicao}, texto))
 

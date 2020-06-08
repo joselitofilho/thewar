@@ -1,0 +1,6 @@
+[
+  {
+    "comando": "kick",
+    "regex": "!kick(\\w+|\\W+)*"
+  }
+]

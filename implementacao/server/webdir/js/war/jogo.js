@@ -418,6 +418,7 @@ function processarMsg_saiu_do_jogo(msgParams) {
     if (msgParams.usuario === _usuario) {
         _territorios.limpa();
         appwar_limparVariaveis();
+        jogo_removeElementosHtml();
     }
 }
 

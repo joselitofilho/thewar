@@ -7,6 +7,7 @@ import random
 import traceback
 
 from badges import *
+from src.chat.chat import *
 from doacaodb import *
 from ia.iafactory import *
 from jogador import *
@@ -25,6 +26,7 @@ class GerenciadorSala(object):
         self.jogadores = {}
         self.estado = EstadoDaSala.sala_criada
         self.jogadoresDaSala = []
+        self.chat = Chat()
 
     def entra(self, cliente, usuario):
         self.jogadores[cliente] = usuario
@@ -237,6 +239,7 @@ class GerenciadorPrincipal(object):
         self.jogadores = {}
         self.salas = {}
         self.usuarioPorSala = {}
+        self.chat = Chat()
 
         # TODO: Verificar criacao de salas pre-criadas.
         # self.salas["1"] = GerenciadorSala("1", self)
@@ -331,6 +334,7 @@ class GerenciadorPrincipal(object):
 
         elif mensagem.tipo == TipoMensagem.msg_chat_geral:
             texto = mensagem.params['texto']
+            texto, comando = self.chat.interpreta_comandos(texto)
             self.enviaMsgParaTodos(TipoMensagem.msg_chat_geral, MsgChatGeral(usuario, texto))
 
     def criaSala(self, cliente, usuario, mensagem):

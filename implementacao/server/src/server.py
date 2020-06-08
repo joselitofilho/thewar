@@ -98,7 +98,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     _gerenciadorPrincipal.interpretaMensagem(self, mensagem)
                 except:
                     traceback.print_exc()
-                    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem
+                    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", json.dumps(mensagem, default=lambda o: o.__dict__)
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
