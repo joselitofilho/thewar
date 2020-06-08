@@ -1000,10 +1000,17 @@ class Jogo(object):
         texto, comando = self.chat.interpreta_comandos(texto)
 
         if comando and comando == Chat.KICK_COMMAND:
+            arg = texto
             if GrupoUsuariosDB().verifica_usuario_adm(usuario):
-                cliente = self.clientes[self.posicaoDoUsuario(texto)]
-                self.gerenciador.sai(cliente)
-                texto = '[ADM] O jogador ' + texto + ' foi retirado da partida.'
+                if arg in self.olheiros:
+                    self.gerenciador.sai(self.olheiros[arg])
+                    texto = '[ADM] O jogador ' + arg + ' foi retirado da sala.'
+                else:
+                    posicao_usuario_kickado = self.posicaoDoUsuario(arg)
+                    if posicao_usuario_kickado != -1:
+                        cliente = self.clientes[posicao_usuario_kickado]
+                        self.gerenciador.sai(cliente)
+                        texto = '[ADM] O jogador ' + arg + ' foi retirado da sala.'
 
         self.enviaMsgParaTodos(TipoMensagem.msg_chat_jogo,
                                MsgChatJogo({"usuario": usuario, "posicao": posicao}, texto))

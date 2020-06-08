@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cd /app # Dentro do container docker deve ser a pasta /app, mas equivale a pasta implementação/server 
 FILE="war.db"
 if [ ! -f "$FILE" ]; then
 	echo "Creating database..."
@@ -11,4 +11,5 @@ if [ ! -f "$FILE" ]; then
 	python ../database_update4.py
 fi
 echo "Starting server..."
-PYTHONPATH=. python src/server.py
+PYTHONPATH=. python ./src/server.py && tail -F ./log/server.log
+
