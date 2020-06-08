@@ -3,8 +3,7 @@
 $ docker-compose up -d
 $ docker-compose exec server bash
 $ cd /opt/app/implementacao/server
-$ ./start_first.sh # (only first-time)
-$ ./start_game.sh
+$ ./start_game.dev.sh
 ```
 
 ```sh
