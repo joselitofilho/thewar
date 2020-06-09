@@ -107,8 +107,6 @@ class Jogo(object):
             for j in range(inicio, fim):
                 territoriosJogador_i.append(territorios[j])
 
-            print
-            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadores[self.posicaoJogadorDaVez].iniciaTerritorios(territoriosJogador_i)
             listaTerritoriosPorJogador.append(
                 TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
@@ -987,6 +985,32 @@ class Jogo(object):
 
     def temJogadorOnLine(self):
         return len(self.clientes) > 0
+
+    def grafoTerritorios(self):
+        grafo_territorios = {}
+        for codigo_territorio in CodigoTerritorio.Lista:
+            grafo_territorios[codigo_territorio] = {
+                'fronteiras': FronteiraTerritorio.Fronteiras[codigo_territorio]
+            }
+            if codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Asia]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Asia
+            elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.AmericaDoNorte]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.AmericaDoNorte
+            elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Africa]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Africa
+            elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.AmericaDoSul]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.AmericaDoSul
+            elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Europa]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Europa
+            elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Oceania]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Oceania
+
+        for jogador in self.jogadores.values():
+            for territorio in jogador.territorios:
+                grafo_territorios[territorio.codigo]['usuario'] = jogador.usuario
+                grafo_territorios[territorio.codigo]['quantidade'] = territorio.quantidadeDeTropas
+
+        return grafo_territorios
 
     def territoriosInimigos(self, usuario):
         territorios = []

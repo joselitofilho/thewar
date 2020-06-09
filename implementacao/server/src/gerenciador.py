@@ -7,7 +7,6 @@ import random
 import traceback
 
 from badges import *
-from src.chat.chat import *
 from doacaodb import *
 from ia.iafactory import *
 from jogador import *
@@ -15,6 +14,7 @@ from jogo import *
 from mensagens import *
 from pontuacaodb import *
 from sala import *
+from src.chat.chat import *
 
 
 class GerenciadorSala(object):
@@ -417,14 +417,14 @@ class GerenciadorPrincipal(object):
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        print "[INFO][GerenciadorPrincipal] Enviando: " + jsonMsg
+        # print "[INFO][GerenciadorPrincipal] Enviando: " + jsonMsg
         cliente.sendMessage(jsonMsg)
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
         jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
         for socket in self.jogadores.keys():
             socket.sendMessage(jsonMsg)
-        print "[INFO][GerenciadorPrincipal] Broadcast: ", jsonMsg
+        # print "[INFO][GerenciadorPrincipal] Broadcast: ", jsonMsg
 
     def fecha(self):
         for gerenciadorSala in self.salas.values():
