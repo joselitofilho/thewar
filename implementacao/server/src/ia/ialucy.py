@@ -10,7 +10,7 @@ from src.tipoAcaoTurno import *
 from .iainterface import IAInterface
 
 
-class IALucy(IAInterface, object):
+class IALucy(IAInterface):
     def __init__(self, sufixo=''):
         super(IALucy, self).__init__('Lucy' + sufixo)
 

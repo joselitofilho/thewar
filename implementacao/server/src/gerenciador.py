@@ -118,6 +118,7 @@ class GerenciadorSala(object):
                     elif cpu and jogadorDaSala.tipo == TipoJogador.cpu:
                         cpu.jogador_ref(jogadoresDoJogo[k])
                         cpus[usuario] = cpu
+                        cpu.start()
             self.jogo = Jogo(self.nome, jogadoresDoJogo, cpus, clientes, self)
 
             # Distribui os territorios e define quem comeca.
