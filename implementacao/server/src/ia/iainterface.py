@@ -1,23 +1,31 @@
 # -*- coding: utf-8 -*-
 
+import threading
+import time
+
 from src.carta import *
 from src.mensagens import *
 from src.territorio import *
 from src.timeout import *
 from src.tipoAcaoTurno import *
 
+from Queue import Queue
 
-class IAInterface(object):
+
+class IAInterface(threading.Thread):
     def __init__(self, usuario):
+        threading.Thread.__init__(self)
+        self.loop = False
+
+        self.mensagem = None
         self.usuario = usuario
         self.jogador = None
+        self.jogo = None
 
-        self.timeout_coloca_tropa = None
-        self.timeout_coloca_tropa_grupo_territorio = None
-        self.timeout_trocar_cartas = None
-        self.timeout_ataca = None
-        self.timeout_move_apos_conquistar_territorio = None
-        self.timeout_finaliza_turno = None
+        self.queue_msgs = Queue()
+
+    def __del__(self):
+        self.para()
 
     def acao_coloca_tropa(self, usuario, jogador, jogo, params):
         raise NotImplementedError()
@@ -43,17 +51,32 @@ class IAInterface(object):
     def jogador_ref(self, value):
         self.jogador = value
 
+    def run(self):
+        self.loop = True
+        while self.loop:
+            msg = self.queue_msgs.get()
+            if msg:
+                self.mensagem = Mensagem()
+                self.mensagem.fromJson(msg)
+                if self.mensagem.tipo == TipoMensagem.turno:
+                    params = self.mensagem.params
+                    if params['vezDoJogador']['usuario'] == self.usuario:
+                        # self.mensagem = None
+                        self.processa_msg_turno(self.usuario, self.jogador, self.jogo, params)
+                elif self.mensagem.tipo == TipoMensagem.atacar:
+                    params = self.mensagem.params
+                    if params['jogadorAtaque']['usuario'] == self.usuario:
+                        # self.mensagem = None
+                        self.processa_msg_atacar(self.usuario, self.jogador, self.jogo, params)
+            time.sleep(1)
+
+    def para(self):
+        self.loop = False
+        # raise Exception("ThreadTimeout: Forcando a parada da thread... " + self.usuario)
+
     def processa_msg(self, jogo, msg):
-        mensagem = Mensagem()
-        mensagem.fromJson(msg)
-        if mensagem.tipo == TipoMensagem.turno:
-            params = mensagem.params
-            if params['vezDoJogador']['usuario'] == self.usuario:
-                self.processa_msg_turno(self.usuario, self.jogador, jogo, params)
-        elif mensagem.tipo == TipoMensagem.atacar:
-            params = mensagem.params
-            if params['jogadorAtaque']['usuario'] == self.usuario:
-                self.processa_msg_atacar(self.usuario, self.jogador, jogo, params)
+        self.queue_msgs.put(msg)
+        self.jogo = jogo
 
     def processa_msg_turno(self, usuario, jogador, jogo, params):
         if params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_globais or params[
@@ -69,74 +92,67 @@ class IAInterface(object):
             self.turno_mover(usuario, jogador, jogo)
 
     def turno_distribuir_tropas_globais(self, usuario, jogador, jogo, params):
-        self.timeout_coloca_tropa = Timeout(3, self.coloca_tropa,
-                                            {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
-        self.timeout_coloca_tropa.start()
+        time.sleep(2)
+        self.coloca_tropa(usuario, jogador, jogo, params)
 
     def coloca_tropa(self, usuario, jogador, jogo, params):
         if self.acao_coloca_tropa(usuario, jogador, jogo, params):
-            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-            self.timeout_finaliza_turno.start()
+            time.sleep(0.5)
+            self.finaliza_turno(usuario, jogo)
 
     def turno_distribuir_tropas_grupo_territorio(self, usuario, jogador, jogo, params):
-        self.timeout_coloca_tropa_grupo_territorio = Timeout(3, self.coloca_tropa_grupo_territorio,
-                                                             {'usuario': usuario, 'jogador': jogador, 'jogo': jogo,
-                                                              'params': params})
-        self.timeout_coloca_tropa_grupo_territorio.start()
+        time.sleep(2)
+        self.coloca_tropa_grupo_territorio(usuario, jogador, jogo, params)
 
     def coloca_tropa_grupo_territorio(self, usuario, jogador, jogo, params):
         if self.acao_coloca_tropa_grupo_territorio(usuario, jogador, jogo, params):
-            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-            self.timeout_finaliza_turno.start()
+            time.sleep(0.5)
+            self.finaliza_turno(usuario, jogo)
 
     def turno_distribuir_tropas_troca_de_cartas(self, usuario, jogador, jogo, params):
         pass
 
     def turno_trocar_cartas(self, usuario, jogador, jogo, params):
-        self.timeout_trocar_cartas = Timeout(3, self.trocar_cartas,
-                                             {'usuario': usuario, 'jogador': jogador, 'jogo': jogo, 'params': params})
-        self.timeout_trocar_cartas.start()
+        time.sleep(2)
+        self.trocar_cartas(usuario, jogador, jogo, params)
 
     def trocar_cartas(self, usuario, jogador, jogo, params):
         if self.acao_trocar_cartas(usuario, jogador, jogo, params):
-            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-            self.timeout_finaliza_turno.start()
+            time.sleep(0.5)
+            self.finaliza_turno(usuario, jogo)
 
     def processa_msg_atacar(self, usuario, jogador, jogo, params):
         conquistou_territorio = params['conquistouTerritorio']
 
         if conquistou_territorio:
-            self.timeout_move_apos_conquistar_territorio = Timeout(3, self.move_apos_conquistar_territorio,
-                                                                   {'usuario': usuario, 'jogador': jogador,
-                                                                    'jogo': jogo, 'params': params})
-            self.timeout_move_apos_conquistar_territorio.start()
+            time.sleep(2)
+            self.move_apos_conquistar_territorio(usuario, jogador, jogo, params)
         else:
             self.turno_atacar(usuario, jogador, jogo)
 
     def turno_atacar(self, usuario, jogador, jogo):
-        self.timeout_ataca = Timeout(3, self.ataca, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
-        self.timeout_ataca.start()
+        time.sleep(2)
+        self.ataca(usuario, jogador, jogo)
 
     def ataca(self, usuario, jogador, jogo):
         if self.acao_ataca(usuario, jogador, jogo):
-            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-            self.timeout_finaliza_turno.start()
+            time.sleep(0.5)
+            self.finaliza_turno(usuario, jogo)
 
     def move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
         if self.acao_move_apos_conquistar_territorio(usuario, jogador, jogo, params):
             self.turno_atacar(usuario, jogador, jogo)
 
     def turno_mover(self, usuario, jogador, jogo):
-        self.timeout_move = Timeout(3, self.move, {'usuario': usuario, 'jogador': jogador, 'jogo': jogo})
-        self.timeout_move.start()
+        time.sleep(2)
+        self.move(usuario, jogador, jogo)
 
     def move(self, usuario, jogador, jogo):
         if self.acao_move(usuario, jogador, jogo):
-            self.timeout_finaliza_turno = Timeout(5, self.finaliza_turno, {'jogo': jogo, 'usuario': usuario})
-            self.timeout_finaliza_turno.start()
+            time.sleep(0.5)
+            self.finaliza_turno(usuario, jogo)
 
-    def finaliza_turno(self, jogo, usuario):
-        print "[DEBUG] BOT " + usuario + " finalizou turno"
+    def finaliza_turno(self, usuario, jogo):
         jogo.finalizaTurno(usuario)
 
     def situacao_territorios(self, usuario, jogador, jogo):
