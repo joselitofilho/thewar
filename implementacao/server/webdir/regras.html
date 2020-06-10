@@ -1,0 +1,127 @@
+<html>
+<head>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .header {
+            background-color: #876850;
+            color: #eee;
+            text-align: center;
+        }
+
+        .md-guide-feature {
+            padding-top: 30px;
+            padding-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .row {
+            /*margin-top: -15px;*/
+            margin-right: -15px;
+            margin-left: -15px;
+            margin-bottom: 15px;
+        }
+
+        .video {
+            width: 320px;
+            height: 244px;
+        }
+
+        .video-title {
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="jumbotron jumbotron-fluid header">
+    <div class="container">
+        <h1 class="display-4">Como jogar e regras</h1>
+        <p class="lead">Confira todas as regras do jogo, como distribuir suas tropas, atacar territórios e muito mais.</p>
+    </div>
+</div>
+<div class="container">
+    <div class="md-guide-feature">
+        <h1 class="no-anchor">Tudo que você precisa aprender para começar a jogar.</h1>
+        <p class="lead" style="margin-bottom: 60px">Aprenda como atacar territórios, fazer trocas, distribuir e mover suas tropas.</p>
+        <div class="row">
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/distribuir-tropas-globais.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Distribuia tropas globais.</h4>
+                <p>As tropas globais podem ser distribuídas em qualquer território seu. Basta você clicar no território desejado.</p>
+            </div>
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/distribuir-tropas-continente.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Distribuia tropas de continente.</h4>
+                <p>As tropas adquiridas pelo domínio total de um continente podem ser distribuídas em qualquer território do mesmo. Basta você clicar no território desejado.</p>
+            </div>
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/distribuir-tropas-troca.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Troque e distribuia as tropas.</h4>
+                <p>As tropas adquiridas pela troca de cartas territórios podem ser distribuídas em qualquer território seu. Basta você clicar no território desejado.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/atacar.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Ataque o inimigo.</h4>
+                <p>Para atacar, primeiro você precisa clicar no território inimigo e depois no seu território que tenha fronteira com o alvo.</p>
+            </div>
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/atacar-mover.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Fortifique sua conquista.</h4>
+                <p>Após conquistar um território você pode mover até duas tropas para novo território conquistado.</p>
+            </div>
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/atacar-combinado.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Una forças para atacar.</h4>
+                <p>Você também pode atacar o seu alvo com mais de um território ao mesmo tempo, desde que eles façam frontreia com o alvo e tenham mais de uma tropa.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/mover.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Mova suas tropas.</h4>
+                <p>Para mover, primeiro clique no território de onde as tropas vão sair e depois clique no território para onde as tropas vão.</p>
+            </div>
+            <div class="col-sm-4">
+                <video class="video" controls>
+                    <source src="videos/mover-varias-vezes.m4v" type="video/mp4">
+                </video>
+                <h4 class="no-anchor video-title">Mova várias vezes.</h4>
+                <p>Mova suas tropas quantas vezes você achar necessário entre os seus territórios que tenham fronteiras.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

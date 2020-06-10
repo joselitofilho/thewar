@@ -546,7 +546,8 @@ function appwar_abrirRanking() {
 }
 
 function appwar_abrirRegras() {
-    var win = window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
+    // var win = window.open('https://docs.google.com/document/d/1mWxAj06aMWTXOR57s69zaMAr5K31YZiqBAlGW2oThng/pub', '_blank');
+    var win = window.open('/regras.html', '_blank');
     win.focus();
 }
 

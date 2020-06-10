@@ -13,6 +13,11 @@ mkdir -p webdir/sons/
 unzip -u sons.zip -d webdir/
 rm sons.zip
 
+gdown --id 1DLO1aRCZFgJZeGQoVnlQZpZLVuPHiZ4F
+mkdir -p webdir/videos/
+unzip -u videos.zip -d webdir/
+rm videos.zip
+
 FILE="war.db"
 if [ ! -f "$FILE" ]; then
 	echo "Creating database..."
