@@ -16,6 +16,13 @@ if [ ! -f "sons.zip" ]; then
   #rm sons.zip  # Please, remove manually.
 fi
 
+if [ ! -f "videos.zip" ]; then
+  gdown --id 1DLO1aRCZFgJZeGQoVnlQZpZLVuPHiZ4F
+  mkdir -p webdir/videos/
+  unzip -u videos.zip -d webdir/
+  #rm videos.zip  # Please, remove manually.
+fi
+
 if [ ! -f "war.db" ]; then
 	echo "Creating database..."
 	python ../database_update0.py
