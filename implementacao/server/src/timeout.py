@@ -26,7 +26,7 @@ class Timeout(threading.Thread):
 
     def para(self):
         self.loop = False
-        raise Exception("ThreadTimeout: Forcando a parada da thread...")
+        # raise Exception("ThreadTimeout: Forcando a parada da thread...")
 
     def __del__(self):
         self.para()
