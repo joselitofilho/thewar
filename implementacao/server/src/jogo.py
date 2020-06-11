@@ -224,11 +224,7 @@ class Jogo(object):
         ok = False
         for i in range(len(self.ordemJogadores)):
             self.indiceOrdemJogadores = (self.indiceOrdemJogadores + 1) % len(self.ordemJogadores)
-            print
-            'indiceOrdemJogadores', self.indiceOrdemJogadores
             self.posicaoJogadorDaVez = self.ordemJogadores[self.indiceOrdemJogadores]
-            print
-            'posicaoJogadorDaVez', self.posicaoJogadorDaVez
             self.jogadorDaVezConquistouTerritorio = False
 
             jogador = self.jogadores[self.posicaoJogadorDaVez]
@@ -250,188 +246,188 @@ class Jogo(object):
             self.gerenciador.jogoTerminou(self.nome)
 
     def finalizaTurno_1(self):
-        turno = self.turno
+        # turno = self.turno
 
-        if turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais and turno.quantidadeDeTropas == 0:
+        if self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais and self.turno.quantidadeDeTropas == 0:
             jogador = self.jogadores[self.posicaoJogadorDaVez]
             if len(jogador.gruposTerritorio()) > 0:
-                turno.gruposTerritorio = list(jogador.gruposTerritorio())
-                turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
+                self.turno.gruposTerritorio = list(jogador.gruposTerritorio())
+                self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             else:
                 if not self.temUmVencedor():
                     self.passaParaProximoJogador()
 
                     if self.todosJogaram():
-                        turno.numero = 2
-                        turno.tipoAcao = TipoAcaoTurno.atacar
+                        self.turno.numero = 2
+                        self.turno.tipoAcao = TipoAcaoTurno.atacar
                     else:
-                        turno.numero = 1
-                        turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                        self.turno.numero = 1
+                        self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
                     self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                    acaoDoTurno = self.criaAcaoDoTurno(turno)
+                    acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.nome)
 
-        elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and turno.quantidadeDeTropas == 0:
+        elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and self.turno.quantidadeDeTropas == 0:
             try:
-                turno.gruposTerritorio.pop(0)
+                self.turno.gruposTerritorio.pop(0)
             except:
                 logging.exception("Nao tem grupo territorio para remover.")
 
-            if len(turno.gruposTerritorio) == 0:
+            if len(self.turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
-                    turno.tipoAcao = TipoAcaoTurno.jogo_terminou
+                    self.turno.tipoAcao = TipoAcaoTurno.jogo_terminou
                 else:
                     self.passaParaProximoJogador()
 
                     if self.todosJogaram():
-                        turno.numero = 2
-                        turno.tipoAcao = TipoAcaoTurno.atacar
+                        self.turno.numero = 2
+                        self.turno.tipoAcao = TipoAcaoTurno.atacar
                     else:
-                        turno.numero = 1
-                        turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                        self.turno.numero = 1
+                        self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
             self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
+            acaoDoTurno = self.criaAcaoDoTurno(self.turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.nome)
 
     def finalizaTurno_2(self):
-        turno = self.turno
+        # turno = self.turno
 
-        if turno.tipoAcao == TipoAcaoTurno.atacar:
-            turno.numero = 2
-            turno.tipoAcao = TipoAcaoTurno.mover
+        if self.turno.tipoAcao == TipoAcaoTurno.atacar:
+            self.turno.numero = 2
+            self.turno.tipoAcao = TipoAcaoTurno.mover
             self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
+            acaoDoTurno = self.criaAcaoDoTurno(self.turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
-        elif turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
-            if turno.tropasParaMoverAposAtaque < 3:
+        elif self.turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
+            if self.turno.tropasParaMoverAposAtaque < 3:
                 self.finalizaTurno_moverAposConquistarTerritorio()
 
-        elif turno.tipoAcao == TipoAcaoTurno.mover:
+        elif self.turno.tipoAcao == TipoAcaoTurno.mover:
             if self.temUmVencedor():
-                turno.tipoAcao = TipoAcaoTurno.jogo_terminou
+                self.turno.tipoAcao = TipoAcaoTurno.jogo_terminou
             else:
                 self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
 
                 self.passaParaProximoJogador()
 
                 if self.todosJogaram():
-                    turno.numero = 3
-                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                    self.turno.numero = 3
+                    self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
                 else:
-                    turno.numero = 2
-                    turno.tipoAcao = TipoAcaoTurno.atacar
+                    self.turno.numero = 2
+                    self.turno.tipoAcao = TipoAcaoTurno.atacar
 
             self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
+            acaoDoTurno = self.criaAcaoDoTurno(self.turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
                 self.gerenciador.jogoTerminou(self.nome)
 
     def finalizaTurno_I(self):
-        turno = self.turno
+        # turno = self.turno
         erro = True
         jogador = self.jogadores[self.posicaoJogadorDaVez]
 
-        if turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais:
-            if turno.quantidadeDeTropas == 0:
+        if self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais:
+            if self.turno.quantidadeDeTropas == 0:
                 if len(jogador.gruposTerritorio()) > 0:
-                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
-                    turno.gruposTerritorio = list(jogador.gruposTerritorio())
+                    self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
+                    self.turno.gruposTerritorio = list(jogador.gruposTerritorio())
                 elif len(jogador.cartasTerritorio) > 2:
-                    turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+                    self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
-                    turno.tipoAcao = TipoAcaoTurno.atacar
+                    self.turno.tipoAcao = TipoAcaoTurno.atacar
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
-        elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
-            if turno.quantidadeDeTropas == 0:
+        elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
+            if self.turno.quantidadeDeTropas == 0:
                 try:
-                    turno.gruposTerritorio.pop(0)
+                    self.turno.gruposTerritorio.pop(0)
                 except Exception:
                     logging.debug("Nao tem grupo territorio para remover.")
 
-                if len(turno.gruposTerritorio) == 0:
+                if len(self.turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
-                        turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+                        self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                     else:
-                        turno.tipoAcao = TipoAcaoTurno.atacar
+                        self.turno.tipoAcao = TipoAcaoTurno.atacar
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
-        elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
-            if turno.quantidadeDeTropas == 0:
+        elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
+            if self.turno.quantidadeDeTropas == 0:
                 if len(jogador.cartasTerritorio) > 2:
-                    turno.tipoAcao = TipoAcaoTurno.trocar_cartas
+                    self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
-                    turno.tipoAcao = TipoAcaoTurno.atacar
+                    self.turno.tipoAcao = TipoAcaoTurno.atacar
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
-        elif turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
+        elif self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
             logging.debug("Obrigatorio passar a vez? " + str(self.obrigatorioPassarAVez))
             if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
                 if self.obrigatorioPassarAVez:
-                    turno.tipoAcao = TipoAcaoTurno.mover
+                    self.turno.tipoAcao = TipoAcaoTurno.mover
                 else:
-                    turno.tipoAcao = TipoAcaoTurno.atacar
+                    self.turno.tipoAcao = TipoAcaoTurno.atacar
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                acaoDoTurno = self.criaAcaoDoTurno(turno)
+                acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
                 self.obrigatorioPassarAVez = False
 
-        elif turno.tipoAcao == TipoAcaoTurno.atacar:
-            turno.tipoAcao = TipoAcaoTurno.mover
+        elif self.turno.tipoAcao == TipoAcaoTurno.atacar:
+            self.turno.tipoAcao = TipoAcaoTurno.mover
             self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
+            acaoDoTurno = self.criaAcaoDoTurno(self.turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             erro = False
 
-        elif turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
-            if turno.tropasParaMoverAposAtaque < 3:
+        elif self.turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
+            if self.turno.tropasParaMoverAposAtaque < 3:
                 self.finalizaTurno_moverAposConquistarTerritorio()
                 erro = False
 
-        elif turno.tipoAcao == TipoAcaoTurno.mover:
+        elif self.turno.tipoAcao == TipoAcaoTurno.mover:
             if self.temUmVencedor():
-                turno.tipoAcao = TipoAcaoTurno.jogo_terminou
+                self.turno.tipoAcao = TipoAcaoTurno.jogo_terminou
             else:
                 self.enviaCartaTerritorioSeJogadorDaVezConquistouTerritorio()
 
                 self.passaParaProximoJogador()
-                turno.trocouCartas = False
+                self.turno.trocouCartas = False
 
                 if self.todosJogaram():
-                    turno.numero += 1
-                turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+                    self.turno.numero += 1
+                self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
             self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-            acaoDoTurno = self.criaAcaoDoTurno(turno)
+            acaoDoTurno = self.criaAcaoDoTurno(self.turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
             erro = False
 
@@ -486,18 +482,18 @@ class Jogo(object):
         return posicaoJogador
 
     def colocaTropaReq(self, usuario, codigoTerritorio, quantidade):
-        turno = self.turno
+        # turno = self.turno
         jogador = self.jogadores[self.posicaoJogadorDaVez]
 
         erro = True
         if jogador.usuario == usuario:
-            if turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais or \
-                    turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
-                if quantidade <= turno.quantidadeDeTropas and jogador.temTerritorio(codigoTerritorio):
-                    turno.quantidadeDeTropas -= quantidade
+            if self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais or \
+                    self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
+                if quantidade <= self.turno.quantidadeDeTropas and jogador.temTerritorio(codigoTerritorio):
+                    self.turno.quantidadeDeTropas -= quantidade
                     territorio = jogador.adicionaTropasNoTerritorio(codigoTerritorio, quantidade)
 
-                    quantidadeTotalRestante = turno.quantidadeDeTropas
+                    quantidadeTotalRestante = self.turno.quantidadeDeTropas
 
                     self.enviaMsgParaTodos(TipoMensagem.colocar_tropa,
                                            ColocarTropa(self.jogadores[self.posicaoJogadorDaVez].usuario,
@@ -505,14 +501,14 @@ class Jogo(object):
                                                         territorio,
                                                         quantidadeTotalRestante))
                     erro = False
-            elif turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
-                if quantidade <= turno.quantidadeDeTropas and \
+            elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
+                if quantidade <= self.turno.quantidadeDeTropas and \
                         jogador.temTerritorio(codigoTerritorio) and \
-                        codigoTerritorio in GrupoTerritorio.Dicionario[turno.grupoTerritorioAtual]:
-                    turno.quantidadeDeTropas -= quantidade
+                        codigoTerritorio in GrupoTerritorio.Dicionario[self.turno.grupoTerritorioAtual]:
+                    self.turno.quantidadeDeTropas -= quantidade
                     territorio = jogador.adicionaTropasNoTerritorio(codigoTerritorio, quantidade)
 
-                    quantidadeTotalRestante = turno.quantidadeDeTropas
+                    quantidadeTotalRestante = self.turno.quantidadeDeTropas
 
                     self.enviaMsgParaTodos(TipoMensagem.colocar_tropa,
                                            ColocarTropa(self.jogadores[self.posicaoJogadorDaVez].usuario,
@@ -536,12 +532,12 @@ class Jogo(object):
                                                                       territoriosBeneficiados))
 
     def ataca(self, usuario, dosTerritorios, paraOTerritorio):
-        turno = self.turno
+        # turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
 
         if jogador.usuario == usuario:
-            if turno.tipoAcao == TipoAcaoTurno.atacar:
+            if self.turno.tipoAcao == TipoAcaoTurno.atacar:
                 if not self.estaAtacando and jogador.temOsTerritorios(dosTerritorios) and not jogador.temTerritorio(
                         paraOTerritorio):
                     self.estaAtacando = True
@@ -642,18 +638,18 @@ class Jogo(object):
                                                                        JogadorDestruido(jogadorDefesa))
 
                                             self.jogadorDaVezConquistouTerritorio = True
-                                            turno.tropasParaMoverAposAtaque = 0
-                                            turno.territoriosDoAtaqueDaConquista = []
+                                            self.turno.tropasParaMoverAposAtaque = 0
+                                            self.turno.territoriosDoAtaqueDaConquista = []
                                             for t in territoriosDoAtaque:
                                                 if t.quantidadeDeTropas > 1:
-                                                    turno.territoriosDoAtaqueDaConquista.append(t.codigo)
-                                                    turno.tropasParaMoverAposAtaque += t.quantidadeDeTropas - 1
-                                                    if turno.tropasParaMoverAposAtaque > 2:
-                                                        turno.tropasParaMoverAposAtaque = 2
-                                            turno.territorioConquistado = territorioDaDefesa.codigo
+                                                    self.turno.territoriosDoAtaqueDaConquista.append(t.codigo)
+                                                    self.turno.tropasParaMoverAposAtaque += t.quantidadeDeTropas - 1
+                                                    if self.turno.tropasParaMoverAposAtaque > 2:
+                                                        self.turno.tropasParaMoverAposAtaque = 2
+                                            self.turno.territorioConquistado = territorioDaDefesa.codigo
 
-                                            if turno.tropasParaMoverAposAtaque > 0:
-                                                turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
+                                            if self.turno.tropasParaMoverAposAtaque > 0:
+                                                self.turno.tipoAcao = TipoAcaoTurno.mover_apos_conquistar_territorio
                                             break
 
                                     else:
@@ -692,17 +688,16 @@ class Jogo(object):
             pos -= 1
 
     def move(self, usuario, doTerritorio, paraOTerritorio, quantidade):
-        turno = self.turno
+        # turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
 
         if jogador.usuario == usuario:
-            if turno.tipoAcao == TipoAcaoTurno.mover:
+            if self.turno.tipoAcao == TipoAcaoTurno.mover:
                 if jogador.temTerritorio(doTerritorio) and jogador.temTerritorio(paraOTerritorio) and \
                         FronteiraTerritorio.TemFronteira(doTerritorio, paraOTerritorio):
                     doTerritorioObj = jogador.seuTerritorio(doTerritorio)
                     paraOTerritorioObj = jogador.seuTerritorio(paraOTerritorio)
-
                     if doTerritorioObj.quantidadeDeTropas > quantidade:
                         jogador.removeTropasNoTerritorio(doTerritorioObj.codigo, quantidade)
                         jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.codigo, quantidade)
@@ -716,12 +711,12 @@ class Jogo(object):
                 else:
                     self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
-            elif turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
+            elif self.turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
                 if jogador.temTerritorio(doTerritorio) and \
                         jogador.temTerritorio(paraOTerritorio) and \
-                        turno.territorioConquistado == paraOTerritorio and \
-                        doTerritorio in turno.territoriosDoAtaqueDaConquista and \
-                        turno.tropasParaMoverAposAtaque > 0:
+                        self.turno.territorioConquistado == paraOTerritorio and \
+                        doTerritorio in self.turno.territoriosDoAtaqueDaConquista and \
+                        self.turno.tropasParaMoverAposAtaque > 0:
 
                     doTerritorioObj = jogador.seuTerritorio(doTerritorio)
                     paraOTerritorioObj = jogador.seuTerritorio(paraOTerritorio)
@@ -730,7 +725,7 @@ class Jogo(object):
                         jogador.removeTropasNoTerritorio(doTerritorioObj.codigo, quantidade)
                         jogador.adicionaTropasNoTerritorio(paraOTerritorioObj.codigo, quantidade)
 
-                        turno.tropasParaMoverAposAtaque -= quantidade
+                        self.turno.tropasParaMoverAposAtaque -= quantidade
                         self.enviaMsgParaTodos(TipoMensagem.mover,
                                                Mover(self.jogadores[posicaoJogador].usuario,
                                                      doTerritorioObj, paraOTerritorioObj,
@@ -741,13 +736,13 @@ class Jogo(object):
                     self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
     def moveAposConquistarTerritorio(self, usuario, quantidade):
-        turno = self.turno
+        # turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
 
-        if jogador.usuario == usuario and turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
-            paraOTerritorio = turno.territorioConquistado
-            for codigo in turno.territoriosDoAtaqueDaConquista:
+        if jogador.usuario == usuario and self.turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio:
+            paraOTerritorio = self.turno.territorioConquistado
+            for codigo in self.turno.territoriosDoAtaqueDaConquista:
                 terr = jogador.seuTerritorio(codigo)
                 if quantidade > 0:
                     doTerritorio = terr.codigo
@@ -762,13 +757,13 @@ class Jogo(object):
             self.finalizaTurno_moverAposConquistarTerritorio()
 
     def trocaCartasTerritorio(self, usuario, cartasTerritorio):
-        turno = self.turno
+        # turno = self.turno
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
 
         logging.debug("Troca de cartas territorio: " + ", ".join(cartasTerritorio))
 
-        if turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
+        if self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
                 jogador.usuario == usuario and \
                 len(cartasTerritorio) == 3:
 
@@ -799,16 +794,16 @@ class Jogo(object):
                     podeTrocar = True
 
                 if podeTrocar:
-                    turno.trocouCartas = True
+                    self.turno.trocouCartas = True
 
                     self.colocaTropaNaTrocaDeCartasTerritorios(posicaoJogador, cartasParaTroca)
 
                     # Envia informacao do turno.
-                    turno.quantidadeDeTropas = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
+                    self.turno.quantidadeDeTropas = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
                     self.numeroDaTroca += 1
-                    turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_troca_de_cartas
+                    self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_troca_de_cartas
                     self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
-                    acaoDoTurno = self.criaAcaoDoTurno(turno)
+                    acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
                     # Remove e envia ao jogador suas cartas de territorios atualizadas.
@@ -820,7 +815,7 @@ class Jogo(object):
                 else:
                     self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
 
-        return turno.trocouCartas
+        return self.turno.trocouCartas
 
     def jogarDado(self):
         # TODO: VIP
@@ -990,19 +985,35 @@ class Jogo(object):
         grafo_territorios = {}
         for codigo_territorio in CodigoTerritorio.Lista:
             grafo_territorios[codigo_territorio] = {
+                'codigo': codigo_territorio,
                 'fronteiras': FronteiraTerritorio.Fronteiras[codigo_territorio]
             }
             if codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Asia]:
-                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Asia
+                grafo_territorios[codigo_territorio]['borda'] = True
             elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.AmericaDoNorte]:
-                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.AmericaDoNorte
+                grafo_territorios[codigo_territorio]['borda'] = True
             elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Africa]:
-                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Africa
+                grafo_territorios[codigo_territorio]['borda'] = True
             elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.AmericaDoSul]:
-                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.AmericaDoSul
+                grafo_territorios[codigo_territorio]['borda'] = True
             elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Europa]:
-                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Europa
+                grafo_territorios[codigo_territorio]['borda'] = True
             elif codigo_territorio in GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.Oceania]:
+                grafo_territorios[codigo_territorio]['borda'] = True
+            else:
+                grafo_territorios[codigo_territorio]['borda'] = False
+
+            if codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.Asia]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Asia
+            elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.AmericaDoNorte]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.AmericaDoNorte
+            elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.Africa]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Africa
+            elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.AmericaDoSul]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.AmericaDoSul
+            elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.Europa]:
+                grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Europa
+            elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.Oceania]:
                 grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Oceania
 
         for jogador in self.jogadores.values():
