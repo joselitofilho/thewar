@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import json
 import threading
 import time
 
+from Queue import Queue
 from src.carta import *
 from src.mensagens import *
 from src.territorio import *
 from src.timeout import *
 from src.tipoAcaoTurno import *
-
-from Queue import Queue
 
 
 class IAInterface(threading.Thread):
@@ -21,6 +21,7 @@ class IAInterface(threading.Thread):
         self.usuario = usuario
         self.jogador = None
         self.jogo = None
+        self.grafo_territorios = None
 
         self.queue_msgs = Queue()
 
@@ -61,13 +62,18 @@ class IAInterface(threading.Thread):
                 if self.mensagem.tipo == TipoMensagem.turno:
                     params = self.mensagem.params
                     if params['vezDoJogador']['usuario'] == self.usuario:
-                        # self.mensagem = None
                         self.processa_msg_turno(self.usuario, self.jogador, self.jogo, params)
                 elif self.mensagem.tipo == TipoMensagem.atacar:
                     params = self.mensagem.params
                     if params['jogadorAtaque']['usuario'] == self.usuario:
-                        # self.mensagem = None
                         self.processa_msg_atacar(self.usuario, self.jogador, self.jogo, params)
+                elif self.mensagem.tipo == TipoMensagem.mover:
+                    params = self.mensagem.params
+                    if params['jogador'] == self.usuario:
+                        pass
+                elif self.mensagem.tipo == TipoMensagem.erro:
+                    print 'ERROR MSG ', self.usuario
+
             time.sleep(1)
 
     def para(self):
@@ -79,11 +85,12 @@ class IAInterface(threading.Thread):
         self.jogo = jogo
 
     def processa_msg_turno(self, usuario, jogador, jogo, params):
-        if params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_globais or params[
-            'tipoAcao'] == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
+        if params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_globais:
             self.turno_distribuir_tropas_globais(usuario, jogador, jogo, params)
         elif params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_grupo_territorio:
             self.turno_distribuir_tropas_grupo_territorio(usuario, jogador, jogo, params)
+        elif params['tipoAcao'] == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
+            self.turno_distribuir_tropas_troca_de_cartas(usuario, jogador, jogo, params)
         elif params['tipoAcao'] == TipoAcaoTurno.trocar_cartas:
             self.turno_trocar_cartas(usuario, jogador, jogo, params)
         elif params['tipoAcao'] == TipoAcaoTurno.atacar:
@@ -110,7 +117,8 @@ class IAInterface(threading.Thread):
             self.finaliza_turno(usuario, jogo)
 
     def turno_distribuir_tropas_troca_de_cartas(self, usuario, jogador, jogo, params):
-        pass
+        time.sleep(2)
+        self.coloca_tropa(usuario, jogador, jogo, params)
 
     def turno_trocar_cartas(self, usuario, jogador, jogo, params):
         time.sleep(2)
@@ -140,8 +148,7 @@ class IAInterface(threading.Thread):
             self.finaliza_turno(usuario, jogo)
 
     def move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
-        if self.acao_move_apos_conquistar_territorio(usuario, jogador, jogo, params):
-            self.turno_atacar(usuario, jogador, jogo)
+        self.acao_move_apos_conquistar_territorio(usuario, jogador, jogo, params)
 
     def turno_mover(self, usuario, jogador, jogo):
         time.sleep(2)
@@ -178,3 +185,60 @@ class IAInterface(threading.Thread):
             'densidade_por_grupos': densidade_por_grupos,
             'meus_territorios_por_grupo': meus_territorios_por_grupo
         }
+
+    def atualiza_grafo(self, usuario, jogador):
+        self.grafo_territorios = self.jogo.grafoTerritorios()
+
+        bst = self.bst(usuario, jogador)
+        # print 'BST', usuario, bst
+        bsr = self.bsr(usuario, jogador)
+        # print 'BSR', usuario, bsr
+        nbsr = self.nbsr(usuario, jogador, bsr)
+        # print 'NBSR', usuario, nbsr
+
+        for t in self.grafo_territorios:
+            if t in bst:
+                self.grafo_territorios[t]['bst'] = bst[t]
+            if t in bsr:
+                self.grafo_territorios[t]['bsr'] = bsr[t]
+            if t in nbsr:
+                self.grafo_territorios[t]['nbsr'] = nbsr[t]
+
+        return self.grafo_territorios
+
+    def bst(self, usuario, jogador):
+        res = {}
+        meus_territorios = jogador.territorios
+        for territorio in meus_territorios:
+            bst = 0.0
+            for adjacente in self.grafo_territorios[territorio.codigo]['fronteiras']:
+                if self.grafo_territorios[adjacente]['usuario'] != usuario:
+                    bst = bst + self.grafo_territorios[adjacente]['quantidade']
+            res[territorio.codigo] = bst
+
+        return res
+
+    def bsr(self, usuario, jogador):
+        res = {}
+        meus_territorios = jogador.territorios
+        for territorio in meus_territorios:
+            bst = 0.0
+            for adjacente in self.grafo_territorios[territorio.codigo]['fronteiras']:
+                if self.grafo_territorios[adjacente]['usuario'] != usuario:
+                    bst = bst + self.grafo_territorios[adjacente]['quantidade']
+            res[territorio.codigo] = bst / self.grafo_territorios[territorio.codigo]['quantidade']
+
+        return res
+
+    def nbsr(self, usuario, jogador, bsr):
+        res = {}
+        meus_territorios = jogador.territorios
+        for territorio in meus_territorios:
+            sum = bsr[territorio.codigo]
+            for adjacente in self.grafo_territorios[territorio.codigo]['fronteiras']:
+                if self.grafo_territorios[adjacente]['usuario'] == usuario:
+                    sum = sum + bsr[adjacente]
+            res[territorio.codigo] = 0 if sum == 0 else bsr[territorio.codigo] / sum
+
+        return res
+

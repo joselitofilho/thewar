@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import operator
 import random
 
 from src.carta import *
@@ -15,44 +16,67 @@ class IALucy(IAInterface):
         super(IALucy, self).__init__('Lucy' + sufixo)
 
     def acao_coloca_tropa(self, usuario, jogador, jogo, params):
+        grafo = self.atualiza_grafo(usuario, jogador)
+
         quantidade_de_tropas = params['quantidadeDeTropas']
         densidades = jogador.densidadeTodosGruposTerritorio()
-        grupo = None
+        grupo_maior_densidade = None
         for densidade in densidades:
-            grupo = densidade[0]
+            grupo_maior_densidade = densidade[0]
             if densidade[1] < 100.0:
-                grupo = densidade[0]
+                grupo_maior_densidade = densidade[0]
                 break
-        listaGrupo = GrupoTerritorio.Dicionario[grupo]
+        lista_grupo_maior_densidade = GrupoTerritorio.Dicionario[grupo_maior_densidade]
         codigosTerritorios = []
         for terr in jogador.territorios:
             codigosTerritorios.append(terr.codigo)
-        meus_territorios_por_grupo = jogador.territoriosPorGrupo(listaGrupo, codigosTerritorios)
+        meus_territorios_por_grupo_maior_densidade = jogador.territoriosPorGrupo(lista_grupo_maior_densidade, codigosTerritorios)
 
         meus_territorios = []
         for terr in jogador.territorios:
-            if terr.codigo in meus_territorios_por_grupo:
+            if terr.codigo in meus_territorios_por_grupo_maior_densidade:
                 meus_territorios.append(terr)
 
-        territorios_inimigos = jogo.territoriosInimigos(usuario)
-        territorio_inimigo = None
         meu_territorio_escolhido = None
-        for terr in meus_territorios:
-            for terr_inimigo in territorios_inimigos:
-                if FronteiraTerritorio.TemFronteira(terr.codigo, terr_inimigo.codigo):
-                    if territorio_inimigo:
-                        if terr_inimigo.quantidadeDeTropas < territorio_inimigo.quantidadeDeTropas:
-                            territorio_inimigo = terr_inimigo
-                            meu_territorio_escolhido = terr
-                    else:
-                        territorio_inimigo = terr_inimigo
-                        meu_territorio_escolhido = terr
+        for terr in meus_territorios_por_grupo_maior_densidade:
+            grafo_terr = grafo[terr]
+            if meu_territorio_escolhido == None:
+                meu_territorio_escolhido = grafo_terr
+            elif grafo_terr['bsr'] == meu_territorio_escolhido['bsr']:
+                qtd_adjacentes_no_grupo_1 = 0
+                for adj in grafo_terr['fronteiras']:
+                    if grafo[adj]['grupo'] == grafo_terr['grupo']:
+                        qtd_adjacentes_no_grupo_1 += 1
+                qtd_adjacentes_no_grupo_2 = 0
+                for adj in meu_territorio_escolhido['fronteiras']:
+                    if meu_territorio_escolhido['grupo'] == grafo[adj]['grupo']:
+                        qtd_adjacentes_no_grupo_2 += 1
+                if qtd_adjacentes_no_grupo_1 > qtd_adjacentes_no_grupo_2:
+                    meu_territorio_escolhido = grafo_terr
+            elif meu_territorio_escolhido['nbsr'] < grafo[terr]['nbsr']:
+                meu_territorio_escolhido = grafo_terr
 
+        # territorios_inimigos = jogo.territoriosInimigos(usuario)
+        # territorio_inimigo = None
+        # meu_territorio_escolhido = None
+        # for terr in meus_territorios:
+        #     for terr_inimigo in territorios_inimigos:
+        #         if FronteiraTerritorio.TemFronteira(terr.codigo, terr_inimigo.codigo):
+        #             if territorio_inimigo:
+        #                 if terr_inimigo.quantidadeDeTropas < territorio_inimigo.quantidadeDeTropas:
+        #                     territorio_inimigo = terr_inimigo
+        #                     meu_territorio_escolhido = terr
+        #             else:
+        #                 territorio_inimigo = terr_inimigo
+        #                 meu_territorio_escolhido = terr
+        #
         if meu_territorio_escolhido:
-            territorio_codigo = meu_territorio_escolhido.codigo
+            # territorio_codigo = meu_territorio_escolhido.codigo
+            territorio_codigo = meu_territorio_escolhido['codigo']
         else:
-            random.shuffle(meus_territorios_por_grupo)
-            territorio_codigo = meus_territorios_por_grupo[0]
+            random.shuffle(meus_territorios_por_grupo_maior_densidade)
+            territorio_codigo = meus_territorios_por_grupo_maior_densidade[0]
+
         jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
 
         return True
@@ -93,7 +117,6 @@ class IALucy(IAInterface):
 
     def acao_trocar_cartas(self, usuario, jogador, jogo, params):
         minhas_cartas = jogador.cartasTerritorio
-        print 'ACAO_TROCAR_CARTAS', usuario, json.dumps(minhas_cartas, default=lambda o: o.__dict__)
         if len(minhas_cartas) >= 3:
             cartasTriangulo = []
             cartasQuadrado = []
@@ -159,10 +182,34 @@ class IALucy(IAInterface):
         return True
 
     def acao_move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
-        quantidade = min(params['territoriosDoAtaque'][0]['quantidadeDeTropas'] - 1, 1)
+        # quantidade = min(params['territoriosDoAtaque'][0]['quantidadeDeTropas'] - 1, 1)
+        # NOTE: Por enquanto não vai mover ao atacar.
+        quantidade = 0
         jogo.moveAposConquistarTerritorio(usuario, quantidade)
 
-        return True
-
     def acao_move(self, usuario, jogador, jogo):
+        grafo = self.atualiza_grafo(usuario, jogador)
+
+        territorios_com_bst_0 = dict(
+            filter(lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1]['bst'] == 0,
+                   grafo.items()))
+
+        if len(territorios_com_bst_0) > 0:
+            do_territorio = next(iter(territorios_com_bst_0))
+            territorio_de = grafo[do_territorio]
+            territorio_para = {}
+            for t in territorio_de['fronteiras']:
+                if grafo[t]['nbsr'] > 0.0 and grafo[t]['usuario'] == usuario:
+                    territorio_para[t] = grafo[t]
+
+            if len(territorio_para) > 0:
+                territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['bsr'], reverse=True)
+                para_o_territorio = territorio_para_ordenado[0][0]
+
+                quantidade = max(territorio_de['quantidade'] - 1, 1)
+
+                print usuario, 'MOVENDO....'
+                jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
+                print usuario, 'MOVER DO', do_territorio, 'PARA', para_o_territorio, quantidade
+
         return True
