@@ -88,7 +88,7 @@ function processarMsg_registrar(msgParams) {
 }
 
 function processarMsg_entrar(msgParams) {
-    if (msgParams.status == 1) {
+    if (msgParams.status === 1) {
         var cookie = new gpscheck.web.Cookie();
         cookie.cria("usuario", $('#inputUsuario').val());
         var senha = CryptoJS.SHA3($('#inputSenha').val());
@@ -98,6 +98,7 @@ function processarMsg_entrar(msgParams) {
         appwar_alterarTituloDaPagina(msgParams.usuario);
         _usuario = msgParams.usuario;
 
+        appwar_atualizarMenuParaSala();
         $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
         $('#sala').css('visibility', 'visible');
         $('html,body').css('overflow', 'auto');
@@ -136,6 +137,8 @@ function posAberturaSocket(valor) {
     if (usuarioCookie != null) {
         $('#inputUsuario').val(usuarioCookie);
     }
+
+    appwar_exibirPainelEntrar();
     $('#painelRegistrarOuEntrar').css('visibility', 'visible');
 }
 
@@ -462,39 +465,15 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
 }
 
 function appwar_exibirPainelEntrar() {
-    var html = "<input id=\"inputUsuario\" type=\"text\"";
-    html += "class=\"input-block-level\"";
-    html += "placeholder=\"Usu&aacute;rio\" />";
-
-    html += "<input id=\"inputSenha\" type=\"password\"";
-    html += "class=\"input-block-level\"";
-    html += "placeholder=\"Senha\" />";
-
-    html += "<button class=\"btn btn-large btn-default\" onclick=\"appwar_entrar();\">Entrar</button>";
-
-    $('#pre_content').html(html);
-    $('#abaEntrar').attr('class', 'active');
-    $('#abaRegistrar').attr('class', '');
+    $(function(){
+      $("#painelRegistrarOuEntrar #pre_content").load("../../login/entrar.html");
+    });
 }
 
 function appwar_exibirPainelRegistrar() {
-    var html = "<input id=\"inputUsuario\" type=\"text\"";
-    html += "class=\"input-block-level\"";
-    html += "placeholder=\"Usu&aacute;rio\" />";
-
-    html += "<input id=\"inputSenha\" type=\"password\"";
-    html += "class=\"input-block-level\"";
-    html += "placeholder=\"Senha\" />";
-
-    html += "<input id=\"inputEmail\" type=\"text\"";
-    html += "class=\"input-block-level\"";
-    html += "placeholder=\"Email\" />";
-
-    html += "<button class=\"btn btn-large btn-default\" onclick=\"appwar_registrar();\">Registrar</button>";
-
-    $('#pre_content').html(html);
-    $('#abaEntrar').attr('class', '');
-    $('#abaRegistrar').attr('class', 'active');
+    $(function(){
+      $("#painelRegistrarOuEntrar #pre_content").load("../../login/registrar.html");
+    });
 }
 
 function emailValido(email) {
@@ -503,20 +482,31 @@ function emailValido(email) {
     else return true;
 }
 
-function appwar_entrar() {
-    var senha = CryptoJS.SHA3($('#inputSenha').val());
-    senha = base64_encode(senha.toString());
-    var entrarMsg = comunicacao_entrar($('#inputUsuario').val(), senha);
-    _libwebsocket.enviarObjJson(entrarMsg);
+function appwar_entrar(usuario, senha) {
+    if (!senha) {
+        senha = $('#inputSenha').val();
+    }
+    if (!usuario) {
+        usuario = $('#inputUsuario').val();
+    }
 
-    appwar_atualizarMenuParaSala();
+    senha = CryptoJS.SHA3(senha);
+    senha = base64_encode(senha.toString());
+    var entrarMsg = comunicacao_entrar(usuario, senha);
+    _libwebsocket.enviarObjJson(entrarMsg);
 }
 
-function appwar_registrar() {
-    var usuario = $('#inputUsuario').val();
-    var senha = $('#inputSenha').val();
-    var email = $('#inputEmail').val();
-    if (usuario.length == 0 || senha.length == 0 || email.length == 0 || !emailValido(email)) {
+function appwar_registrar(usuario, senha, email) {
+    if (!senha) {
+        senha = $('#inputSenha').val();
+    }
+    if (!usuario) {
+        usuario = $('#inputUsuario').val();
+    }
+    if (!email) {
+        usuario = $('#inputEmail').val();
+    }
+    if (usuario.length === 0 || senha.length === 0 || email.length === 0 || !emailValido(email)) {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
     } else {
         senha = CryptoJS.SHA3(senha);
@@ -614,18 +604,6 @@ function appwar_mostrarEsconderConfiguracoes() {
     }
 }
 
-function audio_iniciarControleDeAudio() {
-    $("#volume").slider({
-        min: 0,
-        max: 100,
-        value: 25,
-        range: "min",
-        slide: function (event, ui) {
-            setVolume(ui.value / 100);
-        }
-    });
-}
-
 function tocarSom(el, soundfile, force) {
     var el = $('#audioPlayer').get(0);
     var volume = (force || $('#botao_conf_audio .material-icons').html() === 'volume_up') ? 0.5 : 0;
@@ -656,5 +634,3 @@ function audio_paraSomDeFundo() {
     bgMusicPlayer.pause();
     bgMusicPlayer.currentTime = 0;
 }
-
-audio_iniciarControleDeAudio();
