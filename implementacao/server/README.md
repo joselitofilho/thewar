@@ -38,6 +38,7 @@ $ apt-get install screen
     - Gerador de sprite: http://pt.spritegen.website-performance.org/
     - drop-shadow: http://css3gen.com/box-shadow/
     - linear-gradient: http://www.css3factory.com/linear-gradients/
+    - Material icons: https://material.io/resources/icons/?search=eye&icon=visibility&style=outline
 
 ### Sons:
     - http://www.freesound.org/
