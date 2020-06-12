@@ -186,8 +186,8 @@ class IAInterface(threading.Thread):
             'meus_territorios_por_grupo': meus_territorios_por_grupo
         }
 
-    def atualiza_grafo(self, usuario, jogador):
-        self.grafo_territorios = self.jogo.grafoTerritorios()
+    def atualiza_grafo(self, usuario, jogador, jogo):
+        self.grafo_territorios = jogo.grafoTerritorios()
 
         bst = self.bst(usuario, jogador)
         # print 'BST', usuario, bst
