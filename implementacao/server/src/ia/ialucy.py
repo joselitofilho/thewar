@@ -151,7 +151,8 @@ class IALucy(IAInterface):
                                      cartasQuadrado[0].codigoTerritorio,
                                      cartasBola[0].codigoTerritorio]
             elif len(cartasCoringa) > 0:
-                while (len(cartas_para_troca) < 3):
+                cartas_para_troca.append(cartasCoringa.pop(0).codigoTerritorio)
+                while len(cartas_para_troca) < 3:
                     if len(cartasTriangulo) > 0:
                         cartas_para_troca.append(cartasTriangulo.pop(0).codigoTerritorio)
                     elif len(cartasQuadrado) > 0:
@@ -161,7 +162,7 @@ class IALucy(IAInterface):
                     elif len(cartasCoringa) > 0:
                         cartas_para_troca.append(cartasCoringa.pop(0).codigoTerritorio)
 
-            if len(cartas_para_troca) == 3:
+            if len(cartas_para_troca) >= 3:
                 jogo.trocaCartasTerritorio(usuario, cartas_para_troca)
                 return False
 
@@ -189,9 +190,9 @@ class IALucy(IAInterface):
         jogo.moveAposConquistarTerritorio(usuario, quantidade)
 
     def acao_move(self, usuario, jogador, jogo):
-        grafo = self.atualiza_grafo(usuario, jogador, jogo)
         visitados = []
         while True:
+            grafo = self.atualiza_grafo(usuario, jogador, jogo)
             territorios_com_bst_0 = dict(
                 filter(lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1]['bst'] == 0 and elem[1]['codigo'] not in visitados,
                        grafo.items()))
@@ -201,14 +202,22 @@ class IALucy(IAInterface):
                 territorio_de = grafo[do_territorio]
                 territorio_para = {}
                 so_tem_fronteira_com_bst_0 = True
+                # for t in territorio_de['fronteiras']:
+                #     if grafo[t]['usuario'] == usuario and grafo[t]['bst'] != 0:
+                #         so_tem_fronteira_com_bst_0 = False
+                #         territorio_para[t] = grafo[t]
+                # if so_tem_fronteira_com_bst_0:
+                #     visitados.append(do_territorio)
                 for t in territorio_de['fronteiras']:
-                    if grafo[t]['usuario'] == usuario and grafo[t]['bst'] != 0:
-                        so_tem_fronteira_com_bst_0 = False
+                    if grafo[t]['usuario'] == usuario:
                         territorio_para[t] = grafo[t]
-                if so_tem_fronteira_com_bst_0:
-                    visitados.append(do_territorio)
+                        if grafo[t]['bst'] != 0:
+                            so_tem_fronteira_com_bst_0 = False
 
                 if len(territorio_para) > 0:
+                    if so_tem_fronteira_com_bst_0:
+                        visitados.append(do_territorio)
+
                     territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'], reverse=True)
                     para_o_territorio = territorio_para_ordenado[0][0]
 
@@ -216,10 +225,11 @@ class IALucy(IAInterface):
 
                     print usuario, 'MOVENDO....'
                     jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
-                    grafo[do_territorio]['quantidade'] -= quantidade
-                    grafo[para_o_territorio]['quantidade'] += quantidade
+                    # grafo[do_territorio]['quantidade'] -= quantidade
+                    # grafo[para_o_territorio]['quantidade'] += quantidade
                     print usuario, 'MOVER DO', do_territorio, 'PARA', para_o_territorio, quantidade
                     time.sleep(1)
+
             else:
                 break
 
