@@ -4,11 +4,11 @@ services:
   server:
     image: ricardogpsf/jogowar:v1
     volumes:
-      - .:/opt/app
+      - ./implementacao/server:/opt/app
     working_dir: /opt/app
     ports:
-      - "8080:8080"
-      - "9092:9092"
+      - 8080:8080
+      - 9092:9092
     networks:
       - jogowar-network
     stdin_open: true

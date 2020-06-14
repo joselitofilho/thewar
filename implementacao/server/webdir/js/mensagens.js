@@ -1,6 +1,8 @@
 var TipoMensagem = {
     entrar: "Entrar",
     registrar: "Registrar",
+    recuperar_senha: "RecuperarSenha",
+    nova_senha: "NovaSenha",
     ranking: "Ranking",
     doacoes: "Doacoes",
     lobby: "Lobby",

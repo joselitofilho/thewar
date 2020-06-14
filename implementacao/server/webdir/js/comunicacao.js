@@ -18,6 +18,22 @@ function comunicacao_registrar(usuario, senha, email) {
         });
 }
 
+function comunicacao_recuperarSenha(email) {
+    return new Mensagem(TipoMensagem.recuperar_senha,
+        {
+            email: email
+        });
+}
+
+function comunicacao_novaSenha(codigo, email, senha) {
+    return new Mensagem(TipoMensagem.nova_senha,
+        {
+            codigo: codigo,
+            email: email,
+            senha: senha
+        });
+}
+
 function comunicacao_ranking() {
     return new Mensagem(TipoMensagem.ranking, null);
 }

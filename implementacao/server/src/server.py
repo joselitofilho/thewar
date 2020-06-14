@@ -7,6 +7,7 @@ import signal
 import sys
 import traceback
 import os
+import json
 
 import banco
 import gerenciador
@@ -16,6 +17,7 @@ from autobahn.twisted.websocket import WebSocketServerFactory, \
 from mensagens import *
 from pontuacaodb import *
 from badges import *
+from email_util import *
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -38,11 +40,11 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 params = {}
 
                 usuario = mensagem.params['usuario']
+                usuario = _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha'])
                 params["usuario"] = usuario
-
-                if len(usuario) > 0 and _banco.verificaCredenciaisDoUsuario(usuario, mensagem.params['senha']):
+                if usuario and len(usuario) > 0:
                     if self.factory.usuarioEstaConectado(usuario):
-                        params["status"] = 2
+                        params['status'] = 2
                         # TODO: Enviar mensagem para o outro socket do usuario uma 
                         # mensagem com o motivo da sua desconexao.
                         # jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
@@ -57,14 +59,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     logging.info('%s %s', usuario, self.peer)
 
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
-                    print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
 
                     _gerenciadorPrincipal.clienteConectou(self, usuario)
                 else:
                     params["status"] = 0
                     jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
-                    print "# ", jsonMsg
                     self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.registrar:
@@ -72,9 +72,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 usuario = mensagem.params['usuario']
                 senha = mensagem.params['senha']
                 email = mensagem.params['email']
-                # TODO: Validar email.
-                if len(usuario) > 0 and len(senha) > 0 and len(email) > 0:
-                    if _banco.usuarioExiste(usuario):
+                if len(usuario) > 0 and len(senha) > 0 and len(email) > 0 and Email().is_valid(email):
+                    if _banco.usuarioExiste(usuario, email):
                         params["status"] = 0
                     else:
                         _banco.registraUsuario(usuario, senha, email)
@@ -83,8 +82,48 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     params["status"] = 2
 
                 jsonMsg = json.dumps(Mensagem(TipoMensagem.registrar, params), default=lambda o: o.__dict__)
-                print "# ", jsonMsg
                 self.sendMessage(jsonMsg)
+
+            elif mensagem.tipo == TipoMensagem.recuperar_senha:
+                email = mensagem.params['email']
+                params = {
+                    "email": email
+                }
+                email_inst = Email()
+                if email_inst.is_valid(email):
+                    params["status"] = 1
+                    if _banco.emailExiste(email):
+                        codigo_recuperacao = _banco.geraCodigoRecuperacao(email)
+                        if codigo_recuperacao:
+                            email_conf_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'email.conf')
+                            with open(email_conf_path, 'r') as conf_json:
+                                conf = json.load(conf_json)
+                                try:
+                                    email_inst.send_mail(conf['email'], conf['password'], [email], 'Password recovery',
+                                                      'Your recovery code is: <b>' + codigo_recuperacao + '</b>',
+                                                      files=None, server=conf['server'], port=conf['port'])
+                                    params["status"] = 0
+                                except:
+                                    pass
+                else:
+                    params["status"] = 2
+
+                jsonMsg = json.dumps(Mensagem(TipoMensagem.recuperar_senha, params), default=lambda o: o.__dict__)
+                print "Recuperar senha # ", jsonMsg, email, codigo_recuperacao
+                self.sendMessage(jsonMsg)
+
+            elif mensagem.tipo == TipoMensagem.nova_senha:
+                params = {}
+                codigo = mensagem.params['codigo']
+                email = mensagem.params['email']
+                senha = mensagem.params['senha']
+                if len(senha) > 0 and len(email) > 0 and Email().is_valid(email) and _banco.atualizaSenha(codigo, email, senha):
+                    params["status"] = 0
+                else:
+                    params["status"] = 1
+                jsonMsg = json.dumps(Mensagem(TipoMensagem.nova_senha, params), default=lambda o: o.__dict__)
+                self.sendMessage(jsonMsg)
+
             elif mensagem.tipo == TipoMensagem.ranking:
                 ranking = PontuacaoDB().ranking()
                 badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')

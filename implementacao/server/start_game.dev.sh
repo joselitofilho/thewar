@@ -25,12 +25,13 @@ fi
 
 if [ ! -f "war.db" ]; then
 	echo "Creating database..."
-	python ../database_update0.py
-	python ../database_update1.py
-	python ../database_update2.py
-	python ../database_update2.1.py
-	python ../database_update3.py
-	python ../database_update4.py
+	python migrations/database_update0.py
+	python migrations/database_update1.py
+	python migrations/database_update2.py
+	python migrations/database_update2.1.py
+	python migrations/database_update3.py
+	python migrations/database_update4.py
+	python migrations/database_update5.py
 fi
 echo "Starting server..."
 PYTHONPATH=. python src/server.py && tail -F log/server.log
