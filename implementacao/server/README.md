@@ -1,3 +1,14 @@
+### Configure o email do jogo
+```sh
+$ cp implementacao/server/src/email.conf.template implementacao/server/src/email.conf
+{
+    "server": "smtp.gmail.com",
+    "port": 587,
+    "email": "",
+    "password": ""
+}
+```
+
 ### docker-compose
 ```sh
 $ docker-compose up -d

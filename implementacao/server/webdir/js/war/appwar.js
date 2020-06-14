@@ -77,10 +77,10 @@ function exibirAlerta(tipo, msg) {
 // Processando mensagens recebidas do servidor.
 // --------------------------------------------------------------------------------
 function processarMsg_registrar(msgParams) {
-    if (msgParams.status == 1) {
+    if (msgParams.status === 1) {
         exibirAlerta('alert-success', 'Registrado com sucesso.');
         appwar_exibirPainelEntrar();
-    } else if (msgParams.status == 0) {
+    } else if (msgParams.status === 0) {
         exibirAlerta('alert-info', 'Você já está registrado.');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
@@ -104,6 +104,28 @@ function processarMsg_entrar(msgParams) {
         $('html,body').css('overflow', 'auto');
     } else {
         exibirAlerta('alert-danger', 'Verifique se seus dados estão corretos e tente novamente.');
+    }
+}
+
+function processaMsg_recuperar_senha(msgParams) {
+    $('#btn_recuperar_senha i').css('display', 'none');
+    $('#btn_recuperar_senha').prop('disabled', false);
+    if (msgParams.status === 0) {
+        appwar_exibirPainelNovaSenha();
+        exibirAlerta('alert-success', 'Verifique o código que foi enviado para o seu email.');
+    } else {
+        exibirAlerta('alert-danger', 'Verifique se seu email está correto e tente novamente.');
+    }
+}
+
+function processaMsg_nova_senha(msgParams) {
+    $('#btn_alterar_senha i').css('display', 'none');
+    $('#btn_alterar_senha').prop('disabled', false);
+    if (msgParams.status === 0) {
+        appwar_exibirPainelEntrar();
+        exibirAlerta('alert-success', 'Senha alterada com sucesso.');
+    } else {
+        exibirAlerta('alert-danger', 'Verifique se o código está correto e tente novamente.');
     }
 }
 
@@ -149,6 +171,10 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_registrar(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.entrar) {
         processarMsg_entrar(jsonMensagem.params);
+    } else if (jsonMensagem.tipo === TipoMensagem.recuperar_senha) {
+        processaMsg_recuperar_senha(jsonMensagem.params);
+    } else if (jsonMensagem.tipo === TipoMensagem.nova_senha) {
+        processaMsg_nova_senha(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.lobby) {
         processarMsg_lobby(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.criar_sala) {
@@ -465,14 +491,26 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
 }
 
 function appwar_exibirPainelEntrar() {
-    $(function(){
-      $("#painelRegistrarOuEntrar #pre_content").load("../../login/entrar.html");
+    $(function () {
+        $("#painelRegistrarOuEntrar #pre_content").load("../../login/entrar.html");
     });
 }
 
 function appwar_exibirPainelRegistrar() {
-    $(function(){
-      $("#painelRegistrarOuEntrar #pre_content").load("../../login/registrar.html");
+    $(function () {
+        $("#painelRegistrarOuEntrar #pre_content").load("../../login/registrar.html");
+    });
+}
+
+function appwar_exibirPainelRecuperarSenha() {
+    $(function () {
+        $("#painelRegistrarOuEntrar #pre_content").load("../../login/recuperar_senha.html");
+    });
+}
+
+function appwar_exibirPainelNovaSenha() {
+    $(function () {
+        $("#painelRegistrarOuEntrar #pre_content").load("../../login/nova_senha.html");
     });
 }
 
@@ -511,8 +549,48 @@ function appwar_registrar(usuario, senha, email) {
     } else {
         senha = CryptoJS.SHA3(senha);
         senha = base64_encode(senha.toString());
-        var registrarMsg = comunicacao_registrar(usuario, senha, email);
+        const registrarMsg = comunicacao_registrar(usuario, senha, email);
         _libwebsocket.enviarObjJson(registrarMsg);
+    }
+}
+
+function appwar_recuperarSenha(email) {
+    $('#btn_recuperar_senha i').css('display', '');
+    $('#btn_recuperar_senha').prop('disabled', true);
+    if (!email) {
+        email = $('#inputRSEmail').val();
+    }
+    if (email && emailValido(email)) {
+        const msg = comunicacao_recuperarSenha(email);
+        _libwebsocket.enviarObjJson(msg);
+    } else {
+        exibirAlerta('alert-danger', 'Verifique se seu email está correto e tente novamente.');
+        $('#btn_recuperar_senha i').css('display', 'none');
+        $('#btn_recuperar_senha').prop('disabled', false);
+    }
+}
+
+function appwar_novaSenha(codigo, email, senha) {
+    $('#btn_alterar_senha i').css('display', '');
+    $('#btn_alterar_senha').prop('disabled', true);
+    if (!codigo) {
+        codigo = $('#inputCodigo').val();
+    }
+    if (!email) {
+        email = $('#inputNSEmail').val();
+    }
+    if (!senha) {
+        senha = $('#inputNovaSenha').val();
+    }
+    if (codigo.length === 0 || senha.length === 0 || email.length === 0 || !emailValido(email)) {
+        exibirAlerta('alert-danger', 'Verifique se o código está correto ou senha tem mais que 4 dígitos e tente novamente.');
+        $('#btn_alterar_senha i').css('display', 'none');
+        $('#btn_alterar_senha').prop('disabled', false);
+    } else {
+        senha = CryptoJS.SHA3(senha);
+        senha = base64_encode(senha.toString());
+        const msg = comunicacao_novaSenha(codigo, email, senha);
+        _libwebsocket.enviarObjJson(msg);
     }
 }
 
