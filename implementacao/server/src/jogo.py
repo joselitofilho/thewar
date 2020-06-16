@@ -3,6 +3,7 @@
 
 import logging
 import random
+import json
 
 from carta import *
 from mensagens import *
@@ -765,7 +766,7 @@ class Jogo(object):
 
         if self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
                 jogador.usuario == usuario and \
-                len(cartasTerritorio) == 3:
+                len(cartasTerritorio) >= 3:
 
             cartasParaTroca = []
             for carta in jogador.cartasTerritorio:
