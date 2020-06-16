@@ -28,6 +28,9 @@ class GerenciadorSala(object):
         self.jogadoresDaSala = []
         self.chat = Chat()
 
+    def info_sala_msg(self):
+        return InfoSala(self.sala.id, self.estado, self.sala.jogadores.values(), None)
+
     def entra(self, cliente, usuario):
         self.jogadores[cliente] = usuario
 
@@ -136,7 +139,7 @@ class GerenciadorSala(object):
 
             infoSalaMsg = InfoSala(self.sala.id,
                                    self.estado, self.sala.jogadores.values(), None)
-            self.jogo.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+            self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
             self.jogo.iniciaTurnos()
 

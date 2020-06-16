@@ -21,10 +21,9 @@ class IALucy(IAInterface):
 
         quantidade_de_tropas = params['quantidadeDeTropas']
         densidades = jogador.densidadeTodosGruposTerritorio()
-        grupo_maior_densidade = None
+        grupo_maior_densidade = densidades[0][0]
         for densidade in densidades:
-            grupo_maior_densidade = densidade[0]
-            if densidade[1] < 100.0:
+            if 0.0 > densidade[1] and densidade[1] < 100.0:
                 grupo_maior_densidade = densidade[0]
                 break
         lista_grupo_maior_densidade = GrupoTerritorio.Dicionario[grupo_maior_densidade]
@@ -57,22 +56,7 @@ class IALucy(IAInterface):
             elif meu_territorio_escolhido['nbsr'] < grafo[terr]['nbsr']:
                 meu_territorio_escolhido = grafo_terr
 
-        # territorios_inimigos = jogo.territoriosInimigos(usuario)
-        # territorio_inimigo = None
-        # meu_territorio_escolhido = None
-        # for terr in meus_territorios:
-        #     for terr_inimigo in territorios_inimigos:
-        #         if FronteiraTerritorio.TemFronteira(terr.codigo, terr_inimigo.codigo):
-        #             if territorio_inimigo:
-        #                 if terr_inimigo.quantidadeDeTropas < territorio_inimigo.quantidadeDeTropas:
-        #                     territorio_inimigo = terr_inimigo
-        #                     meu_territorio_escolhido = terr
-        #             else:
-        #                 territorio_inimigo = terr_inimigo
-        #                 meu_territorio_escolhido = terr
-        #
         if meu_territorio_escolhido:
-            # territorio_codigo = meu_territorio_escolhido.codigo
             territorio_codigo = meu_territorio_escolhido['codigo']
         else:
             random.shuffle(meus_territorios_por_grupo_maior_densidade)
@@ -110,8 +94,8 @@ class IALucy(IAInterface):
         if meu_territorio_escolhido:
             territorio_codigo = meu_territorio_escolhido.codigo
         else:
-            random.shuffle(meus_territorios_com_fronteira)
-            territorio_codigo = meus_territorios_com_fronteira[0]
+            random.shuffle(meus_territorios)
+            territorio_codigo = meus_territorios[0].codigo
         jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
 
         return True
@@ -124,7 +108,7 @@ class IALucy(IAInterface):
             cartasBola = []
             cartasCoringa = []
             for carta in minhas_cartas:
-                if carta.codigoTerritorio == CartaForma.Todas:
+                if carta.forma == CartaForma.Todas:
                     cartasCoringa.append(carta)
                 elif carta.forma == CartaForma.Bola:
                     cartasBola.append(carta)
@@ -202,12 +186,6 @@ class IALucy(IAInterface):
                 territorio_de = grafo[do_territorio]
                 territorio_para = {}
                 so_tem_fronteira_com_bst_0 = True
-                # for t in territorio_de['fronteiras']:
-                #     if grafo[t]['usuario'] == usuario and grafo[t]['bst'] != 0:
-                #         so_tem_fronteira_com_bst_0 = False
-                #         territorio_para[t] = grafo[t]
-                # if so_tem_fronteira_com_bst_0:
-                #     visitados.append(do_territorio)
                 for t in territorio_de['fronteiras']:
                     if grafo[t]['usuario'] == usuario:
                         territorio_para[t] = grafo[t]
@@ -222,12 +200,7 @@ class IALucy(IAInterface):
                     para_o_territorio = territorio_para_ordenado[0][0]
 
                     quantidade = max(territorio_de['quantidade'] - 1, 1)
-
-                    print usuario, 'MOVENDO....'
                     jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
-                    # grafo[do_territorio]['quantidade'] -= quantidade
-                    # grafo[para_o_territorio]['quantidade'] += quantidade
-                    print usuario, 'MOVER DO', do_territorio, 'PARA', para_o_territorio, quantidade
                     time.sleep(1)
 
             else:
