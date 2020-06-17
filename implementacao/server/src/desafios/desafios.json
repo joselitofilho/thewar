@@ -1,0 +1,132 @@
+[
+  {
+    "name": "",
+    "description": "Vença uma partida jogando contra pelo menos 3 computadores.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida jogando contra pelo menos 4 computadores.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida jogando contra 5 computadores.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida destruindo 2 outros jogadores.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida destruindo 3 outros jogadores.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida destruindo 4 outros jogadores.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 28 territórios conquistados.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 32 territórios conquistados.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 36 territórios conquistados.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 50 tropas em Moscou.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 100 tropas em Moscou.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 150 tropas em Moscou.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 1 continente conquistado.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 2 continentes conquistados.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com pelo menos 3 continentes conquistados.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com o continente Am. do Sul conquistado.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com o continente África conquistado.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com o continente Oceania conquistado.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com o continente Am. do Norte conquistado.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com o continente Europa conquistado.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida com o continente Ásia conquistado.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Termine 1 partida sem ser destruído.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partida destruindo o jogador {usuario}.",
+    "xp": 150
+  },
+  {
+    "name": "",
+    "description": "Vença uma partidade em até 30 turnos.",
+    "xp": 50
+  },
+  {
+    "name": "",
+    "description": "Vença uma partidade em até 20 turnos.",
+    "xp": 100
+  },
+  {
+    "name": "",
+    "description": "Vença uma partidade em até 10 turnos.",
+    "xp": 150
+  }
+]

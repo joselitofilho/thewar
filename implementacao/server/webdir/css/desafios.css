@@ -1,0 +1,133 @@
+#desafios_painel {
+    position: absolute;
+    width: 1280px;
+    min-height: 800px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#desafios_painel .btn_fechar {
+    position: absolute;
+    margin: 8px 0 0 944px;
+    width: 24px;
+    height: 24px;
+    background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -219px no-repeat;
+    border: 0;
+}
+
+#desafios_conteudo {
+    /*position: absolute;*/
+    width: 976px;
+    height: 631px;
+    background-image: url("../imagens/desafios/bg.jpg");
+    outline: 8px solid rgba(135, 104, 80, 0.5);
+    z-index: 9000;
+}
+
+.desafios_titulo {
+    margin-top: 40px;
+    font-family: "wartorn";
+    text-align: center;
+    font-size: 60px;
+    color: #453122;
+}
+
+.desafios_subtitulo {
+    font-size: 14px;
+    text-align: center;
+    color: black;
+}
+
+.desafios_termina_em {
+    font-size: 14px;
+    text-align: center;
+    color: #252525;
+}
+
+.desafios_arame {
+    margin: 12px 0;
+    width: 100%;
+    height: 52px;
+    background-image: url("../imagens/desafios/arame.png");
+    background-repeat: repeat-x;
+}
+
+#desafios_cartas {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.desafios_carta {
+    width: 213px;
+    height: 289px;
+    background-image: url("../imagens/desafios/fundo_carta.png");
+}
+
+.desafio_carta_conteudo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+
+.desafio_coroa {
+    float: left;
+    margin: -19px 0px 0px -3px;
+    vertical-align: middle;
+}
+
+.desafio_info {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .55);
+    width: 181px;
+    height: 252px;
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-left: 16px;
+    text-align: center;
+}
+
+.desafio_info p {
+    margin: 96px 8px 0 8px;
+    font-family: "wartorn";
+    color: white;
+}
+
+.desafio_info i {
+    color: white;
+}
+
+.desafio_orientador {
+    height: 131px;
+}
+
+.desafio_orientador img {
+    width: auto;
+    height: 100%;
+}
+
+.desafio_xp {
+    margin: 4px 20px;
+    padding: 0 4px;
+    height: 21px;
+    line-height: 21px;
+    background: rgba(255, 255, 255, .35);
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.desafio_descricao {
+    margin: 0px 20px;
+    padding: 4px;
+    height: 75px;
+    line-height: 21px;
+    background: rgba(255, 255, 255, .35);
+    border-radius: 4px;
+    text-align: left;
+}
