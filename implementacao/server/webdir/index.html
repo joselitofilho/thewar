@@ -6,7 +6,6 @@
     <META CONTENT="-1" HTTP-EQUIV="expires">
 
     <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
     <title>Guerra</title>
 
     <meta content='jogowar, jogo, jogos, games, guerra, war, meutabuleiro, tabuleiro, board' name='keywords'>
@@ -83,8 +82,8 @@
     <!-- Login -->
     <link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="login/fonts/iconic/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="login/css/util.css">
-    <link rel="stylesheet" type="text/css" href="login/css/main.css">
+    <link rel="stylesheet" type="text/css" href="login/css/util.css?ver=1.6">
+    <link rel="stylesheet" type="text/css" href="login/css/main.css?ver=1.6">
     <!---->
 
     <link href="css/glow.css?ver=1.6" rel="stylesheet">
@@ -93,6 +92,7 @@
     <link href="css/mouse_cursor.css?ver=1.6" rel="stylesheet">
     <link href="css/label_tropas.css?ver=1.6" rel="stylesheet">
     <link href="css/cores.css?ver=1.6" rel="stylesheet">
+    <link type="text/css" href="css/desafios.css?ver=1.6" rel="stylesheet">
     <link href="css/listaUsuariosLobby.css?ver=1.6" rel="stylesheet">
     <link href="css/listaLogJogo.css?ver=1.6" rel="stylesheet">
     <link href="css/chat_question_box.css?ver=1.6" rel="stylesheet">
@@ -425,6 +425,55 @@
 </div> <!-- div: geral -->
 
 
+<!-- Desafios -->
+<div id="desafios_painel" style="visibility:hidden;">
+    <div id="desafios_conteudo">
+        <div class="btn_fechar" onclick="_desafios.toogle();"></div>
+        <p class="desafios_titulo">Desafios</p>
+        <p class="desafios_subtitulo">Complete os desafios para se tornar o melhor guerreiro de todos os tempos.</p>
+        <p class="desafios_termina_em">Termina em 18/04/2020 as 22:00</p>
+        <div class="desafios_arame"></div>
+        <div id="desafios_cartas">
+            <div id="desafio_carta_esq" class="desafios_carta">
+                <div class="box_crown desafio_coroa"></div>
+                <div class="desafio_info" style="visibility: hidden">
+                    <p>Somente doador</p>
+                </div>
+                <div class="desafio_carta_conteudo">
+                    <div class="desafio_orientador"><img src="imagens/desafios/personagens/Lucy.png"/></div>
+                    <div class="desafio_xp">+1000 pontos</div>
+                    <div class="desafio_descricao">Vença uma partida derrotando o jogador galenim.</div>
+                </div>
+            </div>
+            <div id="desafio_carta_centro" class="desafios_carta">
+                <div class="box_crown desafio_coroa" style="visibility: hidden"></div>
+                <div class="desafio_info">
+                    <p>Realizado</p>
+                    <i class="material-icons">done_outline</i>
+                </div>
+                <div class="desafio_carta_conteudo">
+                    <div class="desafio_orientador"><img src="imagens/desafios/personagens/Y18.png"/></div>
+                    <div class="desafio_xp">+50 pontos</div>
+                    <div class="desafio_descricao">Vença uma partida com pelo menos 50 tropas em Moscou.</div>
+                </div>
+            </div>
+            <div id="desafio_carta_dir" class="desafios_carta">
+                <div class="box_crown desafio_coroa"></div>
+                <div class="desafio_info" style="visibility: hidden">
+                    <p>Somente doador</p>
+                </div>
+                <div class="desafio_carta_conteudo">
+                    <div class="desafio_orientador"><img src="imagens/desafios/personagens/nancy.png"/></div>
+                    <div class="desafio_xp">+100 pontos</div>
+                    <div class="desafio_descricao">Vença uma partida destruindo dois outros jogadores.</div>
+                </div>
+            </div>
+        </div>
+        <div class="desafios_arame"></div>
+    </div>
+</div>
+<!---->
+
 <!-- Menu -->
 <div id="menu_principal">
     <!--TODO: VIP-->
@@ -436,6 +485,10 @@
     <button id="botao_sair" class="btn-menu" title="Sair da partida" onclick="jogo_sair();">
         <div class="material-icons md-36">exit_to_app</div>
     </button>
+<!--    <button id="botao_desafios" class="btn-menu" title="Desafios"-->
+<!--            onclick="_desafios.toogle();">-->
+<!--        <div class="material-icons md-36">star_rate</div>-->
+<!--    </button>-->
     <button id="botao_ranking" class="btn-menu" title="Ranking" onclick="appwar_abrirRanking();">
         <div class="glow"></div>
         <div class="particles">
@@ -635,6 +688,7 @@
 <script src="js/war/acaoTurno.js?ver=1.6" type="text/javascript"></script>
 <script src="js/war/jogo.js?ver=1.6" type="text/javascript"></script>
 <script src="js/war/sala.js?ver=1.6" type="text/javascript"></script>
+<script src="js/war/desafios.js?ver=1.6" type="text/javascript"></script>
 <script src="js/war/appwar.js?ver=1.6.1" type="text/javascript"></script>
 <script src="js/war/mundo/main.js?ver=1.6" type="text/javascript"></script>
 <!---->

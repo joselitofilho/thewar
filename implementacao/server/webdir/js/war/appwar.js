@@ -35,6 +35,8 @@ _sala = new jogos.war.Sala();
 _chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'));
 _chatGeral.boasVindas();
 
+_desafios = new jogos.war.Desafios();
+
 function appwar_limparVariaveis() {
     _posicaoJogador = -1;
     _jogadorEstaEmJogo = false;

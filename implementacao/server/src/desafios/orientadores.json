@@ -1,0 +1,230 @@
+[
+  {
+    "name": "Dempsey",
+    "gender": "male",
+    "class": "Artilharia",
+    "bio": "Comandante do Segundo Exército Britânico durante a Batalha da Normandia, Dempsey foi um soldado de infantaria de carreira com inteligência afiada e uma capacidade única para ler mapas. Perito em operações combinadas, ele sabia como tirar o máximo das tropas Aliadas trabalhando em união em missões complicadas."
+  },
+  {
+    "name": "Lutz",
+    "gender": "female",
+    "class": "Artilharia",
+    "bio": "Aleda Lutz foi talvez a mais experiente enfermeira de voo do serviço militar dos Estados Unidos. Fatalmente ferida quando seu avião caiu em novembro de 1944, ela tinha transportado até então mais de 3.500 soldados em segurança e recebeu postumamente a Distinguished Flying Cross."
+  },
+  {
+    "name": "Reisch",
+    "gender": "female",
+    "class": "Artilharia",
+    "bio": "Piloto de testes alemão, Reitsch foi a única mulher de todos os tempos a receber a Iron Cross First Class.Estabelecendo mais de quarenta recordes de altitude e resistência durante a carreira, ela propôs a Hitler a Operação Suicida, em que pilotos alemães seriam treinados para voar no estilo Kamikaze contra o inimigo, um plano, em última instância, rejeitado."
+  },
+  {
+    "name": "Lauwers",
+    "gender": "female",
+    "class": "Arma Anti-tanque",
+    "bio": "Lançando uma das campanhas psicológicas mais bem-sucedidas da 2a Guerra, Lauwers foi cabo na OSS, a agência de inteligência americana. Tendo montado uma equipa de prisioneiros alemães, ela os treinou para que se infiltrassem nas linhas inimigas e espalhassem propaganda sobre Hitler e o estado da guerra, causando graves danos à moral das tropas alemãs."
+  },
+  {
+    "name": "Nearne",
+    "gender": "female",
+    "class": "Arma Anti-tanque",
+    "bio": "Um membro da SOE, Eileen Nearne era uma operadora de rádio britânica que voou para a França ocupada pelos nazistas e ajudou a encontrar fontes de financiamento de grupos de resistência. Mantendo um link de comunicação sem fio vital entre Paris e Londres, ela foi capturada e torturada pela SS em 1944, conseguindo escapar no final da guerra."
+  },
+  {
+    "name": "Rudel",
+    "gender": "male",
+    "class": "Arma Anti-tanque",
+    "bio": "Um piloto de bombardeiro Stuka, Rudel foi o mais altamente condecorado soldado alemão da guerra. Voando em mais 2.500 missões de combate e destruindo mais de 2.000 alvos, incluindo 800 veículos, 519 tanques e um navio de guerra soviético, ele enfrentou tropas Soviéticas durante a guerra e era desprezado pelos seus inimigos por sua crueldade indiferente."
+  },
+  {
+    "name": "Von Kluge",
+    "gender": "male",
+    "class": "Arma Anti-tanque",
+    "bio": "Um Marechal de Campo experiente das frentes ocidental e oriental, Von Kluge assumiu o comando do Grupo do Exército B depois que Rommel foi ferido, mas suas forças estavam cercadas por tropas Aliadas no bolsão de Falaise. Von Kluge não estava envolvido no plano de assassinar Hitler,mas seu sobrinho estava, razão pela qual foi afastado do comando."
+  },
+  {
+    "name": "Churchill",
+    "gender": "male",
+    "class": "Bazuca",
+    "bio": "Considerado um dos maiores líderes em tempos de guerra do século XX, este lendário primeiro-ministro britânico se tornou um símbolo de esperança durante a batalha da Grã-Bretanha, quando a nação ficou sozinha enquanto a Luftwaffe devastava o país com ataques aéreos contínuos."
+  },
+  {
+    "name": "Kesselring",
+    "gender": "male",
+    "class": "Bazuca",
+    "bio": "Um dos mais habilidosos comandantes da Alemanha nazista, Kesselring foi um general da Luftwaffe no comando do teatro do Mediterrâneo. Muito popular entre os seus homens, Kesselring encetou uma defesa feroz contra as tropas aliadas durante a batalha da Itália, muito para o desgosto de muitos italianos que o desprezavam."
+  },
+  {
+    "name": "Wake",
+    "gender": "female",
+    "class": "Bazuca",
+    "bio": "Tendo se lançado de paraquedas na França na primavera de 1944, esta agente da SEO desempenhou um papel crucial na organização de grupos de Maquis da resistência francesa e se tornou uma das mais condecoradas mulheres a serviço dos aliados. A dado momento a pessoa mais procurada pela Gestapo, as milhares de combatentes da resistência que ela conduziu causaram grandes danos para os ocupantes nazistas."
+  },
+  {
+    "name": "Minet",
+    "gender": "female",
+    "class": "Metralhadora",
+    "bio": "Uma combatente da resistência francesa, Minet participou no Outono de Chartres, esteve presente na libertação de Paris e foi premiada com uma Cruz de Guerra por sua bravura.Ela se tornou um símbolo do espírito de resistência do povo francês em relação à ocupação alemã.."
+  },
+  {
+    "name": "Model",
+    "gender": "male",
+    "class": "Metralhadora",
+    "bio": "Um agressivo comandante panzer nas fases iniciais da guerra, Model foi conhecido como o comandante de defesa mais competente do Terceiro Reich. Líder de tropas durante a Batalha de Ardena, ele não conseguiu manter o ímpeto inicial, e no final ceifou a própria vida depois de uma derrota esmagadora em Ruhr."
+  },
+  {
+    "name": "Murphy",
+    "gender": "male",
+    "class": "Metralhadora",
+    "bio": "Soldado americano mais condecorado da guerra, Audie Murphy era um soldado baixo mas tenaz, tendo provado reiteradamente seu valor em combate. Murphy entrou em ação ao longo de toda a Itália e a França, mas tornou-se lendário quando ele sozinho deteve 50 soldados alemães em cima de um tanque em chamas."
+  },
+  {
+    "name": "Pétain",
+    "gender": "male",
+    "class": "Metralhadora",
+    "bio": "Um herói da Primeira Guerra Mundial, o Marechal Pétain já era um idoso em 1940, e resolveu fazer as pazes com a Alemanha. Formando uma Terceira República Francesa na cidade de repouso de Vichy, estabeleceu um governo autoritário e colaborou plenamente com os nazistas."
+  },
+  {
+    "name": "Montgomery",
+    "gender": "male",
+    "class": "Mortero",
+    "bio": "Um dos comandantes mais extravagantes do exército britânico, Monty foi um marechal de campo controverso, para dizer o mínimo. Conhecido por sua falta de diplomacia, ele tinha um talento especial para irritar os seus superiores, mas fez o que era preciso para vencer importantes batalhas. Ele foi responsável por todas as forças aliadas durante a Operação Overlord."
+  },
+  {
+    "name": "Riefenstahl",
+    "gender": "female",
+    "class": "Mortero",
+    "bio": "Um cineasta inovador, Riefenstahl criou filmes de propaganda ao longo dos anos 30, retratando a Hitler e o partido nazista sob uma luz majestosa e gloriosa. Embora mais tarde ela tenha dito que se recusou a fazer filmes de propaganda, as suas obras foram sem dúvida um fator fundamental para o sucesso inicial do nazismo."
+  },
+  {
+    "name": "Tassigny",
+    "gender": "male",
+    "class": "Mortero",
+    "bio": "No comando do Primeiro Exército Francês, a decisão de de Lattre de conter as suas tropas após a batalha de Belfort permitiu aos alemães formar o bolsão de Colmar, que ele falhou em derrubar até que os americanos chegassem. Continuando em sua marcha pela Alemanha, o seu Primeiro Exército ocasionalmente chegou a contar mais de 320 mil tropas."
+  },
+  {
+    "name": "Eisenhower",
+    "gender": "male",
+    "class": "Paraquedistas",
+    "bio": "O comandante supremo das forças Aliadas na Europa foi um líder eficiente que demonstrou grande tato e capacidade diplomática ao lidar com representantes dos aliados como Churchill, Montgomery e Zhukov. Eisenhower comandou a maior invasão militar na história, a Operação Overlord, e continuou nessa posição até a rendição da Alemanha."
+  },
+  {
+    "name": "Skorzeny",
+    "gender": "male",
+    "class": "Paraquedistas",
+    "bio": "Um coronel austríaco da SS, Skorzeny foi o comando favorito de Hitler e era considerado o homem mais perigoso da Europa. Responsável pelas forças especiais alemãs, ele ajudou o ditador italiano Mussolini a escapar de seu cativeiro em uma missão ousada."
+  },
+  {
+    "name": "Speirs",
+    "gender": "male",
+    "class": "Paraquedistas",
+    "bio": "Um dos mais respeitado e temidos paraquedistas da 506a divisão, Speirs saltou na Normandia no Dia D e lutou em toda a Europa. Muitas vezes liderando destemidos assaltos sobre terreno aberto, ele pegou o inimigo completamente de surpresa e inspirou o eterno respeito de seus homens."
+  },
+  {
+    "name": "Winters",
+    "gender": "male",
+    "class": "Paraquedistas",
+    "bio": "Este comandante da Easy Company tornou-se um dos mais lendários paraquedistas de todos os tempos. Um membro da 101ª Divisão Aerotransportada, ele saltou na Normandia no Dia D, sobreviveu a Market Garden, defendeu Bastogne durante a Batalha de Ardena e capturou o Ninho da Águia."
+  },
+  {
+    "name": "Mayne",
+    "gender": "male",
+    "class": "Reconhecimento",
+    "bio": "Membro fundador do SAS, Paddy Mayne é um dos mais condecorados soldados do exército britânico. Liderando equipes pequenas e de movimento rápido através do deserto de Saara usando jipes atrás das linhas inimigas, o SAS causou estragos nas defesas do Eixo. Uma vez iniciada a invasão da Europa, Mayne comandou inúmeras incursões contra os nazistas ao lado de grupos de resistência local."
+  },
+  {
+    "name": "Prince",
+    "gender": "male",
+    "class": "Reconhecimento",
+    "bio": "Um comando nativo-americano do Canadá, o Príncipe era o membro mais mortal da infame Devil's Brigade. Capaz de rastejar silenciosamente por qualquer terreno, ele tornou a ultrapassagem de linhas inimigas e o terror aplicado às unidades do Eixo um esporte no continente europeu."
+  },
+  {
+    "name": "Rundstedt",
+    "gender": "male",
+    "class": "Reconhecimento",
+    "bio": "Um dos mais experientes Marechais de Campo da Wehrmacht, Von Rundstedt descende de uma distinta família prussiana com uma longa tradição militar. Embora respeitado e considerado um líder estratégico por seus homens, a sua saúde se deteriorou rapidamente e Hitler parecia ter perdido a confiança nele."
+  },
+  {
+    "name": "Bradley",
+    "gender": "male",
+    "class": "Atiradores",
+    "bio": "No comando de todas as forças em terra durante a invasão da Europa, Bradley foi um agente prático e considerado um general dos soldados. Bradley era também um disciplinador rigoroso que tinha o hábito de dispensar comandantes mais velhos que se achavam muito independentes."
+  },
+  {
+    "name": "De Gaulle",
+    "gender": "male",
+    "class": "Atiradores",
+    "bio": "Levando o governo francês em exílio a partir de Londres, De Gaulle tornou-se um símbolo da Liberdade para a França ocupada devido a aparições frequentes nos meios de comunicação. No comando das forças pela França Livre em oposição ao Eixo, ele se opôs veementemente ao regime de Vichy e se posicionou ferozmente por uma França independente."
+  },
+  {
+    "name": "Stauffenberg",
+    "gender": "male",
+    "class": "Atiradores",
+    "bio": "Um dos principais membros da conspiração para assassinar Hitler em 20 de julho, Von Stauffenberg foi uma figura central do movimento de resistência dentro da Wehrmacht. Gravemente ferido na África do Norte, ele foi capaz de iniciar a Operação Valquíria, uma tentativa de golpe frustrada por conta de uma mesa particularmente resistente."
+  },
+  {
+    "name": "ZigZag",
+    "gender": "male",
+    "class": "Atiradores",
+    "bio": "Um criminoso britânico antes da guerra, Chapman estava confinado em uma prisão francesa quando os alemães invadiram e o convenceram a fazer espionagem para eles em troca de sua liberdade. A primeira coisa que ele fez ao chegar à Inglaterra foi oferecer seus serviços como um agente duplo.Tendo ganho a confiança total dos nazistas, ele foi capaz de confundi-los em muitas ocasiões."
+  },
+  {
+    "name": "Allesberger",
+    "gender": "male",
+    "class": "Franco-Atirador",
+    "bio": "Um atirador de elite na 3ª Divisão de Montanhas, Sepp foi creditado com nada menos que 257 mortes durante a guerra. Estacionados principalmente na Frente Oriental, ele usou um guarda-chuva coberto com folhagem para camuflar-se e aterrorizar seus inimigos soviéticos a grandes distâncias."
+  },
+  {
+    "name": "Häyhä",
+    "gender": "male",
+    "class": "Franco-Atirador",
+    "bio": "O franco-atirador mais mortal da história, Simo matou pelo menos 505 homens durante a Guerra de Inverno. Conhecido como A Morte Branca pelo Exército Vermelho, ele se camuflava inteiramente de branco, não usava mira telescópica, operava a temperaturas congelantes e executou todos os seus alvos em menos que 100 dias."
+  },
+  {
+    "name": "Mad Jack",
+    "gender": "male",
+    "class": "Franco-Atirador",
+    "bio": "Famoso por ter executado a última morte por arco e flecha em ação de que se tem registro, Mad Jack foi um soldado britânico que nunca entrou em batalha sem sua espada, sua gaita de foles e seu arco longo. Ele liderou unidades de comandos durante a guerra até sua captura na Iugoslávia, em 1944."
+  },
+  {
+    "name": "Major",
+    "gender": "male",
+    "class": "Franco-Atirador",
+    "bio": "O explorador e atirador franco-canadense Leo Major provou a sua bravura no campo de batalha repetidas vezes durante o avanço Aliado. No Dia D, ele capturou um veículo blindado contendo um valioso equipamento de comunicação. Um exército de um homem só, ele ficou famoso por capturar sozinho 93 soldados durante a batalha do rio Escalda e por libertar sozinho a cidade de Zwolle."
+  },
+  {
+    "name": "Guderian",
+    "gender": "male",
+    "class": "Tanque",
+    "bio": "Pioneiro em táticas com veículos motorizados antes da guerra, Guderian se tornou um comandante Panzer de grande sucesso durante as invasões da Polônia e da França. Um componente-chave da estratégia da Blitzkrieg, promoveu o uso do rádio entre equipes e idealizou táticas de choque mortais."
+  },
+  {
+    "name": "Messe",
+    "gender": "male",
+    "class": "Tanque",
+    "bio": "Considerado o melhor general italiano da Segunda Guerra Mundial e um especialista em guerra de blindados, Messe comandou as tropas na Grécia, Rússia e Tunísia, ascendendo em última instância ao posto de Marechal da Itália antes de render-se aos aliados, em maio de 1943."
+  },
+  {
+    "name": "Patton",
+    "gender": "male",
+    "class": "Tanque",
+    "bio": "Conhecido como um dos generais mais durões já produzidos pelos Estados Unidos, Patton provou o seu valor em ambas as guerras mundiais.Famoso por seus discursos atrevidos, conduziu a frente e não parou diante de nenhum obstáculo para garantir a rápida destruição de seus inimigos."
+  },
+  {
+    "name": "Wittmann",
+    "gender": "male",
+    "class": "Tanque",
+    "bio": "Um dos Ases Panzer com maior pontuação da Alemanha, Wittmann foi creditado com a destruição de 138 tanques, 132 armas AT e um número desconhecido de veículos blindados.Ele foi transferido para a frente ocidental em 1944, aterrorizando as forças aliadas com emboscadas mortais de tanques. Durante a batalha de Villers-Bocage, ele destruiu 14 tanques dentro de 15 minutos."
+  },
+  {
+    "name": "Zhukov",
+    "gender": "male",
+    "class": "Tanque",
+    "bio": "Muitas vezes creditado como o homem que ganhou a segunda guerra mundial, Zhukov conduziu o Exército Vermelho na sua marcha pelo Leste Europeu até Berlim. Ele é o general mais condecorado na história da Rússia e alcançou numerosas vitórias, tais como as das batalhas de Leningrado, Moscou, Stalingrado, Kursk e Berlim."
+  },
+  {
+    "name": "Rommel",
+    "gender": "male",
+    "class": "Tanque",
+    "bio": "Um comandante brilhante quando o assunto era a guerra blindada, Rommel foi considerado um dos poucos comandantes humanistas da Wehrmacht. Recusando-se a cumprir as ordens de matar civis e soldados judeus, ele era ainda assim um soldado feroz, que muitas vezes enganava taticamente seus inimigos."
+  }
+]
