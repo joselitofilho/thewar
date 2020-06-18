@@ -10,7 +10,7 @@ class IACindy(IAInterface):
         return self.usuario
 
     def processa_msg(self, jogo, msg):
-        print 'IACindy', self.usuario, 'processa_msg', msg
+        print('IACindy', self.usuario, 'processa_msg', msg)
 
     def turno_distribuir_tropas_globais(self, jogo, quantidade):
         pass

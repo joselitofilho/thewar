@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import json
 import threading
 import time
 
-from Queue import Queue
+try:
+    import queue
+except ImportError:
+    import Queue as queue
+
 from src.carta import *
 from src.mensagens import *
 from src.territorio import *
@@ -23,7 +26,7 @@ class IAInterface(threading.Thread):
         self.jogo = None
         self.grafo_territorios = None
 
-        self.queue_msgs = Queue()
+        self.queue_msgs = queue.Queue()
 
     def __del__(self):
         self.para()
@@ -72,13 +75,12 @@ class IAInterface(threading.Thread):
                     if params['jogador'] == self.usuario:
                         pass
                 elif self.mensagem.tipo == TipoMensagem.erro:
-                    print 'ERROR MSG ', self.usuario
+                    print('ERROR MSG ', self.usuario)
 
             time.sleep(1)
 
     def para(self):
         self.loop = False
-        # raise Exception("ThreadTimeout: Forcando a parada da thread... " + self.usuario)
 
     def processa_msg(self, jogo, msg):
         self.queue_msgs.put(msg)
@@ -190,11 +192,11 @@ class IAInterface(threading.Thread):
         self.grafo_territorios = jogo.grafoTerritorios()
 
         bst = self.bst(usuario, jogador)
-        # print 'BST', usuario, bst
+        # print('BST', usuario, bst)
         bsr = self.bsr(usuario, jogador)
-        # print 'BSR', usuario, bsr
+        # print('BSR', usuario, bsr)
         nbsr = self.nbsr(usuario, jogador, bsr)
-        # print 'NBSR', usuario, nbsr
+        # print('NBSR', usuario, nbsr)
 
         for t in self.grafo_territorios:
             if t in bst:
@@ -241,4 +243,3 @@ class IAInterface(threading.Thread):
             res[territorio.codigo] = 0 if sum == 0 else bsr[territorio.codigo] / sum
 
         return res
-

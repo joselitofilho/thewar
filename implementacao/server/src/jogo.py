@@ -34,7 +34,7 @@ class Jogo(object):
 
         self.jogadorQueComecou = -1
 
-        self.ordemJogadores = self.jogadores.keys()
+        self.ordemJogadores = list(self.jogadores.keys())
         random.shuffle(self.ordemJogadores)
 
         # Indice que aponta para a fila da ordem dos jogador.
@@ -98,7 +98,7 @@ class Jogo(object):
             incremento.append(9)
         else:
             for i in range(quantidadeDeJogadores):
-                incremento.append(42 / quantidadeDeJogadores)
+                incremento.append(42 // quantidadeDeJogadores)
         inicio = 0
         fim = 0
         for i in range(quantidadeDeJogadores):
@@ -113,12 +113,12 @@ class Jogo(object):
                 TerritoriosPorJogador(self.posicaoJogadorDaVez, self.jogadores[self.posicaoJogadorDaVez].territorios))
 
             inicio = inicio + incremento[i]
-            self.passaParaProximoJogador(False);
+            self.passaParaProximoJogador(False)
 
         return listaTerritoriosPorJogador
 
     def faseI_DefinirObjetivos(self):
-        objetivos = range(0, 13)
+        objetivos = list(range(0, 13))
         random.shuffle(objetivos)
 
         objetivoPorJogadores = []
@@ -176,7 +176,7 @@ class Jogo(object):
         # Preencher os dados da acao
         if tipoAcaoDoTurno == TipoAcaoTurno.distribuir_tropas_globais:
             if turno.quantidadeDeTropas == 0:
-                qtd = len(jogador.territorios) / 2
+                qtd = len(jogador.territorios) // 2
                 if qtd > 3:
                     turno.quantidadeDeTropas = qtd
                 else:
@@ -280,7 +280,7 @@ class Jogo(object):
             try:
                 self.turno.gruposTerritorio.pop(0)
             except:
-                logging.exception("Nao tem grupo territorio para remover.")
+                print("Nao tem grupo territorio para remover.")
 
             if len(self.turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
@@ -363,7 +363,7 @@ class Jogo(object):
                 try:
                     self.turno.gruposTerritorio.pop(0)
                 except Exception:
-                    logging.debug("Nao tem grupo territorio para remover.")
+                    print("Nao tem grupo territorio para remover.")
 
                 if len(self.turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
@@ -389,7 +389,6 @@ class Jogo(object):
                 erro = False
 
         elif self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
-            logging.debug("Obrigatorio passar a vez? " + str(self.obrigatorioPassarAVez))
             if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
                 if self.obrigatorioPassarAVez:
                     self.turno.tipoAcao = TipoAcaoTurno.mover
@@ -440,7 +439,7 @@ class Jogo(object):
 
     def finalizaTurno(self, usuario):
         posicaoJogador = -1
-        for k, v in self.jogadores.iteritems():
+        for k, v in self.jogadores.items():
             if v.usuario == usuario:
                 posicaoJogador = k
 
@@ -476,7 +475,7 @@ class Jogo(object):
 
     def posicaoDoUsuario(self, usuario):
         posicaoJogador = -1
-        for k, v in self.jogadores.iteritems():
+        for k, v in self.jogadores.items():
             if v.usuario == usuario:
                 posicaoJogador = k
                 break
@@ -548,7 +547,7 @@ class Jogo(object):
                     #   - Identifica o jogador que esta sendo atacado;
                     #   - Identifica o territorio que esta sendo atacado;
                     #   - Pega a quantidade de tropas desse territorio.
-                    for k, v in self.jogadores.iteritems():
+                    for k, v in self.jogadores.items():
                         if v.temTerritorio(paraOTerritorio):
                             jogadorDefesa = v
                             territorioDaDefesa = jogadorDefesa.seuTerritorio(paraOTerritorio)
@@ -762,8 +761,6 @@ class Jogo(object):
         posicaoJogador = self.posicaoJogadorDaVez
         jogador = self.jogadores[posicaoJogador]
 
-        logging.debug("Troca de cartas territorio: " + ", ".join(cartasTerritorio))
-
         if self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas and \
                 jogador.usuario == usuario and \
                 len(cartasTerritorio) >= 3:
@@ -880,7 +877,7 @@ class Jogo(object):
 
         olheiro = True
         posicao = -1
-        for k, v in self.jogadores.iteritems():
+        for k, v in self.jogadores.items():
             if v != None and v.usuario == usuario:
                 # Jogador reconectou!
                 posicao = k
@@ -947,7 +944,7 @@ class Jogo(object):
             self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, 7))
             del self.olheiros[usuario]
         else:
-            for k, v in self.jogadores.iteritems():
+            for k, v in self.jogadores.items():
                 if v.usuario == usuario:
                     self.enviaMsgParaTodos(TipoMensagem.saiu_do_jogo, SaiuDoJogo(usuario, k))
                     del self.clientes[k]
@@ -964,7 +961,7 @@ class Jogo(object):
             qtdJogadores = len(self.jogadores)
             usuarios = []
             quemDestruiuQuem = {}
-            for k, v in self.jogadores.iteritems():
+            for k, v in self.jogadores.items():
                 usuarios.append(v.usuario)
                 if len(v.jogadoresDestruidos) > 0:
                     quemDestruiuQuem[v.usuario] = []
@@ -1052,23 +1049,21 @@ class Jogo(object):
                                MsgChatJogo({"usuario": usuario, "posicao": posicao}, texto))
 
     def montaMsg(self, tipoMensagem, params):
-        return json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+        return Mensagem(tipoMensagem, params).toJson()
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         try:
             jsonMsg = self.montaMsg(tipoMensagem, params)
-            logging.debug("JSON: " + jsonMsg)
             cliente.sendMessage(jsonMsg)
         except Exception:
-            logging.exception("Nao foi possivel enviar a mensagem para o cliente - JSON: " + jsonMsg)
+            print("Nao foi possivel enviar a mensagem para o cliente - JSON: ", jsonMsg)
 
     def enviaMsgParaCPU(self, tipoMensagem, params, cpu):
         try:
             jsonMsg = self.montaMsg(tipoMensagem, params)
-            logging.debug("JSON: " + jsonMsg)
             cpu.processa_msg(self, jsonMsg)
         except Exception:
-            logging.exception("Nao foi possivel enviar a mensagem para o cliente - JSON: " + jsonMsg)
+            print("Nao foi possivel enviar a mensagem para o cliente - JSON: ", jsonMsg)
 
     def enviaMsgParaJogador(self, tipoMensagem, params, jogador):
         posicao = jogador.posicao
@@ -1079,18 +1074,15 @@ class Jogo(object):
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
         try:
-            jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+            jsonMsg = self.montaMsg(tipoMensagem, params)
             for socket in self.clientes.values():
-                logging.debug("Enviando para socket " + str(socket))
                 socket.sendMessage(jsonMsg)
             for socket in self.olheiros.values():
-                logging.debug("Enviando para olheiro " + str(socket))
                 socket.sendMessage(jsonMsg)
             for jogadorCpu in self.cpus.values():
                 jogadorCpu.processa_msg(self, jsonMsg)
-            logging.debug("JSON: " + jsonMsg)
         except Exception:
-            logging.exception("Nao foi possivel enviar a mensagem para todos os clientes - JSON: " + jsonMsg)
+            print("Nao foi possivel enviar a mensagem para todos os clientes - JSON: ", jsonMsg)
 
     def fecha(self):
         for jogadorCpu in self.cpus.values():

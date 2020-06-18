@@ -84,7 +84,7 @@ class Pontuacao(object):
             pontuacaoDB.atualizaPontuacaoDBOParaUsuario(usuario, novaPontuacaoDBO)
 
     def usuarioFoiDestruidoPorAlguem(self, usuario):
-        for k, v in self.quemDestruiuQuem.iteritems():
+        for k, v in self.quemDestruiuQuem.items():
             if usuario in v:
                 return True
 
@@ -92,7 +92,7 @@ class Pontuacao(object):
 
     def contabilizaPontosExtra(self, usuario, cpus):
         pontosExtra = 0
-        for k, usuarios in self.quemDestruiuQuem.iteritems():
+        for k, usuarios in self.quemDestruiuQuem.items():
             if k == usuario:
                 pontosExtra = len(usuarios)
                 for cpu in cpus:

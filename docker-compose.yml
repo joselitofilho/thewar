@@ -2,7 +2,10 @@ version: '3.7'
 
 services:
   server:
-    image: ricardogpsf/jogowar:v1
+    build:
+      context: ./implementacao/server
+      dockerfile: Dockerfile
+    image: jogowar/app
     volumes:
       - ./implementacao/server:/opt/app
     working_dir: /opt/app
@@ -13,7 +16,6 @@ services:
       - jogowar-network
     stdin_open: true
     tty: true
-
 
 networks:
   jogowar-network:

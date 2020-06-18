@@ -59,7 +59,6 @@ class IALucy(IAInterface):
         if meu_territorio_escolhido:
             territorio_codigo = meu_territorio_escolhido['codigo']
         else:
-            random.shuffle(meus_territorios_por_grupo_maior_densidade)
             territorio_codigo = meus_territorios_por_grupo_maior_densidade[0]
 
         jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)

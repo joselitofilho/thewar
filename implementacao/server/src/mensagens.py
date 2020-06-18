@@ -1,4 +1,5 @@
 import json
+from json import JSONEncoder
 
 from src.turno import *
 
@@ -42,6 +43,14 @@ class TipoMensagem:
     usuario_desconectou = "UsuarioDesconectou"
 
 
+class MensagemEncoder(JSONEncoder):
+    def default(self, object):
+        if type(object) == {}.values().__class__:
+            return list(object)
+        else:
+            return object.__dict__
+
+
 class Mensagem(object):
     def __init__(self, tipo=None, params=None):
         self.tipo = tipo
@@ -49,6 +58,9 @@ class Mensagem(object):
 
     def fromJson(self, jsonMsg):
         self.__dict__ = json.loads(jsonMsg)
+
+    def toJson(self):
+        return MensagemEncoder().encode(self).encode('utf-8')
 
 
 class Lobby(object):

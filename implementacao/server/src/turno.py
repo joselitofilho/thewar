@@ -46,7 +46,7 @@ class Turno(object):
         try:
             self.loopTimeout.para()
         except:
-            print "Thread foi morta com excecao!"
+            print("Thread foi morta com excecao!")
 
         del self.loopTimeout
         self.loopTimeout = None
