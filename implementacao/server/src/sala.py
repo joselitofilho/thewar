@@ -15,7 +15,7 @@ class Sala(object):
         self.jogadores = {}
         self.dono = None
 
-        print "Sala[" + str(self.id) + "] criada."
+        print("Sala[" + str(self.id) + "] criada.")
 
     def salaEstaCheia(self):
         return len(self.jogadores) == 6;
@@ -141,7 +141,7 @@ class Sala(object):
     def posicaoDoUsuario(self, usuario):
         posicao = -1
 
-        for k, v in self.jogadores.iteritems():
+        for k, v in self.jogadores.items():
             # TODO: Equals do objeto jogador...
             if v.usuario == usuario:
                 posicao = k
@@ -151,7 +151,7 @@ class Sala(object):
     def jogadorDaPosicao(self, posicao):
         jogador = None
 
-        for k, v in self.jogadores.iteritems():
+        for k, v in self.jogadores.items():
             if k == posicao:
                 jogador = v
 

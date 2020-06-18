@@ -7,3 +7,8 @@
 **/*/test/htmlcov/
 
 .idea/
+
+*.zip
+implementacao/server/webdir/imagens/memes/
+implementacao/server/webdir/sons/
+implementacao/server/webdir/videos/

@@ -17,6 +17,6 @@ class IAFactory:
         return self.disponiveis[target]
 
     def random(self):
-        cpus = self.disponiveis.keys()
+        cpus = list(self.disponiveis.keys())
         random.shuffle(cpus)
         return self.build(cpus[0])

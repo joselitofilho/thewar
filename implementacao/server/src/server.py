@@ -28,10 +28,10 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 
     def onMessage(self, msg, binary):
         if not binary:
-            # print "[%s] Enviou: %s" % (self.peer, msg)
+            # print("[%s] Enviou: %s" % (self.peer, msg))
 
             # Retirando qualquer tipo de tag html da mensagem.
-            msg = re.sub('<[^<]+?>', '', msg)
+            msg = re.sub('<[^<]+?>', '', msg.decode('utf-8'))
 
             mensagem = Mensagem()
             mensagem.fromJson(msg)
@@ -47,8 +47,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                         params['status'] = 2
                         # TODO: Enviar mensagem para o outro socket do usuario uma 
                         # mensagem com o motivo da sua desconexao.
-                        # jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
-                        # print "# ", jsonMsg
+                        # jsonMsg = Mensagem(TipoMensagem.entrar, params).toJson()
+                        # print("# ", jsonMsg)
                         # self.sendMessage(jsonMsg)
 
                         # TODO: Se for o mesmo socket, nao eh necessario desconectar o jogagdor.
@@ -58,13 +58,13 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     self.factory.clienteConectou(self, usuario)
                     logging.info('%s %s', usuario, self.peer)
 
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
+                    jsonMsg = Mensagem(TipoMensagem.entrar, params).toJson()
                     self.sendMessage(jsonMsg)
 
                     _gerenciadorPrincipal.clienteConectou(self, usuario)
                 else:
                     params["status"] = 0
-                    jsonMsg = json.dumps(Mensagem(TipoMensagem.entrar, params), default=lambda o: o.__dict__)
+                    jsonMsg = Mensagem(TipoMensagem.entrar, params).toJson()
                     self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.registrar:
@@ -81,7 +81,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 else:
                     params["status"] = 2
 
-                jsonMsg = json.dumps(Mensagem(TipoMensagem.registrar, params), default=lambda o: o.__dict__)
+                jsonMsg = Mensagem(TipoMensagem.registrar, params).toJson()
                 self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.recuperar_senha:
@@ -108,8 +108,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 else:
                     params["status"] = 2
 
-                jsonMsg = json.dumps(Mensagem(TipoMensagem.recuperar_senha, params), default=lambda o: o.__dict__)
-                print "Recuperar senha # ", jsonMsg, email, codigo_recuperacao
+                jsonMsg = Mensagem(TipoMensagem.recuperar_senha, params).toJson()
+                print("Recuperar senha # ", jsonMsg, email, codigo_recuperacao)
                 self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.nova_senha:
@@ -121,7 +121,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     params["status"] = 0
                 else:
                     params["status"] = 1
-                jsonMsg = json.dumps(Mensagem(TipoMensagem.nova_senha, params), default=lambda o: o.__dict__)
+
+                jsonMsg = Mensagem(TipoMensagem.nova_senha, params).toJson()
                 self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.ranking:
@@ -129,15 +130,14 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
                 ranking['badges'] = Badges().ler_csv(badges_path)
 
-                jsonMsg = json.dumps(Mensagem(TipoMensagem.ranking, ranking), default=lambda o: o.__dict__)
-                print "# ", jsonMsg
+                jsonMsg = Mensagem(TipoMensagem.ranking, ranking).toJson()
                 self.sendMessage(jsonMsg)
             else:
                 try:
                     _gerenciadorPrincipal.interpretaMensagem(self, mensagem)
                 except:
                     traceback.print_exc()
-                    print "[ERRO][Server] Gerenciador nao interpretou a mensagem: ", json.dumps(mensagem, default=lambda o: o.__dict__)
+                    print("[ERRO][Server] Gerenciador nao interpretou a mensagem: ", mensagem.toJson())
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
@@ -158,20 +158,20 @@ class BroadcastServerFactory(WebSocketServerFactory):
 
     def register(self, client):
         if not client in self.clients:
-            print "registered client " + client.peer
+            print("registered client " + client.peer)
             self.clients.append(client)
 
     def unregister(self, client):
         if client in self.clients:
-            print "unregistered client " + client.peer
+            print("unregistered client " + client.peer)
             _gerenciadorPrincipal.clienteDesconectou(client)
             self.clients.remove(client)
 
     def broadcast(self, msg):
-        # print "broadcasting message '%s' .." % msg
+        # print("broadcasting message '%s' .." % msg)
         for c in self.clients:
-            c.sendMessage(msg)
-            print "message sent to " + c.peer
+            c.sendMessage(msg.encode('utf-8'))
+            print("message sent to " + c.peer)
 
     def usuarioEstaConectado(self, usuario):
         return usuario in self.clientesConectados
@@ -220,7 +220,7 @@ if __name__ == '__main__':
     factory = ServerFactory("ws://localhost:8080",
                             debug=debug,
                             debugCodePaths=debug)
-    print 'Servido websocket iniciado na porta 8080.'
+    print('Servido websocket iniciado na porta 8080.')
 
     factory.protocol = BroadcastServerProtocol
     factory.setProtocolOptions()
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     webdir = File("./webdir")
     web = Site(webdir)
     reactor.listenTCP(9092, web)
-    print 'Servido web iniciado na porta 9092.'
+    print('Servido web iniciado na porta 9092.')
 
     reactor.run()
 

@@ -17,9 +17,10 @@ class Banco(object):
             cursor.execute(sql, (usuario, senha, email))
             self.conn.commit()
 
-        except sqlite3.Error:
+        except sqlite3.Error as e:
             if self.conn:
                 self.conn.rollback()
+            print("Error %s:" % e.args[0])
 
     def atualizaSenha(self, codigo, email, senha):
         retorno = False

@@ -7,6 +7,7 @@ import random
 import traceback
 
 from badges import *
+from src.chat.chat import *
 from doacaodb import *
 from ia.iafactory import *
 from jogador import *
@@ -14,7 +15,6 @@ from jogo import *
 from mensagens import *
 from pontuacaodb import *
 from sala import *
-from src.chat.chat import *
 
 
 class GerenciadorSala(object):
@@ -74,17 +74,18 @@ class GerenciadorSala(object):
 
                 if not self.jogo.temJogadorOnLine():
                     self.jogoTerminou(self.nome)
-
-                self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
+                    self.enviaMsgParaTodos(TipoMensagem.lobby, self.gerenciadorPrincipal.montaMensagemParamsLobby())
+                else:
+                    self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
 
             del self.jogadores[cliente]
         except:
             traceback.print_exc()
-            print "[ERROR]", "Nao foi possivel desconectar o cliente ", cliente
+            print("[ERROR]", "Nao foi possivel desconectar o cliente ", cliente)
 
     def iniciaPartida(self):
         quantidade_jogadores_na_sala = 0
-        for k, v in self.sala.jogadores.iteritems():
+        for k, v in self.sala.jogadores.items():
             jogadorDaSala = self.sala.jogadores[k]
             if jogadorDaSala.tipo != TipoJogador.desabilitado:
                 quantidade_jogadores_na_sala = quantidade_jogadores_na_sala + 1
@@ -102,7 +103,7 @@ class GerenciadorSala(object):
                 sufixos.append(str(i))
             random.shuffle(sufixos)
 
-            for k, v in tempJogadoresDaSala.iteritems():
+            for k, v in tempJogadoresDaSala.items():
                 jogadorDaSala = tempJogadoresDaSala[k]
                 if jogadorDaSala.tipo != TipoJogador.desabilitado:
                     cpu = None
@@ -202,13 +203,13 @@ class GerenciadorSala(object):
 
         # TODO: Verificar criacao de salas pre-criadas.
         # if idJogo == "1" or idJogo == "2":
-        print "Recriando sala ", idJogo
-        self.sala = Sala(idJogo)
-        self.estado = EstadoDaSala.sala_criada
+        # print("Recriando sala ", idJogo)
+        # self.sala = Sala(idJogo)
+        # self.estado = EstadoDaSala.sala_criada
 
-        infoSalaMsg = InfoSala(self.sala.id,
-                               self.estado, self.sala.jogadores.values(), None)
-        self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+        # infoSalaMsg = InfoSala(self.sala.id,
+        #                        self.estado, self.sala.jogadores.values(), None)
+        # self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
         if self.jogo != None:
@@ -224,7 +225,7 @@ class GerenciadorSala(object):
         return False
 
     def socketDoUsuario(self, usuario):
-        for k, v in self.jogadores.iteritems():
+        for k, v in self.jogadores.items():
             if v == usuario:
                 return k
         return None
@@ -280,8 +281,8 @@ class GerenciadorPrincipal(object):
             gerenciadorSala.sai(cliente)
             del self.usuarioPorSala[usuario]
         except:
-            print "[ERRO][GerenciadorPrincipal] Erro ao tentar desconectar o usuario[" + usuario + "] da sala."
-            print "\tProvavelmente ele nao esteja em nenhuma."
+            print("[ERRO][GerenciadorPrincipal] Erro ao tentar desconectar o usuario[" + usuario + "] da sala.")
+            print("\tProvavelmente ele nao esteja em nenhuma.")
         del self.jogadores[cliente]
 
         self.enviaMsgParaTodos(TipoMensagem.usuario_desconectou, UsuarioDesconectou(usuario))
@@ -332,7 +333,7 @@ class GerenciadorPrincipal(object):
                 try:
                     self.usuarioPorSala.pop(usuario)
                 except:
-                    print "[DEBUG] Erro ao tentar retirar o jogador [" + usuario + "] da relacao usuario por sala."
+                    print("[DEBUG] Erro ao tentar retirar o jogador [" + usuario + "] da relacao usuario por sala.")
             else:
                 self.enviaMsgLobbyParaCliente(cliente)
 
@@ -373,17 +374,17 @@ class GerenciadorPrincipal(object):
 
     def fechaSala(self, idSala):
         idSala = str(idSala)
-        print "[DEBUG] fechaSala(", idSala, ")"
+        print("[DEBUG] fechaSala(", idSala, ")")
         try:
             # TODO: Verificar criacao de salas pre-criadas.
             # if idSala != "1" and idSala != "2":
             del self.salas[idSala]
             self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
                                    FecharSala(idSala))
-            print "[DEBUG] Sala ", idSala, " fechada."
+            print("[DEBUG] Sala ", idSala, " fechada.")
         except:
             traceback.print_exc()
-            print "[ERRO] Tentou fechar sala de id:", idSala
+            print("[ERRO] Tentou fechar sala de id:", idSala)
 
     def jogoTerminou(self, idJogo):
         removerUsuarios = []
@@ -398,7 +399,7 @@ class GerenciadorPrincipal(object):
 
         self.enviaMsgParaTodos(TipoMensagem.ranking, self.ranking())
 
-    def enviaMsgLobbyParaCliente(self, cliente):
+    def montaMensagemParamsLobby(self):
         # Envia a lista de salas para o cliente.
         infoSalas = []
         for gerenciadorSala in self.salas.values():
@@ -415,19 +416,22 @@ class GerenciadorPrincipal(object):
         for r in ranking['ranking']:
             if r.nome in self.jogadores.values():
                 infoUsuarios.append(r)
-        self.enviaMsgParaCliente(TipoMensagem.lobby,
-                                 Lobby(infoSalas, infoUsuarios), cliente)
+        return Lobby(infoSalas, infoUsuarios)
+
+    def enviaMsgLobbyParaCliente(self, cliente):
+        lobby = self.montaMensagemParamsLobby()
+        self.enviaMsgParaCliente(TipoMensagem.lobby, lobby, cliente)
 
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
-        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
-        # print "[INFO][GerenciadorPrincipal] Enviando: " + jsonMsg
+        jsonMsg = Mensagem(tipoMensagem, params).toJson()
+        # print("[INFO][GerenciadorPrincipal] Enviando: " + jsonMsg)
         cliente.sendMessage(jsonMsg)
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
-        jsonMsg = json.dumps(Mensagem(tipoMensagem, params), default=lambda o: o.__dict__)
+        jsonMsg = Mensagem(tipoMensagem, params).toJson()
         for socket in self.jogadores.keys():
             socket.sendMessage(jsonMsg)
-        # print "[INFO][GerenciadorPrincipal] Broadcast: ", jsonMsg
+        # print("[INFO][GerenciadorPrincipal] Broadcast: ", jsonMsg)
 
     def fecha(self):
         for gerenciadorSala in self.salas.values():

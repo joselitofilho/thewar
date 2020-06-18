@@ -1,8 +1,6 @@
 #!/bin/bash
 cd /app # Dentro do container docker deve ser a pasta /app, mas equivale a pasta implementação/server 
 
-pip install gdown
-
 gdown --id 12x46KaDlY5d1OzXJtEERGDoEaI6bPV-O
 mkdir -p webdir/imagens/memes/
 unzip -u memes.zip -d webdir/imagens/

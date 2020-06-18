@@ -11,7 +11,7 @@ class FabricaObjetivo(object):
             3: Objetivo04(),
             4: Objetivo05(),
             5: Objetivo06(),
-            # 6: Objetivo07(), // 18 territores com 2 tropas em cada.
+            # 6: Objetivo07(),  # 18 territores com 2 tropas em cada.
             6: Objetivo08(),
             7: Objetivo09(),
             8: Objetivo10(),

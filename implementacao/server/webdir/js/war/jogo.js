@@ -293,9 +293,13 @@ function processarMsg_colocar_tropa(msgParams) {
         _territorios.focaNosTerritorios([msgParams.territorio.codigo]);
     }
     _territorios.piscar(msgParams.territorio.codigo);
-    _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
+    if (_labelTerritorios[msgParams.territorio.codigo]) {
+        _labelTerritorios[msgParams.territorio.codigo].alteraQuantiadeDeTropas("" + msgParams.territorio.quantidadeDeTropas);
+    }
 
-    _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropasRestante);
+    if (_componenteAcaoTurno) {
+        _componenteAcaoTurno.alteraQuantidadeDistribuirTropas(msgParams.quantidadeDeTropasRestante);
+    }
 
     if ((msgParams.quantidadeDeTropasRestante === 0) &&
         (msgParams.jogador === _usuario)) {
@@ -432,6 +436,12 @@ function jogo_processaMsg_jogador_destruido(msgParams) {
         _painelObjetivo.abreEspecifico(Number(msgParams.jogador.objetivo) + 1,
             usuario + ' foi destruído.');
     }, 2000);
+}
+
+function jogo_processaMsg_jogo_interrompido(msgParams) {
+    _territorios.limpa();
+    appwar_limparVariaveis();
+    jogo_removeElementosHtml();
 }
 
 function processarMsg_turno(msgParams) {
