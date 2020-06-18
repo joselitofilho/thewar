@@ -23,7 +23,7 @@ class IALucy(IAInterface):
         densidades = jogador.densidadeTodosGruposTerritorio()
         grupo_maior_densidade = densidades[0][0]
         for densidade in densidades:
-            if 0.0 > densidade[1] and densidade[1] < 100.0:
+            if 0.0 < densidade[1] and densidade[1] < 100.0:
                 grupo_maior_densidade = densidade[0]
                 break
         lista_grupo_maior_densidade = GrupoTerritorio.Dicionario[grupo_maior_densidade]
