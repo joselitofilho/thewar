@@ -168,7 +168,7 @@ function posAberturaSocket(valor) {
 
 function posRecebimentoMensagemServidor(valor) {
     // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
-    var jsonMensagem = JSON.parse(valor);
+    const jsonMensagem = JSON.parse(valor);
     if (jsonMensagem.tipo === TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.entrar) {
@@ -389,7 +389,7 @@ function territorioMouseMoveFunc(evento, posicaoJogador, codigoDoTerritorio) {
 }
 
 function territorioMouseOutFunc(posicaoJogador, codigoDoTerritorio) {
-    document.getElementById("mapa").className = '';
+    document.getElementById("mapa").className = 'mouse_padrao';
     $('#legenda').html('');
     $('#legenda').css('visibility', 'hidden');
 }
@@ -457,8 +457,8 @@ function territorioClickFunc(posicaoJogador, nomeDoTerritorio) {
                     _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio));
 
                 var posicao = _territorios.posicaoHTML(_territorioAlvoAtaque);
-                $('#popupBtnAtacar').offset({top: posicao.top + 21, left: posicao.left - 8});
-            } else if (_territorioAlvoAtaque != null) {
+                $('#popupBtnAtacar').offset({top: posicao.top + 21, left: posicao.left - 10});
+            } else if (_territorioAlvoAtaque !== null) {
                 var quantidadeDeTropasNoTerritorio = _territorios.quantidadeDeTropaDoTerritorio(nomeDoTerritorio);
                 if (quantidadeDeTropasNoTerritorio > 1 &&
                     _territorios.temFronteira(nomeDoTerritorio, _territorioAlvoAtaque)) {
