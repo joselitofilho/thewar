@@ -264,20 +264,23 @@ function processarMsg_altera_posicao_na_sala(msgParams) {
 }
 
 function processarMsg_lobby(msgParams) {
-    jogo_removeElementosHtml();
-    _jogadorEstaEmJogo = false;
+    if (!_jogadorEstaEmJogo) {
+        jogo_removeElementosHtml();
+        _jogadorEstaEmJogo = false;
 
-    $('#googleads').css('left', '34px');
+        $('#googleads').css('left', '34px');
 
-    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
-    $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
-    $('#sala').css('visibility', 'visible');
-    $('#sala .form-signin').children().each(function (i, elemento) {
-        $(elemento).css('visibility', 'visible');
-    });
+        $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+        $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
+        $('#sala').css('visibility', 'visible');
+        $('#sala .form-signin').children().each(function (i, elemento) {
+            $(elemento).css('visibility', 'visible');
+        });
+
+        document.getElementById('geral').style.cursor = 'auto';
+    }
+
     _sala.limpaListaSala();
-    document.getElementById('geral').style.cursor = 'auto';
-
     for (iSala = 0; iSala < msgParams.salas.length; iSala++) {
         var sala = msgParams.salas[iSala].sala;
         var jogadores = msgParams.salas[iSala].jogadores;

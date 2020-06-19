@@ -12,14 +12,14 @@ function Label(opt_options) {
 
     // Label contendo a quantidade de tropas...
     var span = this.span_ = document.createElement('span');
-    span.setAttribute('class', 'label_tropas');
+    span.setAttribute('class', 'label_tropas unselectable');
     span.style.color = this.corTexto;
 
     var spanInfoTropasPerdidas = this.spanInfoTropasPerdidas_ = document.createElement('span');
-    spanInfoTropasPerdidas.setAttribute('class', 'label_info_tropas_perdidas');
+    spanInfoTropasPerdidas.setAttribute('class', 'label_info_tropas_perdidas unselectable');
 
     var divExplosao = this.divExplosao_ = document.createElement('div');
-    divExplosao.setAttribute('class', 'label_div_explosao');
+    divExplosao.setAttribute('class', 'label_div_explosao unselectable');
     $(this.divExplosao_).css("background", "url('../imagens/explosao_50px_sprite.png') no-repeat");
     $(this.divExplosao_).css('visibility', 'hidden');
 
@@ -29,6 +29,7 @@ function Label(opt_options) {
     div.appendChild(divExplosao);
     div.style.cssText = 'position: absolute; display: none';
 }
+
 Label.prototype = new google.maps.OverlayView;
 
 Label.prototype.onAdd = function () {
@@ -79,7 +80,7 @@ Label.prototype.alteraQuantiadeDeTropas = function (qtd) {
 
 Label.prototype.alteraPosicaoJogador = function (posicaoJogador) {
     this.posicaoJogador = posicaoJogador;
-    if (posicaoJogador == 4 || posicaoJogador == 5) {
+    if (posicaoJogador === 4 || posicaoJogador === 5) {
         this.corTexto = '#282423';
     } else {
         this.corTexto = '#F8F7E9';
@@ -97,12 +98,11 @@ Label.prototype.perdeuTropas = function (quantidade) {
             .animate({
                     "top": "-=50px"
                 },
-                2000,
+                1000,
                 function () {
                     $(this).animate({
                         opacity: 0.0,
-                    }),
-                        1000
+                    }), 500
                 }
             );
     }
