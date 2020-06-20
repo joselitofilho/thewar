@@ -1,14 +1,15 @@
 /**
  * Define a camada derivada de google.maps.OverlayView
  */
-function Label(opt_options) {
+function Label(opt_options, labelOverlayClick) {
     // Inicializacao
     this.setValues(opt_options);
+
+    this.labelOverlayClick = labelOverlayClick;
 
     this.texto = '1';
     this.corTexto = '#F8F7E9';
     this.posicaoJogador = -1;
-    this.infoTropasPerdidas = '0';
 
     // Label contendo a quantidade de tropas...
     var span = this.span_ = document.createElement('span');
@@ -21,7 +22,7 @@ function Label(opt_options) {
     var divExplosao = this.divExplosao_ = document.createElement('div');
     divExplosao.setAttribute('class', 'label_div_explosao unselectable');
     $(this.divExplosao_).css("background", "url('../imagens/explosao_50px_sprite.png') no-repeat");
-    $(this.divExplosao_).css('visibility', 'hidden');
+    $(this.divExplosao_).css('display', 'none');
 
     var div = this.div_ = document.createElement('div');
     div.appendChild(span);
@@ -48,6 +49,13 @@ Label.prototype.onAdd = function () {
                 me.draw();
             })
     ];
+
+    if (this.labelOverlayClick) {
+        this.getPanes().overlayMouseTarget.appendChild(this.div_);
+        google.maps.event.addDomListener(this.div_, 'click', function () {
+            google.maps.event.trigger(me, 'click');
+        });
+    }
 };
 
 Label.prototype.onRemove = function () {
@@ -67,7 +75,7 @@ Label.prototype.draw = function () {
         var div = this.div_;
         div.style.left = position.x + 'px';
         div.style.top = position.y + 'px';
-        div.style.display = 'block';
+        div.style.display = 'inline-block'; // 'block';
         this.span_.innerHTML = this.texto;
     }
 };
@@ -109,7 +117,7 @@ Label.prototype.perdeuTropas = function (quantidade) {
 };
 
 Label.prototype.explosao = function () {
-    $(this.divExplosao_).css('visibility', 'visible');
+    $(this.divExplosao_).css('display', '');
     $(".label_div_explosao").css("background-position", "0px 0px");
     var i = 0;
     var explosaoLoop = setInterval(function () {
@@ -117,7 +125,7 @@ Label.prototype.explosao = function () {
         ++i;
     }, 100);
     setTimeout(function () {
-        $(".label_div_explosao").css('visibility', 'hidden');
+        $(".label_div_explosao").css('display', 'none');
         clearInterval(explosaoLoop);
     }, 2700);
 };

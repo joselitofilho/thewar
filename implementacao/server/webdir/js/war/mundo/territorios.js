@@ -8,6 +8,15 @@ var _poligonosTerritoriosListeners = {};
 
 var _piscarLoopFunc = {};
 
+const TERR_COD_AFRICADOSUL = "AfricaDoSul";
+const TERR_COD_BORNEO = "Borneo";
+const TERR_COD_SUMATRA = "Sumatra";
+const TERR_COD_NOVAGUINE = "NovaGuine";
+const TERR_COD_JAPAO = "Japao";
+const TERR_COD_MADAGASCAR = "Madagascar";
+const TERR_COD_INGLATERRA = "Inglaterra";
+const TERR_COD_ISLANDIA = "Islandia";
+
 jogos.war.TerritoriosJS = function () {
     this.carrega = function () {
         var territorios = {};
@@ -562,6 +571,7 @@ jogos.war.Territorios = function (mapa) {
 
         var me = this;
         $.each(territorios, function (i, territorio) {
+            let labelOverlayClick = false;
             if (me.territorios[territorio.codigo]) {
                 var posicao = me.territorios[territorio.codigo].centro;
 
@@ -576,19 +586,32 @@ jogos.war.Territorios = function (mapa) {
                         map: mapa,
                         icon: circulo,
                         title: territorio.nome,
+                        clickable: true,
                         zIndex: 2
                     });
 
-                    var poligono_pais_listener = new google.maps.Polygon({
-                        map: mapa,
-                        paths: me.territorios[territorio.codigo].territorio,
-                        strokeColor: "#000000",
-                        strokeOpacity: 0,
-                        strokeWeight: 0,
-                        fillColor: "#000000",
-                        fillOpacity: 0,
-                        zIndex: 3
-                    });
+                    let poligono_pais_listener = null;
+                    if (territorio.codigo === TERR_COD_SUMATRA ||
+                        territorio.codigo === TERR_COD_BORNEO ||
+                        territorio.codigo === TERR_COD_NOVAGUINE ||
+                        territorio.codigo === TERR_COD_JAPAO ||
+                        territorio.codigo === TERR_COD_MADAGASCAR ||
+                        territorio.codigo === TERR_COD_INGLATERRA ||
+                        territorio.codigo === TERR_COD_ISLANDIA) {
+                        poligono_pais_listener = marker;
+                        labelOverlayClick = true;
+                    } else {
+                        poligono_pais_listener = new google.maps.Polygon({
+                            map: mapa,
+                            paths: me.territorios[territorio.codigo].territorio,
+                            strokeColor: "#000000",
+                            strokeOpacity: 0,
+                            strokeWeight: 0,
+                            fillColor: "#000000",
+                            fillOpacity: 0,
+                            zIndex: 3
+                        });
+                    }
 
                     _poligonosTerritoriosListeners[territorio.codigo] = poligono_pais_listener;
 
@@ -623,7 +646,7 @@ jogos.war.Territorios = function (mapa) {
                 } else {
                     label = new Label({
                         map: mapa
-                    });
+                    }, labelOverlayClick);
 
                     label.bindTo('position', marker, 'position');
                     label.bindTo('text', marker, 'position');
@@ -637,8 +660,6 @@ jogos.war.Territorios = function (mapa) {
                 _labelTerritorios[territorio.codigo] = label;
             }
         });
-
-        $('.gm-style div[style*="z-index: 106"]').html('');
     };
 
     this.piscar = function (codigoTerritorio) {
