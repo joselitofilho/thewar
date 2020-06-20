@@ -203,13 +203,13 @@ class GerenciadorSala(object):
 
         # TODO: Verificar criacao de salas pre-criadas.
         # if idJogo == "1" or idJogo == "2":
-        # print("Recriando sala ", idJogo)
-        # self.sala = Sala(idJogo)
-        # self.estado = EstadoDaSala.sala_criada
+        print("Recriando sala ", idJogo)
+        self.sala = Sala(idJogo)
+        self.estado = EstadoDaSala.sala_criada
 
-        # infoSalaMsg = InfoSala(self.sala.id,
-        #                        self.estado, self.sala.jogadores.values(), None)
-        # self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+        infoSalaMsg = InfoSala(self.sala.id,
+                               self.estado, self.sala.jogadores.values(), None)
+        self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
         if self.jogo != None:
