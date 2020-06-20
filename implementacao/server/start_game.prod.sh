@@ -26,6 +26,7 @@ if [ ! -f "$FILE" ]; then
 	python migrations/database_update3.py
 	python migrations/database_update4.py
 	python migrations/database_update5.py
+	python migrations/database_update5.py
 fi
 echo "Starting server..."
 PYTHONPATH=. python ./src/server.py && tail -F ./log/server.log
