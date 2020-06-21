@@ -266,6 +266,19 @@ jogos.war.Territorios = function (mapa) {
             });
 
             _poligonosTerritorios[pais.nome] = poligono_pais;
+
+            google.maps.event.addListener(poligono_pais, 'mousemove', function (event) {
+                territorioMouseMove(event, _labelTerritorios[pais.nome].posicaoJogador, pais.nome);
+            });
+            google.maps.event.addListener(poligono_pais, 'mouseout', function () {
+                territorioMouseOut(_labelTerritorios[pais.nome].posicaoJogador, pais.nome);
+            });
+            google.maps.event.addListener(poligono_pais, 'click', function (event) {
+                clearTimeout(this.doNotTriggerTwiceTimeout);
+                this.doNotTriggerTwiceTimeout = setTimeout(function(){
+                    territorioClick(_labelTerritorios[pais.nome].posicaoJogador, pais.nome);
+                }, 300);
+            });
         });
     };
 
@@ -590,54 +603,71 @@ jogos.war.Territorios = function (mapa) {
                         zIndex: 2
                     });
 
+                    google.maps.event.addListener(marker, 'mousemove', function (event) {
+                        territorioMouseMove(event, _labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    });
+
+                    google.maps.event.addListener(marker, 'mouseout', function () {
+                        territorioMouseOut(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function (event) {
+                        clearTimeout(this.doNotTriggerTwiceTimeout);
+                        this.doNotTriggerTwiceTimeout = setTimeout(function() {
+                            territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                        }, 300);
+                    });
+
                     let poligono_pais_listener = null;
-                    if (territorio.codigo === TERR_COD_SUMATRA ||
-                        territorio.codigo === TERR_COD_BORNEO ||
-                        territorio.codigo === TERR_COD_NOVAGUINE ||
-                        territorio.codigo === TERR_COD_JAPAO ||
-                        territorio.codigo === TERR_COD_MADAGASCAR ||
-                        territorio.codigo === TERR_COD_INGLATERRA ||
-                        territorio.codigo === TERR_COD_ISLANDIA) {
-                        poligono_pais_listener = marker;
-                        labelOverlayClick = true;
-                    } else {
-                        poligono_pais_listener = new google.maps.Polygon({
-                            map: mapa,
-                            paths: me.territorios[territorio.codigo].territorio,
-                            strokeColor: "#000000",
-                            strokeOpacity: 0,
-                            strokeWeight: 0,
-                            fillColor: "#000000",
-                            fillOpacity: 0,
-                            zIndex: 3
-                        });
-                    }
+                    // if (territorio.codigo === TERR_COD_SUMATRA ||
+                    //     territorio.codigo === TERR_COD_BORNEO ||
+                    //     territorio.codigo === TERR_COD_NOVAGUINE ||
+                    //     territorio.codigo === TERR_COD_JAPAO ||
+                    //     territorio.codigo === TERR_COD_MADAGASCAR ||
+                    //     territorio.codigo === TERR_COD_INGLATERRA ||
+                    //     territorio.codigo === TERR_COD_ISLANDIA) {
+                    //     poligono_pais_listener = marker;
+                    //     labelOverlayClick = true;
+                    // } else {
+                    //     poligono_pais_listener = new google.maps.Polygon({
+                    //         map: mapa,
+                    //         paths: me.territorios[territorio.codigo].territorio,
+                    //         strokeColor: "#000000",
+                    //         strokeOpacity: 0,
+                    //         strokeWeight: 0,
+                    //         fillColor: "#000000",
+                    //         fillOpacity: 0,
+                    //         zIndex: 3
+                    //     });
+                    // }
+                    poligono_pais_listener = marker;
+                    labelOverlayClick = true;
 
                     _poligonosTerritoriosListeners[territorio.codigo] = poligono_pais_listener;
 
-                    let poligonoListener = null;
-                    me.poligonosListener.find(function (ele) {
-                        return ele.territorioCodigo === territorio.codigo;
-                    });
-                    if (!poligonoListener) {
-                        poligonoListener = {};
-                        poligonoListener.territorioCodigo = territorio.codigo;
-                        poligonoListener.posicao = posicao;
-
-                        poligonoListener.listenerMouseMove = google.maps.event.addListener(poligono_pais_listener, 'mousemove', function (event) {
-                            territorioMouseMove(event, _labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
-                        });
-                        poligonoListener.listenerMouseOut = google.maps.event.addListener(poligono_pais_listener, 'mouseout', function () {
-                            territorioMouseOut(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
-                        });
-                        poligonoListener.listenerClick = google.maps.event.addListener(poligono_pais_listener, 'click', function (event) {
-                            clearTimeout(this.doNotTriggerTwiceTimeout);
-                            this.doNotTriggerTwiceTimeout = setTimeout(function(){
-                                territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
-                            }, 300);
-                        });
-                        me.poligonosListener.push(poligonoListener);
-                    }
+                    // let poligonoListener = null;
+                    // me.poligonosListener.find(function (ele) {
+                    //     return ele.territorioCodigo === territorio.codigo;
+                    // });
+                    // if (!poligonoListener) {
+                    //     poligonoListener = {};
+                    //     poligonoListener.territorioCodigo = territorio.codigo;
+                    //     poligonoListener.posicao = posicao;
+                    //
+                    //     poligonoListener.listenerMouseMove = google.maps.event.addListener(poligono_pais_listener, 'mousemove', function (event) {
+                    //         territorioMouseMove(event, _labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    //     });
+                    //     poligonoListener.listenerMouseOut = google.maps.event.addListener(poligono_pais_listener, 'mouseout', function () {
+                    //         territorioMouseOut(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    //     });
+                    //     poligonoListener.listenerClick = google.maps.event.addListener(poligono_pais_listener, 'click', function (event) {
+                    //         clearTimeout(this.doNotTriggerTwiceTimeout);
+                    //         this.doNotTriggerTwiceTimeout = setTimeout(function(){
+                    //             territorioClick(_labelTerritorios[territorio.codigo].posicaoJogador, territorio.codigo);
+                    //         }, 300);
+                    //     });
+                    //     me.poligonosListener.push(poligonoListener);
+                    // }
                 }
 
                 var label = null;
