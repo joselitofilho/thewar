@@ -1087,7 +1087,15 @@ class Jogo(object):
     def fecha(self):
         for jogadorCpu in self.cpus.values():
             jogadorCpu.para()
-        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
+
+        if not self.temUmVencedor():
+            try:
+                jsonMsg = self.montaMsg(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
+                for socket in self.olheiros.values():
+                    socket.sendMessage(jsonMsg)
+            except Exception:
+                print("Nao foi possivel enviar a mensagem para todos os clientes - JSON: ", jsonMsg)
+
         self.turno.paraTimeout()
 
     def __del__(self):

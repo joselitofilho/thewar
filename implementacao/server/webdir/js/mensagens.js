@@ -4,6 +4,7 @@ var TipoMensagem = {
     recuperar_senha: "RecuperarSenha",
     nova_senha: "NovaSenha",
     ranking: "Ranking",
+    desafios_em_andamento: "DesafiosEmAndamento",
     doacoes: "Doacoes",
     lobby: "Lobby",
     erro: "Erro",
