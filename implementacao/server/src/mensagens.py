@@ -15,6 +15,7 @@ class TipoMensagem:
     colocar_tropa = "ColocarTropa"
     colocar_tropa_na_troca_de_cartas_territorios = "ColocarTropaNaTrocaDeCartasTerritorios"
     criar_sala = "CriarSala"
+    desafios_em_andamento = "DesafiosEmAndamento"
     doacoes = "Doacoes"
     entrar = "Entrar"
     entrou_no_jogo = "EntrouNoJogo"

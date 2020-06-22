@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 import logging
+import os
 import re
 import signal
 import sys
 import traceback
-import os
-import json
 
 import banco
 import gerenciador
 from autobahn.twisted.websocket import WebSocketServerFactory, \
     WebSocketServerProtocol, \
     listenWS
+from badges import *
+from src.desafios.desafios import *
+from email_util import *
 from mensagens import *
 from pontuacaodb import *
-from badges import *
-from email_util import *
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -100,8 +101,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                                 conf = json.load(conf_json)
                                 try:
                                     email_inst.send_mail(conf['email'], conf['password'], [email], 'Password recovery',
-                                                      'Your recovery code is: <b>' + codigo_recuperacao + '</b>',
-                                                      files=None, server=conf['server'], port=conf['port'])
+                                                         'Your recovery code is: <b>' + codigo_recuperacao + '</b>',
+                                                         files=None, server=conf['server'], port=conf['port'])
                                     params["status"] = 0
                                 except:
                                     pass
@@ -117,7 +118,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 codigo = mensagem.params['codigo']
                 email = mensagem.params['email']
                 senha = mensagem.params['senha']
-                if len(senha) > 0 and len(email) > 0 and Email().is_valid(email) and _banco.atualizaSenha(codigo, email, senha):
+                if len(senha) > 0 and len(email) > 0 and Email().is_valid(email) and _banco.atualizaSenha(codigo, email,
+                                                                                                          senha):
                     params["status"] = 0
                 else:
                     params["status"] = 1
@@ -132,6 +134,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 
                 jsonMsg = Mensagem(TipoMensagem.ranking, ranking).toJson()
                 self.sendMessage(jsonMsg)
+
+            elif mensagem.tipo == TipoMensagem.desafios_em_andamento:
+                desafios_em_andamento = Desafios().em_andamento()
+                jsonMsg = Mensagem(TipoMensagem.desafios_em_andamento, desafios_em_andamento).toJson()
+                self.sendMessage(jsonMsg)
+
             else:
                 try:
                     _gerenciadorPrincipal.interpretaMensagem(self, mensagem)

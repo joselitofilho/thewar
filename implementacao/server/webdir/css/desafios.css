@@ -19,6 +19,12 @@
     height: 24px;
     background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -219px no-repeat;
     border: 0;
+    cursor: -webkit-grab; cursor: grab;
+}
+
+#desafios_painel .btn_fechar:hover {
+    background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -190px no-repeat;
+    cursor: -webkit-grab; cursor: grab;
 }
 
 #desafios_conteudo {

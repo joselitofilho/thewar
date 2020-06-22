@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
 import os
 import random
 import traceback
 
 from badges import *
-from src.chat.chat import *
 from doacaodb import *
 from ia.iafactory import *
 from jogador import *
@@ -15,6 +13,8 @@ from jogo import *
 from mensagens import *
 from pontuacaodb import *
 from sala import *
+from src.chat.chat import *
+from src.desafios.desafios import *
 
 
 class GerenciadorSala(object):
@@ -203,13 +203,13 @@ class GerenciadorSala(object):
 
         # TODO: Verificar criacao de salas pre-criadas.
         # if idJogo == "1" or idJogo == "2":
-        print("Recriando sala ", idJogo)
-        self.sala = Sala(idJogo)
-        self.estado = EstadoDaSala.sala_criada
+        # print("Recriando sala ", idJogo)
+        # self.sala = Sala(idJogo)
+        # self.estado = EstadoDaSala.sala_criada
 
-        infoSalaMsg = InfoSala(self.sala.id,
-                               self.estado, self.sala.jogadores.values(), None)
-        self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+        # infoSalaMsg = InfoSala(self.sala.id,
+        #                        self.estado, self.sala.jogadores.values(), None)
+        # self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
         if self.jogo != None:
@@ -271,8 +271,12 @@ class GerenciadorPrincipal(object):
             self.enviaMsgParaTodos(TipoMensagem.usuario_conectou, UsuarioConectou(infoUsuario))
             self.enviaMsgParaTodos(TipoMensagem.ranking, ranking)
 
+        # TODO:  Rever a forma de mandar essas mensagens com mais frequência.
         doacoes = DoacaoDB().doadores()
-        self.enviaMsgParaTodos(TipoMensagem.doacoes, doacoes)
+        self.enviaMsgParaCliente(TipoMensagem.doacoes, doacoes, cliente)
+
+        desafios_em_andamento = Desafios().em_andamento(usuario)
+        self.enviaMsgParaCliente(TipoMensagem.desafios_em_andamento, desafios_em_andamento, cliente)
 
     def clienteDesconectou(self, cliente):
         usuario = self.jogadores[cliente]
@@ -330,6 +334,7 @@ class GerenciadorPrincipal(object):
                 gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
                 gerenciadorSala.sai(cliente)
 
+                # TODO: Verificar qual o motivo deste codigo estar aqui, pois ele sempre da excecao.
                 try:
                     self.usuarioPorSala.pop(usuario)
                 except:

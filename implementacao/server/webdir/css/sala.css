@@ -168,6 +168,7 @@
 
 #sala_boxCriarSala .btn_criar:hover {
     background: url('../imagens/lobby/btn_sala_sprite-v2.png') 0px -208px no-repeat;
+    cursor: -webkit-grab; cursor: grab;
 }
 
 #sala_boxCriarSala .btn_fechar {
@@ -178,10 +179,12 @@
     height: 24px;
     background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -219px no-repeat;
     border: 0;
+    cursor: -webkit-grab; cursor: grab;
 }
 
 #sala_boxCriarSala .btn_fechar:hover {
     background: url('../imagens/lobby/box_criar_sala_sprite.png') 0px -190px no-repeat;
+    cursor: -webkit-grab; cursor: grab;
 }
 
 /**/
