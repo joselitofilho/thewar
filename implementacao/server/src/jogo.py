@@ -769,7 +769,7 @@ class Jogo(object):
             for carta in jogador.cartasTerritorio:
                 if carta.codigoTerritorio in cartasTerritorio:
                     cartasParaTroca.append(carta)
-                    cartasTerritorio.remove(carta)
+                    cartasTerritorio.remove(carta.codigoTerritorio)
 
             if len(cartasParaTroca) < 3:
                 self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
