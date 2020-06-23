@@ -30,7 +30,7 @@ jogos.war.Desafios = function () {
         }
 
         // Centro
-        desafio_centro = desafios.filter(d => {
+        const desafio_centro = desafios.filter(d => {
             return d.apenas_doador === 0;
         })[0];
         const img_name = desafio_centro.orientador.name.replace(' ', '').trim().toLowerCase();
@@ -44,13 +44,22 @@ jogos.war.Desafios = function () {
             $('#desafio_carta_centro .desafio_info').html('');
             $('#desafio_carta_centro .desafio_info').css('display', 'none');
         }
-        $('.desafios_termina_em').text('Termina em ' + desafio_centro.terminaEm);
+        const dateOptions = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+        const terminaEm = new Date(Date.parse(desafio_centro.terminaEm + ' GMT'));
+        $('.desafios_termina_em').text('Termina em ' + terminaEm.toLocaleDateString("pt-BR", dateOptions));
 
+        // Esquerda, Direita
         const ordem = ['esq', 'dir'];
-        desafios_doadores = desafios.filter(d => {
+        const desafios_doadores = desafios.filter(d => {
             return d.apenas_doador === 1;
         });
-        // Esquerda, Direita
         const nomeDoadores = _doadores.map(d => d['nome']) || [];
         const doador = nomeDoadores.includes(_usuario) || false;
         for (let i = 0; i < desafios_doadores.length; ++i) {

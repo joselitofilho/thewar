@@ -345,6 +345,7 @@ class Jogo(object):
 
         if self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais:
             if self.turno.quantidadeDeTropas == 0:
+                fator_tempo_adicional = 0
                 if len(jogador.gruposTerritorio()) > 0:
                     self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
                     self.turno.gruposTerritorio = list(jogador.gruposTerritorio())
@@ -352,8 +353,10 @@ class Jogo(object):
                     self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
+                    valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
+                    fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
@@ -365,37 +368,46 @@ class Jogo(object):
                 except Exception:
                     print("Nao tem grupo territorio para remover.")
 
+                fator_tempo_adicional = 0
                 if len(self.turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
                         self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                     else:
                         self.turno.tipoAcao = TipoAcaoTurno.atacar
+                        valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
+                        fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
         elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             if self.turno.quantidadeDeTropas == 0:
+                fator_tempo_adicional = 0
                 if len(jogador.cartasTerritorio) > 2:
                     self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
+                    valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
+                    fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
         elif self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
             if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
+                fator_tempo_adicional = 0
                 if self.obrigatorioPassarAVez:
                     self.turno.tipoAcao = TipoAcaoTurno.mover
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
+                    valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
+                    fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
@@ -444,7 +456,6 @@ class Jogo(object):
                 posicaoJogador = k
 
         if posicaoJogador == self.posicaoJogadorDaVez:
-            self.turno.paraTimeout()
             if self.turno.numero == 1:
                 self.finalizaTurno_1()
             elif self.turno.numero == 2:
@@ -469,7 +480,6 @@ class Jogo(object):
     def finalizaTurno_moverAposConquistarTerritorio(self):
         self.turno.reiniciaVariaveisExtrasMoverAposConquistar()
         self.turno.tipoAcao = TipoAcaoTurno.atacar
-        self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
         acaoDoTurno = self.criaAcaoDoTurno(self.turno)
         self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
@@ -1073,6 +1083,14 @@ class Jogo(object):
         elif self.jogadores[posicao].tipo == TipoJogador.cpu:
             self.enviaMsgParaCPU(tipoMensagem, params, self.cpus[jogador.usuario])
 
+    def enviaMsgParaOlheiros(self, tipoMensagem, params):
+        try:
+            jsonMsg = self.montaMsg(tipoMensagem, params)
+            for socket in self.olheiros.values():
+                socket.sendMessage(jsonMsg)
+        except Exception:
+            print("Nao foi possivel enviar a mensagem para todos os olheiros - JSON: ", jsonMsg)
+
     def enviaMsgParaTodos(self, tipoMensagem, params):
         try:
             jsonMsg = self.montaMsg(tipoMensagem, params)
@@ -1088,14 +1106,7 @@ class Jogo(object):
     def fecha(self):
         for jogadorCpu in self.cpus.values():
             jogadorCpu.para()
-
-        if not self.temUmVencedor():
-            try:
-                jsonMsg = self.montaMsg(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
-                for socket in self.olheiros.values():
-                    socket.sendMessage(jsonMsg)
-            except Exception:
-                print("Nao foi possivel enviar a mensagem para todos os clientes - JSON: ", jsonMsg)
+        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
 
         self.turno.paraTimeout()
 

@@ -35,11 +35,11 @@ class Turno(object):
         self.territoriosDoAtaqueDaConquista = []
         self.territorioConquistado = None
 
-    def iniciaTimeout(self, funcTimeout):
+    def iniciaTimeout(self, funcTimeout, fator_tempo_adicional=0):
         if self.loopTimeout != None:
             self.paraTimeout()
 
-        self.loopTimeout = Timeout(self.TIMEOUT, funcTimeout)
+        self.loopTimeout = Timeout(self.TIMEOUT * (1 + fator_tempo_adicional), funcTimeout)
         self.loopTimeout.start()
 
     def paraTimeout(self):
