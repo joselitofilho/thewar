@@ -651,7 +651,6 @@ var _loopTempoRestante = null;
 var _timeoutTempoRestante = null;
 
 function jogo_iniciaBarraDeProgresso(tempoTotal, timeoutSemTolerancia) {
-    // TODO: minutosTotal também deveria vir do servidor.
     const minutosTotal = timeoutSemTolerancia;
 
     if (_loopTempoRestante != null || _timeoutTempoRestante != null) {
@@ -660,8 +659,6 @@ function jogo_iniciaBarraDeProgresso(tempoTotal, timeoutSemTolerancia) {
         _loopTempoRestante = null;
         _timeoutTempoRestante = null;
     }
-    $('#barra').width('0%');
-    $('#barra').css('background-color', '#5eb95e');
     jogo_alteraTempoRestante(tempoTotal);
 
     var inc = 100.0 / minutosTotal;
@@ -674,7 +671,11 @@ function jogo_iniciaBarraDeProgresso(tempoTotal, timeoutSemTolerancia) {
         if (valor > 85) {
             barra.css('background-color', '#dd514c');
             tocarSom(this, "alarme.mp3");
-        } else if (valor > 50) barra.css('background-color', '#faa732');
+        } else if (valor > 50) {
+            barra.css('background-color', '#faa732');
+        } else {
+            $('#barra').css('background-color', '#5eb95e');
+        }
 
         tempo -= 1.0;
         jogo_alteraTempoRestante(tempo);
@@ -722,10 +723,10 @@ function jogo_animacaoGanhouCartaTerritorio() {
 function jogo_moveTropas() {
     _jaPodeMover = false;
     var qtd = _sliderMoverTropas.quantidade();
-    if (_turno.tipoAcao == TipoAcaoTurno.mover_apos_conquistar_territorio) {
+    if (_turno.tipoAcao === TipoAcaoTurno.mover_apos_conquistar_territorio) {
         var moverMsg = comunicacao_moverAposConquistarTerritorio(qtd);
         _libwebsocket.enviarObjJson(moverMsg);
-    } else if (_turno.tipoAcao == TipoAcaoTurno.mover) {
+    } else if (_turno.tipoAcao === TipoAcaoTurno.mover) {
         var moverMsg = comunicacao_mover(_posicaoJogador,
             _territorioMovimento,
             _territorioAlvoMover, qtd);
