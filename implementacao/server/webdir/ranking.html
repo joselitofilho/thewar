@@ -174,6 +174,7 @@
     function posRecebimentoMensagemServidor(msg) {
         const jsonMensagem = JSON.parse(msg);
 
+        const level_por_usuario = [];
         const rank = [];
         for (let i = 0; i < jsonMensagem.params.ranking.length; ++i) {
             let r = jsonMensagem.params.ranking[i];
@@ -181,6 +182,7 @@
             if (r.pontos > 0) {
                 r.level = "<div class='insignia_size insignias_x40_nv" + ranking_levelByXp(r.pontos) + "'></div>";
             }
+            level_por_usuario[r.nome] = r.pontos;
             rank.push(r);
         }
         $('#ranking-players').dynatable({
@@ -228,26 +230,26 @@
                 if (i === 0) {
                     $('#ranking-evento .center .top3 .item.one').css('visibility', 'visible');
                     $('#ranking-evento .center .top3 .item.one .pic div').removeClass();
-                    $('#ranking-evento .center .top3 .item.one .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(rank_evento.pontos));
+                    $('#ranking-evento .center .top3 .item.one .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]));
                     $('#ranking-evento .center .top3 .item.one .name').html(rank_evento.nome);
                     $('#ranking-evento .center .top3 .item.one .score').html(rank_evento.pontos);
                 } else if (i === 1) {
                     $('#ranking-evento .center .top3 .item.two').css('visibility', 'visible');
                     $('#ranking-evento .center .top3 .item.two .pic div').removeClass();
-                    $('#ranking-evento .center .top3 .item.two .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(rank_evento.pontos));
+                    $('#ranking-evento .center .top3 .item.two .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]));
                     $('#ranking-evento .center .top3 .item.two .name').html(rank_evento.nome);
                     $('#ranking-evento .center .top3 .item.two .score').html(rank_evento.pontos);
                 } else if (i === 2) {
                     $('#ranking-evento .center .top3 .item.three').css('visibility', 'visible');
                     $('#ranking-evento .center .top3 .item.three .pic div').removeClass();
-                    $('#ranking-evento .center .top3 .item.three .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(rank_evento.pontos));
+                    $('#ranking-evento .center .top3 .item.three .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]));
                     $('#ranking-evento .center .top3 .item.three .name').html(rank_evento.nome);
                     $('#ranking-evento .center .top3 .item.three .score').html(rank_evento.pontos);
                 } else {
                     conteudoRankingGuerra = '';
                     conteudoRankingGuerra += '<div class="item">';
                     conteudoRankingGuerra += '    <div class="pos">' + (i + 1) + '</div>';
-                    conteudoRankingGuerra += '    <div class="pic"><div class="insignia_size insignias_x40_nv' + ranking_levelByXp(rank_evento.pontos) + '"></div></div>';
+                    conteudoRankingGuerra += '    <div class="pic"><div class="insignia_size insignias_x40_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]) + '"></div></div>';
                     conteudoRankingGuerra += '    <div class="name">' + rank_evento.nome + '</div>';
                     conteudoRankingGuerra += '    <div class="score">' + rank_evento.pontos + '</div>';
                     conteudoRankingGuerra += '</div>';
