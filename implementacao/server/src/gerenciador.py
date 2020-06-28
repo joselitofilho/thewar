@@ -5,16 +5,16 @@ import os
 import random
 import traceback
 
-from badges import *
-from doacaodb import *
-from ia.iafactory import *
-from jogador import *
-from jogo import *
-from mensagens import *
-from pontuacaodb import *
-from sala import *
+from src.badges import *
 from src.chat.chat import *
 from src.desafios.desafios import *
+from src.doacaodb import *
+from src.ia.iafactory import *
+from src.jogador import *
+from src.jogo import *
+from src.mensagens import *
+from src.pontuacaodb import *
+from src.sala import *
 
 
 class GerenciadorSala(object):
@@ -372,9 +372,14 @@ class GerenciadorPrincipal(object):
             self.usuarioPorSala[usuario] = idSala
 
     def ranking(self):
-        ranking = PontuacaoDB().ranking()
         badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
-        ranking['badges'] = Badges().ler_csv(badges_path)
+        pontuacao_db = PontuacaoDB()
+        ranking = {
+            'ranking': pontuacao_db.ranking_geral(),
+            'ranking_evento': pontuacao_db.ranking_evento(),
+            'badges': Badges().ler_csv(badges_path),
+            'doacoes': {'meta': DoacaoDB().meta_doacoes_progresso()}
+        }
         return ranking
 
     def fechaSala(self, idSala):

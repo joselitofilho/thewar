@@ -14,11 +14,11 @@ class Timeout(threading.Thread):
     def run(self):
         self.tempo = 0.0
         self.loop = True
-        while (self.tempo < self.tempoMaximo and self.loop):
+        while self.tempo < self.tempoMaximo and self.loop:
             time.sleep(0.5)
             self.tempo += 0.5
 
-        if self.tempo == self.tempoMaximo and self.func != None and self.loop:
+        if self.loop and self.tempo == self.tempoMaximo and self.func is not None:
             if self.func_args:
                 self.func(**self.func_args)
             else:

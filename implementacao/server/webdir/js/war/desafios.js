@@ -52,7 +52,7 @@ jogos.war.Desafios = function () {
             minute: '2-digit',
             second: '2-digit'
         };
-        const terminaEm = new Date(Date.parse(desafio_centro.terminaEm + ' GMT'));
+        const terminaEm = new Date(Date.parse(desafio_centro.termina_em + ' GMT'));
         $('.desafios_termina_em').text('Termina em ' + terminaEm.toLocaleDateString("pt-BR", dateOptions));
 
         // Esquerda, Direita
@@ -69,7 +69,6 @@ jogos.war.Desafios = function () {
             $('#desafio_carta_' + ordem[i] + ' .desafio_carta_conteudo .desafio_xp').html('+' + desafio.desafio.xp + ' pontos');
             $('#desafio_carta_' + ordem[i] + ' .desafio_carta_conteudo .desafio_descricao').html(desafio.desafio.description);
 
-            console.log('doadores', nomeDoadores, doador);
             if (doador) {
                 if (desafio.concluido) {
                     $('#desafio_carta_' + ordem[i] + ' .desafio_info').html('<p>Realizado</p><i class="material-icons">done_outline</i>');

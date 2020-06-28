@@ -1,5 +1,6 @@
 import operator
-from territorio import *
+
+from src.territorio import *
 
 
 class TipoJogador:
@@ -107,11 +108,16 @@ class JogadorDoJogo(object):
             codigosTerritorios.append(terr.codigo)
 
         retorno[GrupoTerritorio.Asia] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAsia, codigosTerritorios)
-        retorno[GrupoTerritorio.AmericaDoNorte] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAmericaDoNorte, codigosTerritorios)
-        retorno[GrupoTerritorio.Europa] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaEuropa, codigosTerritorios)
-        retorno[GrupoTerritorio.Africa] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAfrica, codigosTerritorios)
-        retorno[GrupoTerritorio.AmericaDoSul] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAmericaDoSul, codigosTerritorios)
-        retorno[GrupoTerritorio.Oceania] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaOceania, codigosTerritorios)
+        retorno[GrupoTerritorio.AmericaDoNorte] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAmericaDoNorte,
+                                                                                   codigosTerritorios)
+        retorno[GrupoTerritorio.Europa] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaEuropa,
+                                                                           codigosTerritorios)
+        retorno[GrupoTerritorio.Africa] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAfrica,
+                                                                           codigosTerritorios)
+        retorno[GrupoTerritorio.AmericaDoSul] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaAmericaDoSul,
+                                                                                 codigosTerritorios)
+        retorno[GrupoTerritorio.Oceania] = self.densidadePorGrupoTerritorio(GrupoTerritorio.ListaOceania,
+                                                                            codigosTerritorios)
 
         retorno = sorted(retorno.items(), key=operator.itemgetter(1), reverse=True)
 

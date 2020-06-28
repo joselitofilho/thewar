@@ -1,0 +1,165 @@
+#ranking-evento .center {
+    z-index: 10;
+}
+
+#ranking-evento .top3 {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: end;
+    align-items: flex-end;
+    margin-top: -20px;
+}
+
+#ranking-evento .top3 .item {
+    box-sizing: border-box;
+    position: relative;
+    margin: 1rem 1rem 2rem;
+    width: 156px;
+    height: 212px;
+    background: url(../imagens/desafios/fundo_carta.png);
+    background-size: cover;
+    text-align: center;
+    -webkit-transform-origin: bottom;
+    transform-origin: bottom;
+    cursor: pointer;
+}
+
+#ranking-evento .top3 .item .pic {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    left: calc(50% - 50px);
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 1rem -0.5rem 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ranking-evento .top3 .item .pic div {
+    transform: scale(0.7);
+}
+
+#ranking-evento .top3 .item .pos {
+    font-weight: 900;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#ranking-evento .top3 .item .name {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+#ranking-evento .top3 .item .score {
+    opacity: 0.8;
+}
+
+#ranking-evento .top3 .item .score:after {
+    display: block;
+    content: "pontos";
+    opacity: 0.6;
+}
+
+#ranking-evento .top3 .item.one {
+    width: 170px;
+    height: 231px;
+}
+
+#ranking-evento .top3 .item.one .pic {
+    width: 100px;
+    height: 100px;
+    left: calc(50% - 50px);
+    margin: 0 1rem 0.2rem 0;
+}
+
+#ranking-evento .top3 .item.one .pic div {
+    transform: scale(0.8);
+}
+
+#ranking-evento .top3 .item:hover {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+#ranking-evento .list {
+    padding-left: 2rem;
+    margin: 0 auto;
+}
+
+#ranking-evento .list .item {
+    position: relative;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background: white;
+    height: 3rem;
+    border-radius: 4rem;
+    margin-bottom: 2rem;
+    background: #fdefb2;
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    cursor: pointer;
+    box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+}
+
+#ranking-evento .list .item .pos {
+    font-weight: 900;
+    position: absolute;
+    left: -2rem;
+    text-align: center;
+    font-size: 1.25rem;
+    width: 1.5rem;
+    color: white;
+    -webkit-transition: opacity 200ms ease-in-out;
+    transition: opacity 200ms ease-in-out;
+}
+
+#ranking-evento .list .item .pic {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin-right: 1rem;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 1);
+}
+
+#ranking-evento .list .item .pic div {
+    transform: scale(1.15);
+}
+
+#ranking-evento .list .item .name {
+    -webkit-box-flex: 2;
+    flex-grow: 2;
+    flex-basis: 10rem;
+    font-size: 1.1rem;
+}
+
+#ranking-evento .list .item .score {
+    margin-right: 1.5rem;
+}
+
+#ranking-evento .list .item .score:after {
+    margin-right: 1rem;
+    content: " pontos";
+}
+
+#ranking-evento .list .item:hover {
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
+}
+
+#ranking-evento .list .item:hover .pos {
+}

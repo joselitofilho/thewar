@@ -1,5 +1,5 @@
-from timeout import *
-from tipoAcaoTurno import *
+from src.timeout import *
+from src.tipoAcaoTurno import *
 
 
 class Turno(object):

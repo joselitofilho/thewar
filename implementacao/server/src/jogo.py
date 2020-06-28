@@ -3,17 +3,16 @@
 
 import logging
 import random
-import json
 
-from carta import *
-from mensagens import *
-from objetivos import *
-from pontuacao import *
+from src.carta import *
 from src.chat.chat import *
 from src.grupousuariosdb import *
-from territorio import *
-from tipoAcaoTurno import *
-from turno import *
+from src.mensagens import *
+from src.objetivos import *
+from src.pontuacao import *
+from src.territorio import *
+from src.tipoAcaoTurno import *
+from src.turno import *
 
 
 class Jogo(object):
@@ -244,7 +243,7 @@ class Jogo(object):
                     break
 
         if not ok and self.gerenciador != None:
-            self.gerenciador.jogoTerminou(self.nome)
+            self.jogoTerminou()
 
     def finalizaTurno_1(self):
         # turno = self.turno
@@ -274,7 +273,7 @@ class Jogo(object):
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.nome)
+                self.jogoTerminou()
 
         elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and self.turno.quantidadeDeTropas == 0:
             try:
@@ -300,7 +299,7 @@ class Jogo(object):
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.nome)
+                self.jogoTerminou()
 
     def finalizaTurno_2(self):
         # turno = self.turno
@@ -336,7 +335,7 @@ class Jogo(object):
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.nome)
+                self.jogoTerminou()
 
     def finalizaTurno_I(self):
         # turno = self.turno
@@ -354,7 +353,7 @@ class Jogo(object):
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
                     valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                    fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
+                    fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
@@ -375,7 +374,7 @@ class Jogo(object):
                     else:
                         self.turno.tipoAcao = TipoAcaoTurno.atacar
                         valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                        fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
+                        fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
@@ -390,7 +389,7 @@ class Jogo(object):
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
                     valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                    fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
+                    fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
@@ -405,7 +404,7 @@ class Jogo(object):
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
                     valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                    fator_tempo_adicional = 1 if valorDaTroca > 50 else 0
+                    fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
                 self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
@@ -444,7 +443,7 @@ class Jogo(object):
             erro = False
 
             if self.temUmVencedor() and self.gerenciador != None:
-                self.gerenciador.jogoTerminou(self.nome)
+                self.jogoTerminou()
 
         if erro:
             self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
@@ -969,7 +968,6 @@ class Jogo(object):
         if jogadorVenceu and not self.contabilizouPontos:
             self.jogadorVencedor = jogador
 
-            qtdJogadores = len(self.jogadores)
             usuarios = []
             quemDestruiuQuem = {}
             for k, v in self.jogadores.items():
@@ -979,13 +977,44 @@ class Jogo(object):
                     for p in v.jogadoresDestruidos:
                         quemDestruiuQuem[v.usuario].append(self.jogadores[p].usuario)
 
-            pontuacao = Pontuacao(self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem, self.cpus)
+            pontuacao = Pontuacao(self, self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem, self.cpus)
             self.pontuacaoPelaVitoria = pontuacao.contabilizaPontuacaoDoVencedor()
             pontuacao.contabilizaPontuacaoDosQueNaoVenceram()
 
             self.contabilizouPontos = True
 
         return jogadorVenceu
+
+    def quemDestruiuQuem(self, jogadores):
+        quemDestruiuQuem = {}
+        for k, v in jogadores.items():
+            if len(v.jogadoresDestruidos) > 0:
+                quemDestruiuQuem[v.usuario] = []
+                for p in v.jogadoresDestruidos:
+                    quemDestruiuQuem[v.usuario].append(jogadores[p].usuario)
+        return quemDestruiuQuem
+
+    def usuarioFoiDestruidoPorAlguem(self, usuario, quemDestruiuQuem):
+        for k, v in quemDestruiuQuem.items():
+            if usuario in v:
+                return True
+        return False
+
+    def usuarioDestruiOutroUsuario(self, usuario_destruiu, usuario_destruido, quemDestruiuQuem):
+        for k, usuarios in quemDestruiuQuem.items():
+            if k == usuario_destruiu:
+                return usuario_destruido in usuarios
+        return False
+
+    def jogoTerminou(self):
+        print('jogoTerminou', self.clientes)
+        desafios = Desafios()
+        for k, jogador in self.jogadores.items():
+            desafios_em_andamento = desafios.em_andamento(jogador.usuario)
+            if jogador.posicao in self.clientes.keys() and len(desafios_em_andamento) > 0:
+                self.enviaMsgParaCliente(TipoMensagem.desafios_em_andamento, desafios_em_andamento, self.clientes[jogador.posicao])
+
+        self.gerenciador.jogoTerminou(self.nome)
 
     def temJogadorOnLine(self):
         return len(self.clientes) > 0

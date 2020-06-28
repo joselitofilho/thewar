@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pontuacaodb import *
+from src.desafios.desafios import *
+from src.doacaodb import *
+from src.pontuacaodb import *
 
 
 class Pontuacao(object):
-    def __init__(self, usuarioVencedor, usuarios, quemDestruiuQuem, cpus, baseDeDados='war.db'):
+    def __init__(self, jogo, usuarioVencedor, usuarios, quemDestruiuQuem, cpus, baseDeDados='war.db'):
+        self.jogo = jogo
         self.usuarioVencedor = usuarioVencedor
         self.usuarios = usuarios
         self.quemDestruiuQuem = quemDestruiuQuem
@@ -29,7 +32,11 @@ class Pontuacao(object):
             elif qtdUsuarios == 6:
                 pontos = 800
 
-        pontosExtra = self.contabilizaPontosExtra(self.usuarioVencedor, self.cpus)
+        print('usuario vencedor', self.usuarioVencedor)
+        pontosExtra = self.contabilizaPontosPorDestruirOutroJogador(self.usuarioVencedor, self.cpus)
+        pontosDesafios = self.contabilizaPontosDesafios(self.jogo, self.usuarioVencedor, True)
+        pontosExtra += pontosDesafios
+
         pontos += pontosExtra
 
         pontuacaoDB = PontuacaoDB(self.baseDeDados)
@@ -48,6 +55,7 @@ class Pontuacao(object):
             novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
 
         pontuacaoDB.atualizaPontuacaoDBOParaUsuario(self.usuarioVencedor, novaPontuacaoDBO)
+        pontuacaoDB.atualizaPontuacaoEventoParaUsuario(self.usuarioVencedor, True, False, pontosDesafios)
 
         return pontos
 
@@ -59,7 +67,10 @@ class Pontuacao(object):
                 continue
 
             destruidoPorAlguem = self.usuarioFoiDestruidoPorAlguem(usuario)
-            pontosExtra = self.contabilizaPontosExtra(usuario, self.cpus)
+            pontosExtra = self.contabilizaPontosPorDestruirOutroJogador(usuario, self.cpus)
+
+            pontosDesafios = self.contabilizaPontosDesafios(self.jogo, usuario, False)
+            pontosExtra += pontosDesafios
 
             pontuacaoDBOAtual = pontuacaoDB.pontuacaoDBODoUsuario(usuario)
             novaPontuacaoDBO = PontuacaoDBO()
@@ -82,6 +93,7 @@ class Pontuacao(object):
                     novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
 
             pontuacaoDB.atualizaPontuacaoDBOParaUsuario(usuario, novaPontuacaoDBO)
+            pontuacaoDB.atualizaPontuacaoEventoParaUsuario(usuario, False, destruidoPorAlguem, pontosDesafios)
 
     def usuarioFoiDestruidoPorAlguem(self, usuario):
         for k, v in self.quemDestruiuQuem.items():
@@ -90,7 +102,7 @@ class Pontuacao(object):
 
         return False
 
-    def contabilizaPontosExtra(self, usuario, cpus):
+    def contabilizaPontosPorDestruirOutroJogador(self, usuario, cpus):
         pontosExtra = 0
         for k, usuarios in self.quemDestruiuQuem.items():
             if k == usuario:
@@ -100,3 +112,19 @@ class Pontuacao(object):
                         pontosExtra = max(pontosExtra - 1, 0)
                 break
         return pontosExtra * 100
+
+    def contabilizaPontosDesafios(self, jogo, usuario, venceu):
+        pontos = 0
+
+        doadores = DoacaoDB().nomes_doadores()
+        desafios = Desafios()
+        for d in desafios.em_andamento():
+            desafio = FabricaDesafios().cria(d['desafio']['id'])
+            if d['apenas_doador'] == 0 or (
+                    d['apenas_doador'] == 1 and usuario in doadores):
+                # TODO: Retirar esse IF caso um dia as cpus participem de um evento.
+                if usuario not in jogo.cpus.keys():
+                    if desafio.completou(jogo, usuario, venceu, self.quemDestruiuQuem):
+                        desafios.conclui_desafio(d, usuario)
+                        pontos += d['desafio']['xp']
+        return pontos

@@ -55,6 +55,15 @@ class IAInterface(threading.Thread):
     def jogador_ref(self, value):
         self.jogador = value
 
+    def wait_short_time(self):
+        time.sleep(0.5)
+
+    def wait_mid_time(self):
+        time.sleep(1)
+
+    def wait_long_time(self):
+        time.sleep(2)
+
     def run(self):
         self.loop = True
         while self.loop:
@@ -77,7 +86,7 @@ class IAInterface(threading.Thread):
                 elif self.mensagem.tipo == TipoMensagem.erro:
                     print('ERROR MSG ', self.usuario)
 
-            time.sleep(1)
+            self.wait_short_time()
 
     def para(self):
         self.loop = False
@@ -101,64 +110,64 @@ class IAInterface(threading.Thread):
             self.turno_mover(usuario, jogador, jogo)
 
     def turno_distribuir_tropas_globais(self, usuario, jogador, jogo, params):
-        time.sleep(2)
+        self.wait_mid_time()
         self.coloca_tropa(usuario, jogador, jogo, params)
 
     def coloca_tropa(self, usuario, jogador, jogo, params):
         if self.acao_coloca_tropa(usuario, jogador, jogo, params):
-            time.sleep(0.5)
+            self.wait_short_time()
             self.finaliza_turno(usuario, jogo)
 
     def turno_distribuir_tropas_grupo_territorio(self, usuario, jogador, jogo, params):
-        time.sleep(2)
+        self.wait_mid_time()
         self.coloca_tropa_grupo_territorio(usuario, jogador, jogo, params)
 
     def coloca_tropa_grupo_territorio(self, usuario, jogador, jogo, params):
         if self.acao_coloca_tropa_grupo_territorio(usuario, jogador, jogo, params):
-            time.sleep(0.5)
+            self.wait_short_time()
             self.finaliza_turno(usuario, jogo)
 
     def turno_distribuir_tropas_troca_de_cartas(self, usuario, jogador, jogo, params):
-        time.sleep(2)
+        self.wait_mid_time()
         self.coloca_tropa(usuario, jogador, jogo, params)
 
     def turno_trocar_cartas(self, usuario, jogador, jogo, params):
-        time.sleep(2)
+        self.wait_mid_time()
         self.trocar_cartas(usuario, jogador, jogo, params)
 
     def trocar_cartas(self, usuario, jogador, jogo, params):
         if self.acao_trocar_cartas(usuario, jogador, jogo, params):
-            time.sleep(0.5)
+            self.wait_short_time()
             self.finaliza_turno(usuario, jogo)
 
     def processa_msg_atacar(self, usuario, jogador, jogo, params):
         conquistou_territorio = params['conquistouTerritorio']
 
         if conquistou_territorio:
-            time.sleep(2)
+            self.wait_short_time()
             self.move_apos_conquistar_territorio(usuario, jogador, jogo, params)
         else:
             self.turno_atacar(usuario, jogador, jogo)
 
     def turno_atacar(self, usuario, jogador, jogo):
-        time.sleep(2)
+        self.wait_mid_time()
         self.ataca(usuario, jogador, jogo)
 
     def ataca(self, usuario, jogador, jogo):
         if self.acao_ataca(usuario, jogador, jogo):
-            time.sleep(0.5)
+            self.wait_short_time()
             self.finaliza_turno(usuario, jogo)
 
     def move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
         self.acao_move_apos_conquistar_territorio(usuario, jogador, jogo, params)
 
     def turno_mover(self, usuario, jogador, jogo):
-        time.sleep(2)
+        self.wait_mid_time()
         self.move(usuario, jogador, jogo)
 
     def move(self, usuario, jogador, jogo):
         if self.acao_move(usuario, jogador, jogo):
-            time.sleep(0.5)
+            self.wait_short_time()
             self.finaliza_turno(usuario, jogo)
 
     def finaliza_turno(self, usuario, jogo):

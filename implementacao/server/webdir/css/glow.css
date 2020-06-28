@@ -6,7 +6,8 @@
     height: 100px;
     border-radius: 50%;
     -webkit-animation: glow 15s linear 0s infinite forwards;
-    background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598');
+    /*background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598');*/
+    background: url('../imagens/glow.png');
     background-size: contain;
 }
 
@@ -58,8 +59,8 @@
     left: calc(50% - 5px);
     width: 30px;
     height: 30px;
-    /*   background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598'); */
-    background: url('http://www.officialpsds.com/images/thumbs/shine-light-bright-psd43123.png');
+    /*background: url('https://t0.rbxcdn.com/182160a5d7d68c6d4be14a6d9f9e5598'); */
+    background: url('../imagens/shine-light-bright.png');
 
     background-size: contain;
 }

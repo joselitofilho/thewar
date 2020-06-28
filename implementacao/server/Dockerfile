@@ -2,15 +2,14 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update -y
-RUN apt-get install -y python3-pip python3-dev python3-virtualenv build-essential vim sqlite3
+RUN apt-get update -y --fix-missing
+RUN apt-get install -y python3-pip python3-dev python3-virtualenv build-essential cron sqlite3 vim
 RUN apt-get update --fix-missing
 
 RUN pip3 install --upgrade pip
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-COPY . /opt/app
 WORKDIR /opt/app
 
 EXPOSE 8080
@@ -27,5 +26,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV TERM screen
+
+RUN echo "0 1 * * * /bin/bash /opt/app/gerar_desafio.sh >> /dev/null" | crontab
 
 COPY . .

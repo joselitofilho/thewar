@@ -1,5 +1,5 @@
-from jogador import *
-from territorio import *
+from src.jogador import *
+from src.territorio import *
 
 
 class FabricaObjetivo(object):

@@ -10,16 +10,37 @@ $ cp implementacao/server/src/email.conf.template implementacao/server/src/email
 ```
 
 ### docker-compose
+
+###### Start the game
 ```sh
 $ docker-compose up -d
-$ docker-compose exec server bash
-$ cd /opt/app/implementacao/server
-$ ./start_game.dev.sh
+$ docker-compose exec server bash -c "./start_game.dev.sh"
 ```
-
 ```sh
 $ google-chrome http://localhost:9092
 ```
+
+###### Access database
+```sh
+$ docker-compose exec server bash -c "sqlite3 war.db"
+```
+
+
+### Challenges
+
+###### Generate challenges
+```sh
+$ docker-compose exec server bash -c "./gerar_desafio.sh"
+```
+
+### Donations
+
+###### Configure donations goal
+```sh
+$ docker-compose exec server bash -c "sqlite3 war.db"
+sqlite> INSERT OR REPLACE INTO Configuracoes (chave, valor) VALUES ('meta_doacao', '300');
+```
+
 
 ### Como instalar em sua máquina
 

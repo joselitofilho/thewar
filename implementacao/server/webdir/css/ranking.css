@@ -47,6 +47,21 @@ p.center {
     text-align: center;
 }
 
+ul, ol {
+    max-width: 51.625rem;
+    margin: 1.875em auto;
+    font-size: 20px;
+    font-weight: 300;
+    padding-left: 100px;
+}
+
+#premiacao {
+    max-width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .donation-options {
     display: flex;
     flex-wrap: wrap;
@@ -136,6 +151,9 @@ thead a:hover, thead a:focus {
     border-radius: 4px;
     color: #453122;
     padding: 16px;
+
+    max-width: 350px;
+    margin: auto;
 }
 
 #ranking-badges .insignia_linha {
@@ -158,3 +176,86 @@ thead a:hover, thead a:focus {
     line-height: 40px;
     vertical-align: middle;
 }
+
+/* Ranking do evento */
+#ranking-evento {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    color: #453122;
+    /*background: white;*/
+    border-radius: 4px;
+    padding: 16px;
+
+    /*max-width: 350px;*/
+    max-width: fit-content;
+    margin: auto;
+}
+
+#ranking-evento .rank_evento_linha {
+    display: flex;
+    justify-content: space-between;
+}
+
+#ranking-evento .rank_evento_posicao {
+    width: 48px;
+    line-height: 48px;
+    vertical-align: middle;
+}
+
+#ranking-evento .rank_evento_nome {
+    width: auto;
+    line-height: 48px;
+    vertical-align: middle;
+}
+
+#ranking-evento .rank_evento_pontos {
+    width: 48px;
+    line-height: 48px;
+    vertical-align: middle;
+}
+/**/
+
+/* donations */
+#guerra_mundial li {
+    line-height: 24px;
+}
+
+.donation-current {
+    margin: 0.875em auto 0 auto;
+}
+
+.donation-progress-bar {
+    display: flex;
+    overflow: hidden;
+    margin: 0.875em auto auto auto;
+    max-width: 20rem;
+    height: 30px;
+    font-size: .75rem;
+    background-color: white;
+    border-radius: .25rem;
+    font-weight: 700;
+}
+
+.donation-progress {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #453122;
+    -webkit-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.donation-last-update {
+    margin: 0 auto 0.875em auto;
+    font-size: 16px;
+}
+/**/
