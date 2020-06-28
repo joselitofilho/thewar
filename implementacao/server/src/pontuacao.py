@@ -118,13 +118,14 @@ class Pontuacao(object):
 
         doadores = DoacaoDB().nomes_doadores()
         desafios = Desafios()
-        for d in desafios.em_andamento():
-            desafio = FabricaDesafios().cria(d['desafio']['id'])
-            if d['apenas_doador'] == 0 or (
-                    d['apenas_doador'] == 1 and usuario in doadores):
-                # TODO: Retirar esse IF caso um dia as cpus participem de um evento.
-                if usuario not in jogo.cpus.keys():
-                    if desafio.completou(jogo, usuario, venceu, self.quemDestruiuQuem):
-                        desafios.conclui_desafio(d, usuario)
-                        pontos += d['desafio']['xp']
+        for d in desafios.em_andamento(usuario):
+            if not d['concluido']:
+                desafio = FabricaDesafios().cria(d['desafio']['id'])
+                if d['apenas_doador'] == 0 or (
+                        d['apenas_doador'] == 1 and usuario in doadores):
+                    # TODO: Retirar esse IF caso um dia as cpus participem de um evento.
+                    if usuario not in jogo.cpus.keys():
+                        if desafio.completou(jogo, usuario, venceu, self.quemDestruiuQuem):
+                            desafios.conclui_desafio(d, usuario)
+                            pontos += d['desafio']['xp']
         return pontos
