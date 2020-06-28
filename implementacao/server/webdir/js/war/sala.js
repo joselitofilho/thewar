@@ -201,6 +201,8 @@ function processarMsg_info_sala(msgParams) {
                 if (jog.dono && _usuario === usuario && estado === 'sala_criada') {
                     $('#btnIniciarPartida' + sala).css('visibility', 'visible');
                 }
+            } else {
+                $('#sala' + sala + '_jogador' + (i + 1)).css('text-decoration', '');
             }
         }
 
@@ -306,6 +308,7 @@ function processarMsg_lobby(msgParams) {
                     $('#btnIniciarPartida' + sala).css('visibility', 'visible');
                 }
             } else {
+                $('#sala' + sala + '_jogador' + (i + 1)).css('text-decoration', '');
                 _sala.limpaSVGsDoJogador(sala, i);
             }
         }
