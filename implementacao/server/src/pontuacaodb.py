@@ -3,7 +3,7 @@
 
 import sqlite3
 
-from JogadorRanking import *
+from src.JogadorRanking import *
 
 
 class PontuacaoDBO(object):
@@ -49,29 +49,17 @@ class PontuacaoDB(object):
 
         return retorno
 
-    def ranking(self):
+    def iniciaPontuacaoParaUsuario(self, usuario):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
-        rowPontuacoes = c.execute(
-            'SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
 
-        ranking = []
-        if rowPontuacoes:
-            posicaoRanking = 1
-            for row in rowPontuacoes:
-                eficiencia = 0
-                try:
-                    eficiencia = int((float(row[3]) / float(row[2])) * 100)
-                except:
-                    pass
-                jogadorRanking = JogadorRanking(posicaoRanking,
-                                                row[0], row[1], row[2], row[3], row[4], eficiencia)
-                ranking.append(jogadorRanking)
-                posicaoRanking += 1
+        row = c.execute('SELECT id FROM Usuarios WHERE nome=?', [usuario]).fetchone()
+        if row:
+            idUsuario = row[0]
+            c.execute('INSERT INTO Pontuacao(idUsuario) VALUES (?);', [idUsuario])
+            conn.commit()
 
         conn.close()
-
-        return {'ranking': ranking}
 
     def pontosDoUsuario(self, usuario):
         pontos = None
@@ -111,14 +99,75 @@ class PontuacaoDB(object):
 
         conn.close()
 
-    def iniciaPontuacaoParaUsuario(self, usuario):
+    def atualizaPontuacaoEventoParaUsuario(self, usuario, venceu, destruido_por_alguem, pontos):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
 
-        row = c.execute('SELECT id FROM Usuarios WHERE nome=?', [usuario]).fetchone()
-        if row:
-            idUsuario = row[0]
-            c.execute('INSERT INTO Pontuacao(idUsuario) VALUES (?);', [idUsuario])
-            conn.commit()
+        rowPontuacao = c.execute(
+            'SELECT pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM PontuacaoEventos WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);',
+            [usuario]).fetchone()
+
+        pontuacao = pontos
+        quantidadeDePartidas = 1
+        quantidadeDeVitorias = 1 if venceu else 0
+        quantidadeDestruido = 1 if destruido_por_alguem else 0
+        if rowPontuacao:
+            pontuacao += rowPontuacao[0]
+            quantidadeDePartidas += rowPontuacao[1]
+            quantidadeDeVitorias += rowPontuacao[2]
+            quantidadeDestruido += rowPontuacao[3]
+
+            c.execute(
+                'UPDATE PontuacaoEventos SET pontos=?, quantidadeDePartidas=?, quantidadeDeVitorias=?, quantidadeDestruido=? WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);',
+                [pontuacao, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, usuario])
+
+        conn.commit()
+        conn.close()
+
+    def ranking_geral(self):
+        conn = sqlite3.connect(self.baseDeDados)
+        c = conn.cursor()
+        rowPontuacoes = c.execute(
+            'SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
+
+        ranking = []
+        if rowPontuacoes:
+            posicaoRanking = 1
+            for row in rowPontuacoes:
+                eficiencia = 0
+                try:
+                    eficiencia = int((float(row[3]) / float(row[2])) * 100)
+                except:
+                    pass
+                jogadorRanking = JogadorRanking(posicaoRanking,
+                                                row[0], row[1], row[2], row[3], row[4], eficiencia)
+                ranking.append(jogadorRanking)
+                posicaoRanking += 1
 
         conn.close()
+
+        return ranking
+
+    def ranking_evento(self):
+        conn = sqlite3.connect(self.baseDeDados)
+        c = conn.cursor()
+        rowPontuacoes = c.execute(
+            'SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM PontuacaoEventos p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
+
+        ranking = []
+        if rowPontuacoes:
+            posicaoRanking = 1
+            for row in rowPontuacoes:
+                eficiencia = 0
+                try:
+                    eficiencia = int((float(row[3]) / float(row[2])) * 100)
+                except:
+                    pass
+                jogadorRanking = JogadorRanking(posicaoRanking,
+                                                row[0], row[1], row[2], row[3], row[4], eficiencia)
+                ranking.append(jogadorRanking)
+                posicaoRanking += 1
+
+        conn.close()
+
+        return ranking

@@ -8,6 +8,7 @@ import re
 import signal
 import sys
 import traceback
+import argparse
 
 import banco
 import gerenciador
@@ -15,10 +16,11 @@ from autobahn.twisted.websocket import WebSocketServerFactory, \
     WebSocketServerProtocol, \
     listenWS
 from badges import *
-from src.desafios.desafios import *
 from email_util import *
 from mensagens import *
 from pontuacaodb import *
+from src.desafios.desafios import *
+from src.doacaodb import *
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -128,9 +130,14 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 self.sendMessage(jsonMsg)
 
             elif mensagem.tipo == TipoMensagem.ranking:
-                ranking = PontuacaoDB().ranking()
                 badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
-                ranking['badges'] = Badges().ler_csv(badges_path)
+                pontuacao_db = PontuacaoDB()
+                ranking = {
+                    'ranking': pontuacao_db.ranking_geral(),
+                    'ranking_evento': pontuacao_db.ranking_evento(),
+                    'badges': Badges().ler_csv(badges_path),
+                    'doacoes': {'meta': DoacaoDB().meta_doacoes_progresso()}
+                }
 
                 jsonMsg = Mensagem(TipoMensagem.ranking, ranking).toJson()
                 self.sendMessage(jsonMsg)
@@ -204,8 +211,20 @@ def signal_handler(signal, frame):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='war server')
+    parser.add_argument('-d', '--debug',
+                        action='store_true', dest='debug',
+                        help='Execute server on debug mode.')
+    parser.add_argument('-ws', '--websocket',
+                        default=8080,
+                        help='Web socket port.')
+    parser.add_argument('-s', '--server',
+                        default=9092,
+                        help='Server port.')
 
-    if len(sys.argv) > 1 and sys.argv[1] == 'debug':
+    args = parser.parse_args()
+
+    if args.debug:
         log.startLogging(sys.stdout)
         debug = True
     else:
@@ -225,10 +244,10 @@ if __name__ == '__main__':
     # _loggerIP.debug('Teste')
 
     ServerFactory = BroadcastServerFactory
-    factory = ServerFactory("ws://localhost:8080",
+    factory = ServerFactory("ws://localhost:{}".format(args.websocket),
                             debug=debug,
                             debugCodePaths=debug)
-    print('Servido websocket iniciado na porta 8080.')
+    print('Servido websocket iniciado na porta {}.'.format(args.websocket))
 
     factory.protocol = BroadcastServerProtocol
     factory.setProtocolOptions()
@@ -239,8 +258,8 @@ if __name__ == '__main__':
 
     webdir = File("./webdir")
     web = Site(webdir)
-    reactor.listenTCP(9092, web)
-    print('Servido web iniciado na porta 9092.')
+    reactor.listenTCP(int(args.server), web)
+    print('Servido web iniciado na porta {}.'.format(args.server))
 
     reactor.run()
 

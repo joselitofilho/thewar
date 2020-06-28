@@ -240,7 +240,10 @@ jogos.war.ComponenteAcaoTurno = function () {
     };
 
     this.turnoAtacarExibeResultadoDosDados = function (dadosAtaque, dadosDefesa) {
-        this.turnoAtacarExibirDados();
+        const qtdDadosAtaque = dadosAtaque.length;
+        const qtdDadosDefesa = dadosDefesa.length;
+
+        this.turnoAtacarExibirDados(qtdDadosAtaque, qtdDadosDefesa);
 
         // Usabilidade: Dados do ataque.
         var qtdDadosAtaqueVenceu = 0;
@@ -273,21 +276,25 @@ jogos.war.ComponenteAcaoTurno = function () {
         else tocarSom(this, 'perdeuNosDados.mp3');
     };
 
-    this.turnoAtacarExibirDados = function () {
-        if ($('#acoes_turno .info #conteudoDinamico #meio').attr('class') == 'meio-geral') {
+    this.turnoAtacarExibirDados = function (qtdDadosAtaque, qtdDadosDefesa) {
+        if ($('#acoes_turno .info #conteudoDinamico #meio').attr('class') === 'meio-geral' ||
+            $('#acoes_turno .info #conteudoDinamico #meio').attr('class') === 'meio-dados') {
             $('#acoes_turno .info #conteudoDinamico #meio').attr('class', 'meio-dados');
 
             var divDados =
                 '<div id="dados">' +
                 '<div id="dadosAtaque">' +
-                '<div id="da1" class="dado dado_ataque"></div>' +
-                '<div id="da2" class="dado dado_ataque"></div>' +
-                '<div id="da3" class="dado dado_ataque"></div>' +
+                '<div id="da1" class="dado dado_ataque"></div>';
+
+            if (qtdDadosAtaque >= 2) divDados += '<div id="da2" class="dado dado_ataque"></div>';
+            if (qtdDadosAtaque >= 3) divDados += '<div id="da3" class="dado dado_ataque"></div>';
+            divDados +=
                 '</div>' +
                 '<div id="dadosDefesa">' +
-                '<div id="dd1" class="dado dado_defesa"></div>' +
-                '<div id="dd2" class="dado dado_defesa"></div>' +
-                '<div id="dd3" class="dado dado_defesa"></div>' +
+                '<div id="dd1" class="dado dado_defesa"></div>';
+            if (qtdDadosDefesa >= 2) divDados += '<div id="dd2" class="dado dado_defesa"></div>';
+            if (qtdDadosDefesa >= 3) divDados += '<div id="dd3" class="dado dado_defesa"></div>';
+            divDados +=
                 '</div>' +
                 '</div>';
             $('#acoes_turno .info #conteudoDinamico #meio').html(divDados);

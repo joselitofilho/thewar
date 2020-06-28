@@ -1,4 +1,7 @@
 #!/bin/bash
+
+service cron start
+
 cd /app # Dentro do container docker deve ser a pasta /app, mas equivale a pasta implementação/server 
 
 gdown --id 12x46KaDlY5d1OzXJtEERGDoEaI6bPV-O
@@ -16,18 +19,18 @@ mkdir -p webdir/videos/
 unzip -u videos.zip -d webdir/
 rm videos.zip
 
-FILE="war.db"
-if [ ! -f "$FILE" ]; then
-	echo "Creating database..."
-	python migrations/database_update0.py
-	python migrations/database_update1.py
-	python migrations/database_update2.py
-	python migrations/database_update2.1.py
-	python migrations/database_update3.py
-	python migrations/database_update4.py
-	python migrations/database_update5.py
-	python migrations/database_update5.py
-fi
+gdown --id 1fDOrGiP1gqAUehyAOhZgRMwHyeVgiu81
+mv premiacao.png webdir/imagens/lobby/banners/
+
+gdown --id 15Y7Zrp9s4FiQuKgMiN-lxTad7xyEhh0l
+mv premio.png webdir/imagens/lobby/banners/
+
+echo "Checking challenges..."
+./gerar_desafio.sh
+
+echo "Executing migrations..."
+ls -p migrations/database*.py | xargs -n 1 -I file python file war.db
+
 echo "Starting server..."
 PYTHONPATH=. python ./src/server.py && tail -F ./log/server.log
 

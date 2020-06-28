@@ -200,7 +200,7 @@ class IALucy(IAInterface):
 
                     quantidade = max(territorio_de['quantidade'] - 1, 1)
                     jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
-                    time.sleep(1)
+                    self.wait_short_time()
 
             else:
                 break

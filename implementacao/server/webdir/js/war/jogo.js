@@ -60,7 +60,7 @@ function pararAnimacaoDosDados(msgParams) {
 
 function jogo_jogaDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
     try {
-        if (_animarDadosReferencia == null) {
+        if (_animarDadosReferencia === null) {
             $('#da2').css('visibility', 'hidden');
             $('#da3').css('visibility', 'hidden');
             if (qtdDadosAtaque >= 2) $('#da2').css('visibility', 'visible');
@@ -74,7 +74,7 @@ function jogo_jogaDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
             _animarDadosReferencia = setInterval(animarDados, 50);
             setTimeout(function () {
                 pararAnimacaoDosDados(msgParams);
-            }, 250);
+            }, 100);
         }
     } catch (ex) {
         console.log("Error in fnTimer:\n" + ex);
@@ -82,12 +82,14 @@ function jogo_jogaDados(qtdDadosAtaque, qtdDadosDefesa, msgParams) {
 }
 
 function jogo_iniciaAnimacaoBatalha(msgParams) {
-    _componenteAcaoTurno.turnoAtacarExibirDados();
-
-    this.tocarSom(this, "batalha" + (Math.floor(Math.random() * 4) + 1) + ".wav");
-
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
+
+    const qtdDadosAtaque = dadosAtaque.length;
+    const qtdDadosDefesa = dadosDefesa.length;
+    _componenteAcaoTurno.turnoAtacarExibirDados(qtdDadosAtaque, qtdDadosDefesa);
+
+    this.tocarSom(this, "batalha" + (Math.floor(Math.random() * 4) + 1) + ".wav");
 
     var territorioDaDefesa = msgParams.territorioDaDefesa;
     var territoriosDoAtaque = msgParams.territoriosDoAtaque;
@@ -105,7 +107,8 @@ function jogo_iniciaAnimacaoBatalha(msgParams) {
     }
 
     // Iniciar animacao de jogar os dados...
-    jogo_jogaDados(dadosAtaque.length, dadosDefesa.length, msgParams);
+    // jogo_jogaDados(dadosAtaque.length, dadosDefesa.length, msgParams);
+    jogo_efetuaAtaque(msgParams);
 }
 
 function jogo_efetuaAtaque(msgParams) {

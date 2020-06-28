@@ -1,4 +1,4 @@
-from territorio import *
+from src.territorio import *
 
 
 class CartaForma:
