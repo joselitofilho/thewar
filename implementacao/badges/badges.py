@@ -26,14 +26,13 @@ class Badges(object):
         with open('badges.json', 'w') as arquivo_json:
             json.dump(ranking, arquivo_json)
 
-    def gerar_css(self):
-        w, h = 400, 240
+    def gerar_css(self, w, h):
         lines = 6
         columns = 10
 
         with open('insignias_x{}.css'.format(w // columns), 'w') as arquivo_css:
             block_size = (w // columns)
-            arquivo_css.write('.insignia_size {width: %spx; height: %spx}' % (block_size, block_size) + '\n')
+            arquivo_css.write('.insignia_x%s_size {width: %spx; height: %spx}' % (block_size, block_size, block_size) + '\n')
             nv_i = 0
             for i in range(0, (lines * columns)):
                 lin = (i % columns) * block_size * -1
@@ -47,7 +46,8 @@ def main():
     badges = Badges()
     ranking = badges.ler_csv('badges.csv')
     badges.gerar_json(ranking)
-    badges.gerar_css()
+    badges.gerar_css(400, 240)
+    badges.gerar_css(1000, 600)
 
 
 if __name__ == "__main__":

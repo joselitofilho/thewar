@@ -16,7 +16,7 @@ jogos.war.Util = function () {
         lista: [
             "rank"
         ],
-        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_size insignias_x40_nv{level}'></div>"}
+        rank: {regex: /:rank/g, html: "<div class='comando_rank insignia_x40_size insignias_x40_nv{level}'></div>"}
     };
 
     this.dataAtualFormatada = function () {
