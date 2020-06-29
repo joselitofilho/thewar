@@ -1,7 +1,7 @@
-.insignia_x100_size {width: 100px; height: 100px; background-size: cover;}
+.insignia_x100_size {width: 100px; height: 100px}
 .insignias_x100_nv0 {background: url('../imagens/insignias_1000x600.png') 0px 0px no-repeat;}
 .insignias_x100_nv1 {background: url('../imagens/insignias_1000x600.png') -100px 0px no-repeat;}
-.insignias_x100_nv2 {background: url('../imagens/insignias_1000x600.png') -500px 0px no-repeat;}
+.insignias_x100_nv2 {background: url('../imagens/insignias_1000x600.png') -200px 0px no-repeat;}
 .insignias_x100_nv3 {background: url('../imagens/insignias_1000x600.png') -300px 0px no-repeat;}
 .insignias_x100_nv4 {background: url('../imagens/insignias_1000x600.png') -400px 0px no-repeat;}
 .insignias_x100_nv5 {background: url('../imagens/insignias_1000x600.png') -500px 0px no-repeat;}
@@ -11,7 +11,7 @@
 .insignias_x100_nv9 {background: url('../imagens/insignias_1000x600.png') -900px 0px no-repeat;}
 .insignias_x100_nv10 {background: url('../imagens/insignias_1000x600.png') 0px -100px no-repeat;}
 .insignias_x100_nv11 {background: url('../imagens/insignias_1000x600.png') -100px -100px no-repeat;}
-.insignias_x100_nv12 {background: url('../imagens/insignias_1000x600.png') -500px -100px no-repeat;}
+.insignias_x100_nv12 {background: url('../imagens/insignias_1000x600.png') -200px -100px no-repeat;}
 .insignias_x100_nv13 {background: url('../imagens/insignias_1000x600.png') -300px -100px no-repeat;}
 .insignias_x100_nv14 {background: url('../imagens/insignias_1000x600.png') -400px -100px no-repeat;}
 .insignias_x100_nv15 {background: url('../imagens/insignias_1000x600.png') -500px -100px no-repeat;}
@@ -21,7 +21,7 @@
 .insignias_x100_nv19 {background: url('../imagens/insignias_1000x600.png') -900px -100px no-repeat;}
 .insignias_x100_nv20 {background: url('../imagens/insignias_1000x600.png') 0px -200px no-repeat;}
 .insignias_x100_nv21 {background: url('../imagens/insignias_1000x600.png') -100px -200px no-repeat;}
-.insignias_x100_nv22 {background: url('../imagens/insignias_1000x600.png') -500px -200px no-repeat;}
+.insignias_x100_nv22 {background: url('../imagens/insignias_1000x600.png') -200px -200px no-repeat;}
 .insignias_x100_nv23 {background: url('../imagens/insignias_1000x600.png') -300px -200px no-repeat;}
 .insignias_x100_nv24 {background: url('../imagens/insignias_1000x600.png') -400px -200px no-repeat;}
 .insignias_x100_nv25 {background: url('../imagens/insignias_1000x600.png') -500px -200px no-repeat;}
@@ -31,7 +31,7 @@
 .insignias_x100_nv29 {background: url('../imagens/insignias_1000x600.png') -900px -200px no-repeat;}
 .insignias_x100_nv30 {background: url('../imagens/insignias_1000x600.png') 0px -300px no-repeat;}
 .insignias_x100_nv31 {background: url('../imagens/insignias_1000x600.png') -100px -300px no-repeat;}
-.insignias_x100_nv32 {background: url('../imagens/insignias_1000x600.png') -500px -300px no-repeat;}
+.insignias_x100_nv32 {background: url('../imagens/insignias_1000x600.png') -200px -300px no-repeat;}
 .insignias_x100_nv33 {background: url('../imagens/insignias_1000x600.png') -300px -300px no-repeat;}
 .insignias_x100_nv34 {background: url('../imagens/insignias_1000x600.png') -400px -300px no-repeat;}
 .insignias_x100_nv35 {background: url('../imagens/insignias_1000x600.png') -500px -300px no-repeat;}
@@ -41,7 +41,7 @@
 .insignias_x100_nv39 {background: url('../imagens/insignias_1000x600.png') -900px -300px no-repeat;}
 .insignias_x100_nv40 {background: url('../imagens/insignias_1000x600.png') 0px -400px no-repeat;}
 .insignias_x100_nv41 {background: url('../imagens/insignias_1000x600.png') -100px -400px no-repeat;}
-.insignias_x100_nv42 {background: url('../imagens/insignias_1000x600.png') -500px -400px no-repeat;}
+.insignias_x100_nv42 {background: url('../imagens/insignias_1000x600.png') -200px -400px no-repeat;}
 .insignias_x100_nv43 {background: url('../imagens/insignias_1000x600.png') -300px -400px no-repeat;}
 .insignias_x100_nv44 {background: url('../imagens/insignias_1000x600.png') -400px -400px no-repeat;}
 .insignias_x100_nv45 {background: url('../imagens/insignias_1000x600.png') -500px -400px no-repeat;}
@@ -51,7 +51,7 @@
 .insignias_x100_nv49 {background: url('../imagens/insignias_1000x600.png') -900px -400px no-repeat;}
 .insignias_x100_nv50 {background: url('../imagens/insignias_1000x600.png') 0px -500px no-repeat;}
 .insignias_x100_nv51 {background: url('../imagens/insignias_1000x600.png') -100px -500px no-repeat;}
-.insignias_x100_nv52 {background: url('../imagens/insignias_1000x600.png') -500px -500px no-repeat;}
+.insignias_x100_nv52 {background: url('../imagens/insignias_1000x600.png') -200px -500px no-repeat;}
 .insignias_x100_nv53 {background: url('../imagens/insignias_1000x600.png') -300px -500px no-repeat;}
 .insignias_x100_nv54 {background: url('../imagens/insignias_1000x600.png') -400px -500px no-repeat;}
 .insignias_x100_nv55 {background: url('../imagens/insignias_1000x600.png') -500px -500px no-repeat;}

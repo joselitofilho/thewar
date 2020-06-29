@@ -132,7 +132,7 @@
     <div class="container">
         <table class="table table-bordered" id="ranking-players">
             <thead>
-            <th class="dynatable-head insignia_size" data-dynatable-column="level"></th>
+            <th class="dynatable-head insignia_x40_size" data-dynatable-column="level"></th>
             <th class="dynatable-head" data-dynatable-column="posicaoNoRanking" data-dynatable-sorts="posicaoNoRanking">
                 Posi&ccedil;&atilde;o
             </th>
@@ -178,9 +178,9 @@
         const rank = [];
         for (let i = 0; i < jsonMensagem.params.ranking.length; ++i) {
             let r = jsonMensagem.params.ranking[i];
-            r.level = "<div class='insignia_size insignias_x40_nv0'></div>";
+            r.level = "<div class='insignia_x40_size insignias_x40_nv0'></div>";
             if (r.pontos > 0) {
-                r.level = "<div class='insignia_size insignias_x40_nv" + ranking_levelByXp(r.pontos) + "'></div>";
+                r.level = "<div class='insignia_x40_size insignias_x40_nv" + ranking_levelByXp(r.pontos) + "'></div>";
             }
             level_por_usuario[r.nome] = r.pontos;
             rank.push(r);
@@ -196,7 +196,7 @@
         for (let i = 0; i < limitBadges; ++i) {
             let badge = jsonMensagem.params.badges[i];
             badge.xp = parseInt(badge.xp);
-            badge.images = "<div class='insignia_size insignias_x40_nv" + badge.level + "'></div>";
+            badge.images = "<div class='insignia_x40_size insignias_x40_nv" + badge.level + "'></div>";
             badges.push(badge);
         }
 
@@ -249,7 +249,7 @@
                     conteudoRankingGuerra = '';
                     conteudoRankingGuerra += '<div class="item">';
                     conteudoRankingGuerra += '    <div class="pos">' + (i + 1) + '</div>';
-                    conteudoRankingGuerra += '    <div class="pic"><div class="insignia_size insignias_x40_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]) + '"></div></div>';
+                    conteudoRankingGuerra += '    <div class="pic"><div class="insignia_x40_size insignias_x40_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]) + '"></div></div>';
                     conteudoRankingGuerra += '    <div class="name">' + rank_evento.nome + '</div>';
                     conteudoRankingGuerra += '    <div class="score">' + rank_evento.pontos + '</div>';
                     conteudoRankingGuerra += '</div>';

@@ -69,7 +69,7 @@ jogos.war.MenuJogadores = function () {
             for (let j = 0; j < _ranking.length; ++j) {
                 if (_ranking[j].nome === infos.usuario) {
                     $("#menu_jogador" + infos.posicao + "_insignia")
-                        .addClass("insignia_size insignias_x40_nv" + ranking_levelByXp(_ranking[j].pontos));
+                        .addClass("insignia_x40_size insignias_x40_nv" + ranking_levelByXp(_ranking[j].pontos));
                     break;
                 }
             }
