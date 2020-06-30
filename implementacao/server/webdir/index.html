@@ -72,6 +72,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!---->
 
+    <!-- Tour -->
+    <!--    <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>-->
+    <!--    <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css">-->
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
+    <!---->
+
     <!-- 3rd Party -->
     <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
     <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
@@ -237,28 +243,28 @@
 <div id="sala">
 
     <!-- INICIO FORMULARIO BOTAO PAYPAL -->
-<!--    <div class="btn-paypal">-->
-<!--        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">-->
-<!--            <input name="cmd" type="hidden" value="_s-xclick">-->
-<!--            <input name="encrypted" type="hidden" value="-&#45;&#45;&#45;&#45;BEGIN PKCS7-&#45;&#45;&#45;&#45;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-&#45;&#45;&#45;&#45;END PKCS7-&#45;&#45;&#45;&#45;-->
-<!--                ">-->
-<!--            <input alt="PayPal - A maneira mais fácil e segura de efetuar pagamentos online!" border="0" name="submit"-->
-<!--                   src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_LG.gif" type="image">-->
-<!--            <img alt="" border="0" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1">-->
-<!--        </form>-->
-<!--    </div>-->
+    <!--    <div class="btn-paypal">-->
+    <!--        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">-->
+    <!--            <input name="cmd" type="hidden" value="_s-xclick">-->
+    <!--            <input name="encrypted" type="hidden" value="-&#45;&#45;&#45;&#45;BEGIN PKCS7-&#45;&#45;&#45;&#45;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-&#45;&#45;&#45;&#45;END PKCS7-&#45;&#45;&#45;&#45;-->
+    <!--                ">-->
+    <!--            <input alt="PayPal - A maneira mais fácil e segura de efetuar pagamentos online!" border="0" name="submit"-->
+    <!--                   src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_LG.gif" type="image">-->
+    <!--            <img alt="" border="0" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1">-->
+    <!--        </form>-->
+    <!--    </div>-->
     <!-- FINAL FORMULARIO BOTAO PAYPAL -->
 
     <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
-<!--    <div class="btn-pagseguro">-->
-<!--        <form action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post" target="pagseguro">-->
-<!--            &lt;!&ndash; NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO &ndash;&gt;-->
-<!--            <input name="receiverEmail" type="hidden" value="joselitofilhoo@gmail.com"/>-->
-<!--            <input name="currency" type="hidden" value="BRL"/>-->
-<!--            <input alt="Pague com PagSeguro - é rápido, grátis e seguro!" name="submit"-->
-<!--                   src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/95x45-doar.gif" type="image"/>-->
-<!--        </form>-->
-<!--    </div>-->
+    <!--    <div class="btn-pagseguro">-->
+    <!--        <form action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post" target="pagseguro">-->
+    <!--            &lt;!&ndash; NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO &ndash;&gt;-->
+    <!--            <input name="receiverEmail" type="hidden" value="joselitofilhoo@gmail.com"/>-->
+    <!--            <input name="currency" type="hidden" value="BRL"/>-->
+    <!--            <input alt="Pague com PagSeguro - é rápido, grátis e seguro!" name="submit"-->
+    <!--                   src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/95x45-doar.gif" type="image"/>-->
+    <!--        </form>-->
+    <!--    </div>-->
     <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
 
     <div class="banner-promocao">
@@ -443,9 +449,12 @@
 <div id="desafios_painel" style="visibility:hidden;">
     <div id="desafios_conteudo">
         <div class="btn_fechar" onclick="_desafios.toogle();"></div>
-        <p class="desafios_titulo">Desafios</p>
-        <p class="desafios_subtitulo">Complete os desafios para se tornar o melhor guerreiro de todos os tempos.</p>
-        <p class="desafios_termina_em"></p>
+        <div id="desafios_header">
+            <p class="desafios_titulo">Desafios</p>
+            <p class="desafios_subtitulo">Complete os desafios para se tornar o melhor guerreiro de todos os tempos.</p>
+            <p class="desafios_termina_em"></p>
+            <button class="war_button" onclick="_desafios.atualiza();"><span>Atualizar</span></button>
+        </div>
         <div class="desafios_arame"></div>
         <div id="desafios_cartas">
             <div id="desafio_carta_esq" class="desafios_carta">
@@ -563,7 +572,9 @@
 <!---->
 
 <div id="bloqueador_tela"></div>
-<div id="botao_recarregar" onclick="appwar_recarregarPagina();"></div>
+<div id="botao_recarregar" onclick="appwar_recarregarPagina();">
+    <div class="reload-image"></div>
+</div>
 
 <!-- sweetalert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>

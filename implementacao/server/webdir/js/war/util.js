@@ -36,7 +36,10 @@ jogos.war.Util = function () {
         if (texto.match(/:comandos/) || texto.match(/:memes/) || texto.match(/:help/)) {
             return "Memes disponíveis --> " + ":" + Array.from(_comandos.lista).join(', :');
         }
-        texto = this.substituiURLPorHTMLLinks(texto);
+        if (!texto.match(/a href/)) {
+            // TODO: Colocar a interpretação de urls para o backend.
+            texto = this.substituiURLPorHTMLLinks(texto);
+        }
         texto = this.substituiComandos(listaUsuarios, usuarioQueEnviou, texto);
         return texto;
     };

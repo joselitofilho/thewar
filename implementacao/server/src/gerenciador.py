@@ -347,6 +347,11 @@ class GerenciadorPrincipal(object):
             texto, comando = self.chat.interpreta_comandos(texto)
             self.enviaMsgParaTodos(TipoMensagem.msg_chat_geral, MsgChatGeral(usuario, texto))
 
+        elif mensagem.tipo == TipoMensagem.desafios_em_andamento:
+            desafios_em_andamento = Desafios().em_andamento(usuario)
+            self.enviaMsgParaCliente(TipoMensagem.desafios_em_andamento, desafios_em_andamento, cliente)
+
+
     def criaSala(self, cliente, usuario, mensagem):
         # TODO: VIP
         # idSala = mensagem.params['sala']

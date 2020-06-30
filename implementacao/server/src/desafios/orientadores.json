@@ -226,5 +226,11 @@
     "gender": "male",
     "class": "Tanque",
     "bio": "Um comandante brilhante quando o assunto era a guerra blindada, Rommel foi considerado um dos poucos comandantes humanistas da Wehrmacht. Recusando-se a cumprir as ordens de matar civis e soldados judeus, ele era ainda assim um soldado feroz, que muitas vezes enganava taticamente seus inimigos."
+  },
+  {
+    "name": "Lucy",
+    "gender": "female",
+    "class": "Inteligência",
+    "bio": "Lucy was discovered in 1974 in Africa, at Hadar, a site in the Awash Valley of the Afar Triangle in Ethiopia, by paleoanthropologist Donald Johanson of the Cleveland Museum of Natural History. The Lucy specimen is an early australopithecine and is dated to about 3.2 million years ago.."
   }
 ]

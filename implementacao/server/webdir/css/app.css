@@ -221,15 +221,20 @@ html, body {
 
 #botao_recarregar {
     position: absolute;
-    width: 128px;
-    height: 128px;
-    background: url('../imagens/recarregar.png') no-repeat;
-    top: 255px;
-    left: 50%;
-    margin-left: -64px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     visibility: hidden;
     z-index: 9001;
+}
+
+#botao_recarregar .reload-image {
+    width: 128px;
+    height: 128px;
+    background: url('../imagens/recarregar.png') no-repeat;
 }
 
 /**/
@@ -355,4 +360,30 @@ html, body {
     padding: 0 26px;
     color: white;
     font-size: 16px;
+}
+
+/**/
+/**/
+/**/
+
+.war_button {
+    display: flex;
+    padding: 10px 30px;
+    text-decoration: none;
+    font-family: "wartorn";
+    color: #eee;
+    background: #876850;
+    box-shadow: 6px 6px 0 black;
+    transform: skewX(-15deg);
+}
+
+.war_button:hover {
+    outline: none;
+    color: white;
+    transition: 0.5s;
+    box-shadow: 8px 8px 0 #FBC638;
+}
+
+.war_button span {
+    transform: skewX(15deg);
 }
