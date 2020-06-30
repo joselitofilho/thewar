@@ -15,6 +15,11 @@ jogos.war.Desafios = function () {
         }
     };
 
+    this.atualiza = function () {
+        msg = comunicacao_desafiosEmAndamento();
+        _libwebsocket.enviarObjJson(msg);
+    };
+
     this.preencheElementoHtml = function (desafios) {
         if (desafios.length === 0) {
             const htmlEmBreve = '<p>Em breve</p>';

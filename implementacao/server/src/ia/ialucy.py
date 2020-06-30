@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
-import operator
 import random
-import time
 
 from src.carta import *
 from src.mensagens import *
@@ -30,7 +27,8 @@ class IALucy(IAInterface):
         codigosTerritorios = []
         for terr in jogador.territorios:
             codigosTerritorios.append(terr.codigo)
-        meus_territorios_por_grupo_maior_densidade = jogador.territoriosPorGrupo(lista_grupo_maior_densidade, codigosTerritorios)
+        meus_territorios_por_grupo_maior_densidade = jogador.territoriosPorGrupo(lista_grupo_maior_densidade,
+                                                                                 codigosTerritorios)
 
         meus_territorios = []
         for terr in jogador.territorios:
@@ -177,8 +175,9 @@ class IALucy(IAInterface):
         while True:
             grafo = self.atualiza_grafo(usuario, jogador, jogo)
             territorios_com_bst_0 = dict(
-                filter(lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1]['bst'] == 0 and elem[1]['codigo'] not in visitados,
-                       grafo.items()))
+                filter(
+                    lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1]['bst'] == 0 and
+                                 elem[1]['codigo'] not in visitados, grafo.items()))
 
             if len(territorios_com_bst_0) > 0:
                 do_territorio = next(iter(territorios_com_bst_0))

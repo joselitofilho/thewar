@@ -70,15 +70,13 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
     };
 
     this.boasVindas = function () {
-        let texto = 'Entre na sala de áudio para falar com os outros jogadores:';
-        texto = texto.fontcolor("#453122");
+        let texto = '';
+        texto += 'Entre na sala de áudio para falar com os outros jogadores:'.fontcolor("#453122");
         texto += '<div style=" width: 100%; display: flex; justify-content: start; text-align: center;">';
         texto += '    <a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>';
         texto += '</div>';
         chatAreaJogadores.append(texto);
-        chatAreaJogadores.scrollTop(
-            chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height()
-        );
+        chatAreaJogadores.scrollTop(chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height());
     };
 
     this.distrubuirTropasGlobais = function (jogador, quantidade) {

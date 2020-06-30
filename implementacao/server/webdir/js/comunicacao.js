@@ -129,3 +129,7 @@ function comunicacao_MsgChatGeral(texto) {
             texto: texto
         });
 }
+
+function comunicacao_desafiosEmAndamento() {
+    return new Mensagem(TipoMensagem.desafios_em_andamento, {});
+}

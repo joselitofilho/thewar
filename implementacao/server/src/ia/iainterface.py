@@ -173,30 +173,6 @@ class IAInterface(threading.Thread):
     def finaliza_turno(self, usuario, jogo):
         jogo.finalizaTurno(usuario)
 
-    def situacao_territorios(self, usuario, jogador, jogo):
-        meus_territorios = jogador.territorios
-        territorios_inimigos = jogo.territoriosInimigos(usuario)
-
-        densidade_por_grupos = jogador.densidadeTodosGruposTerritorio()
-
-        codigos_meus_territorios = []
-        for terr in meus_territorios:
-            codigos_meus_territorios.append(terr.codigo)
-        meus_territorios_por_grupo = []
-        for grupo in GrupoTerritorio.Dicionario:
-            meus_territorios_por_grupo[grupo] = jogador.territoriosPorGrupo(GrupoTerritorio.Dicionario[grupo],
-                                                                            codigos_meus_territorios)
-
-        # FronteiraTerritorio.Fronteiras[territorio.codigo]
-        # GrupoTerritorio.FronteirasContinentes[GrupoTerritorio.CONTINENTE]
-
-        return {
-            'meus_territorios': meus_territorios,
-            'territorios_inimigos': territorios_inimigos,
-            'densidade_por_grupos': densidade_por_grupos,
-            'meus_territorios_por_grupo': meus_territorios_por_grupo
-        }
-
     def atualiza_grafo(self, usuario, jogador, jogo):
         self.grafo_territorios = jogo.grafoTerritorios()
 

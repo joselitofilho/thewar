@@ -75,17 +75,6 @@ class Desafios(object):
             conn = sqlite3.connect(self.baseDeDados)
             c = conn.cursor()
             rows = c.execute(
-                # """
-                # SELECT da.idDesafio
-                #   FROM DesafiosEmAndamento da
-                #  WHERE da.iniciaEm >= datetime(date('now', '-1 DAY'), time('23:00:00'))
-                #    AND da.terminaEm <= datetime(date('now'), time('22:59:59'))
-                #    AND da.idDesafio NOT IN ( SELECT dc.idDesafio
-                #                                FROM DesafiosConcluidos dc
-                #                                JOIN Usuarios u ON u.id = dc.idUsuario
-                #                               WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm
-                #                                 AND u.nome = ? );
-                # """, [usuario]).fetchall()
                 """
                 SELECT da.idDesafio
                   FROM DesafiosEmAndamento da 
@@ -155,9 +144,9 @@ class FabricaDesafios(object):
         return mapaObjetivos[id]
 
 
+# @interface
 class Desafio(object):
     def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
-        # NOTE: Interface.
         return False
 
 

@@ -22,7 +22,7 @@
     cursor: text;
     margin-bottom: 1px;
     padding: 5px;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 #cg_mensagens object {
@@ -31,4 +31,30 @@
 
 .comando_rank {
     display: inline-block;
+}
+
+.chat_tour {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px;
+    margin: 8px 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat_tour p {
+    color: #453122;
+    line-height: 32px;
+    font-size: 15px;
+}
+
+.chat_tour .chat_soldado {
+    width: 64px;
+    height: 64px;
+
+    background-color: #453122;
+    mask: url('../imagens/soldier.svg') no-repeat center / contain;
+    -webkit-mask: url('../imagens/soldier.svg') no-repeat center / contain;
 }

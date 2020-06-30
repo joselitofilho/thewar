@@ -31,13 +31,20 @@
     /*position: absolute;*/
     width: 976px;
     height: 631px;
-    background-image: url("../imagens/desafios/bg.jpg");
+    background-image: url("../imagens/desafios/bg.png");
     outline: 8px solid rgba(135, 104, 80, 0.5);
     z-index: 9000;
 }
 
+#desafios_header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .desafios_titulo {
-    margin-top: 40px;
+    margin-top: 8px;
     font-family: "wartorn";
     text-align: center;
     font-size: 60px;

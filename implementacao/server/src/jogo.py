@@ -344,7 +344,6 @@ class Jogo(object):
 
         if self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais:
             if self.turno.quantidadeDeTropas == 0:
-                fator_tempo_adicional = 0
                 if len(jogador.gruposTerritorio()) > 0:
                     self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_grupo_territorio
                     self.turno.gruposTerritorio = list(jogador.gruposTerritorio())
@@ -352,10 +351,8 @@ class Jogo(object):
                     self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
-                    valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                    fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
@@ -367,46 +364,37 @@ class Jogo(object):
                 except Exception:
                     print("Nao tem grupo territorio para remover.")
 
-                fator_tempo_adicional = 0
                 if len(self.turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
                         self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                     else:
                         self.turno.tipoAcao = TipoAcaoTurno.atacar
-                        valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                        fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
         elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_troca_de_cartas:
             if self.turno.quantidadeDeTropas == 0:
-                fator_tempo_adicional = 0
                 if len(jogador.cartasTerritorio) > 2:
                     self.turno.tipoAcao = TipoAcaoTurno.trocar_cartas
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
-                    valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                    fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
 
         elif self.turno.tipoAcao == TipoAcaoTurno.trocar_cartas:
             if len(jogador.cartasTerritorio) < 5 or self.obrigatorioPassarAVez:
-                fator_tempo_adicional = 0
                 if self.obrigatorioPassarAVez:
                     self.turno.tipoAcao = TipoAcaoTurno.mover
                 else:
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
-                    valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(self.numeroDaTroca)
-                    fator_tempo_adicional = 1 if valorDaTroca > 35 else 0
 
-                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout, fator_tempo_adicional)
+                self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
                 acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                 self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
                 erro = False
@@ -833,9 +821,15 @@ class Jogo(object):
 
     def calculaQuantidadeDeTropasDaTroca(self, numeroDaTroca):
         if 1 <= numeroDaTroca <= 5:
-            return (numeroDaTroca * 2) + 2
+            quantidade = (numeroDaTroca * 2) + 2
         else:
-            return (2 * numeroDaTroca) + (3 * (numeroDaTroca - 5))
+            quantidade = (2 * numeroDaTroca) + (3 * (numeroDaTroca - 5))
+        return min(quantidade, 50)
+
+
+    def fatorTempoAdicional(self, numeroDaTroca):
+        valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(numeroDaTroca)
+        return 1 if valorDaTroca > 35 else 0
 
     def pegaUmaCartaTerritorioDoBaralho(self):
         if len(self.cartasTerritorioDoBaralho) == 0:

@@ -47,3 +47,15 @@ INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, inicia
 insert into DesafiosConcluidos values(16, 26, 12, 'Lutz', '2020-06-29 23:36:41');
 update  pontuacao set pontos = pontos + 150 where idUsuario = 26;
 update  PontuacaoEventos set pontos = pontos + 150 where idUsuario = 26;
+
+
+
+# SELECT da.idDesafio
+#   FROM DesafiosEmAndamento da
+#  WHERE da.iniciaEm >= datetime(date('now', '-1 DAY'), time('23:00:00'))
+#    AND da.terminaEm <= datetime(date('now'), time('22:59:59'))
+#    AND da.idDesafio NOT IN ( SELECT dc.idDesafio
+#                                FROM DesafiosConcluidos dc
+#                                JOIN Usuarios u ON u.id = dc.idUsuario
+#                               WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm
+#                                 AND u.nome = ? );
