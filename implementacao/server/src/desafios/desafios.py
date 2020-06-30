@@ -257,8 +257,11 @@ class Desafio10(Desafio):
         if venceu:
             for jogador in jogo.jogadores.values():
                 if jogador.usuario == usuario:
+                    maior_quantidade = 0
                     for t in jogador.territorios:
-                        return t.quantidadeDeTropas >= 60
+                        if t.quantidadeDeTropas > maior_quantidade:
+                            maior_quantidade = t.quantidadeDeTropas
+                    return maior_quantidade >= 60
         return False
 
 
@@ -268,8 +271,11 @@ class Desafio11(Desafio):
         if venceu:
             for jogador in jogo.jogadores.values():
                 if jogador.usuario == usuario:
+                    maior_quantidade = 0
                     for t in jogador.territorios:
-                        return t.quantidadeDeTropas >= 120
+                        if t.quantidadeDeTropas > maior_quantidade:
+                            maior_quantidade = t.quantidadeDeTropas
+                    return maior_quantidade >= 120
         return False
 
 
@@ -279,8 +285,11 @@ class Desafio12(Desafio):
         if venceu:
             for jogador in jogo.jogadores.values():
                 if jogador.usuario == usuario:
+                    maior_quantidade = 0
                     for t in jogador.territorios:
-                        return t.quantidadeDeTropas >= 180
+                        if t.quantidadeDeTropas > maior_quantidade:
+                            maior_quantidade = t.quantidadeDeTropas
+                    return maior_quantidade >= 180
         return False
 
 
