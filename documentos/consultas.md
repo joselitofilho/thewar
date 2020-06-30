@@ -42,3 +42,8 @@ DELETE FROM DesafiosEmAndamento;
 INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (16, 'Prince', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
 INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (17, 'Lucy', 0, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
 INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (19, 'Lutz', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
+
+
+insert into DesafiosConcluidos values(16, 26, 12, 'Lutz', '2020-06-29 23:36:41');
+update  pontuacao set pontos = pontos + 150 where idUsuario = 26;
+update  PontuacaoEventos set pontos = pontos + 150 where idUsuario = 26;
