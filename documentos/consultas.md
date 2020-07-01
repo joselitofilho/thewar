@@ -30,6 +30,20 @@ SELECT dc.*, u.nome FROM DesafiosConcluidos dc JOIN Usuarios u ON u.id = dc.idUs
 SELECT da.idDesafio FROM DesafiosEmAndamento da JOIN DesafiosConcluidos dc ON dc.idDesafio = da.idDesafio JOIN Usuarios u ON u.id = dc.idUsuario WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm AND u.nome = 't1';
 
 
+###### Testes desafios
+DELETE FROM DesafiosEmAndamento;
+INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (16, 'Prince', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
+INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (17, 'Lucy', 0, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
+INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (19, 'Lutz', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
+
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(2, 16, 'Lucy', '2020-07-02 15:00:00');
+
+
+# Doações
+
+###### Limpar doações
+DELETE FROM Doacoes WHERE valor > -1;
+
 ###### Meta de doações
 INSERT OR REPLACE INTO Configuracoes (chave, valor) VALUES ('meta_doacao', '300');
 
@@ -37,17 +51,14 @@ INSERT OR REPLACE INTO Configuracoes (chave, valor) VALUES ('meta_doacao', '300'
 INSERT INTO Doacoes(idUsuario, valor) VALUES (2, 20);
 
 
-###### Testes rápidos
-DELETE FROM DesafiosEmAndamento;
-INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (16, 'Prince', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
-INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (17, 'Lucy', 0, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
-INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (19, 'Lutz', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
+# Eventos
+INSERT OR REPLACE INTO Configuracoes (chave, valor) VALUES ('id_evento_atual', 1);
+INSERT INTO Eventos (id, nome, iniciaEm, terminaEm) VALUES (1, 'Guerra Mundia #1', datetime('now','start of month','23:00:00'), datetime('now','start of month','22:59:59','+1 month','-1 day'));
 
-
-insert into DesafiosConcluidos values(16, 26, 12, 'Lutz', '2020-06-29 23:36:41');
-update  pontuacao set pontos = pontos + 150 where idUsuario = 26;
-update  PontuacaoEventos set pontos = pontos + 150 where idUsuario = 26;
-
+###### Pontuação dos eventos
+INSERT INTO PontuacaoEventos(idUsuario, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, idEvento) VALUES (2, 150, 1, 1, 0, 1);
+UPDATE  Pontuacao SET pontos = pontos + 150 WHERE idUsuario = 2;
+UPDATE  PontuacaoEventos SET pontos = pontos + 150 WHERE idUsuario = 2;
 
 
 # SELECT da.idDesafio
@@ -59,3 +70,12 @@ update  PontuacaoEventos set pontos = pontos + 150 where idUsuario = 26;
 #                                JOIN Usuarios u ON u.id = dc.idUsuario
 #                               WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm
 #                                 AND u.nome = ? );
+
+
+# Ações rápidas
+
+###### Se der merda no desafio de alguém.
+SELECT * FROM PontuacaoEventos WHERE idUsuario = 2 AND idEvento = ( SELECT CAST(valor AS INTEGER) FROM Configuracoes WHERE chave = 'id_evento_atual' ); 
+INSERT INTO PontuacaoEventos(idUsuario, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, idEvento) VALUES (2, 150, 1, 1, 0, 1);  # (first time)
+UPDATE  Pontuacao SET pontos = pontos + 150 WHERE idUsuario = 2;  # (or just update)
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(2, 16, 'Lucy', '2020-07-02 15:00:00');

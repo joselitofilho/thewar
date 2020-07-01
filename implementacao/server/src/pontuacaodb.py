@@ -103,9 +103,22 @@ class PontuacaoDB(object):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
 
+        id_evento_atual = 0
+        row_evento_atual = c.execute(
+            """
+            SELECT CAST(valor AS INTEGER) FROM Configuracoes WHERE chave = 'id_evento_atual';
+            """).fetchone()
+        if row_evento_atual:
+            id_evento_atual = row_evento_atual[0]
+
         rowPontuacao = c.execute(
-            'SELECT pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM PontuacaoEventos WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);',
-            [usuario]).fetchone()
+            """
+            SELECT pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido 
+              FROM PontuacaoEventos 
+             WHERE idUsuario IN ( SELECT id FROM Usuarios WHERE nome=? ) 
+               AND idEvento = ?
+            """,
+            [usuario, id_evento_atual]).fetchone()
 
         pontuacao = pontos
         quantidadeDePartidas = 1
@@ -116,10 +129,21 @@ class PontuacaoDB(object):
             quantidadeDePartidas += rowPontuacao[1]
             quantidadeDeVitorias += rowPontuacao[2]
             quantidadeDestruido += rowPontuacao[3]
-
             c.execute(
-                'UPDATE PontuacaoEventos SET pontos=?, quantidadeDePartidas=?, quantidadeDeVitorias=?, quantidadeDestruido=? WHERE idUsuario IN (SELECT id FROM Usuarios WHERE nome=?);',
-                [pontuacao, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, usuario])
+                """
+                UPDATE PontuacaoEventos 
+                   SET pontos=?, quantidadeDePartidas=?, quantidadeDeVitorias=?, quantidadeDestruido=? 
+                 WHERE idUsuario IN ( SELECT id FROM Usuarios WHERE nome=? ) 
+                   AND idEvento = ?;
+                """,
+                [pontuacao, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, usuario, id_evento_atual])
+        else:
+            c.execute(
+                """
+                INSERT INTO PontuacaoEventos(idUsuario, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, idEvento) 
+                     VALUES ( ( SELECT id FROM Usuarios WHERE nome=? ),?,?,?,?,?);
+                """,
+                [usuario, pontuacao, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, id_evento_atual])
 
         conn.commit()
         conn.close()
@@ -128,7 +152,13 @@ class PontuacaoDB(object):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
         rowPontuacoes = c.execute(
-            'SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM Pontuacao p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
+            """
+            SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido
+              FROM Pontuacao p 
+              JOIN Usuarios u ON u.id = p.idUsuario 
+          ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido 
+              DESC;
+            """).fetchall()
 
         ranking = []
         if rowPontuacoes:
@@ -152,7 +182,16 @@ class PontuacaoDB(object):
         conn = sqlite3.connect(self.baseDeDados)
         c = conn.cursor()
         rowPontuacoes = c.execute(
-            'SELECT nome, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido FROM PontuacaoEventos p INNER JOIN Usuarios u ON u.id = p.idUsuario ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido DESC').fetchall()
+            """
+                SELECT u.nome, p.pontos, p.quantidadeDePartidas, p.quantidadeDeVitorias, p.quantidadeDestruido
+                  FROM PontuacaoEventos p 
+                  JOIN Eventos e ON e.id = p.idEvento
+                  JOIN Usuarios u ON u.id = p.idUsuario
+                 WHERE datetime('now') BETWEEN e.iniciaEm AND e.terminaEm 
+                   AND e.id = ( SELECT CAST(valor AS INTEGER) FROM Configuracoes WHERE chave = 'id_evento_atual' ) 
+              ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido 
+                  DESC;
+            """).fetchall()
 
         ranking = []
         if rowPontuacoes:
