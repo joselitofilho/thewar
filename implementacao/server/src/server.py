@@ -142,11 +142,6 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 jsonMsg = Mensagem(TipoMensagem.ranking, ranking).toJson()
                 self.sendMessage(jsonMsg)
 
-            elif mensagem.tipo == TipoMensagem.desafios_em_andamento:
-                desafios_em_andamento = Desafios().em_andamento()
-                jsonMsg = Mensagem(TipoMensagem.desafios_em_andamento, desafios_em_andamento).toJson()
-                self.sendMessage(jsonMsg)
-
             else:
                 try:
                     _gerenciadorPrincipal.interpretaMensagem(self, mensagem)

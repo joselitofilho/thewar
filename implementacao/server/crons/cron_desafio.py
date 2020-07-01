@@ -27,8 +27,9 @@ def main():
                     "INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));",
                     [id_desafio, nome_orientador, apenas_doador])
 
-                time.sleep(2)
+                time.sleep(1)
 
+        time.sleep(1)
 
         desafios_vao_iniciar = cur.execute(
             "SELECT idDesafio FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('23:00:00'));").fetchall()
@@ -41,7 +42,7 @@ def main():
                     "INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (?, ?, ?, datetime(date('now'), time('23:00:00')), datetime(date('now', '+1 DAY'), time('22:59:59')));",
                     [id_desafio, nome_orientador, apenas_doador])
 
-                time.sleep(2)
+                time.sleep(1)
 
         con.commit()
 
