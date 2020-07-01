@@ -80,7 +80,7 @@ class Desafios(object):
                   FROM DesafiosEmAndamento da 
                   JOIN DesafiosConcluidos dc ON dc.idDesafio = da.idDesafio 
                   JOIN Usuarios u ON u.id = dc.idUsuario 
-                 WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm AND da.iniciaEm >= datetime('now') AND  u.nome = ?;
+                 WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm AND datetime('now') BETWEEN da.iniciaEm AND da.terminaEm AND  u.nome = ?;
                 """, [usuario]).fetchall()
             desafiosId = []
             for row in rows:
