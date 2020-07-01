@@ -74,6 +74,11 @@ UPDATE  PontuacaoEventos SET pontos = pontos + 150 WHERE idUsuario = 2;
 
 # Ações rápidas
 
+###### Criar um evento
+INSERT INTO Eventos (id, nome, iniciaEm, terminaEm) VALUES (1, 'Guerra Mundia #1', datetime('2020-07-01 23:00:00'), datetime('2020-07-31 22:59:59'));
+INSERT INTO pontuacaoeventos(idUsuario, idEvento) SELECT id, 1 FROM usuarios;
+INSERT OR REPLACE INTO Configuracoes (chave, valor) VALUES ('id_evento_atual', 1);
+
 ###### Se der merda no desafio de alguém.
 SELECT * FROM PontuacaoEventos WHERE idUsuario = 2 AND idEvento = ( SELECT CAST(valor AS INTEGER) FROM Configuracoes WHERE chave = 'id_evento_atual' ); 
 INSERT INTO PontuacaoEventos(idUsuario, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, idEvento) VALUES (2, 150, 1, 1, 0, 1);  # (first time)
