@@ -84,3 +84,14 @@ SELECT * FROM PontuacaoEventos WHERE idUsuario = 2 AND idEvento = ( SELECT CAST(
 INSERT INTO PontuacaoEventos(idUsuario, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, idEvento) VALUES (2, 150, 1, 1, 0, 1);  # (first time)
 UPDATE  Pontuacao SET pontos = pontos + 150 WHERE idUsuario = 2;  # (or just update)
 INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(2, 16, 'Lucy', '2020-07-02 15:00:00');
+
+
+
+update pontuacaoeventos set pontos = 200 where id = 10;
+SELECT u.nome, p.pontos, p.quantidadeDePartidas, p.quantidadeDeVitorias, p.quantidadeDestruido, p.atualizado
+                  FROM PontuacaoEventos p 
+                  JOIN Eventos e ON e.id = p.idEvento
+                  JOIN Usuarios u ON u.id = p.idUsuario
+                 WHERE e.id = 0
+              ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido+atualizado 
+                  DESC;
