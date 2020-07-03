@@ -824,7 +824,7 @@ class Jogo(object):
             quantidade = (numeroDaTroca * 2) + 2
         else:
             quantidade = (2 * numeroDaTroca) + (3 * (numeroDaTroca - 5))
-        return min(quantidade, 50)
+        return min(quantidade, 100)
 
 
     def fatorTempoAdicional(self, numeroDaTroca):
