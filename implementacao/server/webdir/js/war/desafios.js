@@ -58,7 +58,7 @@ jogos.war.Desafios = function () {
             second: '2-digit'
         };
         const terminaEm = new Date(Date.parse(desafio_centro.termina_em + ' GMT'));
-        $('.desafios_termina_em').text('Termina em ' + terminaEm.toLocaleDateString("pt-BR", dateOptions));
+        $('.desafios_termina_em').text('Novos desafios em ' + terminaEm.toLocaleDateString("pt-BR", dateOptions));
 
         // Esquerda, Direita
         const ordem = ['esq', 'dir'];
