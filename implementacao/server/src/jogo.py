@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
 import logging
 import random
 
@@ -65,6 +66,9 @@ class Jogo(object):
     def faseI_Inicia(self):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
+        print(
+            '{} ID jogo: {} - humanos: {} - maquina: {}'.format(datetime.datetime.now(), self.nome, len(self.clientes),
+                                                                len(self.cpus)))
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
@@ -824,8 +828,7 @@ class Jogo(object):
             quantidade = (numeroDaTroca * 2) + 2
         else:
             quantidade = (2 * numeroDaTroca) + (3 * (numeroDaTroca - 5))
-        return min(quantidade, 100)
-
+        return min(quantidade, 60)
 
     def fatorTempoAdicional(self, numeroDaTroca):
         valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(numeroDaTroca)
@@ -1006,7 +1009,8 @@ class Jogo(object):
         for k, jogador in self.jogadores.items():
             desafios_em_andamento = desafios.em_andamento(jogador.usuario)
             if jogador.posicao in self.clientes.keys() and len(desafios_em_andamento) > 0:
-                self.enviaMsgParaCliente(TipoMensagem.desafios_em_andamento, desafios_em_andamento, self.clientes[jogador.posicao])
+                self.enviaMsgParaCliente(TipoMensagem.desafios_em_andamento, desafios_em_andamento,
+                                         self.clientes[jogador.posicao])
 
         self.gerenciador.jogoTerminou(self.nome)
 

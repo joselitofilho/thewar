@@ -72,7 +72,7 @@ class GerenciadorSala(object):
             else:
                 self.jogo.remove(usuario)
 
-                if not self.jogo.temJogadorOnLine():
+                if not self.jogo.temJogadorOnLine() and len(self.jogo.cpus) == 0:
                     self.jogoTerminou(self.nome)
                     self.enviaMsgParaTodos(TipoMensagem.lobby, self.gerenciadorPrincipal.montaMensagemParamsLobby())
                 else:
