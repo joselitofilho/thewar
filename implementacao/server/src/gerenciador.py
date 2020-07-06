@@ -74,7 +74,7 @@ class GerenciadorSala(object):
 
                 if not self.jogo.temJogadorOnLine() and len(self.jogo.cpus) == 0:
                     self.jogoTerminou(self.nome)
-                    self.enviaMsgParaTodos(TipoMensagem.lobby, self.gerenciadorPrincipal.montaMensagemParamsLobby())
+                    self.enviaMsgLobbyParaTodos()
                 else:
                     self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
 
@@ -212,9 +212,8 @@ class GerenciadorSala(object):
         # self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
 
     def fecha(self):
-        if self.jogo != None:
+        if self.jogo is not None:
             self.jogo.fecha()
-            del self.jogo
             self.jogo = None
 
     def estaDentro(self, usuario):
@@ -234,6 +233,9 @@ class GerenciadorSala(object):
         if self.sala:
             self.jogadoresDaSala = self.sala.jogadores
         return self.jogadoresDaSala
+
+    def enviaMsgLobbyParaTodos(self):
+        self.enviaMsgParaTodos(TipoMensagem.lobby, self.gerenciadorPrincipal.montaMensagemParamsLobby())
 
     def enviaMsgParaTodos(self, tipo, params):
         self.gerenciadorPrincipal.enviaMsgParaTodos(tipo, params)
@@ -281,13 +283,16 @@ class GerenciadorPrincipal(object):
     def clienteDesconectou(self, cliente):
         usuario = self.jogadores[cliente]
         try:
-            gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
-            gerenciadorSala.sai(cliente)
-            del self.usuarioPorSala[usuario]
+            if usuario in self.usuarioPorSala and self.usuarioPorSala[usuario] in self.salas:
+                gerenciadorSala = self.salas[self.usuarioPorSala[usuario]]
+                gerenciadorSala.sai(cliente)
+                del self.usuarioPorSala[usuario]
         except:
             print("[ERRO][GerenciadorPrincipal] Erro ao tentar desconectar o usuario[" + usuario + "] da sala.")
             print("\tProvavelmente ele nao esteja em nenhuma.")
-        del self.jogadores[cliente]
+
+        if cliente in self.jogadores:
+            del self.jogadores[cliente]
 
         self.enviaMsgParaTodos(TipoMensagem.usuario_desconectou, UsuarioDesconectou(usuario))
 
@@ -351,7 +356,6 @@ class GerenciadorPrincipal(object):
             desafios_em_andamento = Desafios().em_andamento(usuario)
             self.enviaMsgParaCliente(TipoMensagem.desafios_em_andamento, desafios_em_andamento, cliente)
 
-
     def criaSala(self, cliente, usuario, mensagem):
         # TODO: VIP
         # idSala = mensagem.params['sala']
@@ -393,10 +397,14 @@ class GerenciadorPrincipal(object):
         try:
             # TODO: Verificar criacao de salas pre-criadas.
             # if idSala != "1" and idSala != "2":
-            del self.salas[idSala]
-            self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
-                                   FecharSala(idSala))
-            print("[DEBUG] Sala ", idSala, " fechada.")
+            if idSala in self.salas:
+                self.salas[idSala].fecha()
+                del self.salas[idSala]
+                self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
+                                       FecharSala(idSala))
+                print("[DEBUG] Sala ", idSala, " fechada.")
+            else:
+                print("[DEBUG] Sala ", idSala, " já foi fechada anteriormente.")
         except:
             traceback.print_exc()
             print("[ERRO] Tentou fechar sala de id:", idSala)

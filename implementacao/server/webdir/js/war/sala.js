@@ -173,6 +173,7 @@ function processarMsg_info_sala(msgParams) {
                 entrouNaSala(msgParams.sala, extra.jogador);
             } else {
                 saiuDaSala(msgParams.sala, extra.jogador);
+                $('#sala' + sala + '_jogador' + (extra.jogador.posicao + 1)).css('text-decoration', '');
             }
         }
 
@@ -201,8 +202,6 @@ function processarMsg_info_sala(msgParams) {
                 if (jog.dono && _usuario === usuario && estado === 'sala_criada') {
                     $('#btnIniciarPartida' + sala).css('visibility', 'visible');
                 }
-            } else {
-                $('#sala' + sala + '_jogador' + (i + 1)).css('text-decoration', '');
             }
         }
 
