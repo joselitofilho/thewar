@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import logging
 import random
 
 from src.carta import *
@@ -18,7 +17,6 @@ from src.turno import *
 
 class Jogo(object):
     def __init__(self, nome, jogadores, cpus, clientes=None, gerenciador=None):
-        logging.basicConfig(filename='log/jogo_' + nome + '.log', level=logging.DEBUG)
         random.seed()
 
         self.gerenciador = gerenciador
@@ -31,6 +29,9 @@ class Jogo(object):
         self.cpus = cpus
 
         self.olheiros = {}
+
+        self.qtd_turnos_sem_jogadores_humanos = 0
+        self.quemJaJogou = 0
 
         self.jogadorQueComecou = -1
 
@@ -139,6 +140,8 @@ class Jogo(object):
 
         self.numeroDaTroca = 1
 
+        self.qtd_turnos_sem_jogadores_humanos = 0
+
         self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
         acaoDoTurno = self.criaAcaoDoTurno(self.turno)
         self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
@@ -221,37 +224,36 @@ class Jogo(object):
         return acao
 
     def todosJogaram(self):
-        return self.cabecaDaFila == self.indiceOrdemJogadores
+        return self.quemJaJogou > len(self.ordemJogadores) - 1
 
     def passaParaProximoJogador(self, comVerificacaoExtra=True):
         # Verifica se o jogador ainda esta no jogo. Caso nao esteja, pula a vez dele.
         ok = False
-        for i in range(len(self.ordemJogadores)):
-            self.indiceOrdemJogadores = (self.indiceOrdemJogadores + 1) % len(self.ordemJogadores)
-            self.posicaoJogadorDaVez = self.ordemJogadores[self.indiceOrdemJogadores]
-            self.jogadorDaVezConquistouTerritorio = False
 
-            jogador = self.jogadores[self.posicaoJogadorDaVez]
-            jogadorEstaOn = True
-            if jogador.tipo == TipoJogador.humano:
-                # Verifica se o jogador esta logado na sala e nao foi destruido.
-                # TODO: Se o jogador não estiver na sala, usar um BOT no lugar.
-                jogadorEstaOn = self.posicaoJogadorDaVez in self.clientes.keys()
+        if comVerificacaoExtra:
+            self.quemJaJogou += 1
+        self.indiceOrdemJogadores = (self.indiceOrdemJogadores + 1) % len(self.ordemJogadores)
+        self.posicaoJogadorDaVez = self.ordemJogadores[self.indiceOrdemJogadores]
+        self.jogadorDaVezConquistouTerritorio = False
 
-            if jogadorEstaOn:
-                if not comVerificacaoExtra:
-                    ok = True
-                    break
-                elif len(jogador.territorios) > 0:
-                    ok = True
-                    break
+        jogador = self.jogadores[self.posicaoJogadorDaVez]
+        jogadorEstaOn = True
+        if jogador.tipo == TipoJogador.humano:
+            # Verifica se o jogador esta logado na sala e nao foi destruido.
+            # TODO: Se o jogador não estiver na sala, usar um BOT no lugar.
+            jogadorEstaOn = self.posicaoJogadorDaVez in self.clientes.keys()
 
-        if not ok and self.gerenciador != None:
-            self.jogoTerminou()
+        if jogadorEstaOn:
+            if not comVerificacaoExtra:
+                ok = True
+            elif len(jogador.territorios) > 0:
+                ok = True
+
+        if not ok:
+            return self.passaParaProximoJogador(comVerificacaoExtra)
+        return ok
 
     def finalizaTurno_1(self):
-        # turno = self.turno
-
         if self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_globais and self.turno.quantidadeDeTropas == 0:
             jogador = self.jogadores[self.posicaoJogadorDaVez]
             if len(jogador.gruposTerritorio()) > 0:
@@ -266,8 +268,16 @@ class Jogo(object):
                     self.passaParaProximoJogador()
 
                     if self.todosJogaram():
+                        self.quemJaJogou = 0
                         self.turno.numero = 2
                         self.turno.tipoAcao = TipoAcaoTurno.atacar
+
+                        if len(self.cpus) > 0 and not self.temJogadorOnLine():
+                            self.qtd_turnos_sem_jogadores_humanos += 1
+                        if self.qtd_turnos_sem_jogadores_humanos > 3:
+                            self.gerenciador.jogoTerminou(self.nome)
+                            self.gerenciador.enviaMsgLobbyParaTodos()
+                            return
                     else:
                         self.turno.numero = 1
                         self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
@@ -283,7 +293,7 @@ class Jogo(object):
             try:
                 self.turno.gruposTerritorio.pop(0)
             except:
-                print("Nao tem grupo territorio para remover.")
+                print("Sala( {} ) Nao tem grupo territorio para remover.".format(self.nome))
 
             if len(self.turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
@@ -292,8 +302,16 @@ class Jogo(object):
                     self.passaParaProximoJogador()
 
                     if self.todosJogaram():
+                        self.quemJaJogou = 0
                         self.turno.numero = 2
                         self.turno.tipoAcao = TipoAcaoTurno.atacar
+
+                        if len(self.cpus) > 0 and not self.temJogadorOnLine():
+                            self.qtd_turnos_sem_jogadores_humanos += 1
+                        if self.qtd_turnos_sem_jogadores_humanos > 3:
+                            self.gerenciador.jogoTerminou(self.nome)
+                            self.gerenciador.enviaMsgLobbyParaTodos()
+                            return
                     else:
                         self.turno.numero = 1
                         self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
@@ -328,8 +346,16 @@ class Jogo(object):
                 self.passaParaProximoJogador()
 
                 if self.todosJogaram():
+                    self.quemJaJogou = 0
                     self.turno.numero = 3
                     self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
+
+                    if len(self.cpus) > 0 and not self.temJogadorOnLine():
+                        self.qtd_turnos_sem_jogadores_humanos += 1
+                    if self.qtd_turnos_sem_jogadores_humanos > 3:
+                        self.gerenciador.jogoTerminou(self.nome)
+                        self.gerenciador.enviaMsgLobbyParaTodos()
+                        return
                 else:
                     self.turno.numero = 2
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
@@ -426,13 +452,21 @@ class Jogo(object):
                 self.turno.trocouCartas = False
 
                 if self.todosJogaram():
+                    self.quemJaJogou = 0
                     self.turno.numero += 1
+
+                    if len(self.cpus) > 0 and not self.temJogadorOnLine():
+                        self.qtd_turnos_sem_jogadores_humanos += 1
+                    if self.qtd_turnos_sem_jogadores_humanos > 3:
+                        self.gerenciador.jogoTerminou(self.nome)
+                        self.gerenciador.enviaMsgLobbyParaTodos()
+                        return
                 self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
+            erro = False
             self.turno.iniciaTimeout(self.finalizaTurnoPorTimeout)
             acaoDoTurno = self.criaAcaoDoTurno(self.turno)
             self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
-            erro = False
 
             if self.temUmVencedor() and self.gerenciador != None:
                 self.jogoTerminou()
@@ -1004,7 +1038,7 @@ class Jogo(object):
         return False
 
     def jogoTerminou(self):
-        print('jogoTerminou', self.clientes)
+        print(datetime.datetime.now(), 'O jogo( {} ) terminou.'.format(self.nome))
         desafios = Desafios()
         for k, jogador in self.jogadores.items():
             desafios_em_andamento = desafios.em_andamento(jogador.usuario)
@@ -1136,6 +1170,3 @@ class Jogo(object):
         self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
 
         self.turno.paraTimeout()
-
-    def __del__(self):
-        self.fecha()
