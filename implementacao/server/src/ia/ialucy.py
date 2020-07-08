@@ -185,7 +185,7 @@ class IALucy(IAInterface):
                 territorio_para = {}
                 so_tem_fronteira_com_bst_0 = True
                 for t in territorio_de['fronteiras']:
-                    if grafo[t]['usuario'] == usuario:
+                    if grafo[t]['usuario'] == usuario and t not in visitados:
                         territorio_para[t] = grafo[t]
                         if grafo[t]['bst'] != 0:
                             so_tem_fronteira_com_bst_0 = False
