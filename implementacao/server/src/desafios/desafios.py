@@ -58,12 +58,12 @@ class Desafios(object):
         if apenas_doador == 1:
             desafios = [d for d in desafios if d['xp'] > 50]
 
-        return desafios[random.randint(0, len(desafios) - 1)]
+        return desafios
 
-    def shuffle_orientadores(self, apenas_doador):
+    def shuffle_orientadores(self):
         orientadores = self.orientadores_json
         random.shuffle(orientadores)
-        return orientadores[random.randint(0, len(orientadores) - 1)]
+        return orientadores
 
     def em_andamento(self, usuario=None):
         self.carrega_infos()
