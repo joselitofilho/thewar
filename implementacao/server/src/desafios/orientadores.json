@@ -232,5 +232,11 @@
     "gender": "female",
     "class": "Inteligência",
     "bio": "Lucy foi descoberta em 1974 na África, em Hadar, um local no vale Awash do Triângulo Afar, na Etiópia, pelo paleoantropólogo Donald Johanson, do Museu de História Natural de Cleveland. O espécime Lucy é um australopitecino inicial e datado por volta de 3,2 milhões de anos atrás."
+  },
+  {
+    "name": "Kratos",
+    "gender": "male",
+    "class": "Deus",
+    "bio": "Kratos é um deus da força e do poder, irmão de da deusa grega da vitória, Nike, da força, Bia, e de Zelus, o da rivalidade. Todos eles foram os primeiros a ficar ao lado de Zeus para defender o Monte Olimpo do deus monstro Typhon."
   }
 ]
