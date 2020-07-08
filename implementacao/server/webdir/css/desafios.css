@@ -10,6 +10,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    background-color: rgba(73, 54, 37, 0.8)
 }
 
 #desafios_painel .btn_fechar {

@@ -31,6 +31,8 @@ _cartasTerritoriosSelecionadas = [];
 
 _quantidadeDeJogadoresNaSala = 0;
 
+_tour = new jogos.war.Tour();
+
 _sala = new jogos.war.Sala();
 _chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'));
 _chatGeral.boasVindas();

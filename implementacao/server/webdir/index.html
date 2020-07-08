@@ -75,7 +75,8 @@
     <!-- Tour -->
     <!--    <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>-->
     <!--    <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css">-->
-    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
+
+    <!--    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>-->
     <!---->
 
     <!-- 3rd Party -->
@@ -100,6 +101,7 @@
     <link href="css/label_tropas.css?ver=2.2" rel="stylesheet">
     <link href="css/cores.css?ver=2.2" rel="stylesheet">
     <link type="text/css" href="css/desafios.css?ver=2.2" rel="stylesheet">
+    <link type="text/css" href="css/tour.css?ver=2.2" rel="stylesheet">
     <link href="css/listaUsuariosLobby.css?ver=2.2" rel="stylesheet">
     <link href="css/listaLogJogo.css?ver=2.2" rel="stylesheet">
     <link href="css/chat_question_box.css?ver=2.2" rel="stylesheet">
@@ -490,6 +492,25 @@
 </div>
 <!---->
 
+<!-- Tour -->
+<div id="tour_painel" style="visibility:hidden;">
+    <div id="tour_conteudo">
+        <div class="btn_fechar" onclick="_tour.toogle();"></div>
+        <div id="tour_header">
+            <p class="tour_titulo"></p>
+        </div>
+        <div id="tour_content"></div>
+        <div id="tour_footer">
+            <button id="tour_btn_page_prev" class="war_button" onclick="_tour.prev();"><span class="material-icons">arrow_back</span></button>
+            <button id="tour_btn_page_1" class="war_button war_button_active" onclick="_tour.to_page('page_1');"><span>1</span></button>
+            <button id="tour_btn_page_2" class="war_button" onclick="_tour.to_page('page_2');"><span>2</span></button>
+            <button id="tour_btn_page_3" class="war_button" onclick="_tour.to_page('page_3');"><span>3</span></button>
+            <button id="tour_btn_page_next" class="war_button" onclick="_tour.next();"><span class="material-icons">arrow_forward</span></button>
+        </div>
+    </div>
+</div>
+<!---->
+
 <!-- Menu -->
 <div id="menu_principal">
     <!--TODO: VIP-->
@@ -706,6 +727,7 @@
 <script src="js/war/acaoTurno.js?ver=2.2" type="text/javascript"></script>
 <script src="js/war/jogo.js?ver=2.2" type="text/javascript"></script>
 <script src="js/war/sala.js?ver=2.2" type="text/javascript"></script>
+<script src="js/war/tour.js?ver=2.2" type="text/javascript"></script>
 <script src="js/war/desafios.js?ver=2.2" type="text/javascript"></script>
 <script src="js/war/appwar.js?ver=2.2" type="text/javascript"></script>
 <script src="js/war/mundo/main.js?ver=2.2" type="text/javascript"></script>
