@@ -37,10 +37,10 @@ jogos.war.ChatGeral = function (area) {
     this.boasVindas = function () {
         let texto = '';
         texto += '<h4>Seja bem-vindo ao servidor principal!</h4>';
-        // texto += '<div class="chat_tour" onclick="_chatGeral.tour()">';
-        // texto += '    <div class="chat_soldado"></div>';
-        // texto += '    <p>Primeira vez por aqui?<br/>Clique aqui para conhecer o jogo.</p>';
-        // texto += '</div>';
+        texto += '<div class="chat_tour" onclick="_tour.start()">';
+        texto += '    <div class="chat_soldado"></div>';
+        texto += '    <p>Primeira vez por aqui?<br/>Clique aqui para conhecer o jogo.</p>';
+        texto += '</div>';
         texto += 'Connect-se a uma de nossas redes:'.fontcolor("#453122");
         texto += '<div style=" width: 50%; display: flex; justify-content: space-around; text-align: center;">';
         texto += '    <a href="https://chat.whatsapp.com/DjRwmsDjKJUEUh9HLyFky2" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/whatsapp.png" /></a>';
@@ -50,26 +50,6 @@ jogos.war.ChatGeral = function (area) {
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
-    };
-
-    this.tour = function () {
-        // const driver = new Driver({
-        //     animate: true,
-        //     allowClose: false,
-        //     opacity: 0,
-        //     doneBtnText: 'Entendi',
-        //     closeBtnText: 'Fechar',
-        //     nextBtnText: 'Próximo',
-        //     prevBtnText: 'Anterior'
-        // });
-        // driver.highlight({
-        //     element: '#botao_criar_sala',
-        //     popover: {
-        //         title: '<em>An italicized title</em>',
-        //         description: 'Description may also contain <strong>HTML</strong>'
-        //     }
-        // });
-        // Instance the tour
     };
 
     this.usuarioConectou = function (jogador) {
