@@ -58,8 +58,11 @@ jogos.war.Tour = function () {
         this.init();
         this.toogle();
 
+        $('#tour_btn_page_1').removeClass('war_button_active');
         $('#tour_btn_page_2').removeClass('war_button_active');
         $('#tour_btn_page_3').removeClass('war_button_active');
+
+        $('#tour_btn_page_1').addClass('war_button_active');
 
         $('#tour_conteudo').removeClass();
         $('#tour_conteudo').addClass(this.pages['page_1'].page.class);
