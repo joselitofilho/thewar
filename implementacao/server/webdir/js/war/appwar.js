@@ -185,6 +185,7 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_criar_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.info_sala) {
         processarMsg_info_sala(jsonMensagem.params);
+        _tour.start_creation_room();
     } else if (jsonMensagem.tipo === TipoMensagem.fechar_sala) {
         processarMsg_fechar_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.altera_posicao_na_sala) {
@@ -601,7 +602,7 @@ function appwar_novaSenha(codigo, email, senha) {
 }
 
 function appwar_recarregarPagina() {
-    location.reload();
+    location.reload(true);
 }
 
 function appwar_processaMsg_msg_chat_geral(msgParams) {

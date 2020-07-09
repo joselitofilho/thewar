@@ -7,6 +7,18 @@ jogos.war.Desafios = function () {
         this.preencheElementoHtml(params);
     };
 
+    this.show = function () {
+        if ($('#desafios_painel').css('visibility') === 'hidden') {
+            $('#desafios_painel').css('visibility', 'visible');
+        }
+    };
+
+    this.hide = function () {
+        if ($('#desafios_painel').css('visibility') === 'visible') {
+            $('#desafios_painel').css('visibility', 'hidden');
+        }
+    };
+
     this.toogle = function () {
         if ($('#desafios_painel').css('visibility') === 'visible') {
             $('#desafios_painel').css('visibility', 'hidden');

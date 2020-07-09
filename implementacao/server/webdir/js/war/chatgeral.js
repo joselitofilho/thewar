@@ -37,7 +37,7 @@ jogos.war.ChatGeral = function (area) {
     this.boasVindas = function () {
         let texto = '';
         texto += '<h4>Seja bem-vindo ao servidor principal!</h4>';
-        texto += '<div class="chat_tour" onclick="_tour.start()">';
+        texto += '<div class="chat_tour" onclick="_tour.open()">';
         texto += '    <div class="chat_soldado"></div>';
         texto += '    <p>Primeira vez por aqui?<br/>Clique aqui para conhecer o jogo.</p>';
         texto += '</div>';
