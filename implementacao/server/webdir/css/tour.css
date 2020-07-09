@@ -11,6 +11,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(73, 54, 37, 0.8);
+    z-index: 1000;
 }
 
 #tour_painel .btn_fechar {
@@ -33,7 +34,6 @@
     width: 976px;
     height: 631px;
     outline: 8px solid rgba(135, 104, 80, 0.5);
-    z-index: 9000;
 }
 
 .tour_1 {
@@ -87,6 +87,10 @@
 #tour_footer .war_button_active {
     outline: none;
     color: white;
-    transition: 0.5s;
+    /*transition: 0.5s;*/
     box-shadow: 8px 8px 0 #FBC638;
+}
+
+#tour_btn_tour {
+    transition: 0s;
 }
