@@ -17,10 +17,10 @@ def main():
         cur = con.cursor()
 
         desafios_iniciaram_ontem = cur.execute(
-            "SELECT idDesafio FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('23:00:00'));").fetchall()
+            "SELECT idDesafio FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'));").fetchall()
         if len(desafios_iniciaram_ontem) != 3:
             cur.execute(
-                "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('23:00:00'));")
+                "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'));")
             orientadores = desafios.shuffle_orientadores()
             desafios_todos = desafios.shuffle_desafios(0)
             desafios_apenas_doador = desafios.shuffle_desafios(1)
@@ -32,15 +32,15 @@ def main():
                     id_desafio = desafios_apenas_doador[random.randint(0, len(desafios_apenas_doador) - 1)]['id']
                 nome_orientador = orientadores[i]['name']
                 cur.execute(
-                    "INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));",
+                    "INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('10:00:00')), datetime(date('now'), time('09:59:59')));",
                     [id_desafio, nome_orientador, apenas_doador])
 
                 i += 1
 
         desafios_vao_iniciar = cur.execute(
-            "SELECT idDesafio FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('23:00:00'));").fetchall()
+            "SELECT idDesafio FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('10:00:00'));").fetchall()
         if len(desafios_vao_iniciar) != 3:
-            cur.execute("DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('23:00:00'));")
+            cur.execute("DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('10:00:00'));")
             orientadores = desafios.shuffle_orientadores()
             desafios_todos = desafios.shuffle_desafios(0)
             desafios_apenas_doador = desafios.shuffle_desafios(1)
@@ -52,7 +52,7 @@ def main():
                     id_desafio = desafios_apenas_doador[random.randint(0, len(desafios_apenas_doador) - 1)]['id']
                 nome_orientador = orientadores[i]['name']
                 cur.execute(
-                    "INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (?, ?, ?, datetime(date('now'), time('23:00:00')), datetime(date('now', '+1 DAY'), time('22:59:59')));",
+                    "INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (?, ?, ?, datetime(date('now'), time('10:00:00')), datetime(date('now', '+1 DAY'), time('09:59:59')));",
                     [id_desafio, nome_orientador, apenas_doador])
 
                 i += 1
