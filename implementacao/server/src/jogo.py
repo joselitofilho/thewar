@@ -68,7 +68,8 @@ class Jogo(object):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
         print(
-            '{} ID jogo: {} - humanos: {} - maquina: {}'.format(datetime.datetime.now(), self.nome, len(self.clientes),
+            '{} ID jogo: {} - humanos: {} - maquina: {}'.format(datetime.datetime.now(), self.nome,
+                                                                0 if self.clientes is None else len(self.clientes),
                                                                 len(self.cpus)))
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
@@ -241,7 +242,7 @@ class Jogo(object):
         if jogador.tipo == TipoJogador.humano:
             # Verifica se o jogador esta logado na sala e nao foi destruido.
             # TODO: Se o jogador não estiver na sala, usar um BOT no lugar.
-            jogadorEstaOn = self.posicaoJogadorDaVez in self.clientes.keys()
+            jogadorEstaOn = True if self.clientes is None else self.posicaoJogadorDaVez in self.clientes.keys()
 
         if jogadorEstaOn:
             if not comVerificacaoExtra:
@@ -769,6 +770,7 @@ class Jogo(object):
                         self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
                 else:
                     self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
+            self.jogadores[posicaoJogador] = jogador
 
     def moveAposConquistarTerritorio(self, usuario, quantidade):
         # turno = self.turno
