@@ -1,4 +1,6 @@
-class CodigoTerritorio:
+from src.jsonserializer import *
+
+class CodigoTerritorio(JSONSerializer):
     AfricaDoSul = "AfricaDoSul"
     Alaska = "Alaska"
     Alemanha = "Alemanha"
@@ -48,7 +50,7 @@ class CodigoTerritorio:
              Portugal, Siberia, Sudao, Suecia, Sumatra, Tchita, Vancouver, Vietna, Vladivostok]
 
 
-class GrupoTerritorio:
+class GrupoTerritorio(JSONSerializer):
     Asia = "Asia"
     AmericaDoNorte = "AmericaDoNorte"
     Europa = "Europa"
@@ -101,7 +103,7 @@ class GrupoTerritorio:
     }
 
 
-class FronteiraTerritorio(object):
+class FronteiraTerritorio(JSONSerializer):
     Fronteiras = {
         CodigoTerritorio.Argentina: [CodigoTerritorio.Brasil, CodigoTerritorio.Chile],
         CodigoTerritorio.Brasil: [CodigoTerritorio.Argentina, CodigoTerritorio.Chile, CodigoTerritorio.Colombia,
@@ -180,8 +182,7 @@ class FronteiraTerritorio(object):
         return territorio2 in FronteiraTerritorio.Fronteiras[territorio1]
 
 
-class Territorio(object):
-
+class Territorio(JSONSerializer):
     def __init__(self, codigo):
         self.codigo = codigo
         self.quantidadeDeTropas = 1
