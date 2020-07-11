@@ -1,0 +1,4 @@
+.timer on
+.header on
+.mode lines
+ATTACH 'PATH' AS 'war';

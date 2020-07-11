@@ -25,6 +25,7 @@ jogos.war.MenuJogadores = function () {
             if (doador) {
                 conteudo += "<div id='menu_jogador" + i + "_coroa' class='box_crown jogo_menu_jogadores_box_crown' title='Doador'></div>";
             }
+            conteudo += "    <div id='menu_jogador" + i + "_destruido' class='menu_jogadores_box_destruido'></div>";
             conteudo += "    <div class='menu_jogadores_box_title " + cores[i] + "'>";
             if (cpu) {
                 conteudo += '    <svg id="menu_jogador' + i + '_cpu_svg" style="width: 24px; height: 24px;" viewBox="0 0 24 24"><path fill="currentColor" d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z" /></svg>';
@@ -65,22 +66,28 @@ jogos.war.MenuJogadores = function () {
         for (let i = 0; i < jogadoresNaOrdem.length; i++) {
             const infos = jogadoresNaOrdem[i];
 
-            $("#menu_jogador" + infos.posicao + "_insignia").attr('class', 'menu_jogadores_box_badge');
+            $('#menu_jogador' + infos.posicao + '_insignia').attr('class', 'menu_jogadores_box_badge');
             for (let j = 0; j < _ranking.length; ++j) {
                 if (_ranking[j].nome === infos.usuario) {
-                    $("#menu_jogador" + infos.posicao + "_insignia")
-                        .addClass("insignia_x40_size insignias_x40_nv" + ranking_levelByXp(_ranking[j].pontos));
+                    $('#menu_jogador' + infos.posicao + '_insignia')
+                        .addClass('insignia_x40_size insignias_x40_nv' + ranking_levelByXp(_ranking[j].pontos));
                     break;
                 }
             }
 
-            $("#jogador" + (infos.posicao + 1)).html(infos.usuario);
-            $("#menu_jogador" + infos.posicao + "_info_territorios").html(infos.total_territorios);
-            $("#menu_jogador" + infos.posicao + "_info_cartas").html(infos.total_cartas_territorio);
+            $('#jogador' + (infos.posicao + 1)).html(infos.usuario);
+            $('#menu_jogador' + infos.posicao + '_info_territorios').html(infos.total_territorios);
+            $('#menu_jogador' + infos.posicao + '_info_cartas').html(infos.total_cartas_territorio);
 
-            $("#jogador" + (infos.posicao + 1)).removeClass("text_through");
+            if (infos.total_territorios === 0) {
+                $('#menu_jogador' + infos.posicao + '_destruido').css('display', '');
+            } else {
+                $('#menu_jogador' + infos.posicao + '_destruido').css('display', 'none');
+            }
+
+            $('#jogador' + (infos.posicao + 1)).removeClass('text_through');
             if (!infos.esta_na_sala) {
-                $("#jogador" + (infos.posicao + 1)).addClass("text_through");
+                $('#jogador' + (infos.posicao + 1)).addClass('text_through');
             }
         }
     };
