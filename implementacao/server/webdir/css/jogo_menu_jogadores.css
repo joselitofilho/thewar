@@ -32,6 +32,15 @@
     box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, .3);
 }
 
+.menu_jogadores_box_destruido {
+    position: absolute;
+    margin: 0 auto;
+    background-image: url("../imagens/bulletglass.png");
+    width: 78px;
+    height: 90px;
+    z-index: 1;
+}
+
 .menu_jogadores_box_title {
     height: 24px;
 }

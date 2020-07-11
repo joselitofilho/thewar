@@ -145,16 +145,10 @@ jogos.war.Tour = function () {
 
     this.start_creation_room = function () {
         if (true === this.wait_creation_room) {
-            var that = this;
+            this.wait_creation_room = false;
             this.hide();
             var enjoyhint_instance = new EnjoyHint({
                 backgroundColor: "rgba(73, 54, 37, 0.8)",
-                onEnd: function () {
-                    that.wait_creation_room = false;
-                },
-                onSkip: function () {
-                    that.wait_creation_room = false;
-                },
             });
             var enjoyhint_script_steps = [
                 {
