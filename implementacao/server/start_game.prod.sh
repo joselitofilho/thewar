@@ -32,5 +32,5 @@ echo "Executing migrations..."
 ls -p migrations/database*.py | xargs -n 1 -I file python file war.db
 
 echo "Starting server..."
-PYTHONPATH=. python ./src/server.py && tail -F ./log/server.log
+PYTHONPATH=. python ./src/server.py >> ./log/server.log && tail -F ./log/server.log
 
