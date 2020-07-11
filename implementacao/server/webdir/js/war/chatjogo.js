@@ -81,8 +81,10 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
 
         if (this.rolou_a_barra_msgs) {
             if (chatAreaJogadores.scrollTop() + chatAreaJogadores.innerHeight() >= chatAreaJogadores[0].scrollHeight) {
+                this.rolou_a_barra_msgs = false;
                 msgsBotaoIrParaBaixo.hide();
             } else {
+                this.rolou_a_barra_msgs = true;
                 msgsBotaoIrParaBaixo.show();
             }
         } else {
@@ -95,8 +97,10 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
 
         if (this.rolou_a_barra_logs) {
             if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
+                this.rolou_a_barra_logs = false;
                 logsBotaoIrParaBaixo.hide();
             } else {
+                this.rolou_a_barra_logs = true;
                 logsBotaoIrParaBaixo.show();
             }
         } else {
@@ -104,26 +108,33 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         }
     };
 
-    this.msgsVaiParaBaixo = function () {
-        this.rolou_a_barra_msgs = false;
-        msgsBotaoIrParaBaixo.hide();
+    this.msgsVaiParaBaixo = function (fromButton = false) {
+        if (fromButton) {
+            this.rolou_a_barra_msgs = false;
+            msgsBotaoIrParaBaixo.hide();
+        }
         chatAreaJogadores.scrollTop(chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height());
     };
 
-    this.logsVaiParaBaixo = function () {
-        this.rolou_a_barra_logs = false;
-        logsBotaoIrParaBaixo.hide();
+    this.logsVaiParaBaixo = function (fromButton = false) {
+        if (fromButton) {
+            this.rolou_a_barra_logs = false;
+            logsBotaoIrParaBaixo.hide();
+        }
         chatAreaLogs.scrollTop(chatAreaLogs[0].scrollHeight - chatAreaLogs.height());
     };
 
     this.limpa = function () {
         chatAreaJogadores.text('');
         this.rolou_a_barra_msgs = false;
+        msgsBotaoIrParaBaixo.hide();
         chatAreaLogs.text('');
         this.rolou_a_barra_logs = false;
+        logsBotaoIrParaBaixo.hide();
     };
 
     this.boasVindas = function () {
+        this.limpa();
         let texto = '';
         texto += 'Entre na sala de áudio para falar com os outros jogadores:'.fontcolor("#453122");
         texto += '<div style=" width: 100%; display: flex; justify-content: start; text-align: center;">';

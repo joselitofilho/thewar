@@ -36,8 +36,10 @@ jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
 
         if (this.rolou_a_barra) {
             if (area.scrollTop() + area.innerHeight() >= area[0].scrollHeight) {
+                that.rolou_a_barra = false;
                 botaoIrParaBaixo.hide();
             } else {
+                that.rolou_a_barra = true;
                 botaoIrParaBaixo.show();
             }
         } else {
@@ -52,9 +54,12 @@ jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
     this.limpa = function () {
         area.html('');
         this.rolou_a_barra = false;
+        botaoIrParaBaixo.hide();
     };
 
     this.boasVindas = function () {
+        this.limpa();
+
         let texto = '';
         texto += '<h4>Seja bem-vindo ao servidor principal!</h4>';
         texto += '<div class="chat_tour" onclick="_tour.open()">';
@@ -67,12 +72,14 @@ jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
         texto += '    <a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>';
         texto += '</div>';
         area.append(texto);
-        this.vaiParaBaixo();
+        this.vaiParaBaixo(true);
     };
 
-    this.vaiParaBaixo = function () {
-        this.rolou_a_barra = false;
-        botaoIrParaBaixo.hide();
+    this.vaiParaBaixo = function (fromButton = false) {
+        if (fromButton) {
+            this.rolou_a_barra = false;
+            botaoIrParaBaixo.hide();
+        }
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );
