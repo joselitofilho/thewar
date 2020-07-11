@@ -9,6 +9,7 @@ from src.badges import *
 from src.chat.chat import *
 from src.desafios.desafios import *
 from src.doacaodb import *
+from src.grupousuariosdb import *
 from src.ia.iafactory import *
 from src.jogador import *
 from src.jogo import *
@@ -74,7 +75,7 @@ class GerenciadorSala(object):
 
                 if not self.jogo.temJogadorOnLine() and len(self.jogo.cpus) == 0:
                     self.jogoTerminou(self.nome)
-                    self.enviaMsgLobbyParaTodos()
+                    self.gerenciadorPrincipal.enviaMsgLobbyParaTodos()
                 else:
                     self.gerenciadorPrincipal.enviaMsgLobbyParaCliente(cliente)
 
@@ -201,15 +202,7 @@ class GerenciadorSala(object):
         self.gerenciadorPrincipal.jogoTerminou(idJogo)
         self.jogadoresDaSala = []
 
-        # TODO: Verificar criacao de salas pre-criadas.
-        # if idJogo == "1" or idJogo == "2":
-        # print("Recriando sala ", idJogo)
-        # self.sala = Sala(idJogo)
-        # self.estado = EstadoDaSala.sala_criada
-
-        # infoSalaMsg = InfoSala(self.sala.id,
-        #                        self.estado, self.sala.jogadores.values(), None)
-        # self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
+        self.gerenciadorPrincipal.enviaMsgLobbyParaTodos()
 
     def fecha(self):
         if self.jogo is not None:
@@ -234,9 +227,6 @@ class GerenciadorSala(object):
             self.jogadoresDaSala = self.sala.jogadores
         return self.jogadoresDaSala
 
-    def enviaMsgLobbyParaTodos(self):
-        self.enviaMsgParaTodos(TipoMensagem.lobby, self.gerenciadorPrincipal.montaMensagemParamsLobby())
-
     def enviaMsgParaTodos(self, tipo, params):
         self.gerenciadorPrincipal.enviaMsgParaTodos(tipo, params)
 
@@ -247,10 +237,6 @@ class GerenciadorPrincipal(object):
         self.salas = {}
         self.usuarioPorSala = {}
         self.chat = Chat()
-
-        # TODO: Verificar criacao de salas pre-criadas.
-        # self.salas["1"] = GerenciadorSala("1", self)
-        # self.salas["2"] = GerenciadorSala("2", self)
 
     def clienteConectou(self, cliente, usuario):
         self.jogadores[cliente] = usuario
@@ -350,7 +336,17 @@ class GerenciadorPrincipal(object):
         elif mensagem.tipo == TipoMensagem.msg_chat_geral:
             texto = mensagem.params['texto']
             texto, comando = self.chat.interpreta_comandos(texto)
-            self.enviaMsgParaTodos(TipoMensagem.msg_chat_geral, MsgChatGeral(usuario, texto))
+
+            if comando == Chat.KILL_COMMAND:
+                id_sala = texto
+                if id_sala in self.salas:
+                    if GrupoUsuariosDB().verifica_usuario_adm(usuario):
+                        self.mata_jogo(id_sala)
+                        self.enviaMsgLobbyParaTodos()
+                        texto = '[ADM] A sala ' + id_sala + ' foi encerrada.'
+                        self.enviaMsgParaTodos(TipoMensagem.msg_chat_geral, MsgChatGeral(usuario, texto))
+            else:
+                self.enviaMsgParaTodos(TipoMensagem.msg_chat_geral, MsgChatGeral(usuario, texto))
 
         elif mensagem.tipo == TipoMensagem.desafios_em_andamento:
             desafios_em_andamento = Desafios().em_andamento(usuario)
@@ -395,8 +391,6 @@ class GerenciadorPrincipal(object):
         idSala = str(idSala)
         print("[DEBUG] fechaSala(", idSala, ")")
         try:
-            # TODO: Verificar criacao de salas pre-criadas.
-            # if idSala != "1" and idSala != "2":
             if idSala in self.salas:
                 self.salas[idSala].fecha()
                 del self.salas[idSala]
@@ -422,6 +416,9 @@ class GerenciadorPrincipal(object):
 
         self.enviaMsgParaTodos(TipoMensagem.ranking, self.ranking())
 
+    def mata_jogo(self, id_jogo):
+        self.jogoTerminou(id_jogo)
+
     def montaMensagemParamsLobby(self):
         # Envia a lista de salas para o cliente.
         infoSalas = []
@@ -440,6 +437,10 @@ class GerenciadorPrincipal(object):
             if r.nome in self.jogadores.values():
                 infoUsuarios.append(r)
         return Lobby(infoSalas, infoUsuarios)
+
+    def enviaMsgLobbyParaTodos(self):
+        lobby = self.montaMensagemParamsLobby()
+        self.enviaMsgParaTodos(TipoMensagem.lobby, lobby)
 
     def enviaMsgLobbyParaCliente(self, cliente):
         lobby = self.montaMensagemParamsLobby()

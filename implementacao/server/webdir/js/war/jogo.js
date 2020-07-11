@@ -432,7 +432,6 @@ function processarMsg_saiu_do_jogo(msgParams) {
 function jogo_processaMsg_jogador_destruido(msgParams) {
     setTimeout(function () {
         const posicaoJogador = msgParams.jogador.posicao;
-        $("#jogador" + (posicaoJogador + 1)).addClass("text_through");
         this.tocarSom(this, "jogadorDestruido.mp3");
         var usuario = msgParams.jogador.usuario;
         if (posicaoJogador === _posicaoJogador) usuario = 'Você';

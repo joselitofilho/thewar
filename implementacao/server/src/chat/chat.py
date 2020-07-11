@@ -5,6 +5,7 @@ import re
 
 class Chat(object):
     KICK_COMMAND = 'kick'
+    KILL_COMMAND = 'kill'
 
     def interpreta_comandos(self, texto):
         comando = None
@@ -20,6 +21,8 @@ class Chat(object):
         if comando:
             if comando == Chat.KICK_COMMAND:
                 return argumento, Chat.KICK_COMMAND
+            elif comando == Chat.KILL_COMMAND:
+                return argumento, Chat.KILL_COMMAND
 
         with open('src/chat/comandos_gerais.json') as json_file:
             comandos = json.load(json_file)
