@@ -276,9 +276,7 @@ class Jogo(object):
                         if len(self.cpus) > 0 and not self.temJogadorOnLine():
                             self.qtd_turnos_sem_jogadores_humanos += 1
                         if self.qtd_turnos_sem_jogadores_humanos > 3:
-                            self.gerenciador.jogoTerminou(self.nome)
-                            self.gerenciador.enviaMsgLobbyParaTodos()
-                            return
+                            return self.gerenciador.jogoTerminou(self.nome)
                     else:
                         self.turno.numero = 1
                         self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
@@ -310,9 +308,7 @@ class Jogo(object):
                         if len(self.cpus) > 0 and not self.temJogadorOnLine():
                             self.qtd_turnos_sem_jogadores_humanos += 1
                         if self.qtd_turnos_sem_jogadores_humanos > 3:
-                            self.gerenciador.jogoTerminou(self.nome)
-                            self.gerenciador.enviaMsgLobbyParaTodos()
-                            return
+                            return self.gerenciador.jogoTerminou(self.nome)
                     else:
                         self.turno.numero = 1
                         self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
@@ -354,9 +350,7 @@ class Jogo(object):
                     if len(self.cpus) > 0 and not self.temJogadorOnLine():
                         self.qtd_turnos_sem_jogadores_humanos += 1
                     if self.qtd_turnos_sem_jogadores_humanos > 3:
-                        self.gerenciador.jogoTerminou(self.nome)
-                        self.gerenciador.enviaMsgLobbyParaTodos()
-                        return
+                        return self.gerenciador.jogoTerminou(self.nome)
                 else:
                     self.turno.numero = 2
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
@@ -459,9 +453,7 @@ class Jogo(object):
                     if len(self.cpus) > 0 and not self.temJogadorOnLine():
                         self.qtd_turnos_sem_jogadores_humanos += 1
                     if self.qtd_turnos_sem_jogadores_humanos > 3:
-                        self.gerenciador.jogoTerminou(self.nome)
-                        self.gerenciador.enviaMsgLobbyParaTodos()
-                        return
+                        return self.gerenciador.jogoTerminou(self.nome)
                 self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
             erro = False

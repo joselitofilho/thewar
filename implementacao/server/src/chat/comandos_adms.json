@@ -2,5 +2,9 @@
   {
     "comando": "kick",
     "regex": "!kick(\\w+|\\W+)*"
+  },
+  {
+    "comando": "kill",
+    "regex": "!kill(\\w+|\\W+)*"
   }
 ]
