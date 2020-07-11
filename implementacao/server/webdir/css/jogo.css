@@ -128,7 +128,7 @@
 }
 
 #chat_do_jogo {
-    float: left;
+    position: absolute;
 }
 
 #chat_do_jogo .titulo {
