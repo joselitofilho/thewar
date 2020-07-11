@@ -1,14 +1,18 @@
 #logs_do_jogo {
-    float: left;
+    position: absolute;
     width: 286px;
     height: 294px;
-    margin-top: 4px;
     background-image: linear-gradient(to bottom, #453122, #876850);
     -moz-box-shadow: inset 0 45px 20px -15px #453122;
     -webkit-box-shadow: inset 0 45px 20px -15px #453122;
     box-shadow: inset 0px 45px 20px -15px #453122;
     overflow-x: hidden;
     overflow-y: hidden;
+    top: 454px
+}
+
+#logs_do_jogo .botao_ir_para_baixo {
+    bottom: 8px;
 }
 
 #logs_do_jogo .titulo {

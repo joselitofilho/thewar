@@ -1,8 +1,20 @@
 var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
-jogos.war.ChatGeral = function (area) {
+jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
+    var that = this;
+    this.rolou_a_barra = false;
     this.util = new jogos.war.Util();
+
+    area.scroll(function () {
+        if (area.scrollTop() + area.innerHeight() >= area[0].scrollHeight) {
+            that.rolou_a_barra = false;
+            botaoIrParaBaixo.hide();
+        } else {
+            that.rolou_a_barra = true;
+            botaoIrParaBaixo.show();
+        }
+    });
 
     this.handleQuestionAnswerCallback = function (texto) {
         sala_enviaMsg(texto);
@@ -21,9 +33,16 @@ jogos.war.ChatGeral = function (area) {
         }
 
         area.append(texto + '<br/>');
-        area.scrollTop(
-            area[0].scrollHeight - area.height()
-        );
+
+        if (this.rolou_a_barra) {
+            if (area.scrollTop() + area.innerHeight() >= area[0].scrollHeight) {
+                botaoIrParaBaixo.hide();
+            } else {
+                botaoIrParaBaixo.show();
+            }
+        } else {
+            this.vaiParaBaixo();
+        }
     };
 
     this.servidorDiz = function (msg) {
@@ -32,6 +51,7 @@ jogos.war.ChatGeral = function (area) {
 
     this.limpa = function () {
         area.html('');
+        this.rolou_a_barra = false;
     };
 
     this.boasVindas = function () {
@@ -47,6 +67,12 @@ jogos.war.ChatGeral = function (area) {
         texto += '    <a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>';
         texto += '</div>';
         area.append(texto);
+        this.vaiParaBaixo();
+    };
+
+    this.vaiParaBaixo = function () {
+        this.rolou_a_barra = false;
+        botaoIrParaBaixo.hide();
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );

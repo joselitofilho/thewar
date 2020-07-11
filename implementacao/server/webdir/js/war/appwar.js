@@ -34,7 +34,7 @@ _quantidadeDeJogadoresNaSala = 0;
 _tour = new jogos.war.Tour();
 
 _sala = new jogos.war.Sala();
-_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'));
+_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'), $('#cg_botao_ir_para_baixo'));
 _chatGeral.boasVindas();
 
 _desafios = new jogos.war.Desafios();

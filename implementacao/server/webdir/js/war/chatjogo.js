@@ -1,8 +1,31 @@
 var jogowar = jogowar || {};
 jogowar.war = jogowar.war || {};
 
-jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
+jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAreaLogs, logsBotaoIrParaBaixo) {
+    var that = this;
+    this.rolou_a_barra_msgs = false;
+    this.rolou_a_barra_logs = false;
     this.util = new jogos.war.Util();
+
+    chatAreaJogadores.scroll(function () {
+        if (chatAreaJogadores.scrollTop() + chatAreaJogadores.innerHeight() >= chatAreaJogadores[0].scrollHeight) {
+            that.rolou_a_barra_msgs = false;
+            msgsBotaoIrParaBaixo.hide();
+        } else {
+            that.rolou_a_barra_msgs = true;
+            msgsBotaoIrParaBaixo.show();
+        }
+    });
+
+    chatAreaLogs.scroll(function () {
+        if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
+            that.rolou_a_barra_logs = false;
+            logsBotaoIrParaBaixo.hide();
+        } else {
+            that.rolou_a_barra_logs = true;
+            logsBotaoIrParaBaixo.show();
+        }
+    });
 
     this.handleQuestionAnswerCallback = function (texto) {
         jogo_enviaMsg(texto);
@@ -55,18 +78,49 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
 
     this.escreveNoComponente = function (texto) {
         chatAreaJogadores.append(texto + '</br>');
-        chatAreaJogadores.scrollTop(
-            chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height() + 250 /*Tamanho das imagens dentro do chat*/
-        );
+
+        if (this.rolou_a_barra_msgs) {
+            if (chatAreaJogadores.scrollTop() + chatAreaJogadores.innerHeight() >= chatAreaJogadores[0].scrollHeight) {
+                msgsBotaoIrParaBaixo.hide();
+            } else {
+                msgsBotaoIrParaBaixo.show();
+            }
+        } else {
+            this.msgsVaiParaBaixo();
+        }
     };
 
     this.escreveNoLog = function (texto) {
         chatAreaLogs.append(texto + '</br>');
+
+        if (this.rolou_a_barra_logs) {
+            if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
+                logsBotaoIrParaBaixo.hide();
+            } else {
+                logsBotaoIrParaBaixo.show();
+            }
+        } else {
+            this.logsVaiParaBaixo();
+        }
+    };
+
+    this.msgsVaiParaBaixo = function () {
+        this.rolou_a_barra_msgs = false;
+        msgsBotaoIrParaBaixo.hide();
+        chatAreaJogadores.scrollTop(chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height());
+    };
+
+    this.logsVaiParaBaixo = function () {
+        this.rolou_a_barra_logs = false;
+        logsBotaoIrParaBaixo.hide();
+        chatAreaLogs.scrollTop(chatAreaLogs[0].scrollHeight - chatAreaLogs.height());
     };
 
     this.limpa = function () {
         chatAreaJogadores.text('');
+        this.rolou_a_barra_msgs = false;
         chatAreaLogs.text('');
+        this.rolou_a_barra_logs = false;
     };
 
     this.boasVindas = function () {
@@ -75,8 +129,7 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
         texto += '<div style=" width: 100%; display: flex; justify-content: start; text-align: center;">';
         texto += '    <a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>';
         texto += '</div>';
-        chatAreaJogadores.append(texto);
-        chatAreaJogadores.scrollTop(chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height());
+        this.escreveNoComponente(texto);
     };
 
     this.distrubuirTropasGlobais = function (jogador, quantidade) {

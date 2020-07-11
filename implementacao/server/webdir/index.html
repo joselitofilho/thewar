@@ -299,6 +299,12 @@
     </div>
     <div id="chat_geral">
         <div class="titulo"></div>
+        <div id="cg_botao_ir_para_baixo" class="botao_ir_para_baixo" role="button"
+             style="transform: scaleX(1) scaleY(1); opacity: 1;" onclick="_chatGeral.vaiParaBaixo()">
+            <svg viewBox="0 0 24 24" transform="rotate(90)">
+                <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+            </svg>
+        </div>
         <div id="cg_mensagens"></div>
         <input class="form-control" id="cg_texto"
                onkeypress="return cg_texto_onkeypress(event);"
@@ -424,6 +430,12 @@
     <div id="lado_direito_jogo">
         <div id="chat_do_jogo">
             <div class="titulo"></div>
+            <div id="cj_botao_ir_para_baixo" class="botao_ir_para_baixo" role="button"
+                 style="transform: scaleX(1) scaleY(1); opacity: 1;" onclick="_chatJogo.msgsVaiParaBaixo()">
+                <svg viewBox="0 0 24 24" transform="rotate(90)">
+                    <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+                </svg>
+            </div>
             <div id="cj_mensagens">
                 <!-- NOTE: Conteúdo gerada dinamicamente. -->
             </div>
@@ -435,6 +447,12 @@
 
         <div id="logs_do_jogo">
             <div class="titulo"><p class="titulo_text">LOG DA PARTIDA</p></div>
+            <div id="lj_botao_ir_para_baixo" class="botao_ir_para_baixo" role="button"
+                 style="transform: scaleX(1) scaleY(1); opacity: 1;" onclick="_chatJogo.logsVaiParaBaixo()">
+                <svg viewBox="0 0 24 24" transform="rotate(90)">
+                    <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+                </svg>
+            </div>
             <div id="lj_mensagens">
                 <!-- NOTE: Conteúdo gerada dinamicamente. -->
             </div>
@@ -502,11 +520,14 @@
         </div>
         <div id="tour_content"></div>
         <div id="tour_footer">
-            <button id="tour_btn_page_prev" class="war_button" onclick="_tour.prev();"><span class="material-icons">arrow_back</span></button>
-            <button id="tour_btn_page_1" class="war_button war_button_active" onclick="_tour.to_page('page_1');"><span>1</span></button>
+            <button id="tour_btn_page_prev" class="war_button" onclick="_tour.prev();"><span class="material-icons">arrow_back</span>
+            </button>
+            <button id="tour_btn_page_1" class="war_button war_button_active" onclick="_tour.to_page('page_1');">
+                <span>1</span></button>
             <button id="tour_btn_page_2" class="war_button" onclick="_tour.to_page('page_2');"><span>2</span></button>
             <button id="tour_btn_page_3" class="war_button" onclick="_tour.to_page('page_3');"><span>3</span></button>
-            <button id="tour_btn_page_next" class="war_button" onclick="_tour.next();"><span class="material-icons">arrow_forward</span></button>
+            <button id="tour_btn_page_next" class="war_button" onclick="_tour.next();"><span class="material-icons">arrow_forward</span>
+            </button>
             <button id="tour_btn_tour" class="war_button" onclick="_tour.start();"><span>TOUR</span></button>
         </div>
     </div>

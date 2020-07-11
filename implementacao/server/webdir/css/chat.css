@@ -58,3 +58,20 @@
     mask: url('../imagens/soldier.svg') no-repeat center / contain;
     -webkit-mask: url('../imagens/soldier.svg') no-repeat center / contain;
 }
+
+.botao_ir_para_baixo {
+    position: absolute;
+    right: 18px;
+    bottom: 58px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #989898;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .6), 0 2px 5px 0 rgba(0, 0, 0, .2);
+}
