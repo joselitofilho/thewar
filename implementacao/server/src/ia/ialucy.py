@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
+import sys
 
 from src.carta import *
 from src.mensagens import *
@@ -174,12 +175,16 @@ class IALucy(IAInterface):
         visitados = []
         while True:
             grafo = self.atualiza_grafo(usuario, jogador, jogo)
-            territorios_com_bst_0 = dict(
-                filter(
-                    lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1]['bst'] == 0 and
-                                 elem[1]['codigo'] not in visitados, grafo.items()))
+            territorios_com_bst_0 = None
+            try:
+                territorios_com_bst_0 = dict(
+                    filter(lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1][
+                        'bst'] == 0 and elem[1]['codigo'] not in visitados, grafo.items()))
+            except:
+                print(grafo)
+                print("acao_move :: Unexpected exception:", sys.exc_info()[0])
 
-            if len(territorios_com_bst_0) > 0:
+            if territorios_com_bst_0 and len(territorios_com_bst_0) > 0:
                 do_territorio = next(iter(territorios_com_bst_0))
                 territorio_de = grafo[do_territorio]
                 territorio_para = {}
