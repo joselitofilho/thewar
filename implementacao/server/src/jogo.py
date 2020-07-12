@@ -635,12 +635,16 @@ class Jogo(object):
 
                                         # Verifica se o territorio foi conquistado.
                                         if territorioDaDefesa.quantidadeDeTropas == 0:
-                                            jogadorDefesa.territorios.remove(territorioDaDefesa)
-                                            jogador.territorios.append(territorioDaDefesa)
+                                            # jogadorDefesa.territorios.remove(territorioDaDefesa)
+                                            # jogador.territorios.append(territorioDaDefesa)
 
-                                            # Movendo uma tropa para o territorio conquistado.
-                                            territorioDaDefesa = jogador.adicionaTropasNoTerritorio(
-                                                territorioDaDefesa.codigo, 1)
+                                            # # Movendo uma tropa para o territorio conquistado.
+                                            # territorioDaDefesa = jogador.adicionaTropasNoTerritorio(
+                                            #     territorioDaDefesa.codigo, 1)
+
+                                            jogadorDefesa.removeTerritorio(territorioDaDefesa.codigo)
+                                            territorioDaDefesa.quantidadeDeTropas = 1
+                                            jogador.adicionaTerritorio(territorioDaDefesa)
 
                                             for t in territoriosDoAtaque:
                                                 if t.quantidadeDeTropas > 1:
