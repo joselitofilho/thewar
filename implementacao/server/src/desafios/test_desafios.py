@@ -23,7 +23,7 @@ def test_desafio01():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -47,7 +47,7 @@ def test_desafio02():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -71,7 +71,7 @@ def test_desafio03():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -94,7 +94,7 @@ def test_desafio04():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -117,7 +117,7 @@ def test_desafio05():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -141,7 +141,7 @@ def test_desafio07():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -165,7 +165,7 @@ def test_desafio10():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -190,7 +190,7 @@ def test_desafio14():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -213,7 +213,7 @@ def test_desafio17():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -235,7 +235,7 @@ def test_desafio22():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = False
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -256,7 +256,7 @@ def test_desafio25():
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     jogo.turno.numero = 20
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -280,7 +280,7 @@ def test_desafio28():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -304,7 +304,7 @@ def test_desafio32():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario = 'player0'
-    jogo.jogadorVencedor = usuario
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
@@ -324,7 +324,7 @@ def test_contabiliza_pontos():
 
     jogo = Jogo('TesteDesafio', jogadoresDoJogo, cpus)
     usuario_vencedor = 'player0'
-    jogo.jogadorVencedor = usuario_vencedor
+    jogo.jogadorVencedor = jogadoresDoJogo[0]
     venceu = True
     quemDestruiuQuem = jogo.quemDestruiuQuem(jogo.jogadores)
 
