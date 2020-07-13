@@ -183,14 +183,20 @@ class PontuacaoDB(object):
         c = conn.cursor()
         rowPontuacoes = c.execute(
             """
-                SELECT u.nome, p.pontos, p.quantidadeDePartidas, p.quantidadeDeVitorias, p.quantidadeDestruido
+                SELECT u.nome, p.pontos, p.quantidadeDePartidas, p.quantidadeDeVitorias, p.quantidadeDestruido, 
+                       COALESCE(p.pontos / p.quantidadeDePartidas, 0.0) AS eficiencia_pontos,
+                       COALESCE(p.quantidadeDeVitorias * 100.0 / p.quantidadeDePartidas, 0.0) AS eficiencia_vitorias
                   FROM PontuacaoEventos p 
                   JOIN Eventos e ON e.id = p.idEvento
                   JOIN Usuarios u ON u.id = p.idUsuario
                  WHERE datetime('now') BETWEEN e.iniciaEm AND e.terminaEm 
                    AND e.id = ( SELECT CAST(valor AS INTEGER) FROM Configuracoes WHERE chave = 'id_evento_atual' ) 
-              ORDER BY pontos-quantidadeDePartidas+quantidadeDeVitorias-quantidadeDestruido 
-                  DESC;
+              ORDER BY pontos DESC,
+                       eficiencia_pontos DESC,
+                       eficiencia_vitorias DESC,
+              		   quantidadeDePartidas ASC,
+              		   quantidadeDeVitorias DESC,
+              		   quantidadeDestruido ASC;
             """).fetchall()
 
         ranking = []
