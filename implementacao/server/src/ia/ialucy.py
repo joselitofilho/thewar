@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 import sys
+import time
 
 from src.carta import *
 from src.mensagens import *
@@ -174,39 +175,43 @@ class IALucy(IAInterface):
     def acao_move(self, usuario, jogador, jogo):
         visitados = []
         while True:
-            grafo = self.atualiza_grafo(usuario, jogador, jogo)
-            territorios_com_bst_0 = None
             try:
+                grafo = self.atualiza_grafo(usuario, jogador, jogo)
+
                 territorios_com_bst_0 = dict(
                     filter(lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1][
                         'bst'] == 0 and elem[1]['codigo'] not in visitados, grafo.items()))
-            except:
-                print(grafo)
-                print("acao_move :: Unexpected exception:", sys.exc_info()[0])
 
-            if territorios_com_bst_0 and len(territorios_com_bst_0) > 0:
-                do_territorio = next(iter(territorios_com_bst_0))
-                territorio_de = grafo[do_territorio]
-                territorio_para = {}
-                so_tem_fronteira_com_bst_0 = True
-                for t in territorio_de['fronteiras']:
-                    if grafo[t]['usuario'] == usuario and t not in visitados:
-                        territorio_para[t] = grafo[t]
-                        if grafo[t]['bst'] != 0:
-                            so_tem_fronteira_com_bst_0 = False
+                if len(territorios_com_bst_0) > 0:
+                    do_territorio = next(iter(territorios_com_bst_0))
+                    territorio_de = grafo[do_territorio]
+                    territorio_para = {}
+                    so_tem_fronteira_com_bst_0 = True
+                    for t in territorio_de['fronteiras']:
+                        if grafo[t]['usuario'] == usuario and t not in visitados:
+                            territorio_para[t] = grafo[t]
+                            if grafo[t]['bst'] != 0:
+                                so_tem_fronteira_com_bst_0 = False
 
-                if len(territorio_para) > 0:
-                    if so_tem_fronteira_com_bst_0:
+                    if len(territorio_para) > 0:
+                        # if so_tem_fronteira_com_bst_0:
                         visitados.append(do_territorio)
 
-                    territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'], reverse=True)
-                    para_o_territorio = territorio_para_ordenado[0][0]
+                        territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'],
+                                                          reverse=True)
+                        para_o_territorio = territorio_para_ordenado[0][0]
 
-                    quantidade = max(territorio_de['quantidade'] - 1, 1)
-                    jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
-                    self.wait_short_time()
+                        quantidade = max(territorio_de['quantidade'] - 1, 1)
+                        jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
+                        self.wait_short_time()
 
-            else:
+                else:
+                    break
+            except:
+                print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)))
+                print("acao_move :: Unexpected exception:", sys.exc_info()[0])
                 break
+
+            time.sleep(0.1)
 
         return True

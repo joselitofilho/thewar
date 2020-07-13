@@ -163,6 +163,66 @@ html, body {
     z-index: 9010;
 }
 
+#logo_carregando {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.logo_carregando_conteudo {
+    width: 100%;
+    height: max-content;
+    padding: 2em;
+    background-color: var(--background-color-overlay);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.soldier_logo {
+    width: 10em;
+    height: 10em;
+    background-color: var(--color-dark-brown);
+    mask: url('../imagens/soldier.svg') no-repeat center / contain;
+    -webkit-mask: url('../imagens/soldier.svg') no-repeat center / contain;
+    animation: soldier-logo-color 6s linear infinite;
+}
+
+@keyframes soldier-logo-color {
+    0%, 16% {
+        background-color: var(--color-player-red)
+    }
+    16%, 32% {
+        background-color: var(--color-player-blue)
+    }
+    32%, 48% {
+        background-color: var(--color-player-green);
+    }
+    48%, 54% {
+        background-color: var(--color-player-green);
+    }
+    54%, 70% {
+        background-color: var(--color-player-black);
+    }
+    70%, 86% {
+        background-color: var(--color-player-white);
+    }
+    86%, 100% {
+        background-color: var(--color-player-yellow);
+    }
+}
+
+#logo_carregando p {
+    font-family: var(--font-family-wartorn);
+    color: white;
+}
+
 #painelRegistrarOuEntrar {
     position: absolute;
     width: 100%;

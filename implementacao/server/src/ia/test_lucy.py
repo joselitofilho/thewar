@@ -66,7 +66,7 @@ def test_acao_mover():
             jogo.jogadores[1].adicionaTerritorio(terr)
 
     # print('Lucy0 {}'.format(jogo.jogadores[1].toJson()))
-    # print('grafo {}'.format(jogo.grafoTerritorios()))
+    # print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)))
 
     ################################################################################
     ################################################################################

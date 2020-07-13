@@ -65,7 +65,6 @@ ul, ol {
 .donation-options {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     justify-content: space-evenly;
     max-width: 43.75rem;
     margin: auto;
@@ -76,6 +75,45 @@ ul, ol {
 .donation-ico {
     margin-top: 8px;
     height: 150px;
+}
+
+.donation-values {
+    max-width: 63.75rem;
+    margin: 0.875em auto;
+    padding: 1em;
+    display: flex;
+    /*flex-direction: column;*/
+    flex-direction: row;
+    align-items: center;
+}
+
+.donation-values div {
+    width: 80%;
+    height: 3em;
+    margin: 1em;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+    background-color: white;
+    color: #453122;
+}
+
+.donation-values p {
+    max-width: 11.625rem;
+    margin: 2px auto;
+    font-size: 1.0em;
+    line-height: 1.2em;
+    text-align: center;
+}
+
+.donation-values h2 {
+    max-width: 51.625rem;
+    margin: 2px auto;
+    font-size: 1.4em;
+    line-height: 1.2em;
+    text-align: center;
 }
 
 /* dynatable */
@@ -259,3 +297,12 @@ thead a:hover, thead a:focus {
     font-size: 16px;
 }
 /**/
+
+
+/*@media screen and (min-width: 1120px) {*/
+/*    .donation-values {*/
+/*        max-width: 63.75rem;*/
+/*        flex-direction: row;*/
+/*        padding: 2em;*/
+/*    }*/
+/*}*/

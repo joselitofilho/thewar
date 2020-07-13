@@ -1049,7 +1049,7 @@ class Jogo(object):
     def temJogadorOnLine(self):
         return len(self.clientes) > 0
 
-    def grafoTerritorios(self):
+    def grafoTerritorios(self, jogadores):
         grafo_territorios = {}
         for codigo_territorio in CodigoTerritorio.Lista:
             grafo_territorios[codigo_territorio] = {
@@ -1084,7 +1084,7 @@ class Jogo(object):
             elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.Oceania]:
                 grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Oceania
 
-        for jogador in self.jogadores.values():
+        for jogador in jogadores.values():
             for territorio in jogador.territorios:
                 grafo_territorios[territorio.codigo]['usuario'] = jogador.usuario
                 grafo_territorios[territorio.codigo]['quantidade'] = territorio.quantidadeDeTropas
