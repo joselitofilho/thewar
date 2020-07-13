@@ -224,9 +224,13 @@
 
 #sala_content .sala_menu .war_button {
     margin: 2px;
-    height: 32px;
+    height: 28px;
     padding: 6px 20px;
-    font-size: 14px;
+    font-size: 10px;
+}
+
+#sala_content .sala_menu .war_button:hover {
+    transition: 0s;
 }
 
 #sala_content .sala_content_grid {
