@@ -85,6 +85,9 @@ class IAInterface(threading.Thread):
                         pass
                 elif self.mensagem.tipo == TipoMensagem.erro:
                     print('ERROR MSG ', self.usuario)
+                elif self.mensagem.tipo == TipoMensagem.jogo_interrompido:
+                    print('JOGO INTERROMPIDO ', self.usuario)
+                    self.para()
 
             self.wait_short_time()
 
