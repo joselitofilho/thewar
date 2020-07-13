@@ -154,7 +154,7 @@ class Desafio(object):
 class Desafio01(Desafio):
     def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
         if venceu:
-            if usuario == jogo.jogadorVencedor:
+            if usuario == jogo.jogadorVencedor.usuario:
                 if len(jogo.cpus) >= 3:
                     return True
         return False
@@ -164,7 +164,7 @@ class Desafio01(Desafio):
 class Desafio02(Desafio):
     def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
         if venceu:
-            if usuario == jogo.jogadorVencedor:
+            if usuario == jogo.jogadorVencedor.usuario:
                 if len(jogo.cpus) >= 4:
                     return True
         return False
@@ -174,7 +174,7 @@ class Desafio02(Desafio):
 class Desafio03(Desafio):
     def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
         if venceu:
-            if usuario == jogo.jogadorVencedor:
+            if usuario == jogo.jogadorVencedor.usuario:
                 if len(jogo.cpus) == 5:
                     return True
         return False
