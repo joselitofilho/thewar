@@ -144,7 +144,7 @@ jogos.war.Sala = function () {
     };
 
     this.alteraBtnEntrar = function (acao, sala) {
-        $('#btnEntrarNaSala' + sala).attr('class', 'btn_' + acao);
+        $('#btnEntrarNaSala' + sala).html('<span>' + acao + '</span>');
     };
 
     this.abreBoxCriarSala = function () {
@@ -241,13 +241,13 @@ function saiuDaSala(sala, jogadorDaSala) {
 
 function atualizaElementosJogadorNaSala(sala) {
     $('#sc_bloqueador' + sala).css('visibility', 'hidden');
-    $('#btnSairDaSala' + sala).css('visibility', 'visible');
+    $('#btnSairDaSala' + sala).css('display', '');
     $('#btnEntrarNaSala' + sala).css('display', 'none');
 }
 
 function atualizaElementosJogadorForaDaSala(sala) {
     $('#sc_bloqueador' + sala).css('visibility', 'visible');
-    $('#btnSairDaSala' + sala).css('visibility', 'hidden');
+    $('#btnSairDaSala' + sala).css('display', 'none');
     $('#btnEntrarNaSala' + sala).css('display', '');
 }
 
