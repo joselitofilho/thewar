@@ -189,7 +189,7 @@ class PontuacaoDB(object):
                   JOIN Usuarios u ON u.id = p.idUsuario
                  WHERE datetime('now') BETWEEN e.iniciaEm AND e.terminaEm 
                    AND e.id = ( SELECT CAST(valor AS INTEGER) FROM Configuracoes WHERE chave = 'id_evento_atual' ) 
-              ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido 
+              ORDER BY pontos-quantidadeDePartidas+quantidadeDeVitorias-quantidadeDestruido 
                   DESC;
             """).fetchall()
 

@@ -3,6 +3,8 @@ jogos.war = jogos.war || {};
 
 jogos.war.Tour = function () {
 
+    var that = this;
+
     this.pages = [];
 
     this.init = function () {
@@ -84,7 +86,6 @@ jogos.war.Tour = function () {
     };
 
     this.start = function () {
-        var that = this;
         this.hide();
         this.wait_creation_room = false;
 
@@ -135,6 +136,7 @@ jogos.war.Tour = function () {
                 'click #botao_criar_sala': 'Clique no botão "criar sala" para começar a jogar com seus amigos.',
                 onBeforeStart: function () {
                     _desafios.hide();
+                    that.wait_creation_room = true;
                 },
             },
         ];

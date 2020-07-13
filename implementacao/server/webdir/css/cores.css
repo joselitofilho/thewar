@@ -4,32 +4,32 @@
 }
 
 .cor_vermelha {
-    background: #841D0F;
+    background: var(--color-player-red);
     color: #FFF;
 }
 
 .cor_azul {
-    background: #2621A8;
+    background: var(--color-player-blue);
     color: #FFF;
 }
 
 .cor_verde {
-    background: #436C4B;
+    background: var(--color-player-green);
     color: #FFF;
 }
 
 .cor_preto {
-    background: #1A191E;
+    background: var(--color-player-black);
     color: #FFF;
 }
 
 .cor_branco {
-    background: #bdbdbd;
+    background: var(--color-player-white);
     color: #444;
 }
 
 .cor_amarelo {
-    background: #CABF45;
+    background: var(--color-player-yellow);
     color: #444;
 }
 

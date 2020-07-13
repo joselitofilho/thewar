@@ -174,7 +174,7 @@ class IAInterface(threading.Thread):
         jogo.finalizaTurno(usuario)
 
     def atualiza_grafo(self, usuario, jogador, jogo):
-        self.grafo_territorios = jogo.grafoTerritorios()
+        self.grafo_territorios = jogo.grafoTerritorios(jogo.jogadores)
 
         bst = self.bst(usuario, jogador)
         # print('BST', usuario, bst)

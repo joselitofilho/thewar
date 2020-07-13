@@ -91,10 +91,10 @@ jogos.war.Sala = function () {
         html += '    <div class="sala_header">';
         html += '        <div class="sala_titulo">#' + id + '&nbsp;<p id="sala_' + id + '_titulo_info">Jogar com o computador reduz a pontuação de vitória.</p></div>';
         html += '        <div class="sala_menu">';
-        html += '            <button id="btnIniciarPartida' + id + '" class="btn_iniciar_partida" onclick="iniciarPartida();"></button>';
+        html += '            <button id="btnIniciarPartida' + id + '" class="war_button" onclick="iniciarPartida();"><span>iniciar partida</span></button>';
         // html += '            <button>Pronto</button>';
-        html += '            <button id="btnSairDaSala' + id + '" class="btn_sair" onclick="_sala.sai();"></button>';
-        html += '            <button id="btnEntrarNaSala' + id + '" class="btn_entrar" onclick="appwar_alteraPosicaoSala(\'' + id + '\', 0);"></button>';
+        html += '            <button id="btnSairDaSala' + id + '" class="war_button" onclick="_sala.sai();"><span>sair</span></button>';
+        html += '            <button id="btnEntrarNaSala' + id + '" class="war_button" onclick="appwar_alteraPosicaoSala(\'' + id + '\', 0);"><span>entrar</span></button>';
         html += '        </div>';
         html += '    </div>';
         html += '    <div class="sala_content_grid">';

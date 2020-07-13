@@ -39,6 +39,10 @@ _chatGeral.boasVindas();
 
 _desafios = new jogos.war.Desafios();
 
+window.addEventListener('load', function () {
+    $('#logo_carregando').css('display', 'none');
+});
+
 function appwar_limparVariaveis() {
     _posicaoJogador = -1;
     _jogadorEstaEmJogo = false;
@@ -103,7 +107,8 @@ function processarMsg_entrar(msgParams) {
         _usuario = msgParams.usuario;
 
         appwar_atualizarMenuParaSala();
-        $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+        $('#conteudo_principal').css('display', '');
+        $('#painelRegistrarOuEntrar').css('display', 'none');
         $('#sala').css('visibility', 'visible');
         $('html,body').css('overflow', 'auto');
     } else {
@@ -165,7 +170,8 @@ function posAberturaSocket(valor) {
     }
 
     appwar_exibirPainelEntrar();
-    $('#painelRegistrarOuEntrar').css('visibility', 'visible');
+    $('#conteudo_principal').css('display', 'none');
+    $('#painelRegistrarOuEntrar').css('display', '');
 }
 
 function posRecebimentoMensagemServidor(valor) {
@@ -241,7 +247,8 @@ function posRecebimentoMensagemServidor(valor) {
 
 function posFechamentoSocket(valor) {
     $('#bloqueador_tela').css('visibility', 'visible');
-    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+    $('#conteudo_principal').css('display', 'none');
+    $('#painelRegistrarOuEntrar').css('display', 'none');
     $('#botao_recarregar').css('visibility', 'visible');
 }
 

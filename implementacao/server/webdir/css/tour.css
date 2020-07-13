@@ -84,6 +84,11 @@
     font-size: 18px;
 }
 
+.btn_tour {
+    font-family: 'wartorn';
+    font-size: 14px;
+}
+
 #tour_footer .war_button_active {
     outline: none;
     color: white;
