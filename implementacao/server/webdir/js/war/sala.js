@@ -289,7 +289,6 @@ function processarMsg_lobby(msgParams) {
         document.getElementById('geral').style.cursor = 'auto';
     }
 
-    console.log(msgParams);
     _sala.limpaListaSala();
     for (iSala = 0; iSala < msgParams.salas.length; ++iSala) {
         var sala = msgParams.salas[iSala].sala;
