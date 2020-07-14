@@ -27,6 +27,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV TERM screen
 
-RUN echo "0 * * * * /bin/bash /opt/app/gerar_desafio.sh >> /dev/null" | crontab
+RUN echo "0 * * * * /bin/bash /opt/app/gerar_desafio.sh >> /opt/app/log/cron_gerar_desafios.log" | crontab
 
 COPY . .
