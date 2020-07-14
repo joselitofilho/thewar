@@ -225,8 +225,6 @@
 #sala_content .sala_menu .war_button {
     margin: 2px;
     height: 28px;
-    padding: 6px 20px;
-    font-size: 10px;
 }
 
 #sala_content .sala_menu .war_button:hover {

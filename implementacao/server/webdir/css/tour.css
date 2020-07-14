@@ -10,7 +10,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background-color: rgba(73, 54, 37, 0.8);
+    background-color: var(--background-color-overlay);
     z-index: 1000;
 }
 
@@ -58,7 +58,7 @@
 
 .tour_titulo {
     margin-top: 8px;
-    font-family: "wartorn";
+    font-family: var(--font-family-wartorn);
     text-align: center;
     font-size: 50px;
     color: #453122;
@@ -85,14 +85,13 @@
 }
 
 .btn_tour {
-    font-family: 'wartorn';
-    font-size: 14px;
+    font-family: var(--font-family-wartorn);
+    font-size: 12px;
 }
 
 #tour_footer .war_button_active {
     outline: none;
     color: white;
-    /*transition: 0.5s;*/
     box-shadow: 8px 8px 0 #FBC638;
 }
 
