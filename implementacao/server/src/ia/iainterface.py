@@ -55,6 +55,9 @@ class IAInterface(threading.Thread):
     def jogador_ref(self, value):
         self.jogador = value
 
+    def wait_very_short_time(self):
+        time.sleep(0.25)
+
     def wait_short_time(self):
         time.sleep(0.5)
 
