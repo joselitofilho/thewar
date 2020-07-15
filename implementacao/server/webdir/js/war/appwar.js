@@ -239,6 +239,7 @@ function posRecebimentoMensagemServidor(valor) {
         doacoes_processaMsg(jsonMensagem.params);
         _sala.atualizaDoadores(_doadores);
     } else if (jsonMensagem.tipo === TipoMensagem.desafios_em_andamento) {
+        console.log(jsonMensagem.params);
         _desafios.processaMsg(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.erro) {
         processarMsg_erro();
