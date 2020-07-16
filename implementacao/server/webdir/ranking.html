@@ -197,6 +197,7 @@
 
     function posRecebimentoMensagemServidor(msg) {
         const jsonMensagem = JSON.parse(msg);
+        ranking_processaMsg(jsonMensagem.params);
 
         const level_por_usuario = [];
         const rank = [];
