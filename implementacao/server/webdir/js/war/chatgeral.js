@@ -1,8 +1,20 @@
 var jogos = jogos || {};
 jogos.war = jogos.war || {};
 
-jogos.war.ChatGeral = function (area) {
+jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
+    var that = this;
+    this.rolou_a_barra = false;
     this.util = new jogos.war.Util();
+
+    area.scroll(function () {
+        if (area.scrollTop() + area.innerHeight() >= area[0].scrollHeight) {
+            that.rolou_a_barra = false;
+            botaoIrParaBaixo.hide();
+        } else {
+            that.rolou_a_barra = true;
+            botaoIrParaBaixo.show();
+        }
+    });
 
     this.handleQuestionAnswerCallback = function (texto) {
         sala_enviaMsg(texto);
@@ -21,9 +33,18 @@ jogos.war.ChatGeral = function (area) {
         }
 
         area.append(texto + '<br/>');
-        area.scrollTop(
-            area[0].scrollHeight - area.height()
-        );
+
+        if (this.rolou_a_barra) {
+            if (area.scrollTop() + area.innerHeight() >= area[0].scrollHeight) {
+                that.rolou_a_barra = false;
+                botaoIrParaBaixo.hide();
+            } else {
+                that.rolou_a_barra = true;
+                botaoIrParaBaixo.show();
+            }
+        } else {
+            this.vaiParaBaixo();
+        }
     };
 
     this.servidorDiz = function (msg) {
@@ -32,12 +53,16 @@ jogos.war.ChatGeral = function (area) {
 
     this.limpa = function () {
         area.html('');
+        this.rolou_a_barra = false;
+        botaoIrParaBaixo.hide();
     };
 
     this.boasVindas = function () {
+        this.limpa();
+
         let texto = '';
         texto += '<h4>Seja bem-vindo ao servidor principal!</h4>';
-        texto += '<div class="chat_tour" onclick="_tour.start()">';
+        texto += '<div class="chat_tour" onclick="_tour.open()">';
         texto += '    <div class="chat_soldado"></div>';
         texto += '    <p>Primeira vez por aqui?<br/>Clique aqui para conhecer o jogo.</p>';
         texto += '</div>';
@@ -47,6 +72,14 @@ jogos.war.ChatGeral = function (area) {
         texto += '    <a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>';
         texto += '</div>';
         area.append(texto);
+        this.vaiParaBaixo(true);
+    };
+
+    this.vaiParaBaixo = function (fromButton = false) {
+        if (fromButton) {
+            this.rolou_a_barra = false;
+            botaoIrParaBaixo.hide();
+        }
         area.scrollTop(
             area[0].scrollHeight - area.height()
         );

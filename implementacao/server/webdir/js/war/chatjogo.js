@@ -1,8 +1,31 @@
 var jogowar = jogowar || {};
 jogowar.war = jogowar.war || {};
 
-jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
+jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAreaLogs, logsBotaoIrParaBaixo) {
+    var that = this;
+    this.rolou_a_barra_msgs = false;
+    this.rolou_a_barra_logs = false;
     this.util = new jogos.war.Util();
+
+    chatAreaJogadores.scroll(function () {
+        if (chatAreaJogadores.scrollTop() + chatAreaJogadores.innerHeight() >= chatAreaJogadores[0].scrollHeight) {
+            that.rolou_a_barra_msgs = false;
+            msgsBotaoIrParaBaixo.hide();
+        } else {
+            that.rolou_a_barra_msgs = true;
+            msgsBotaoIrParaBaixo.show();
+        }
+    });
+
+    chatAreaLogs.scroll(function () {
+        if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
+            that.rolou_a_barra_logs = false;
+            logsBotaoIrParaBaixo.hide();
+        } else {
+            that.rolou_a_barra_logs = true;
+            logsBotaoIrParaBaixo.show();
+        }
+    });
 
     this.handleQuestionAnswerCallback = function (texto) {
         jogo_enviaMsg(texto);
@@ -18,6 +41,10 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
 
     this.estaAtivo = function () {
         return this.ativo || false;
+    };
+
+    this.atualizaJogadoresDaSala = function (jogadores) {
+        this.jogadores = jogadores;
     };
 
     this.escreve = function (params, indiceCor) {
@@ -53,40 +80,104 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
         this.escreveNoComponente(textoMsg);
     };
 
-    this.escreveNoComponente = function (texto) {
-        chatAreaJogadores.append(texto + '</br>');
-        chatAreaJogadores.scrollTop(
-            chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height() + 250 /*Tamanho das imagens dentro do chat*/
-        );
+    this.indiceJogador = function (usuario) {
+        for (let i = 0; i < this.jogadores.length; ++i) {
+            if (this.jogadores[i].usuario === usuario) {
+                return this.jogadores[i].posicao;
+            }
+        }
+        return -1;
     };
 
-    this.escreveNoLog = function (texto) {
-        chatAreaLogs.append(texto + '</br>');
+    this.escreveNoComponente = function (texto) {
+        chatAreaJogadores.append(texto + '</br>');
+
+        if (this.rolou_a_barra_msgs) {
+            if (chatAreaJogadores.scrollTop() + chatAreaJogadores.innerHeight() >= chatAreaJogadores[0].scrollHeight) {
+                this.rolou_a_barra_msgs = false;
+                msgsBotaoIrParaBaixo.hide();
+            } else {
+                this.rolou_a_barra_msgs = true;
+                msgsBotaoIrParaBaixo.show();
+            }
+        } else {
+            this.msgsVaiParaBaixo();
+        }
+    };
+
+    this.escreveNoLog = function (indice, texto) {
+        let cor = 'cor_marrom';
+        if (indice === 0) {
+            cor = 'cor_vermelha';
+        } else if (indice === 1) {
+            cor = 'cor_azul';
+        } else if (indice === 2) {
+            cor = 'cor_verde';
+        } else if (indice === 3) {
+            cor = 'cor_preto';
+        } else if (indice === 4) {
+            cor = 'cor_branco';
+        } else if (indice === 5) {
+            cor = 'cor_amarelo';
+        }
+        chatAreaLogs.append('<div class="log_mensagem_item"><div class="barra_lateral ' + cor + '"></div><p>' + texto + '</p></div>');
+
+        if (this.rolou_a_barra_logs) {
+            if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
+                this.rolou_a_barra_logs = false;
+                logsBotaoIrParaBaixo.hide();
+            } else {
+                this.rolou_a_barra_logs = true;
+                logsBotaoIrParaBaixo.show();
+            }
+        } else {
+            this.logsVaiParaBaixo();
+        }
+    };
+
+    this.msgsVaiParaBaixo = function (fromButton = false) {
+        if (fromButton) {
+            this.rolou_a_barra_msgs = false;
+            msgsBotaoIrParaBaixo.hide();
+        }
+        chatAreaJogadores.scrollTop(chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height());
+    };
+
+    this.logsVaiParaBaixo = function (fromButton = false) {
+        if (fromButton) {
+            this.rolou_a_barra_logs = false;
+            logsBotaoIrParaBaixo.hide();
+        }
+        chatAreaLogs.scrollTop(chatAreaLogs[0].scrollHeight - chatAreaLogs.height());
     };
 
     this.limpa = function () {
         chatAreaJogadores.text('');
+        this.rolou_a_barra_msgs = false;
+        msgsBotaoIrParaBaixo.hide();
         chatAreaLogs.text('');
+        this.rolou_a_barra_logs = false;
+        logsBotaoIrParaBaixo.hide();
     };
 
     this.boasVindas = function () {
+        this.limpa();
         let texto = '';
         texto += 'Entre na sala de áudio para falar com os outros jogadores:'.fontcolor("#453122");
         texto += '<div style=" width: 100%; display: flex; justify-content: start; text-align: center;">';
         texto += '    <a href="https://discord.gg/2Xr8TyR" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/discord.png" /></a>';
         texto += '</div>';
-        chatAreaJogadores.append(texto);
-        chatAreaJogadores.scrollTop(chatAreaJogadores[0].scrollHeight - chatAreaJogadores.height());
+        this.escreveNoComponente(texto);
     };
 
     this.distrubuirTropasGlobais = function (jogador, quantidade) {
         const texto = jogador + ' está distribuindo ' + quantidade + ' exércitos pelo mundo.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.distrubuirTropasGrupoTerritorio = function (jogador, grupo, quantidade) {
         const texto = jogador + ' está distribuindo ' + quantidade + ' exércitos no continente ' + grupo + '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.colocaTropa = function (usuario, territorio, quantidade) {
@@ -98,11 +189,11 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
             texto += quantidade + ' exército';
         texto += ' no território ' + territorio
         texto += '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(usuario), texto);
     };
 
-    this.ataque = function (jogadorAtaque, territoriosDoAtaque,
-                            jogadorDefesa, territorioDaDefesa) {
+    this.ataque = function (jogadorAtaque, territoriosDoAtaque, dadosAtaque,
+                            jogadorDefesa, territorioDaDefesa, dadosDefesa) {
         var territoriosDoAtaqueTexto = territoriosDoAtaque[0].codigo;
         for (i = 1; i < territoriosDoAtaque.length - 1; i++)
             territoriosDoAtaqueTexto += ', ' + territoriosDoAtaque[i].codigo;
@@ -110,7 +201,7 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
         if (territoriosDoAtaque.length > 1)
             territoriosDoAtaqueTexto += ' e ' + territoriosDoAtaque[territoriosDoAtaque.length - 1].codigo;
 
-        var texto = '' +
+        let texto = '' +
             jogadorAtaque + ' atacou ' +
             jogadorDefesa +
             ' no território ' +
@@ -122,8 +213,10 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
             texto += ' do território ' +
                 territoriosDoAtaqueTexto;
         }
-        texto += '.';
-        this.escreveNoLog(texto);
+        texto += '.</br>';
+        texto += 'Dados ataque: ' + dadosAtaque + '</br>';
+        texto += 'Dados defesa: ' + dadosDefesa;
+        this.escreveNoLog(this.indiceJogador(jogadorAtaque), texto);
     };
 
     this.moveu = function (jogador, doTerritorio, paraOTerritorio, quantidade) {
@@ -134,32 +227,32 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, chatAreaLogs) {
         texto += ' do território ' + doTerritorio;
         texto += ' para o território ' + paraOTerritorio
         texto += '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.conquistouTerritorio = function (jogador, territorio) {
         const texto = jogador + ' conquistou o território ' + territorio + '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.trocouCartasTerritorio = function (jogador, quantidade) {
         const texto = jogador + ' trocou suas cartas territórios por ' + quantidade + ' exércitos.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.verificandoTroca = function (jogador) {
         const texto = jogador + ' está no turno troca de cartas.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.estaAtacando = function (jogador) {
         const texto = jogador + ' está no turno atacar.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.estaMovendo = function (jogador) {
         const texto = jogador + ' está no turno mover.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.entrouNoJogo = function (jogador, olheiro) {

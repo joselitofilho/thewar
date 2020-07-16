@@ -1,0 +1,17 @@
+:root {
+    --background-color-overlay: rgba(73, 54, 37, 0.8);
+
+    --color-brown: #876850;
+    --color-dark-brown: #453122;
+
+    --color-player-red: #841D0F;
+    --color-player-blue: #2621A8;
+    --color-player-green: #436C4B;
+    --color-player-black: #1A191E;
+    --color-player-white: #bdbdbd;
+    --color-player-yellow: #CABF45;
+
+    --font-family-wartorn: "wartorn";
+
+    --border-radios-default: 4px;
+}

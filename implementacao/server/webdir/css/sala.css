@@ -218,6 +218,17 @@
 }
 
 #sala_content .sala_menu {
+    display: flex;
+    justify-content: space-around;
+}
+
+#sala_content .sala_menu .war_button {
+    margin: 2px;
+    height: 28px;
+}
+
+#sala_content .sala_menu .war_button:hover {
+    transition: 0s;
 }
 
 #sala_content .sala_content_grid {

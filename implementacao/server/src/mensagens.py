@@ -1,6 +1,4 @@
-import json
-from json import JSONEncoder
-
+from src.jsonserializer import *
 from src.turno import *
 
 
@@ -44,38 +42,24 @@ class TipoMensagem:
     usuario_desconectou = "UsuarioDesconectou"
 
 
-class MensagemEncoder(JSONEncoder):
-    def default(self, object):
-        if type(object) == {}.values().__class__:
-            return list(object)
-        else:
-            return object.__dict__
-
-
-class Mensagem(object):
+class Mensagem(JSONSerializer):
     def __init__(self, tipo=None, params=None):
         self.tipo = tipo
         self.params = params
 
-    def fromJson(self, jsonMsg):
-        self.__dict__ = json.loads(jsonMsg)
 
-    def toJson(self):
-        return MensagemEncoder().encode(self).encode('utf-8')
-
-
-class Lobby(object):
+class Lobby(JSONSerializer):
     def __init__(self, salas, usuarios):
         self.salas = salas
         self.usuarios = usuarios
 
 
-class CriarSala(object):
+class CriarSala(JSONSerializer):
     def __init__(self, sala):
         self.sala = sala
 
 
-class InfoSala(object):
+class InfoSala(JSONSerializer):
     def __init__(self, sala, estado, jogadoresDaSala, extra):
         self.sala = sala
         self.estado = estado
@@ -83,36 +67,36 @@ class InfoSala(object):
         self.extra = extra
 
 
-class FecharSala(object):
+class FecharSala(JSONSerializer):
     def __init__(self, sala):
         self.sala = sala
 
 
-class AlteraPosicaoNaSala(object):
+class AlteraPosicaoNaSala(JSONSerializer):
     def __init__(self, sala, jogadorDaSala, posicaoAntiga):
         self.sala = sala
         self.jogadorDaSala = jogadorDaSala
         self.posicaoAntiga = posicaoAntiga
 
 
-class TerritoriosPorJogador(object):
+class TerritoriosPorJogador(JSONSerializer):
     def __init__(self, posicao, territorios):
         self.posicao = posicao
         self.territorios = territorios
 
 
-class JogoFaseI(object):
+class JogoFaseI(JSONSerializer):
     def __init__(self, posicao, territoriosDosJogadores):
         self.jogadorQueComeca = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
 
 
-class CartaObjetivo(object):
+class CartaObjetivo(JSONSerializer):
     def __init__(self, objetivo):
         self.objetivo = objetivo
 
 
-class EntrouNoJogo(object):
+class EntrouNoJogo(JSONSerializer):
     def __init__(self, usuario, posicao, total_territorios, total_cartas_territorio):
         self.usuario = usuario
         self.posicao = posicao
@@ -120,13 +104,13 @@ class EntrouNoJogo(object):
         self.total_cartas_territorio = total_cartas_territorio
 
 
-class SaiuDoJogo(object):
+class SaiuDoJogo(JSONSerializer):
     def __init__(self, usuario, posicao):
         self.usuario = usuario
         self.posicao = posicao
 
 
-class CarregaJogo(object):
+class CarregaJogo(JSONSerializer):
     def __init__(self, posicao, territoriosDosJogadores, listaJogadores, objetivo, cartasTerritorio):
         self.jogadorDaVez = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
@@ -135,14 +119,14 @@ class CarregaJogo(object):
         self.cartasTerritorio = cartasTerritorio
 
 
-class CarregaJogoOlheiro(object):
+class CarregaJogoOlheiro(JSONSerializer):
     def __init__(self, posicao, territoriosDosJogadores, listaJogadores):
         self.jogadorDaVez = posicao
         self.territoriosDosJogadores = territoriosDosJogadores
         self.jogadores = listaJogadores
 
 
-class AcaoTurno(object):
+class AcaoTurno(JSONSerializer):
     def __init__(self, tipoAcao, numeroDoTurno, infoJogadorDaVez, tempoRestante, valorDaTroca, infoJogadores,
                  jogadorQueComecou, ordemJogadores):
         self.tipoAcao = tipoAcao
@@ -199,7 +183,7 @@ class AcaoJogoTerminou(AcaoTurno):
         self.ganhador = ganhador
 
 
-class ColocarTropa(object):
+class ColocarTropa(JSONSerializer):
     def __init__(self, jogador, quantidade, territorio, quantidadeDeTropasRestante):
         self.jogador = jogador
         self.quantidade = quantidade
@@ -207,7 +191,7 @@ class ColocarTropa(object):
         self.quantidadeDeTropasRestante = quantidadeDeTropasRestante
 
 
-class Atacar(object):
+class Atacar(JSONSerializer):
     def __init__(self, jogadorAtaque, jogadorDefesa,
                  dadosDefesa, dadosAtaque,
                  territorioDaDefesa, territoriosDoAtaque,
@@ -221,7 +205,7 @@ class Atacar(object):
         self.conquistouTerritorio = conquistouTerritorio
 
 
-class Mover(object):
+class Mover(JSONSerializer):
     def __init__(self, jogador, doTerritorioObj, paraOTerritorioObj, quantidade):
         self.jogador = jogador
         self.doTerritorioObj = doTerritorioObj
@@ -229,47 +213,47 @@ class Mover(object):
         self.quantidade = quantidade
 
 
-class Territorios(object):
+class Territorios(JSONSerializer):
     def __init__(self, posicaoJogador, territorios):
         self.posicaoJogador = posicaoJogador
         self.territorios = territorios
 
 
-class ColocarTropaNaTrocaDeCartasTerritorios(object):
+class ColocarTropaNaTrocaDeCartasTerritorios(JSONSerializer):
     def __init__(self, jogador, territorios):
         self.jogador = jogador;
         self.territorios = territorios
 
 
-class JogadorDestruido(object):
+class JogadorDestruido(JSONSerializer):
     def __init__(self, jogador):
         self.jogador = jogador
 
 
-class JogoInterrompido(object):
+class JogoInterrompido(JSONSerializer):
     def __init__(self, identificador):
         self.identificador = identificador
 
 
-class MsgChatJogo(object):
+class MsgChatJogo(JSONSerializer):
     def __init__(self, jogador, texto, som=None):
         self.jogador = jogador
         self.texto = texto
         self.som = som
 
 
-class MsgChatGeral(object):
+class MsgChatGeral(JSONSerializer):
     def __init__(self, usuario, texto, som=None):
         self.usuario = usuario
         self.texto = texto
         self.som = som
 
 
-class UsuarioConectou(object):
+class UsuarioConectou(JSONSerializer):
     def __init__(self, usuario):
         self.usuario = usuario
 
 
-class UsuarioDesconectou(object):
+class UsuarioDesconectou(JSONSerializer):
     def __init__(self, usuario):
         self.usuario = usuario

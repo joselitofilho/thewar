@@ -25,12 +25,9 @@ mv premiacao.png webdir/imagens/lobby/banners/
 gdown --id 15Y7Zrp9s4FiQuKgMiN-lxTad7xyEhh0l
 mv premio.png webdir/imagens/lobby/banners/
 
-echo "Checking challenges..."
-./gerar_desafio.sh
-
 echo "Executing migrations..."
 ls -p migrations/database*.py | xargs -n 1 -I file python file war.db
 
 echo "Starting server..."
-PYTHONPATH=. python ./src/server.py && tail -F ./log/server.log
+PYTHONPATH=. python ./src/server.py >> ./log/server.log && tail -F ./log/server.log
 

@@ -91,10 +91,10 @@ jogos.war.Sala = function () {
         html += '    <div class="sala_header">';
         html += '        <div class="sala_titulo">#' + id + '&nbsp;<p id="sala_' + id + '_titulo_info">Jogar com o computador reduz a pontuação de vitória.</p></div>';
         html += '        <div class="sala_menu">';
-        html += '            <button id="btnIniciarPartida' + id + '" class="btn_iniciar_partida" onclick="iniciarPartida();"></button>';
+        html += '            <button id="btnIniciarPartida' + id + '" class="war_button" onclick="iniciarPartida();"><span>iniciar partida</span></button>';
         // html += '            <button>Pronto</button>';
-        html += '            <button id="btnSairDaSala' + id + '" class="btn_sair" onclick="_sala.sai();"></button>';
-        html += '            <button id="btnEntrarNaSala' + id + '" class="btn_entrar" onclick="appwar_alteraPosicaoSala(\'' + id + '\', 0);"></button>';
+        html += '            <button id="btnSairDaSala' + id + '" class="war_button" onclick="_sala.sai();"><span>sair</span></button>';
+        html += '            <button id="btnEntrarNaSala' + id + '" class="war_button" onclick="appwar_alteraPosicaoSala(\'' + id + '\', 0);"><span>entrar</span></button>';
         html += '        </div>';
         html += '    </div>';
         html += '    <div class="sala_content_grid">';
@@ -144,7 +144,7 @@ jogos.war.Sala = function () {
     };
 
     this.alteraBtnEntrar = function (acao, sala) {
-        $('#btnEntrarNaSala' + sala).attr('class', 'btn_' + acao);
+        $('#btnEntrarNaSala' + sala).html('<span>' + acao + '</span>');
     };
 
     this.abreBoxCriarSala = function () {
@@ -223,9 +223,7 @@ function entrouNaSala(sala, jogadorDaSala) {
     if (_usuario === jogadorDaSala.usuario) {
         _salaDoJogador = sala;
         _posicaoJogador = Number(jogadorDaSala.posicao);
-        $('#sc_bloqueador' + sala).css('visibility', 'hidden');
-        $('#btnSairDaSala' + sala).css('visibility', 'visible');
-        $('#btnEntrarNaSala' + sala).css('display', 'none');
+        this.atualizaElementosJogadorNaSala(sala);
     }
 }
 
@@ -235,12 +233,22 @@ function saiuDaSala(sala, jogadorDaSala) {
     _sala.limpaPosicao(sala, Number(jogadorDaSala.posicao));
 
     if (_usuario === jogadorDaSala.usuario) {
-        _posicaoJogador = -1;
         _salaDoJogador = null;
-        $('#sc_bloqueador' + sala).css('visibility', 'visible');
-        $('#btnSairDaSala' + sala).css('visibility', 'hidden');
-        $('#btnEntrarNaSala' + sala).css('display', '');
+        _posicaoJogador = -1;
+        this.atualizaElementosJogadorForaDaSala(sala);
     }
+}
+
+function atualizaElementosJogadorNaSala(sala) {
+    $('#sc_bloqueador' + sala).css('visibility', 'hidden');
+    $('#btnSairDaSala' + sala).css('display', '');
+    $('#btnEntrarNaSala' + sala).css('display', 'none');
+}
+
+function atualizaElementosJogadorForaDaSala(sala) {
+    $('#sc_bloqueador' + sala).css('visibility', 'visible');
+    $('#btnSairDaSala' + sala).css('display', 'none');
+    $('#btnEntrarNaSala' + sala).css('display', '');
 }
 
 function processarMsg_altera_posicao_na_sala(msgParams) {
@@ -282,14 +290,14 @@ function processarMsg_lobby(msgParams) {
     }
 
     _sala.limpaListaSala();
-    for (iSala = 0; iSala < msgParams.salas.length; iSala++) {
+    for (iSala = 0; iSala < msgParams.salas.length; ++iSala) {
         var sala = msgParams.salas[iSala].sala;
         var jogadores = msgParams.salas[iSala].jogadores;
         var estado = msgParams.salas[iSala].estado;
         _sala.adicionaElementoHtml(sala);
         _sala.alteraBtnEntrar((estado === 'sala_criada') ? 'entrar' : 'assistir', sala);
         $('#btnIniciarPartida' + sala).css('visibility', 'hidden');
-
+        this.atualizaElementosJogadorForaDaSala(sala);
         $('#sala_' + sala + '_titulo_info').css('display', 'none');
         for (let i = 0; i <= 5; i++) {
             if (jogadores[i] != null) {
@@ -299,12 +307,15 @@ function processarMsg_lobby(msgParams) {
                 var tipo = jog.tipo;
                 _sala.preencheJogador(sala, posicaoJogador, usuario, tipo, jog.dono);
 
-                if (usuario === _usuario && estado === 'jogo_em_andamento') {
-                    _sala.alteraBtnEntrar('reentrar', sala);
+                if (_usuario === usuario && estado === 'sala_criada') {
+                    this.atualizaElementosJogadorNaSala(sala);
+                    if (jog.dono) {
+                        $('#btnIniciarPartida' + sala).css('visibility', 'visible');
+                    }
                 }
 
-                if (jog.dono && _usuario === usuario && estado === 'sala_criada') {
-                    $('#btnIniciarPartida' + sala).css('visibility', 'visible');
+                if (usuario === _usuario && estado === 'jogo_em_andamento') {
+                    _sala.alteraBtnEntrar('reentrar', sala);
                 }
             } else {
                 $('#sala' + sala + '_jogador' + (i + 1)).css('text-decoration', '');

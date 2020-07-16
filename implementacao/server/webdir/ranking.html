@@ -15,17 +15,19 @@
 
     <script src='https://s3.amazonaws.com/dynatable-docs-assets/js/highcharts.js' type='text/javascript'></script>
 
+    <link href="css/variaveis.css?ver=2.6" rel="stylesheet">
+
     <!-- Bagdes -->
-    <link href="css/insignias_x40.css?ver=2.3" rel="stylesheet">
-    <link href="css/insignias_x100.css?ver=2.3" rel="stylesheet">
+    <link href="css/insignias_x40.css?ver=2.6" rel="stylesheet">
+    <link href="css/insignias_x100.css?ver=2.6" rel="stylesheet">
     <!---->
 
     <!-- Ranking -->
-    <link href="css/ranking_evento.css?ver=2.3" rel="stylesheet">
+    <link href="css/ranking_evento.css?ver=2.6" rel="stylesheet">
     <!---->
 
     <!-- Donations -->
-    <link href="css/ranking.css?ver=2.3" rel="stylesheet">
+    <link href="css/ranking.css?ver=2.6" rel="stylesheet">
     <!---->
 </head>
 <body>
@@ -68,6 +70,28 @@
             <div role="progressbar" class="donation-progress" style="width: 0%;"><!----></div>
         </div>
         <!--        <p class="center donation-last-update">Atualizado a poucos instantes.</p>-->
+    </div>
+    <div class="donation-values">
+        <div class="donation-adventure">
+            <p>Aventureiro</p>
+            <h2>R$20,00</h2>
+            <p>1 mês</p>
+        </div>
+        <div class="donation-partner">
+            <p>Parceiro</p>
+            <h2>R$35,00</h2>
+            <p>1 mês para você e um amigo</p>
+        </div>
+        <div class="donation-conquer">
+            <p>Conquistador</p>
+            <h2>R$45,00</h2>
+            <p>3 meses</p>
+        </div>
+        <div class="donation-pathfinder">
+            <p>Desbravador</p>
+            <h2>R$60,00</h2>
+            <p>6 meses</p>
+        </div>
     </div>
 </div>
 
@@ -158,10 +182,10 @@
     </div>
 </div>
 
-<script src="js/websocket/websocket.js?ver=2.3" type="text/javascript"></script>
-<script src="js/mensagens.js?ver=2.3" type="text/javascript"></script>
-<script src="js/comunicacao.js?ver=2.3" type="text/javascript"></script>
-<script src="js/war/ranking.js?ver=2.3" type="text/javascript"></script>
+<script src="js/websocket/websocket.js?ver=2.6" type="text/javascript"></script>
+<script src="js/mensagens.js?ver=2.6" type="text/javascript"></script>
+<script src="js/comunicacao.js?ver=2.6" type="text/javascript"></script>
+<script src="js/war/ranking.js?ver=2.6" type="text/javascript"></script>
 
 <script>
     _libwebsocketRanking = new gpscheck.comunicacao.GPSWebSocket(8080);
@@ -173,6 +197,7 @@
 
     function posRecebimentoMensagemServidor(msg) {
         const jsonMensagem = JSON.parse(msg);
+        ranking_processaMsg(jsonMensagem.params);
 
         const level_por_usuario = [];
         const rank = [];

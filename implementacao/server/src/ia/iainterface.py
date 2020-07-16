@@ -55,6 +55,9 @@ class IAInterface(threading.Thread):
     def jogador_ref(self, value):
         self.jogador = value
 
+    def wait_very_short_time(self):
+        time.sleep(0.25)
+
     def wait_short_time(self):
         time.sleep(0.5)
 
@@ -85,6 +88,9 @@ class IAInterface(threading.Thread):
                         pass
                 elif self.mensagem.tipo == TipoMensagem.erro:
                     print('ERROR MSG ', self.usuario)
+                elif self.mensagem.tipo == TipoMensagem.jogo_interrompido:
+                    print('JOGO INTERROMPIDO ', self.usuario)
+                    self.para()
 
             self.wait_short_time()
 
@@ -174,7 +180,7 @@ class IAInterface(threading.Thread):
         jogo.finalizaTurno(usuario)
 
     def atualiza_grafo(self, usuario, jogador, jogo):
-        self.grafo_territorios = jogo.grafoTerritorios()
+        self.grafo_territorios = jogo.grafoTerritorios(jogo.jogadores)
 
         bst = self.bst(usuario, jogador)
         # print('BST', usuario, bst)

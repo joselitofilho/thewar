@@ -68,7 +68,8 @@ class Jogo(object):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
         print(
-            '{} ID jogo: {} - humanos: {} - maquina: {}'.format(datetime.datetime.now(), self.nome, len(self.clientes),
+            '{} ID jogo: {} - humanos: {} - maquina: {}'.format(datetime.datetime.now(), self.nome,
+                                                                0 if self.clientes is None else len(self.clientes),
                                                                 len(self.cpus)))
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
@@ -241,7 +242,7 @@ class Jogo(object):
         if jogador.tipo == TipoJogador.humano:
             # Verifica se o jogador esta logado na sala e nao foi destruido.
             # TODO: Se o jogador não estiver na sala, usar um BOT no lugar.
-            jogadorEstaOn = self.posicaoJogadorDaVez in self.clientes.keys()
+            jogadorEstaOn = True if self.clientes is None else self.posicaoJogadorDaVez in self.clientes.keys()
 
         if jogadorEstaOn:
             if not comVerificacaoExtra:
@@ -275,9 +276,7 @@ class Jogo(object):
                         if len(self.cpus) > 0 and not self.temJogadorOnLine():
                             self.qtd_turnos_sem_jogadores_humanos += 1
                         if self.qtd_turnos_sem_jogadores_humanos > 3:
-                            self.gerenciador.jogoTerminou(self.nome)
-                            self.gerenciador.enviaMsgLobbyParaTodos()
-                            return
+                            return self.gerenciador.jogoTerminou(self.nome)
                     else:
                         self.turno.numero = 1
                         self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
@@ -309,9 +308,7 @@ class Jogo(object):
                         if len(self.cpus) > 0 and not self.temJogadorOnLine():
                             self.qtd_turnos_sem_jogadores_humanos += 1
                         if self.qtd_turnos_sem_jogadores_humanos > 3:
-                            self.gerenciador.jogoTerminou(self.nome)
-                            self.gerenciador.enviaMsgLobbyParaTodos()
-                            return
+                            return self.gerenciador.jogoTerminou(self.nome)
                     else:
                         self.turno.numero = 1
                         self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
@@ -353,9 +350,7 @@ class Jogo(object):
                     if len(self.cpus) > 0 and not self.temJogadorOnLine():
                         self.qtd_turnos_sem_jogadores_humanos += 1
                     if self.qtd_turnos_sem_jogadores_humanos > 3:
-                        self.gerenciador.jogoTerminou(self.nome)
-                        self.gerenciador.enviaMsgLobbyParaTodos()
-                        return
+                        return self.gerenciador.jogoTerminou(self.nome)
                 else:
                     self.turno.numero = 2
                     self.turno.tipoAcao = TipoAcaoTurno.atacar
@@ -458,9 +453,7 @@ class Jogo(object):
                     if len(self.cpus) > 0 and not self.temJogadorOnLine():
                         self.qtd_turnos_sem_jogadores_humanos += 1
                     if self.qtd_turnos_sem_jogadores_humanos > 3:
-                        self.gerenciador.jogoTerminou(self.nome)
-                        self.gerenciador.enviaMsgLobbyParaTodos()
-                        return
+                        return self.gerenciador.jogoTerminou(self.nome)
                 self.turno.tipoAcao = TipoAcaoTurno.distribuir_tropas_globais
 
             erro = False
@@ -642,12 +635,16 @@ class Jogo(object):
 
                                         # Verifica se o territorio foi conquistado.
                                         if territorioDaDefesa.quantidadeDeTropas == 0:
-                                            jogadorDefesa.territorios.remove(territorioDaDefesa)
-                                            jogador.territorios.append(territorioDaDefesa)
+                                            # jogadorDefesa.territorios.remove(territorioDaDefesa)
+                                            # jogador.territorios.append(territorioDaDefesa)
 
-                                            # Movendo uma tropa para o territorio conquistado.
-                                            territorioDaDefesa = jogador.adicionaTropasNoTerritorio(
-                                                territorioDaDefesa.codigo, 1)
+                                            # # Movendo uma tropa para o territorio conquistado.
+                                            # territorioDaDefesa = jogador.adicionaTropasNoTerritorio(
+                                            #     territorioDaDefesa.codigo, 1)
+
+                                            jogadorDefesa.removeTerritorio(territorioDaDefesa.codigo)
+                                            territorioDaDefesa.quantidadeDeTropas = 1
+                                            jogador.adicionaTerritorio(territorioDaDefesa)
 
                                             for t in territoriosDoAtaque:
                                                 if t.quantidadeDeTropas > 1:
@@ -769,6 +766,7 @@ class Jogo(object):
                         self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
                 else:
                     self.enviaMsgParaJogador(TipoMensagem.erro, None, jogador)
+            self.jogadores[posicaoJogador] = jogador
 
     def moveAposConquistarTerritorio(self, usuario, quantidade):
         # turno = self.turno
@@ -1051,7 +1049,7 @@ class Jogo(object):
     def temJogadorOnLine(self):
         return len(self.clientes) > 0
 
-    def grafoTerritorios(self):
+    def grafoTerritorios(self, jogadores):
         grafo_territorios = {}
         for codigo_territorio in CodigoTerritorio.Lista:
             grafo_territorios[codigo_territorio] = {
@@ -1086,7 +1084,7 @@ class Jogo(object):
             elif codigo_territorio in GrupoTerritorio.Dicionario[GrupoTerritorio.Oceania]:
                 grafo_territorios[codigo_territorio]['grupo'] = GrupoTerritorio.Oceania
 
-        for jogador in self.jogadores.values():
+        for jogador in jogadores.values():
             for territorio in jogador.territorios:
                 grafo_territorios[territorio.codigo]['usuario'] = jogador.usuario
                 grafo_territorios[territorio.codigo]['quantidade'] = territorio.quantidadeDeTropas
@@ -1165,8 +1163,7 @@ class Jogo(object):
             print("Nao foi possivel enviar a mensagem para todos os clientes - JSON: ", jsonMsg)
 
     def fecha(self):
+        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
+        self.turno.paraTimeout()
         for jogadorCpu in self.cpus.values():
             jogadorCpu.para()
-        self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
-
-        self.turno.paraTimeout()

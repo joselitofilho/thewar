@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
+import sys
 
 from src.carta import *
 from src.mensagens import *
@@ -14,52 +15,60 @@ class IALucy(IAInterface):
         super(IALucy, self).__init__('Lucy' + sufixo)
 
     def acao_coloca_tropa(self, usuario, jogador, jogo, params):
-        grafo = self.atualiza_grafo(usuario, jogador, jogo)
+        try:
+            grafo = self.atualiza_grafo(usuario, jogador, jogo)
 
-        quantidade_de_tropas = params['quantidadeDeTropas']
-        densidades = jogador.densidadeTodosGruposTerritorio()
-        grupo_maior_densidade = densidades[0][0]
-        for densidade in densidades:
-            if 0.0 < densidade[1] and densidade[1] < 100.0:
-                grupo_maior_densidade = densidade[0]
-                break
-        lista_grupo_maior_densidade = GrupoTerritorio.Dicionario[grupo_maior_densidade]
-        codigosTerritorios = []
-        for terr in jogador.territorios:
-            codigosTerritorios.append(terr.codigo)
-        meus_territorios_por_grupo_maior_densidade = jogador.territoriosPorGrupo(lista_grupo_maior_densidade,
-                                                                                 codigosTerritorios)
+            quantidade_de_tropas = params['quantidadeDeTropas']
+            densidades = jogador.densidadeTodosGruposTerritorio()
+            grupo_maior_densidade = densidades[0][0]
+            for densidade in densidades:
+                if 0.0 < densidade[1] and densidade[1] < 100.0:
+                    grupo_maior_densidade = densidade[0]
+                    break
+            lista_grupo_maior_densidade = GrupoTerritorio.Dicionario[grupo_maior_densidade]
+            codigosTerritorios = []
+            for terr in jogador.territorios:
+                codigosTerritorios.append(terr.codigo)
+            meus_territorios_por_grupo_maior_densidade = jogador.territoriosPorGrupo(lista_grupo_maior_densidade,
+                                                                                     codigosTerritorios)
 
-        meus_territorios = []
-        for terr in jogador.territorios:
-            if terr.codigo in meus_territorios_por_grupo_maior_densidade:
-                meus_territorios.append(terr)
+            meus_territorios = []
+            for terr in jogador.territorios:
+                if terr.codigo in meus_territorios_por_grupo_maior_densidade:
+                    meus_territorios.append(terr)
 
-        meu_territorio_escolhido = None
-        for terr in meus_territorios_por_grupo_maior_densidade:
-            grafo_terr = grafo[terr]
-            if meu_territorio_escolhido == None:
-                meu_territorio_escolhido = grafo_terr
-            elif grafo_terr['bsr'] == meu_territorio_escolhido['bsr']:
-                qtd_adjacentes_no_grupo_1 = 0
-                for adj in grafo_terr['fronteiras']:
-                    if grafo[adj]['grupo'] == grafo_terr['grupo']:
-                        qtd_adjacentes_no_grupo_1 += 1
-                qtd_adjacentes_no_grupo_2 = 0
-                for adj in meu_territorio_escolhido['fronteiras']:
-                    if meu_territorio_escolhido['grupo'] == grafo[adj]['grupo']:
-                        qtd_adjacentes_no_grupo_2 += 1
-                if qtd_adjacentes_no_grupo_1 > qtd_adjacentes_no_grupo_2:
+            meu_territorio_escolhido = None
+            for terr in meus_territorios_por_grupo_maior_densidade:
+                grafo_terr = grafo[terr]
+                if meu_territorio_escolhido == None:
                     meu_territorio_escolhido = grafo_terr
-            elif meu_territorio_escolhido['nbsr'] < grafo[terr]['nbsr']:
-                meu_territorio_escolhido = grafo_terr
+                elif grafo_terr['bsr'] == meu_territorio_escolhido['bsr']:
+                    qtd_adjacentes_no_grupo_1 = 0
+                    for adj in grafo_terr['fronteiras']:
+                        if grafo[adj]['grupo'] == grafo_terr['grupo']:
+                            qtd_adjacentes_no_grupo_1 += 1
+                    qtd_adjacentes_no_grupo_2 = 0
+                    for adj in meu_territorio_escolhido['fronteiras']:
+                        if meu_territorio_escolhido['grupo'] == grafo[adj]['grupo']:
+                            qtd_adjacentes_no_grupo_2 += 1
+                    if qtd_adjacentes_no_grupo_1 > qtd_adjacentes_no_grupo_2:
+                        meu_territorio_escolhido = grafo_terr
+                elif meu_territorio_escolhido['nbsr'] < grafo[terr]['nbsr']:
+                    meu_territorio_escolhido = grafo_terr
 
-        if meu_territorio_escolhido:
-            territorio_codigo = meu_territorio_escolhido['codigo']
-        else:
-            territorio_codigo = meus_territorios_por_grupo_maior_densidade[0]
+            if meu_territorio_escolhido:
+                territorio_codigo = meu_territorio_escolhido['codigo']
+            else:
+                territorio_codigo = meus_territorios_por_grupo_maior_densidade[0]
 
-        jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
+            jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
+        except:
+            print("acao_coloca_tropa :: Unexpected exception:", sys.exc_info()[0], flush=True)
+            print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)), flush=True)
+
+            terrs = jogador.territorios
+            random.shuffle(terrs)
+            jogo.colocaTropaReq(usuario, terrs[0].codigo, quantidade_de_tropas)
 
         return True
 
@@ -172,36 +181,45 @@ class IALucy(IAInterface):
 
     def acao_move(self, usuario, jogador, jogo):
         visitados = []
+        qtd_nao_moveu = 0
         while True:
-            grafo = self.atualiza_grafo(usuario, jogador, jogo)
-            territorios_com_bst_0 = dict(
-                filter(
-                    lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1]['bst'] == 0 and
-                                 elem[1]['codigo'] not in visitados, grafo.items()))
+            try:
+                grafo = self.atualiza_grafo(usuario, jogador, jogo)
 
-            if len(territorios_com_bst_0) > 0:
-                do_territorio = next(iter(territorios_com_bst_0))
-                territorio_de = grafo[do_territorio]
-                territorio_para = {}
-                so_tem_fronteira_com_bst_0 = True
-                for t in territorio_de['fronteiras']:
-                    if grafo[t]['usuario'] == usuario and t not in visitados:
-                        territorio_para[t] = grafo[t]
-                        if grafo[t]['bst'] != 0:
-                            so_tem_fronteira_com_bst_0 = False
+                territorios_com_bst_0 = dict(
+                    filter(lambda elem: elem[1]['quantidade'] > 1 and elem[1]['usuario'] == usuario and elem[1][
+                        'bst'] == 0 and elem[1]['codigo'] not in visitados, grafo.items()))
 
-                if len(territorio_para) > 0:
-                    if so_tem_fronteira_com_bst_0:
+                if len(territorios_com_bst_0) > 0:
+                    do_territorio = next(iter(territorios_com_bst_0))
+                    territorio_de = grafo[do_territorio]
+                    territorio_para = {}
+                    for t in territorio_de['fronteiras']:
+                        if grafo[t]['usuario'] == usuario and t not in visitados:
+                            territorio_para[t] = grafo[t]
+
+                    if len(territorio_para) > 0:
                         visitados.append(do_territorio)
 
-                    territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'], reverse=True)
-                    para_o_territorio = territorio_para_ordenado[0][0]
+                        territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'],
+                                                          reverse=True)
+                        para_o_territorio = territorio_para_ordenado[0][0]
 
-                    quantidade = max(territorio_de['quantidade'] - 1, 1)
-                    jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
-                    self.wait_short_time()
+                        quantidade = max(territorio_de['quantidade'] - 1, 1)
+                        jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
+                        qtd_nao_moveu = 0
+                        self.wait_short_time()
 
-            else:
+                else:
+                    break
+            except:
+                print("acao_move :: Unexpected exception:", sys.exc_info()[0], flush=True)
+                print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)), flush=True)
                 break
+
+            qtd_nao_moveu += 1
+            if qtd_nao_moveu >= 3:
+                break
+            self.wait_short_time()
 
         return True

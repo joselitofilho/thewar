@@ -1,5 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import operator
 
+from src.jsonserializer import *
 from src.territorio import *
 
 
@@ -9,7 +13,7 @@ class TipoJogador:
     desabilitado = "disable"
 
 
-class JogadorDaSala(object):
+class JogadorDaSala(JSONSerializer):
     def __init__(self, usuario, posicao, dono, tipo=TipoJogador.humano):
         self.usuario = usuario
         self.posicao = posicao
@@ -17,7 +21,7 @@ class JogadorDaSala(object):
         self.tipo = tipo
 
 
-class JogadorDoJogo(object):
+class JogadorDoJogo(JSONSerializer):
     def __init__(self, usuario, posicao, dono, tipo):
         self.usuario = usuario
         self.posicao = posicao
@@ -163,6 +167,17 @@ class JogadorDoJogo(object):
 
         return territorio
 
+    def adicionaTerritorio(self, territorio):
+        self.territorios.append(territorio)
+
+    def removeTerritorio(self, codigoTerritorio):
+        novos_territorios = []
+        for t in self.territorios:
+            if t.codigo != codigoTerritorio:
+                novos_territorios.append(t)
+        self.territorios.clear()
+        self.territorios = novos_territorios
+
     def seuTerritorio(self, codigoTerritorio):
         for t in self.territorios:
             if t.codigo == codigoTerritorio:
@@ -180,7 +195,7 @@ class JogadorDoJogo(object):
         return posicao in self.jogadoresDestruidos
 
 
-class Jogador(object):
+class Jogador(JSONSerializer):
     _usuario = None
     _posicaoNaSala = -1
     _socket = None

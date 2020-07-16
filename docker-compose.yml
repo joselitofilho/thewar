@@ -7,8 +7,7 @@ services:
       dockerfile: Dockerfile
     image: jogowar/app
     volumes:
-      - ./implementacao/server:/opt/app
-    working_dir: /opt/app
+      - ./implementacao/server:/app
     ports:
       - 8080:8080
       - 9092:9092

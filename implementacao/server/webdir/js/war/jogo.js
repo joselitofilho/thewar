@@ -1,4 +1,4 @@
-var _chatJogo = new jogowar.war.ChatJogo($('#cj_mensagens'), $('#lj_mensagens'));
+var _chatJogo = new jogowar.war.ChatJogo($('#cj_mensagens'), $('#cj_botao_ir_para_baixo'), $('#lj_mensagens'), $('#lj_botao_ir_para_baixo'));
 var _sliderMoverTropas = new jogos.war.Slider($('#slider-mover-tropas'));
 var _componenteAcaoTurno = new jogos.war.ComponenteAcaoTurno();
 var _menuJogadores = new jogos.war.MenuJogadores();
@@ -117,8 +117,10 @@ function jogo_efetuaAtaque(msgParams) {
     _chatJogo.ataque(
         msgParams.jogadorAtaque.usuario,
         msgParams.territoriosDoAtaque,
+        msgParams.dadosAtaque,
         msgParams.jogadorDefesa.usuario,
-        msgParams.territorioDaDefesa);
+        msgParams.territorioDaDefesa,
+        msgParams.dadosDefesa);
 
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
@@ -432,7 +434,6 @@ function processarMsg_saiu_do_jogo(msgParams) {
 function jogo_processaMsg_jogador_destruido(msgParams) {
     setTimeout(function () {
         const posicaoJogador = msgParams.jogador.posicao;
-        $("#jogador" + (posicaoJogador + 1)).addClass("text_through");
         this.tocarSom(this, "jogadorDestruido.mp3");
         var usuario = msgParams.jogador.usuario;
         if (posicaoJogador === _posicaoJogador) usuario = 'Você';
@@ -451,6 +452,7 @@ function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _infoJogadorDaVezDoTurno = msgParams.vezDoJogador;
     _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
+    $('#pct_numeroDoTurno').html("Turno: " + msgParams.numeroDoTurno);
     $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
 
     const tempoTotal = Number(msgParams.tempoRestante);
@@ -599,6 +601,7 @@ function jogo_alteraInfoTurno(msgParams) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
+    _chatJogo.atualizaJogadoresDaSala(msgParams.infoJogadores);
     _menuJogadores.posicionaElementos(msgParams.jogadorQueComecou, msgParams.ordemJogadores, msgParams.infoJogadores);
     for (let i = 0; i < msgParams.infoJogadores.length; i++) {
         const infos = msgParams.infoJogadores[i];

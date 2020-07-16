@@ -34,10 +34,14 @@ _quantidadeDeJogadoresNaSala = 0;
 _tour = new jogos.war.Tour();
 
 _sala = new jogos.war.Sala();
-_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'));
+_chatGeral = new jogos.war.ChatGeral($('#cg_mensagens'), $('#cg_botao_ir_para_baixo'));
 _chatGeral.boasVindas();
 
 _desafios = new jogos.war.Desafios();
+
+window.addEventListener('load', function () {
+    $('#logo_carregando').css('display', 'none');
+});
 
 function appwar_limparVariaveis() {
     _posicaoJogador = -1;
@@ -103,7 +107,8 @@ function processarMsg_entrar(msgParams) {
         _usuario = msgParams.usuario;
 
         appwar_atualizarMenuParaSala();
-        $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+        $('#conteudo_principal').css('display', '');
+        $('#painelRegistrarOuEntrar').css('display', 'none');
         $('#sala').css('visibility', 'visible');
         $('html,body').css('overflow', 'auto');
     } else {
@@ -165,7 +170,8 @@ function posAberturaSocket(valor) {
     }
 
     appwar_exibirPainelEntrar();
-    $('#painelRegistrarOuEntrar').css('visibility', 'visible');
+    $('#conteudo_principal').css('display', 'none');
+    $('#painelRegistrarOuEntrar').css('display', '');
 }
 
 function posRecebimentoMensagemServidor(valor) {
@@ -185,6 +191,7 @@ function posRecebimentoMensagemServidor(valor) {
         processarMsg_criar_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.info_sala) {
         processarMsg_info_sala(jsonMensagem.params);
+        _tour.start_creation_room();
     } else if (jsonMensagem.tipo === TipoMensagem.fechar_sala) {
         processarMsg_fechar_sala(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.altera_posicao_na_sala) {
@@ -240,7 +247,8 @@ function posRecebimentoMensagemServidor(valor) {
 
 function posFechamentoSocket(valor) {
     $('#bloqueador_tela').css('visibility', 'visible');
-    $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+    $('#conteudo_principal').css('display', 'none');
+    $('#painelRegistrarOuEntrar').css('display', 'none');
     $('#botao_recarregar').css('visibility', 'visible');
 }
 
@@ -601,7 +609,7 @@ function appwar_novaSenha(codigo, email, senha) {
 }
 
 function appwar_recarregarPagina() {
-    location.reload();
+    location.reload(true);
 }
 
 function appwar_processaMsg_msg_chat_geral(msgParams) {
