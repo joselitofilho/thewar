@@ -3,6 +3,11 @@
     color: #FFF;
 }
 
+.cor_marrom {
+    background: var(--color-brown);
+    color: #FFF;
+}
+
 .cor_vermelha {
     background: var(--color-player-red);
     color: #FFF;

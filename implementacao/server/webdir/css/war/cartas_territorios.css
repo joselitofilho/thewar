@@ -26,6 +26,16 @@
     padding: 13px 16px 20px 42px;
 }
 
+#pct_numeroDoTurno {
+    position: absolute;
+    top: 155px;
+    left: 132px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    z-index: 9001;
+}
+
 #pct_valorDaTroca {
     position: absolute;
     top: 185px;

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
 import sys
-import time
 
 from src.carta import *
 from src.mensagens import *
@@ -182,6 +181,7 @@ class IALucy(IAInterface):
 
     def acao_move(self, usuario, jogador, jogo):
         visitados = []
+        qtd_nao_moveu = 0
         while True:
             try:
                 grafo = self.atualiza_grafo(usuario, jogador, jogo)
@@ -194,15 +194,11 @@ class IALucy(IAInterface):
                     do_territorio = next(iter(territorios_com_bst_0))
                     territorio_de = grafo[do_territorio]
                     territorio_para = {}
-                    so_tem_fronteira_com_bst_0 = True
                     for t in territorio_de['fronteiras']:
                         if grafo[t]['usuario'] == usuario and t not in visitados:
                             territorio_para[t] = grafo[t]
-                            if grafo[t]['bst'] != 0:
-                                so_tem_fronteira_com_bst_0 = False
 
                     if len(territorio_para) > 0:
-                        # if so_tem_fronteira_com_bst_0:
                         visitados.append(do_territorio)
 
                         territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'],
@@ -211,6 +207,7 @@ class IALucy(IAInterface):
 
                         quantidade = max(territorio_de['quantidade'] - 1, 1)
                         jogo.move(usuario, do_territorio, para_o_territorio, quantidade)
+                        qtd_nao_moveu = 0
                         self.wait_short_time()
 
                 else:
@@ -220,6 +217,9 @@ class IALucy(IAInterface):
                 print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)), flush=True)
                 break
 
+            qtd_nao_moveu += 1
+            if qtd_nao_moveu >= 3:
+                break
             self.wait_short_time()
 
         return True
