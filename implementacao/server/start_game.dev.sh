@@ -1,7 +1,5 @@
 #!/bin/bash
 
-service cron start
-
 if [ ! -f "memes.zip" ]; then
   gdown --id 12x46KaDlY5d1OzXJtEERGDoEaI6bPV-O
   mkdir -p webdir/imagens/memes/

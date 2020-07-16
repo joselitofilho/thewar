@@ -1,7 +1,5 @@
 #!/bin/bash
 
-service cron start
-
 cd /app # Dentro do container docker deve ser a pasta /app, mas equivale a pasta implementação/server 
 
 gdown --id 12x46KaDlY5d1OzXJtEERGDoEaI6bPV-O
