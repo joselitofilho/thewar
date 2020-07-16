@@ -117,8 +117,10 @@ function jogo_efetuaAtaque(msgParams) {
     _chatJogo.ataque(
         msgParams.jogadorAtaque.usuario,
         msgParams.territoriosDoAtaque,
+        msgParams.dadosAtaque,
         msgParams.jogadorDefesa.usuario,
-        msgParams.territorioDaDefesa);
+        msgParams.territorioDaDefesa,
+        msgParams.dadosDefesa);
 
     var dadosAtaque = msgParams.dadosAtaque;
     var dadosDefesa = msgParams.dadosDefesa;
@@ -450,6 +452,7 @@ function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _infoJogadorDaVezDoTurno = msgParams.vezDoJogador;
     _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
+    $('#pct_numeroDoTurno').html("Turno: " + msgParams.numeroDoTurno);
     $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
 
     const tempoTotal = Number(msgParams.tempoRestante);
@@ -598,6 +601,7 @@ function jogo_alteraInfoTurno(msgParams) {
         _componenteAcaoTurno.turnoMover(ehOJogadorDaVez, msgParams.vezDoJogador.usuario);
     }
 
+    _chatJogo.atualizaJogadoresDaSala(msgParams.infoJogadores);
     _menuJogadores.posicionaElementos(msgParams.jogadorQueComecou, msgParams.ordemJogadores, msgParams.infoJogadores);
     for (let i = 0; i < msgParams.infoJogadores.length; i++) {
         const infos = msgParams.infoJogadores[i];

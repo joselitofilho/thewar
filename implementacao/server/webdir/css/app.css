@@ -189,8 +189,8 @@ html, body {
     width: 10em;
     height: 10em;
     background-color: var(--color-dark-brown);
-    mask: url('../imagens/soldier.svg') no-repeat center / contain;
-    -webkit-mask: url('../imagens/soldier.svg') no-repeat center / contain;
+    mask: url('../imagens/soldier2.svg') no-repeat center / contain;
+    -webkit-mask: url('../imagens/soldier2.svg') no-repeat center / contain;
     animation: soldier-logo-color 6s linear infinite;
 }
 

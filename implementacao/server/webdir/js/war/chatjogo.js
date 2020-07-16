@@ -43,6 +43,10 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         return this.ativo || false;
     };
 
+    this.atualizaJogadoresDaSala = function (jogadores) {
+        this.jogadores = jogadores;
+    };
+
     this.escreve = function (params, indiceCor) {
         let textoUsuarioDiz;
         if (indiceCor !== -1) {
@@ -76,6 +80,15 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         this.escreveNoComponente(textoMsg);
     };
 
+    this.indiceJogador = function (usuario) {
+        for (let i = 0; i < this.jogadores.length; ++i) {
+            if (this.jogadores[i].usuario === usuario) {
+                return this.jogadores[i].posicao;
+            }
+        }
+        return -1;
+    };
+
     this.escreveNoComponente = function (texto) {
         chatAreaJogadores.append(texto + '</br>');
 
@@ -92,8 +105,22 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         }
     };
 
-    this.escreveNoLog = function (texto) {
-        chatAreaLogs.append(texto + '</br>');
+    this.escreveNoLog = function (indice, texto) {
+        let cor = 'cor_marrom';
+        if (indice === 0) {
+            cor = 'cor_vermelha';
+        } else if (indice === 1) {
+            cor = 'cor_azul';
+        } else if (indice === 2) {
+            cor = 'cor_verde';
+        } else if (indice === 3) {
+            cor = 'cor_preto';
+        } else if (indice === 4) {
+            cor = 'cor_branco';
+        } else if (indice === 5) {
+            cor = 'cor_amarelo';
+        }
+        chatAreaLogs.append('<div class="log_mensagem_item"><div class="barra_lateral ' + cor + '"></div><p>' + texto + '</p></div>');
 
         if (this.rolou_a_barra_logs) {
             if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
@@ -145,12 +172,12 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
 
     this.distrubuirTropasGlobais = function (jogador, quantidade) {
         const texto = jogador + ' está distribuindo ' + quantidade + ' exércitos pelo mundo.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.distrubuirTropasGrupoTerritorio = function (jogador, grupo, quantidade) {
         const texto = jogador + ' está distribuindo ' + quantidade + ' exércitos no continente ' + grupo + '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.colocaTropa = function (usuario, territorio, quantidade) {
@@ -162,11 +189,11 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
             texto += quantidade + ' exército';
         texto += ' no território ' + territorio
         texto += '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(usuario), texto);
     };
 
-    this.ataque = function (jogadorAtaque, territoriosDoAtaque,
-                            jogadorDefesa, territorioDaDefesa) {
+    this.ataque = function (jogadorAtaque, territoriosDoAtaque, dadosAtaque,
+                            jogadorDefesa, territorioDaDefesa, dadosDefesa) {
         var territoriosDoAtaqueTexto = territoriosDoAtaque[0].codigo;
         for (i = 1; i < territoriosDoAtaque.length - 1; i++)
             territoriosDoAtaqueTexto += ', ' + territoriosDoAtaque[i].codigo;
@@ -174,7 +201,7 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         if (territoriosDoAtaque.length > 1)
             territoriosDoAtaqueTexto += ' e ' + territoriosDoAtaque[territoriosDoAtaque.length - 1].codigo;
 
-        var texto = '' +
+        let texto = '' +
             jogadorAtaque + ' atacou ' +
             jogadorDefesa +
             ' no território ' +
@@ -186,8 +213,10 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
             texto += ' do território ' +
                 territoriosDoAtaqueTexto;
         }
-        texto += '.';
-        this.escreveNoLog(texto);
+        texto += '.</br>';
+        texto += 'Dados ataque: ' + dadosAtaque + '</br>';
+        texto += 'Dados defesa: ' + dadosDefesa;
+        this.escreveNoLog(this.indiceJogador(jogadorAtaque), texto);
     };
 
     this.moveu = function (jogador, doTerritorio, paraOTerritorio, quantidade) {
@@ -198,32 +227,32 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         texto += ' do território ' + doTerritorio;
         texto += ' para o território ' + paraOTerritorio
         texto += '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.conquistouTerritorio = function (jogador, territorio) {
         const texto = jogador + ' conquistou o território ' + territorio + '.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.trocouCartasTerritorio = function (jogador, quantidade) {
         const texto = jogador + ' trocou suas cartas territórios por ' + quantidade + ' exércitos.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.verificandoTroca = function (jogador) {
         const texto = jogador + ' está no turno troca de cartas.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.estaAtacando = function (jogador) {
         const texto = jogador + ' está no turno atacar.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.estaMovendo = function (jogador) {
         const texto = jogador + ' está no turno mover.';
-        this.escreveNoLog(texto);
+        this.escreveNoLog(this.indiceJogador(jogador), texto);
     };
 
     this.entrouNoJogo = function (jogador, olheiro) {
