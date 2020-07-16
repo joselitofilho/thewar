@@ -46,7 +46,7 @@
 
 .desafios_titulo {
     margin-top: 8px;
-    font-family: "wartorn";
+    font-family: var(--font-family-wartorn);
     text-align: center;
     font-size: 60px;
     color: #453122;
@@ -62,6 +62,7 @@
     font-size: 14px;
     text-align: center;
     color: #252525;
+    margin-bottom: 8px;
 }
 
 .desafios_arame {
@@ -70,6 +71,13 @@
     height: 52px;
     background-image: url("../imagens/desafios/arame.png");
     background-repeat: repeat-x;
+}
+
+#desafios_footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
 }
 
 #desafios_cartas {
@@ -109,7 +117,7 @@
 
 .desafio_info p {
     margin: 96px 8px 0 8px;
-    font-family: "wartorn";
+    font-family: var(--font-family-wartorn);
     color: white;
 }
 
@@ -144,4 +152,15 @@
     background: rgba(255, 255, 255, .35);
     border-radius: 4px;
     text-align: left;
+}
+
+.desafio_restantes {
+    margin: 32px 20px 0 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 5px;
+}
+
+.desafio_restantes p {
+    color: var(--color-dark-brown);
 }
