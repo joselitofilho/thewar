@@ -46,10 +46,39 @@ jogos.war.Desafios = function () {
             return;
         }
 
+        // Verificação se o usuário é doador.
+        const nomeDoadores = _doadores.map(d => d['nome']) || [];
+        const doador = nomeDoadores.includes(_usuario) || false;
+
         // Centro
-        const desafio_centro = desafios.filter(d => {
-            return d.apenas_doador === 0;
-        })[0];
+        let desafio_centro = desafios
+            .sort((a, b) => {
+                return a.concluido - b.concluido;
+            })
+            .sort((a, b) => {
+                return a.ordem > b.ordem;
+            })
+            .filter(d => {
+                if (!doador) {
+                    return d.apenas_doador === 0 && d.ordem === 0;
+                }
+                return d.apenas_doador === 0;
+            });
+
+        const total_desafios_centro_restantes = desafios
+            .filter(d => {
+                return !d.concluido && d.apenas_doador === 0;
+            }).length;
+        console.log('total_desafios_centro_restantes', total_desafios_centro_restantes);
+        let hh = '<p>Restam <b>' + total_desafios_centro_restantes + '</b></p>';
+        if (!doador) {
+            hh += '<p>Apenas para doadores</p>';
+        }
+        if (total_desafios_centro_restantes > 1) {
+            $('#desafio_carta_centro_restantes').html(hh);
+        }
+        console.log('desafio_centro', desafio_centro);
+        desafio_centro = desafio_centro[0];
         const img_name = desafio_centro.orientador.name.replace(' ', '').trim().toLowerCase();
         $('#desafio_carta_centro .desafio_carta_conteudo .desafio_orientador img').attr('src', 'imagens/desafios/personagens/' + img_name + '.png');
         $('#desafio_carta_centro .desafio_carta_conteudo .desafio_xp').html('+' + desafio_centro.desafio.xp + ' pontos');
@@ -77,8 +106,6 @@ jogos.war.Desafios = function () {
         const desafios_doadores = desafios.filter(d => {
             return d.apenas_doador === 1;
         });
-        const nomeDoadores = _doadores.map(d => d['nome']) || [];
-        const doador = nomeDoadores.includes(_usuario) || false;
         for (let i = 0; i < desafios_doadores.length; ++i) {
             const desafio = desafios_doadores[i];
             const img_name = desafio.orientador.name.replace(' ', '').trim().toLowerCase();

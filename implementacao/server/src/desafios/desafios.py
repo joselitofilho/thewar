@@ -31,17 +31,22 @@ class Desafios(object):
 
         self.desafios_em_andamento = self.obter_desafios_em_andamento()
 
-    def obter_desafios_em_andamento(self):
+    def obter_desafios_em_andamento(self, doador=False):
         desafios_em_andamento = []
         con = sqlite3.connect(self.baseDeDados)
         with con:
             c = con.cursor()
-            rows = c.execute(
-                """
-                SELECT idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm 
+            query = """
+                SELECT idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem 
                  FROM DesafiosEmAndamento 
-                WHERE datetime('now') BETWEEN iniciaEm AND terminaEm;
-                """).fetchall()
+                WHERE datetime('now') BETWEEN iniciaEm AND terminaEm
+                """
+            # TODO: Levar em consideração se o jogador é doador aqui?
+            # if not doador:
+            #     query += " AND ordem = 0 "
+            query += " ORDER BY apenasDoador DESC, iniciaEm, ordem; "
+            rows = c.execute(
+                query).fetchall()
             for row in rows:
                 idDesafio = row[0]
                 nomeOrientador = row[1]
@@ -56,7 +61,8 @@ class Desafios(object):
                     "orientador": orientador,
                     "apenas_doador": row[2],
                     "inicia_em": row[3],
-                    "termina_em": row[4]
+                    "termina_em": row[4],
+                    "ordem": row[5]
                 })
         return desafios_em_andamento
 
@@ -98,7 +104,8 @@ class Desafios(object):
                  WHERE iniciaEm = datetime(date('now'), time('10:00:00'));
                 """).fetchall()
             if len(desafios_vao_iniciar) < 3:
-                cur.execute("DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('10:00:00'));")
+                cur.execute(
+                    "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('10:00:00'));")
                 orientadores = self.shuffle_orientadores()
                 desafios_todos = self.shuffle_desafios(0)
                 desafios_apenas_doador = self.shuffle_desafios(1)
@@ -117,12 +124,75 @@ class Desafios(object):
                         [id_desafio, nome_orientador, apenas_doador])
                     i += 1
 
+    def gera_desafios_central(self):
+        con = sqlite3.connect(self.baseDeDados)
+        with con:
+            cur = con.cursor()
+
+            desafios_vao_iniciar = cur.execute(
+                """
+                SELECT idDesafio 
+                  FROM DesafiosEmAndamento 
+                 WHERE iniciaEm = datetime(date('now', 'weekday 0', '-2 days'), time('10:00:00'))
+                   AND apenasDoador = 0;
+                """).fetchall()
+            if len(desafios_vao_iniciar) < 2:
+                cur.execute(
+                    "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', 'weekday 0', '-2 days'), time('10:00:00')) AND apenasDoador = 0;")
+
+                orientadores = self.shuffle_orientadores()
+                i_orientador = 0
+                desafios = self.desafios_json
+                random.shuffle(desafios)
+                desafios_xp_100 = [d for d in desafios if d['xp'] == 100]
+                desafios_xp_150 = [d for d in desafios if d['xp'] == 150]
+                desafios_xp_200 = [d for d in desafios if d['xp'] == 200]
+                i_desafio_100 = 0
+                i_desafio_150 = 0
+                i_desafio_200 = 0
+                limite = 400
+                sequencias = [200, 100, 150, 100, 150]
+                ordem = 0
+                for i in range(limite // len(sequencias)):
+                    for sequencia in sequencias:
+                        if sequencia == 100:
+                            id_desafio = desafios_xp_100[i_desafio_100]['id']
+                            i_desafio_100 += 1
+                            if i_desafio_100 >= len(desafios_xp_100):
+                                i_desafio_100 = 0
+                        elif sequencia == 150:
+                            id_desafio = desafios_xp_150[i_desafio_150]['id']
+                            i_desafio_150 += 1
+                            if i_desafio_150 >= len(desafios_xp_150):
+                                i_desafio_150 = 0
+                        elif sequencia == 200:
+                            id_desafio = desafios_xp_200[i_desafio_200]['id']
+                            i_desafio_200 += 1
+                            if i_desafio_200 >= len(desafios_xp_200):
+                                i_desafio_200 = 0
+                        nome_orientador = orientadores[i_orientador]['name']
+                        i_orientador += 1
+                        if i_orientador >= len(orientadores):
+                            i_orientador = 0
+                        cur.execute(
+                            """
+                            INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem) 
+                                 VALUES (?, ?, 0, datetime(date('now', 'weekday 0', '-2 days'), time('10:00:00')), datetime(date('now', 'weekday 0', '+1 days'), time('09:59:59')), ?);
+                            """, [id_desafio, nome_orientador, ordem])
+                        ordem += 1
+
     def shuffle_desafios(self, apenas_doador):
         desafios = self.desafios_json
         random.shuffle(desafios)
         if apenas_doador == 1:
-            desafios = [d for d in desafios if d['xp'] > 50]
+            desafios = [d for d in desafios if d['xp'] > 100]
 
+        return desafios
+
+    def shuffle_desafios_by_xp(self, xp):
+        desafios = self.desafios_json
+        random.shuffle(desafios)
+        desafios = [d for d in desafios if d['xp'] == xp]
         return desafios
 
     def shuffle_orientadores(self):
@@ -130,25 +200,27 @@ class Desafios(object):
         random.shuffle(orientadores)
         return orientadores
 
-    def em_andamento(self, usuario=None):
+    def em_andamento(self, usuario=None, doador=False):
         self.carrega_infos()
 
-        if len(self.desafios_em_andamento) == 0:
-            self.gera_desafios_diario()
-            self.desafios_em_andamento = self.obter_desafios_em_andamento()
+        self.gera_desafios_diario()
+        self.gera_desafios_central()
+        self.desafios_em_andamento = self.obter_desafios_em_andamento(doador)
 
         if usuario:
             conn = sqlite3.connect(self.baseDeDados)
             with conn:
                 c = conn.cursor()
-                rows = c.execute(
-                    """
+                query = """
                     SELECT da.idDesafio
                       FROM DesafiosEmAndamento da 
                       JOIN DesafiosConcluidos dc ON dc.idDesafio = da.idDesafio 
                       JOIN Usuarios u ON u.id = dc.idUsuario 
-                     WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm AND datetime('now') BETWEEN da.iniciaEm AND da.terminaEm AND  u.nome = ?;
-                    """, [usuario]).fetchall()
+                     WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm 
+                       AND datetime('now') BETWEEN da.iniciaEm AND da.terminaEm
+                       AND u.nome = ? 
+                    """
+                rows = c.execute(query, [usuario]).fetchall()
                 desafiosId = []
                 for row in rows:
                     desafiosId.append(row[0])
