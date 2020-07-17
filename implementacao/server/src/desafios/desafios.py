@@ -40,6 +40,7 @@ class Desafios(object):
                 SELECT id, idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem
                  FROM DesafiosEmAndamento 
                 WHERE datetime('now') BETWEEN iniciaEm AND terminaEm
+             ORDER BY ordem
                 """
             # TODO: Levar em consideração se o jogador é doador aqui?
             # if not doador:
@@ -72,46 +73,47 @@ class Desafios(object):
         with con:
             cur = con.cursor()
 
-            desafios_iniciaram_ontem = cur.execute(
-                """
-                SELECT idDesafio 
-                  FROM DesafiosEmAndamento 
-                 WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'));
-                """).fetchall()
-            if len(desafios_iniciaram_ontem) < 3:
-                cur.execute(
-                    "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'));")
-                orientadores = self.shuffle_orientadores()
-                desafios_todos = self.shuffle_desafios(0)
-                desafios_apenas_doador = self.shuffle_desafios(1)
-                i = random.randint(0, len(orientadores) - 3)
-                for apenas_doador in [1, 0, 1]:
-                    if apenas_doador == 0:
-                        id_desafio = desafios_todos[random.randint(0, len(desafios_todos) - 1)]['id']
-                    else:
-                        id_desafio = desafios_apenas_doador[random.randint(0, len(desafios_apenas_doador) - 1)]['id']
-                    nome_orientador = orientadores[i]['name']
-                    cur.execute(
-                        """
-                        INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) 
-                            VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('10:00:00')), datetime(date('now'), time('09:59:59')));
-                        """, [id_desafio, nome_orientador, apenas_doador])
-                    i += 1
+            # desafios_iniciaram_ontem = cur.execute(
+            #     """
+            #     SELECT idDesafio
+            #       FROM DesafiosEmAndamento
+            #      WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'));
+            #     """).fetchall()
+            # if len(desafios_iniciaram_ontem) < 3:
+            #     cur.execute(
+            #         "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'));")
+            #     orientadores = self.shuffle_orientadores()
+            #     desafios_todos = self.shuffle_desafios(0)
+            #     desafios_apenas_doador = self.shuffle_desafios(1)
+            #     i = random.randint(0, len(orientadores) - 3)
+            #     for apenas_doador in [1, 0, 1]:
+            #         if apenas_doador == 0:
+            #             id_desafio = desafios_todos[random.randint(0, len(desafios_todos) - 1)]['id']
+            #         else:
+            #             id_desafio = desafios_apenas_doador[random.randint(0, len(desafios_apenas_doador) - 1)]['id']
+            #         nome_orientador = orientadores[i]['name']
+            #         cur.execute(
+            #             """
+            #             INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm)
+            #                 VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('10:00:00')), datetime(date('now'), time('09:59:59')));
+            #             """, [id_desafio, nome_orientador, apenas_doador])
+            #         i += 1
 
             desafios_vao_iniciar = cur.execute(
                 """
                 SELECT idDesafio 
                   FROM DesafiosEmAndamento 
-                 WHERE iniciaEm = datetime(date('now'), time('10:00:00'));
+                 WHERE iniciaEm = datetime(date('now'), time('10:00:00'))
+                   AND apenasDoador = 1;
                 """).fetchall()
-            if len(desafios_vao_iniciar) < 3:
+            if len(desafios_vao_iniciar) < 2:
                 cur.execute(
-                    "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('10:00:00'));")
+                    "DELETE FROM DesafiosEmAndamento WHERE iniciaEm = datetime(date('now'), time('10:00:00')) AND apenasDoador;")
                 orientadores = self.shuffle_orientadores()
                 desafios_todos = self.shuffle_desafios(0)
                 desafios_apenas_doador = self.shuffle_desafios(1)
                 i = random.randint(0, len(orientadores) - 3)
-                for apenas_doador in [1, 0, 1]:
+                for apenas_doador in [1, 1]:
                     if apenas_doador == 0:
                         id_desafio = desafios_todos[random.randint(0, len(desafios_todos) - 1)]['id']
                     else:
@@ -129,6 +131,29 @@ class Desafios(object):
         con = sqlite3.connect(self.baseDeDados)
         with con:
             cur = con.cursor()
+
+            desafios_vao_iniciar = cur.execute(
+                """
+                SELECT idDesafio 
+                  FROM DesafiosEmAndamento 
+                 WHERE iniciaEm = datetime(date('now'), time('10:00:00'))
+                   AND apenasDoador = 0;
+                """).fetchall()
+            if len(desafios_vao_iniciar) == 0:
+                orientadores = self.shuffle_orientadores()
+                desafios_todos = self.shuffle_desafios(0)
+                i = random.randint(0, len(orientadores) - 3)
+
+                apenas_doador = 0
+                id_desafio = desafios_todos[random.randint(0, len(desafios_todos) - 1)]['id']
+                nome_orientador = orientadores[i]['name']
+                cur.execute(
+                    """
+                    INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) 
+                         VALUES (?, ?, ?, datetime(date('now'), time('10:00:00')), datetime(date('now', '+1 DAY'), time('09:59:59')));
+                    """,
+                    [id_desafio, nome_orientador, apenas_doador])
+                i += 1
 
             desafios_vao_iniciar = cur.execute(
                 """

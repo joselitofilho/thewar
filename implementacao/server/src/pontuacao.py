@@ -32,7 +32,6 @@ class Pontuacao(object):
             elif qtdUsuarios == 6:
                 pontos = 800
 
-        print('usuario vencedor', self.usuarioVencedor)
         pontosExtra = self.contabilizaPontosPorDestruirOutroJogador(self.usuarioVencedor, self.cpus)
         pontosDesafios = self.contabilizaPontosDesafios(self.jogo, self.usuarioVencedor, True)
         pontosExtra += pontosDesafios
@@ -120,8 +119,12 @@ class Pontuacao(object):
         desafios = Desafios()
         ja_verificou_desafio_central = False
         for d in desafios.em_andamento(usuario):
+            if d['apenas_doador'] == 0 and not d['concluido'] and ja_verificou_desafio_central:
+                continue
+
             if d['apenas_doador'] == 0 and d['concluido'] and usuario not in doadores:
                 ja_verificou_desafio_central = True
+                continue
 
             if not d['concluido']:
                 desafio = FabricaDesafios().cria(d['desafio']['id'])
