@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import logging
 import random
 
 from src.carta import *
@@ -17,6 +18,7 @@ from src.turno import *
 
 class Jogo(object):
     def __init__(self, nome, jogadores, cpus, clientes=None, gerenciador=None):
+        self.TAG = 'jogo_{}_{}'.format(nome, datetime.datetime.now())
         random.seed()
 
         self.gerenciador = gerenciador
@@ -67,11 +69,10 @@ class Jogo(object):
     def faseI_Inicia(self):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
-        print(
-            '{} ID jogo: {} - sockets: {} - maquina: {} -  jogadores: {}'.format(datetime.datetime.now(), self.nome,
-                                                                                 0 if self.clientes is None else len(
-                                                                                     self.clientes), len(self.cpus),
-                                                                                 len(self.jogadores)))
+        logging.info(
+            '{} {} ID jogo: {} - sockets: {} - maquina: {} -  jogadores: {}'.format(
+                self.TAG, datetime.datetime.now(), self.nome, 0 if self.clientes is None else len(self.clientes),
+                len(self.cpus), len(self.jogadores)))
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
@@ -1037,7 +1038,6 @@ class Jogo(object):
         return False
 
     def jogoTerminou(self):
-        print(datetime.datetime.now(), 'O jogo( {} ) terminou.'.format(self.nome))
         desafios = Desafios()
         for k, jogador in self.jogadores.items():
             desafios_em_andamento = desafios.em_andamento(jogador.usuario)
