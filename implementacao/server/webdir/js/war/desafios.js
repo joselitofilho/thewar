@@ -98,8 +98,6 @@ jogos.war.Desafios = function () {
             minute: '2-digit',
             second: '2-digit'
         };
-        const terminaEm = new Date(Date.parse(desafio_centro.termina_em + ' GMT'));
-        $('.desafios_termina_em').text('Novos desafios em ' + terminaEm.toLocaleDateString("pt-BR", dateOptions));
 
         // Esquerda, Direita
         const ordem = ['esq', 'dir'];
@@ -125,6 +123,9 @@ jogos.war.Desafios = function () {
                 $('#desafio_carta_' + ordem[i] + ' .desafio_info').html('<p>Somente doador</p>');
                 $('#desafio_carta_' + ordem[i] + ' .desafio_info').css('display', '');
             }
+
+            const terminaEm = new Date(Date.parse(desafio.termina_em + ' GMT'));
+            $('.desafios_termina_em').text('Novos desafios em ' + terminaEm.toLocaleDateString("pt-BR", dateOptions));
         }
     };
 };
