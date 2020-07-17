@@ -21,9 +21,9 @@ SELECT json_extract(infos, '$.desafio.id'),
   FROM DesafiosEmAndamento;
 
 DELETE FROM DesafiosConcluidos;
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador) VALUES (1, 1, 'Häyhä');
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES (1, 2, 'Lucy', datetime('now', '+1 DAY'));
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador) VALUES ( (SELECT id FROM Usuarios WHERE nome='t1'), 1, 'Häyhä');
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador) VALUES (1, 1, 1, 'Häyhä');
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES (1, 1, 2, 'Lucy', datetime('now', '+1 DAY'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador) VALUES ( (SELECT id FROM Usuarios WHERE nome='t1'), 1, 1, 'Häyhä');
 SELECT dc.*, u.nome FROM DesafiosConcluidos dc JOIN Usuarios u ON u.id = dc.idUsuario ;
 SELECT dc.*, u.nome FROM DesafiosConcluidos dc JOIN Usuarios u ON u.id = dc.idUsuario WHERE u.nome = 't1' ;
 
@@ -42,23 +42,23 @@ INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, inicia
 INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (17, 'Lucy', 0, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
 INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm) VALUES (19, 'Lutz', 1, datetime(date('now', '-1 DAY'), time('23:00:00')), datetime(date('now'), time('22:59:59')));
 
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(2, 16, 'Lucy', '2020-07-02 15:00:00');
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(2, 1, 16, 'Lucy', '2020-07-02 15:00:00');
 
 
 ###### Testes desafios em andamento
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(1, 21, 'Mad Jack', datetime('now'));
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(1, 30, 'Prince', datetime('now'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 21, 'Mad Jack', datetime('now'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 30, 'Prince', datetime('now'));
 
-INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem) VALUES (30, 'Prince', 0, '2020-07-15 10:00:00', '2020-07-16 09:59:59', 1);
+INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem) VALUES (10, 'Lucy', 1, '2020-07-17 10:00:00', '2020-07-18 09:59:59', 1);
 INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem) VALUES (1, 'Lucy', 0, '2020-07-15 10:00:00', '2020-07-16 09:59:59', 2);
-INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem) VALUES (22, 'Kratos', 0, '2020-07-15 10:00:00', '2020-07-16 09:59:59', 3);
+INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem) VALUES (17, 'Kratos', 1, '2020-07-17 10:00:00', '2020-07-18 09:59:59', 3);
 
 SELECT * FROM DesafiosEmAndamento ORDER BY apenasDoador DESC, iniciaEm, ordem ;
 SELECT * FROM DesafiosEmAndamento WHERE datetime('now') BETWEEN iniciaEm AND terminaEm ORDER BY apenasDoador DESC, iniciaEm, ordem ;
 
-SELECT da.idDesafio
+SELECT da.idDesafio, dc.idDesafioEmAndamento
   FROM DesafiosEmAndamento da 
-  JOIN DesafiosConcluidos dc ON dc.idDesafio = da.idDesafio 
+  JOIN DesafiosConcluidos dc ON dc.idDesafioEmAndamento = da.id AND dc.nomeOrientador = da.nomeOrientador AND dc.idDesafio = da.idDesafio 
   JOIN Usuarios u ON u.id = dc.idUsuario 
  WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm AND datetime('now') BETWEEN da.iniciaEm AND da.terminaEm AND  u.nome = 't1';
 
@@ -108,18 +108,18 @@ SELECT * FROM PontuacaoEventos WHERE idUsuario = 1 AND idEvento = ( SELECT CAST(
 INSERT INTO PontuacaoEventos(idUsuario, pontos, quantidadeDePartidas, quantidadeDeVitorias, quantidadeDestruido, idEvento) VALUES (2, 150, 1, 1, 0, 1);  # (first time)
 UPDATE  Pontuacao SET pontos = pontos + 350 WHERE idUsuario = 1;  # (or just update)
 UPDATE  PontuacaoEventos SET pontos = pontos + 350 WHERE idUsuario = 1 AND idEvento = 1;  # (or just update)
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(26, 3, 'Mad Jack', '2020-07-02 00:47:12');
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(26, 1, 3, 'Mad Jack', '2020-07-02 00:47:12');
 
 
 SELECT * FROM DesafiosEmAndamento ORDER BY iniciaEm;
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(1, 3, 'Bradley', datetime('now'));
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(1, 2, 'Winters', datetime('now'));
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(1, 8, 'Major', datetime('now'));
-UPDATE  Pontuacao SET quantidadeDePartidas = quantidadeDePartidas + 1, quantidadeDeVitorias = quantidadeDeVitorias + 1, pontos = pontos + 100 WHERE idUsuario = 1;
-UPDATE  PontuacaoEventos SET quantidadeDePartidas = quantidadeDePartidas + 1, quantidadeDeVitorias = quantidadeDeVitorias + 1, pontos = pontos + 100 WHERE idUsuario = 1 AND idEvento = 1;
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 10, 'Mad Jack', datetime('now'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 17, 'Kratos', datetime('now'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 32, 'Tassigny', datetime('now'));
+UPDATE  Pontuacao SET quantidadeDePartidas = quantidadeDePartidas + 1, quantidadeDeVitorias = quantidadeDeVitorias + 1, pontos = pontos + 400 WHERE idUsuario = 25;
+UPDATE  PontuacaoEventos SET quantidadeDePartidas = quantidadeDePartidas + 1, quantidadeDeVitorias = quantidadeDeVitorias + 1, pontos = pontos + 400 WHERE idUsuario = 25 AND idEvento = 1;
 
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(1, 27, 'Lutz', datetime('now'));
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador, data) VALUES(26, 2, 'Winters', datetime('now'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 27, 'Lutz', datetime('now'));
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(26, 1, 2, 'Winters', datetime('now'));
 UPDATE  Pontuacao SET pontos = pontos + 250 WHERE idUsuario = 26;
 UPDATE  PontuacaoEventos SET pontos = pontos + 250 WHERE idUsuario = 26 AND idEvento = 1;
 

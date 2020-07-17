@@ -37,7 +37,7 @@ class Desafios(object):
         with con:
             c = con.cursor()
             query = """
-                SELECT idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem 
+                SELECT id, idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem
                  FROM DesafiosEmAndamento 
                 WHERE datetime('now') BETWEEN iniciaEm AND terminaEm
                 """
@@ -48,8 +48,8 @@ class Desafios(object):
             rows = c.execute(
                 query).fetchall()
             for row in rows:
-                idDesafio = row[0]
-                nomeOrientador = row[1]
+                idDesafio = row[1]
+                nomeOrientador = row[2]
                 for desafio in self.desafios_json:
                     if desafio['id'] == idDesafio:
                         break
@@ -57,12 +57,13 @@ class Desafios(object):
                     if orientador['name'] == nomeOrientador:
                         break
                 desafios_em_andamento.append({
+                    "id_desafio_em_andamento": row[0],
                     "desafio": desafio,
                     "orientador": orientador,
-                    "apenas_doador": row[2],
-                    "inicia_em": row[3],
-                    "termina_em": row[4],
-                    "ordem": row[5]
+                    "apenas_doador": row[3],
+                    "inicia_em": row[4],
+                    "termina_em": row[5],
+                    "ordem": row[6]
                 })
         return desafios_em_andamento
 
@@ -208,25 +209,31 @@ class Desafios(object):
         self.desafios_em_andamento = self.obter_desafios_em_andamento(doador)
 
         if usuario:
+            desafios_concluidos = {}
             conn = sqlite3.connect(self.baseDeDados)
             with conn:
                 c = conn.cursor()
                 query = """
-                    SELECT da.idDesafio
+                    SELECT da.idDesafio, dc.idDesafioEmAndamento
                       FROM DesafiosEmAndamento da 
-                      JOIN DesafiosConcluidos dc ON dc.idDesafio = da.idDesafio 
+                      JOIN DesafiosConcluidos dc ON dc.idDesafioEmAndamento = da.id AND dc.nomeOrientador = da.nomeOrientador AND dc.idDesafio = da.idDesafio
                       JOIN Usuarios u ON u.id = dc.idUsuario 
                      WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm 
                        AND datetime('now') BETWEEN da.iniciaEm AND da.terminaEm
                        AND u.nome = ? 
                     """
                 rows = c.execute(query, [usuario]).fetchall()
-                desafiosId = []
                 for row in rows:
-                    desafiosId.append(row[0])
+                    desafios_concluidos[row[0]] = {'id': row[0], 'id_desafio_em_andamento': row[1]}
 
             for d in self.desafios_em_andamento:
-                d['concluido'] = d['desafio']['id'] in desafiosId
+                desafio_id = d['desafio']['id']
+                if desafios_concluidos and \
+                        desafio_id in desafios_concluidos.keys() and \
+                        desafios_concluidos[desafio_id]['id_desafio_em_andamento'] == d['id_desafio_em_andamento']:
+                    d['concluido'] = True
+                else:
+                    d['concluido'] = False
 
         return self.desafios_em_andamento
 
@@ -235,8 +242,9 @@ class Desafios(object):
         c = conn.cursor()
 
         c.execute(
-            "INSERT INTO DesafiosConcluidos(idUsuario, idDesafio, nomeOrientador) VALUES ( (SELECT id FROM Usuarios WHERE nome = ?), ?, ? );",
-            [usuario, desafio['desafio']['id'], desafio['orientador']['name']])
+            "INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador) VALUES ( (SELECT id FROM Usuarios WHERE nome = ?), ?, ?, ? );",
+            [usuario, desafio['desafio']['id_desafio_em_andamento'], desafio['desafio']['id'],
+             desafio['orientador']['name']])
 
         conn.commit()
         conn.close()
