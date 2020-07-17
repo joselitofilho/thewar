@@ -40,7 +40,6 @@ class Desafios(object):
                 SELECT id, idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem
                  FROM DesafiosEmAndamento 
                 WHERE datetime('now') BETWEEN iniciaEm AND terminaEm
-             ORDER BY ordem
                 """
             # TODO: Levar em consideração se o jogador é doador aqui?
             # if not doador:
