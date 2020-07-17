@@ -68,9 +68,10 @@ class Jogo(object):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
         print(
-            '{} ID jogo: {} - humanos: {} - maquina: {}'.format(datetime.datetime.now(), self.nome,
-                                                                0 if self.clientes is None else len(self.clientes),
-                                                                len(self.cpus)))
+            '{} ID jogo: {} - sockets: {} - maquina: {} -  jogadores: {}'.format(datetime.datetime.now(), self.nome,
+                                                                                 0 if self.clientes is None else len(
+                                                                                     self.clientes), len(self.cpus),
+                                                                                 len(self.jogadores)))
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
@@ -1087,6 +1088,7 @@ class Jogo(object):
         for jogador in jogadores.values():
             for territorio in jogador.territorios:
                 grafo_territorios[territorio.codigo]['usuario'] = jogador.usuario
+                grafo_territorios[territorio.codigo]['tipo'] = jogador.tipo
                 grafo_territorios[territorio.codigo]['quantidade'] = territorio.quantidadeDeTropas
 
         return grafo_territorios
