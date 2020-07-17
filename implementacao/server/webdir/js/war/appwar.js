@@ -39,6 +39,8 @@ _chatGeral.boasVindas();
 
 _desafios = new jogos.war.Desafios();
 
+_lastMessage = "";
+
 window.addEventListener('load', function () {
     $('#logo_carregando').css('display', 'none');
 });
@@ -177,6 +179,7 @@ function posAberturaSocket(valor) {
 function posRecebimentoMensagemServidor(valor) {
     // console.log('[DEBUG]', 'Recebeu MSG ' + valor);
     const jsonMensagem = JSON.parse(valor);
+    _lastMsg = jsonMensagem;
     if (jsonMensagem.tipo === TipoMensagem.registrar) {
         processarMsg_registrar(jsonMensagem.params);
     } else if (jsonMensagem.tipo === TipoMensagem.entrar) {

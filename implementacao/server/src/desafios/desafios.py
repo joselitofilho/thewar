@@ -221,6 +221,7 @@ class Desafios(object):
                      WHERE dc.data BETWEEN da.iniciaEm AND da.terminaEm 
                        AND datetime('now') BETWEEN da.iniciaEm AND da.terminaEm
                        AND u.nome = ? 
+                       AND dc.idDesafioEmAndamento > 0
                     """
                 rows = c.execute(query, [usuario]).fetchall()
                 for row in rows:
@@ -243,7 +244,7 @@ class Desafios(object):
 
         c.execute(
             "INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador) VALUES ( (SELECT id FROM Usuarios WHERE nome = ?), ?, ?, ? );",
-            [usuario, desafio['desafio']['id_desafio_em_andamento'], desafio['desafio']['id'],
+            [usuario, desafio['id_desafio_em_andamento'], desafio['desafio']['id'],
              desafio['orientador']['name']])
 
         conn.commit()
