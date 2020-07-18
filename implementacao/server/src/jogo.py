@@ -950,6 +950,7 @@ class Jogo(object):
                         "posicao": j.posicao
                     })
 
+                self.qtd_turnos_sem_jogadores_humanos = 0
                 self.enviaMsgParaTodos(TipoMensagem.entrou_no_jogo,
                                        EntrouNoJogo(usuario, posicao, total_territorios, total_cartas_territorio))
 
