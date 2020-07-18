@@ -69,7 +69,6 @@ jogos.war.Desafios = function () {
             .filter(d => {
                 return !d.concluido && d.apenas_doador === 0;
             }).length;
-        console.log('total_desafios_centro_restantes', total_desafios_centro_restantes);
         let hh = '<p>Restam <b>' + total_desafios_centro_restantes + '</b></p>';
         if (!doador) {
             hh += '<p>Apenas para doadores</p>';
@@ -77,7 +76,6 @@ jogos.war.Desafios = function () {
         if (total_desafios_centro_restantes > 1) {
             $('#desafio_carta_centro_restantes').html(hh);
         }
-        console.log('desafio_centro', desafio_centro);
         desafio_centro = desafio_centro[0];
         const img_name = desafio_centro.orientador.name.replace(' ', '').trim().toLowerCase();
         $('#desafio_carta_centro .desafio_carta_conteudo .desafio_orientador img').attr('src', 'imagens/desafios/personagens/' + img_name + '.png');
