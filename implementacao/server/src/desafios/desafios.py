@@ -244,7 +244,7 @@ class Desafios(object):
         self.desafios_em_andamento = self.obter_desafios_em_andamento(doador)
 
         if usuario:
-            desafios_concluidos = []
+            desafios_concluidos = {}
             conn = sqlite3.connect(self.baseDeDados)
             with conn:
                 c = conn.cursor()
@@ -259,10 +259,16 @@ class Desafios(object):
                     """
                 rows = c.execute(query, [usuario]).fetchall()
                 for row in rows:
-                    desafios_concluidos.append(row[0])
+                    desafios_concluidos[row[0]] = {'id': row[0], 'id_desafio_em_andamento': row[1]}
 
             for d in self.desafios_em_andamento:
-                d['concluido'] = d['desafio']['id'] in desafios_concluidos
+                desafio_id = d['desafio']['id']
+                if desafios_concluidos and \
+                        desafio_id in desafios_concluidos and \
+                        desafios_concluidos[desafio_id]['id_desafio_em_andamento'] == d['id_desafio_em_andamento']:
+                    d['concluido'] = True
+                else:
+                    d['concluido'] = False
 
         return self.desafios_em_andamento
 
