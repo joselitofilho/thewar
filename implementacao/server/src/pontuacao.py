@@ -117,24 +117,35 @@ class Pontuacao(object):
 
         doadores = DoacaoDB().nomes_doadores()
         desafios = Desafios()
-        ja_verificou_desafio_central = False
-        for d in desafios.em_andamento(usuario):
-            if d['apenas_doador'] == 0 and not d['concluido'] and ja_verificou_desafio_central:
-                continue
+        desafios_em_andamento = desafios.em_andamento(usuario)
 
-            if d['apenas_doador'] == 0 and d['concluido'] and usuario not in doadores:
-                ja_verificou_desafio_central = True
-                continue
+        proximo_desafio_central = None
+        for d in desafios_em_andamento:
+            if d['apenas_doador'] == 0:
+                if usuario in doadores:
+                    if not d['concluido']:
+                        proximo_desafio_central = d
+                        break
+                else:
+                    if not d['concluido']:
+                        proximo_desafio_central = d
+                    break
 
-            if not d['concluido']:
-                desafio = FabricaDesafios().cria(d['desafio']['id'])
-                if (d['apenas_doador'] == 0 and not ja_verificou_desafio_central) or (
-                        d['apenas_doador'] == 1 and usuario in doadores):
+        if proximo_desafio_central:
+            desafio = FabricaDesafios().cria(d['desafio']['id'])
+            # TODO: Retirar esse IF caso um dia as cpus participem de um evento.
+            if usuario not in jogo.cpus.keys():
+                if desafio.completou(jogo, usuario, venceu, self.quemDestruiuQuem):
+                    desafios.conclui_desafio(d, usuario)
+                    pontos += d['desafio']['xp']
+
+        for d in desafios_em_andamento:
+            if d['apenas_doador'] == 1 and usuario in doadores:
+                if not d['concluido']:
+                    desafio = FabricaDesafios().cria(d['desafio']['id'])
                     # TODO: Retirar esse IF caso um dia as cpus participem de um evento.
                     if usuario not in jogo.cpus.keys():
                         if desafio.completou(jogo, usuario, venceu, self.quemDestruiuQuem):
-                            if d['apenas_doador'] == 0:
-                                ja_verificou_desafio_central = True
                             desafios.conclui_desafio(d, usuario)
                             pontos += d['desafio']['xp']
         return pontos
