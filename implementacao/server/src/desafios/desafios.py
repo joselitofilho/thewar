@@ -39,7 +39,7 @@ class Desafios(object):
             c = con.cursor()
             query = """
                 SELECT id, idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm, ordem
-                 FROM DesafiosEmAndamento 
+                 FROM DesafiosEmAndamento
                 WHERE datetime('now') BETWEEN iniciaEm AND terminaEm
                 """
             # TODO: Levar em consideração se o jogador é doador aqui?
@@ -189,28 +189,28 @@ class Desafios(object):
             if dia_da_semana in range(5):
                 if dia_da_semana > 0:
                     self.insere_desafio_central_diario(cur,
-                        """
-                        SELECT idDesafio
-                          FROM DesafiosEmAndamento
-                         WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'))
-                           AND apenasDoador = 0;
-                        """,
-                        """
-                        INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm)
-                             VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('10:00:00')), datetime(date('now'), time('09:59:59')));
-                        """)
+                                                       """
+                                                       SELECT idDesafio
+                                                         FROM DesafiosEmAndamento
+                                                        WHERE iniciaEm = datetime(date('now', '-1 DAY'), time('10:00:00'))
+                                                          AND apenasDoador = 0;
+                                                       """,
+                                                       """
+                                                       INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm)
+                                                            VALUES (?, ?, ?, datetime(date('now', '-1 DAY'), time('10:00:00')), datetime(date('now'), time('09:59:59')));
+                                                       """)
 
                 self.insere_desafio_central_diario(cur,
-                    """
-                    SELECT idDesafio
-                     FROM DesafiosEmAndamento
-                    WHERE iniciaEm = datetime(date('now'), time('10:00:00'))
-                      AND apenasDoador = 0;
-                    """,
-                    """
-                    INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm)
-                         VALUES (?, ?, ?, datetime(date('now'), time('10:00:00')), datetime(date('now', '+1 DAY'), time('09:59:59')));
-                    """)
+                                                   """
+                                                   SELECT idDesafio
+                                                    FROM DesafiosEmAndamento
+                                                   WHERE iniciaEm = datetime(date('now'), time('10:00:00'))
+                                                     AND apenasDoador = 0;
+                                                   """,
+                                                   """
+                                                   INSERT INTO DesafiosEmAndamento (idDesafio, nomeOrientador, apenasDoador, iniciaEm, terminaEm)
+                                                        VALUES (?, ?, ?, datetime(date('now'), time('10:00:00')), datetime(date('now', '+1 DAY'), time('09:59:59')));
+                                                   """)
 
     def insere_desafio_central_diario(self, cursor, select, insert):
         desafios_vao_iniciar = cursor.execute(select).fetchall()
@@ -250,7 +250,7 @@ class Desafios(object):
         self.desafios_em_andamento = self.obter_desafios_em_andamento(doador)
 
         if usuario:
-            desafios_concluidos = {}
+            desafios_concluidos = []
             conn = sqlite3.connect(self.baseDeDados)
             with conn:
                 c = conn.cursor()
@@ -265,13 +265,13 @@ class Desafios(object):
                     """
                 rows = c.execute(query, [usuario]).fetchall()
                 for row in rows:
-                    desafios_concluidos[row[0]] = {'id': row[0], 'id_desafio_em_andamento': row[1]}
+                    desafios_concluidos.append('{},{}'.format(row[0], row[1]))
 
             for d in self.desafios_em_andamento:
                 desafio_id = d['desafio']['id']
+                desafio_em_andamento_id = d['id_desafio_em_andamento']
                 if desafios_concluidos and \
-                        desafio_id in desafios_concluidos and \
-                        desafios_concluidos[desafio_id]['id_desafio_em_andamento'] == d['id_desafio_em_andamento']:
+                        '{},{}'.format(desafio_id, desafio_em_andamento_id) in desafios_concluidos:
                     d['concluido'] = True
                 else:
                     d['concluido'] = False
