@@ -159,24 +159,57 @@ class IALucy(IAInterface):
         return True
 
     def acao_ataca(self, usuario, jogador, jogo):
-        meus_territorios = jogador.territorios
-        random.shuffle(meus_territorios)
-        territoriosInimigos = jogo.territoriosInimigos(usuario)
-        random.shuffle(territoriosInimigos)
-        for territorio in meus_territorios:
-            if territorio.quantidadeDeTropas > 3:
-                for inimigo in territoriosInimigos:
-                    if territorio.quantidadeDeTropas >= inimigo.quantidadeDeTropas + 2 and FronteiraTerritorio.TemFronteira(
-                            inimigo.codigo, territorio.codigo):
-                        jogo.ataca(usuario, [territorio.codigo], inimigo.codigo)
-                        return False
+        # meus_territorios = jogador.territorios
+        # random.shuffle(meus_territorios)
+        # territoriosInimigos = jogo.territoriosInimigos(usuario)
+        # random.shuffle(territoriosInimigos)
+        # for territorio in meus_territorios:
+        #     if territorio.quantidadeDeTropas > 3:
+        #         for inimigo in territoriosInimigos:
+        #             if territorio.quantidadeDeTropas >= inimigo.quantidadeDeTropas + 2 and FronteiraTerritorio.TemFronteira(
+        #                     inimigo.codigo, territorio.codigo):
+        #                 jogo.ataca(usuario, [territorio.codigo], inimigo.codigo)
+        #                 return False
+        #
+        # return True
+
+        grafo = self.atualiza_grafo(usuario, jogador, jogo)
+        meus_territorios_com_tropa = dict(
+            filter(
+                lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['bst'] != 0 and
+                             elem[1]['bst'] != 1, grafo.items()))
+
+        if len(meus_territorios_com_tropa) > 0:
+            codigo_territorios_inimigos = []
+            for t in jogo.territoriosInimigos(usuario):
+                codigo_territorios_inimigos.append(t.codigo)
+
+            for territorio in meus_territorios_com_tropa:
+                territorio_para = {}
+                for territorio_fronteira in meus_territorios_com_tropa[territorio]['fronteiras']:
+                    diff_quantidade = meus_territorios_com_tropa[territorio]['quantidade'] - \
+                                      grafo[territorio_fronteira]['quantidade']
+                    if territorio_fronteira in codigo_territorios_inimigos and diff_quantidade >= 2:
+                        territorio_para[territorio_fronteira] = grafo[territorio_fronteira]
+                        territorio_para[territorio_fronteira]['diff_quantidade'] = diff_quantidade
+
+                territorio_para_ordenado = sorted(territorio_para.items(),
+                                                  key=lambda x: x[1]['diff_quantidade'] and x[1]['tipo'], reverse=True)
+                if len(territorio_para_ordenado) > 0:
+                    territorio_inimigo = territorio_para_ordenado[0][0]
+                    jogo.ataca(usuario, [territorio], territorio_inimigo)
+                    return False
 
         return True
 
     def acao_move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
-        # quantidade = min(params['territoriosDoAtaque'][0]['quantidadeDeTropas'] - 1, 1)
-        # NOTE: Por enquanto não vai mover ao atacar.
+        # print('acao_move_apos_conquistar_territorio', params)
         quantidade = 0
+        grafo = self.atualiza_grafo(usuario, jogador, jogo)
+        territorio_ataque = grafo[params['territoriosDoAtaque'][0]['codigo']]
+        if territorio_ataque['bst'] == 0:
+            quantidade = min(params['territoriosDoAtaque'][0]['quantidadeDeTropas'] - 1, 2)
+
         jogo.moveAposConquistarTerritorio(usuario, quantidade)
 
     def acao_move(self, usuario, jogador, jogo):
@@ -204,7 +237,6 @@ class IALucy(IAInterface):
                     if len(territorio_para) > 0:
                         if so_tem_fronteira_com_bst_0:
                             visitados.append(do_territorio)
-                        # visitados.append(do_territorio)
 
                         territorio_para_ordenado = sorted(territorio_para.items(), key=lambda x: x[1]['nbsr'],
                                                           reverse=True)
