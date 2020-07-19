@@ -238,5 +238,11 @@
     "gender": "male",
     "class": "Deus",
     "bio": "Kratos é um deus da força e do poder, irmão de da deusa grega da vitória, Nike, da força, Bia, e de Zelus, o da rivalidade. Todos eles foram os primeiros a ficar ao lado de Zeus para defender o Monte Olimpo do deus monstro Typhon."
+  },
+  {
+    "name": "Galeno",
+    "gender": "male",
+    "class": "Inteligência",
+    "bio": ""
   }
 ]
