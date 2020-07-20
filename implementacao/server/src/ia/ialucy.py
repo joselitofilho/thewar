@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 import sys
+import traceback
 
 from src.carta import *
 from src.mensagens import *
@@ -33,16 +34,21 @@ class IALucy(IAInterface):
                                                                                      codigosTerritorios)
 
             meus_territorios = []
-            for terr in jogador.territorios:
-                if terr.codigo in meus_territorios_por_grupo_maior_densidade:
-                    meus_territorios.append(terr)
+            for terr in jogo.territoriosInimigos(usuario):
+                if terr.codigo in lista_grupo_maior_densidade:
+                    for adj in grafo[terr.codigo]['fronteiras']:
+                        if grafo[adj]['grupo'] == grupo_maior_densidade and grafo[adj]['usuario'] == usuario:
+                            meus_territorios.append(grafo[adj]['codigo'])
 
-            meu_territorio_escolhido = None
-            for terr in meus_territorios_por_grupo_maior_densidade:
+            if len(meus_territorios) == 0:
+                for terr in jogador.territorios:
+                    if terr.codigo in meus_territorios_por_grupo_maior_densidade:
+                        meus_territorios.append(terr.codigo)
+
+            meu_territorio_escolhido = grafo[meus_territorios[0]]
+            for terr in meus_territorios:
                 grafo_terr = grafo[terr]
-                if meu_territorio_escolhido == None:
-                    meu_territorio_escolhido = grafo_terr
-                elif grafo_terr['bsr'] == meu_territorio_escolhido['bsr']:
+                if grafo_terr['bsr'] == meu_territorio_escolhido['bsr']:
                     qtd_adjacentes_no_grupo_1 = 0
                     for adj in grafo_terr['fronteiras']:
                         if grafo[adj]['grupo'] == grafo_terr['grupo']:
@@ -63,7 +69,9 @@ class IALucy(IAInterface):
 
             jogo.colocaTropaReq(usuario, territorio_codigo, quantidade_de_tropas)
         except:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
             print("acao_coloca_tropa :: Unexpected exception:", sys.exc_info()[0], flush=True)
+            traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
             print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)), flush=True)
 
             terrs = jogador.territorios
@@ -173,37 +181,49 @@ class IALucy(IAInterface):
         #
         # return True
 
-        grafo = self.atualiza_grafo(usuario, jogador, jogo)
-        meus_territorios_com_tropa = dict(
-            filter(
-                lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['bst'] != 0 and
-                             elem[1]['bst'] != 1, grafo.items()))
+        try:
+            grafo = self.atualiza_grafo(usuario, jogador, jogo)
+            meus_territorios_com_tropa = dict(
+                filter(
+                    # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['bst'] != 0,
+                    # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['nbsr'] < 0.5,
+                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                    grafo.items()))
 
-        if len(meus_territorios_com_tropa) > 0:
-            codigo_territorios_inimigos = []
-            for t in jogo.territoriosInimigos(usuario):
-                codigo_territorios_inimigos.append(t.codigo)
+            if len(meus_territorios_com_tropa) > 0:
+                codigo_territorios_inimigos = []
+                for t in jogo.territoriosInimigos(usuario):
+                    codigo_territorios_inimigos.append(t.codigo)
 
-            for territorio in meus_territorios_com_tropa:
-                territorio_para = {}
-                for territorio_fronteira in meus_territorios_com_tropa[territorio]['fronteiras']:
-                    diff_quantidade = meus_territorios_com_tropa[territorio]['quantidade'] - \
-                                      grafo[territorio_fronteira]['quantidade']
-                    if territorio_fronteira in codigo_territorios_inimigos and diff_quantidade >= 2:
-                        territorio_para[territorio_fronteira] = grafo[territorio_fronteira]
-                        territorio_para[territorio_fronteira]['diff_quantidade'] = diff_quantidade
+                for territorio in meus_territorios_com_tropa:
+                    territorio_para = {}
+                    for territorio_fronteira in meus_territorios_com_tropa[territorio]['fronteiras']:
+                        diff_quantidade = meus_territorios_com_tropa[territorio]['quantidade'] - \
+                                          grafo[territorio_fronteira]['quantidade']
+                        if territorio_fronteira in codigo_territorios_inimigos and diff_quantidade >= 2:
+                            territorio_para[territorio_fronteira] = grafo[territorio_fronteira]
+                            territorio_para[territorio_fronteira]['diff_quantidade'] = diff_quantidade
+                            territorio_para[territorio_fronteira]['mesmo_grupo'] = '1' if grafo[territorio_fronteira][
+                                                                                            'grupo'] == \
+                                                                                        meus_territorios_com_tropa[
+                                                                                            territorio]['grupo'] else '0'
 
-                territorio_para_ordenado = sorted(territorio_para.items(),
-                                                  key=lambda x: x[1]['diff_quantidade'] and x[1]['tipo'], reverse=True)
-                if len(territorio_para_ordenado) > 0:
-                    territorio_inimigo = territorio_para_ordenado[0][0]
-                    jogo.ataca(usuario, [territorio], territorio_inimigo)
-                    return False
+                    territorio_para_ordenado = sorted(territorio_para.items(),
+                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and \
+                                                                    x[1]['tipo'], reverse=True)
+                    if len(territorio_para_ordenado) > 0:
+                        territorio_inimigo = territorio_para_ordenado[0][0]
+                        jogo.ataca(usuario, [territorio], territorio_inimigo)
+                        return False
+        except Exception:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            print("acao_coloca_tropa :: Unexpected exception:", sys.exc_info()[0], flush=True)
+            traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+            print('grafo {}'.format(jogo.grafoTerritorios(jogo.jogadores)), flush=True)
 
         return True
 
     def acao_move_apos_conquistar_territorio(self, usuario, jogador, jogo, params):
-        # print('acao_move_apos_conquistar_territorio', params)
         quantidade = 0
         grafo = self.atualiza_grafo(usuario, jogador, jogo)
         territorio_ataque = grafo[params['territoriosDoAtaque'][0]['codigo']]
