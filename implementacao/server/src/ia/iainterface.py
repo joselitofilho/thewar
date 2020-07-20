@@ -156,7 +156,7 @@ class IAInterface(threading.Thread):
             self.turno_atacar(usuario, jogador, jogo)
 
     def turno_atacar(self, usuario, jogador, jogo):
-        self.wait_mid_time()
+        self.wait_short_time()
         self.ataca(usuario, jogador, jogo)
 
     def ataca(self, usuario, jogador, jogo):
