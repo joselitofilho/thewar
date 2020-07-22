@@ -1,17 +1,24 @@
 import random
 
-# from .iadummy import IADummy
+from .iadummy import IADummy
 from .ialucy import IALucy
+from .iaathena import IAAthena
 
 
 class IAFactory:
     disponiveis = {
-        'Atena': IALucy,
+        'Atena': IAAthena,
         'Cindy': IALucy,
         'Joana': IALucy,
         'Lucy': IALucy,
         'Mavis': IALucy,
         'Minerva': IALucy,
+        # 'Atena': IADummy,
+        # 'Cindy': IADummy,
+        # 'Joana': IADummy,
+        # 'Lucy': IADummy,
+        # 'Mavis': IADummy,
+        # 'Minerva': IADummy,
     }
 
     def build(self, target):

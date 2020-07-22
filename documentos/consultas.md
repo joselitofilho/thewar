@@ -118,17 +118,15 @@ INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeO
 UPDATE  Pontuacao SET quantidadeDePartidas = quantidadeDePartidas + 1, quantidadeDeVitorias = quantidadeDeVitorias + 1, pontos = pontos + 400 WHERE idUsuario = 25;
 UPDATE  PontuacaoEventos SET quantidadeDePartidas = quantidadeDePartidas + 1, quantidadeDeVitorias = quantidadeDeVitorias + 1, pontos = pontos + 400 WHERE idUsuario = 25 AND idEvento = 1;
 
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(1, 1, 27, 'Lutz', datetime('now'));
-INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(26, 1, 2, 'Winters', datetime('now'));
-UPDATE  Pontuacao SET pontos = pontos + 250 WHERE idUsuario = 26;
-UPDATE  PontuacaoEventos SET pontos = pontos + 250 WHERE idUsuario = 26 AND idEvento = 1;
-
-
-update pontuacaoeventos set pontos = 200 where id = 10;
-SELECT u.nome, p.pontos, p.quantidadeDePartidas, p.quantidadeDeVitorias, p.quantidadeDestruido, p.atualizado
-                  FROM PontuacaoEventos p 
-                  JOIN Eventos e ON e.id = p.idEvento
-                  JOIN Usuarios u ON u.id = p.idUsuario
-                 WHERE e.id = 0
-              ORDER BY pontos+quantidadeDePartidas+quantidadeDeVitorias+quantidadeDestruido+atualizado 
-                  DESC;
+INSERT INTO DesafiosConcluidos(idUsuario, idDesafioEmAndamento, idDesafio, nomeOrientador, data) VALUES(25, 70, 2, 'Pétain', datetime('now'));
+UPDATE  Pontuacao SET pontos = pontos + 50 WHERE idUsuario = 25;
+UPDATE  PontuacaoEventos SET pontos = pontos + 50 WHERE idUsuario = 25 AND idEvento = 1;                  
+                  
+                  
+############################# Ver os desafios em loop.
+select * from desafiosConcluidos where data >= datetime(date('now', '-1 DAY'), time('07:00:00')) order by idDesafioEmAndamento;
+select * from desafiosConcluidos where data >= datetime(date('now'), time('07:00:00')) and idUsuario in (25, 26) order by idDesafioEmAndamento;
+SELECT * FROM desafiosemandamento where id = 69;
+delete from desafiosConcluidos where id = 202;
+UPDATE  Pontuacao SET pontos = pontos - 100 WHERE idUsuario = 26;
+UPDATE  PontuacaoEventos SET pontos = pontos - 100 WHERE idUsuario = 26 AND idEvento = 1;

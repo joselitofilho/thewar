@@ -16,6 +16,8 @@ from src.jogo import *
 from src.mensagens import *
 from src.pontuacaodb import *
 from src.sala import *
+from src.ia.iaathena import *
+from src.ia.ialucy import *
 
 
 class GerenciadorSala(object):
@@ -111,7 +113,11 @@ class GerenciadorSala(object):
                     usuario = jogadorDaSala.usuario
                     posicao = jogadorDaSala.posicao
                     if jogadorDaSala.tipo == TipoJogador.cpu:
-                        cpu = cpu_factory.random()(sufixo=sufixos[posicao])
+                        if len(cpus) == 0:
+                            cpu = IAAthena()
+                        else:
+                            # cpu = cpu_factory.random()(sufixo=sufixos[posicao])
+                            cpu = IALucy(sufixo=sufixos[posicao])
                         usuario = cpu.usuario
                     jogadoresDoJogo[k] = JogadorDoJogo(
                         usuario,
