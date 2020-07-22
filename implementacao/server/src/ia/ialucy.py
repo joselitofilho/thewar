@@ -211,7 +211,7 @@ class IALucy(IAInterface):
                                                                                               'grupo'] else '0'
 
                     territorio_para_ordenado = sorted(territorio_para.items(),
-                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and,
+                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'],
                                                       reverse=True)
                     # territorio_para_ordenado = sorted(territorio_para.items(),
                     #                                   key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and \
