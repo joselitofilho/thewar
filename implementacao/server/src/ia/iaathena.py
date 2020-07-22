@@ -11,9 +11,9 @@ from src.tipoAcaoTurno import *
 from .iainterface import IAInterface
 
 
-class IALucy(IAInterface):
+class IAAthena(IAInterface):
     def __init__(self, sufixo=''):
-        super(IALucy, self).__init__('Lucy' + sufixo)
+        super(IAAthena, self).__init__('Atena' + sufixo)
 
     def acao_coloca_tropa(self, usuario, jogador, jogo, params):
         try:
@@ -167,28 +167,12 @@ class IALucy(IAInterface):
         return True
 
     def acao_ataca(self, usuario, jogador, jogo):
-        # meus_territorios = jogador.territorios
-        # random.shuffle(meus_territorios)
-        # territoriosInimigos = jogo.territoriosInimigos(usuario)
-        # random.shuffle(territoriosInimigos)
-        # for territorio in meus_territorios:
-        #     if territorio.quantidadeDeTropas > 3:
-        #         for inimigo in territoriosInimigos:
-        #             if territorio.quantidadeDeTropas >= inimigo.quantidadeDeTropas + 2 and FronteiraTerritorio.TemFronteira(
-        #                     inimigo.codigo, territorio.codigo):
-        #                 jogo.ataca(usuario, [territorio.codigo], inimigo.codigo)
-        #                 return False
-        #
-        # return True
-
         try:
             grafo = self.atualiza_grafo(usuario, jogador, jogo)
             meus_territorios_com_tropa = dict(
                 filter(
-                    # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['bst'] != 0,
-                    # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['nbsr'] < 0.5,
                     lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (
-                                elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                            elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
                     grafo.items()))
 
             if len(meus_territorios_com_tropa) > 0:
@@ -211,8 +195,8 @@ class IALucy(IAInterface):
                                                                                               'grupo'] else '0'
 
                     territorio_para_ordenado = sorted(territorio_para.items(),
-                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'],
-                                                      reverse=True)
+                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and \
+                                                                    x[1]['tipo'], reverse=True)
                     if len(territorio_para_ordenado) > 0:
                         territorio_inimigo = territorio_para_ordenado[0][0]
                         jogo.ataca(usuario, [territorio], territorio_inimigo)
