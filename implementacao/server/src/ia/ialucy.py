@@ -187,7 +187,8 @@ class IALucy(IAInterface):
                 filter(
                     # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['bst'] != 0,
                     # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['nbsr'] < 0.5,
-                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (
+                                elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
                     grafo.items()))
 
             if len(meus_territorios_com_tropa) > 0:
@@ -204,13 +205,17 @@ class IALucy(IAInterface):
                             territorio_para[territorio_fronteira] = grafo[territorio_fronteira]
                             territorio_para[territorio_fronteira]['diff_quantidade'] = diff_quantidade
                             territorio_para[territorio_fronteira]['mesmo_grupo'] = '1' if grafo[territorio_fronteira][
-                                                                                            'grupo'] == \
-                                                                                        meus_territorios_com_tropa[
-                                                                                            territorio]['grupo'] else '0'
+                                                                                              'grupo'] == \
+                                                                                          meus_territorios_com_tropa[
+                                                                                              territorio][
+                                                                                              'grupo'] else '0'
 
                     territorio_para_ordenado = sorted(territorio_para.items(),
-                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and \
-                                                                    x[1]['tipo'], reverse=True)
+                                                      key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and,
+                                                      reverse=True)
+                    # territorio_para_ordenado = sorted(territorio_para.items(),
+                    #                                   key=lambda x: x[1]['mesmo_grupo'] and x[1]['diff_quantidade'] and \
+                    #                                                 x[1]['tipo'], reverse=True)
                     if len(territorio_para_ordenado) > 0:
                         territorio_inimigo = territorio_para_ordenado[0][0]
                         jogo.ataca(usuario, [territorio], territorio_inimigo)
