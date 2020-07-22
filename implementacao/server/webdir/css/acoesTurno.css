@@ -61,61 +61,6 @@
     background: url('../imagens/acoesTurno/area-dados.png') no-repeat;
 }
 
-#dados {
-    position: relative;
-    left: 9px;
-    top: 5px;
-    width: 151px;
-    height: 96px;
-
-    display: flex;
-    flex-direction: column;
-}
-
-#dadosAtaque {
-    display: flex;
-    flex-direction: row;
-    width: 151px;
-}
-
-#dadosDefesa {
-    display: flex;
-    flex-direction: row;
-    width: 151px;
-}
-
-.dado {
-    float: left;
-    width: 39px;
-    height: 38px;
-    background: url('../imagens/dados-v2.png') no-repeat;
-    margin: 2px 2px;
-}
-
-.dado_ataque {
-    background-position: 0px 0px;
-}
-
-.dado_ataque1 {
-    background-position: 0px 0px;
-}
-
-.dado_ataque6 {
-    background-position: -200px 0px;
-}
-
-.dado_defesa {
-    background-position: 0px -39px;
-}
-
-.dado_defesa1 {
-    background-position: 0px -39px;
-}
-
-.dado_defesa6 {
-    background-position: -200px -39px;
-}
-
 #acoes_turno .info #extra {
     position: absolute;
     top: 53px;
