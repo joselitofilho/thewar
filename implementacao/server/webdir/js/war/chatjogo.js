@@ -120,7 +120,7 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         } else if (indice === 5) {
             cor = 'cor_amarelo';
         }
-        chatAreaLogs.append('<div class="log_mensagem_item"><div class="barra_lateral ' + cor + '"></div><p>' + texto + '</p></div>');
+        chatAreaLogs.append('<div class="log_mensagem_item"><div class="barra_lateral ' + cor + '"></div><div style="display: flex;flex-direction: column;margin: 4px 8px;width: 100%;"><p>' + texto + '</p></div></div>');
 
         if (this.rolou_a_barra_logs) {
             if (chatAreaLogs.scrollTop() + chatAreaLogs.innerHeight() >= chatAreaLogs[0].scrollHeight) {
@@ -213,10 +213,43 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
             texto += ' do território ' +
                 territoriosDoAtaqueTexto;
         }
-        texto += '.</br>';
-        texto += 'Dados ataque: ' + dadosAtaque + '</br>';
-        texto += 'Dados defesa: ' + dadosDefesa;
+        texto += '.';
+
+        const divDadosAtaque = this.geraDivDados(dadosAtaque);
+        const divDadosDefesa = this.geraDivDados(dadosDefesa);
+
+        texto += '<div class="log_dados"><div class="dice dice_label">A</div>' + divDadosAtaque + '</div>';
+        texto += '<div class="log_dados"><div class="dice dice_label">D</div>' + divDadosDefesa + '</div>';
         this.escreveNoLog(this.indiceJogador(jogadorAtaque), texto);
+    };
+
+    this.geraDivDados = function(dados) {
+        const splitDados = dados;
+        let divDados = '';
+        for (let i = 0; i < splitDados.length; ++i) {
+            console.log(splitDados[i]);
+            switch (splitDados[i]) {
+                case 1:
+                    divDados += '<div class="first-face dice"><span class="dot"></span></div>';
+                    break;
+                case 2:
+                    divDados += '<div class="second-face dice"><span class="dot"></span><span class="dot"></span></div>';
+                    break;
+                case 3:
+                    divDados += '<div class="third-face dice"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+                    break;
+                case 4:
+                    divDados += '<div class="fourth-face dice"><div class="column"><span class="dot"></span><span class="dot"></span></div><div class="column"><span class="dot"></span><span class="dot"></span></div></div>';
+                    break;
+                case 5:
+                    divDados += '<div class="fifth-face dice"><div class="column"><span class="dot"></span><span class="dot"></span></div><div class="column"><span class="dot"></span></div><div class="column"><span class="dot"></span><span class="dot"></span></div></div>';
+                    break;
+                case 6:
+                    divDados += '<div class="sixth-face dice"><div class="column"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="column"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>';
+                    break;
+            }
+        }
+        return divDados;
     };
 
     this.moveu = function (jogador, doTerritorio, paraOTerritorio, quantidade) {

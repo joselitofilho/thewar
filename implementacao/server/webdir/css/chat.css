@@ -91,8 +91,22 @@
 }
 
 .log_mensagem_item p {
-    margin: 4px 8px;
     color: white;
     text-align: left;
-    width: 100%;
+}
+
+.log_dados {
+    display: flex;
+    margin: 2px 0;
+}
+
+.log_dados .dice_label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2px;
+}
+
+.log_dados .dice {
+    margin-right: 4px;
 }
