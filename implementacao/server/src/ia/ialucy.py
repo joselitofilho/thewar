@@ -183,12 +183,14 @@ class IALucy(IAInterface):
 
         try:
             grafo = self.atualiza_grafo(usuario, jogador, jogo)
+            # TODO: Usar variável para saber se houve conquista de território.
             meus_territorios_com_tropa = dict(
                 filter(
                     # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['bst'] != 0,
                     # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and elem[1]['nbsr'] < 0.5,
-                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (
-                                elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                    # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (
+                    #             elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario,
                     grafo.items()))
 
             if len(meus_territorios_com_tropa) > 0:

@@ -171,8 +171,9 @@ class IAAthena(IAInterface):
             grafo = self.atualiza_grafo(usuario, jogador, jogo)
             meus_territorios_com_tropa = dict(
                 filter(
-                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (
-                            elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                    # lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario and (
+                    #         elem[1]['quantidade'] >= elem[1]['bst'] * 0.3),
+                    lambda elem: elem[1]['quantidade'] > 3 and elem[1]['usuario'] == usuario,
                     grafo.items()))
 
             if len(meus_territorios_com_tropa) > 0:
