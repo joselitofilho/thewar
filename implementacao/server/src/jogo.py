@@ -40,6 +40,10 @@ class Jogo(object):
         self.ordemJogadores = list(self.jogadores.keys())
         random.shuffle(self.ordemJogadores)
 
+        self.quantidade_troca_por_jogador = {}
+        for k, v in self.jogadores.items():
+            self.quantidade_troca_por_jogador[v.usuario] = 0
+
         # Indice que aponta para a fila da ordem dos jogador.
         self.indiceOrdemJogadores = None
         # Posicao do jogador que esta jogando no momento.
@@ -830,6 +834,8 @@ class Jogo(object):
                 if podeTrocar:
                     self.turno.trocouCartas = True
 
+                    self.quantidade_troca_por_jogador[jogador.usuario] += 1
+
                     self.colocaTropaNaTrocaDeCartasTerritorios(posicaoJogador, cartasParaTroca)
 
                     # Envia informacao do turno.
@@ -843,7 +849,7 @@ class Jogo(object):
                     # Remove e envia ao jogador suas cartas de territorios atualizadas.
                     for carta in cartasParaTroca:
                         jogador.removeCartaTerritorio(carta)
-                        self.cartasTerritorioDescartadas.append(carta);
+                        self.cartasTerritorioDescartadas.append(carta)
                     self.enviaMsgParaJogador(TipoMensagem.cartas_territorio, jogador.cartasTerritorio,
                                              jogador)
                 else:
@@ -862,7 +868,9 @@ class Jogo(object):
             quantidade = (numeroDaTroca * 2) + 2
         else:
             quantidade = (2 * numeroDaTroca) + (3 * (numeroDaTroca - 5))
-        return min(quantidade, 60)
+        # TODO: Caso seja necessário limitar a quantidade de tropas.
+        # return min(quantidade, 60)
+        return quantidade
 
     def fatorTempoAdicional(self, numeroDaTroca):
         valorDaTroca = self.calculaQuantidadeDeTropasDaTroca(numeroDaTroca)
