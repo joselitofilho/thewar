@@ -326,6 +326,9 @@ class FabricaDesafios(object):
             30: Desafio30(),
             31: Desafio31(),
             32: Desafio32(),
+            33: Desafio33(),
+            34: Desafio34(),
+            35: Desafio35(),
         }
 
         return mapaObjetivos[id]
@@ -673,3 +676,21 @@ class Desafio32(Desafio):
                         if t.codigo == CodigoTerritorio.OrienteMedio and t.quantidadeDeTropas >= 150:
                             return True
         return False
+
+
+# Vença uma partida fazendo no máximo 3 trocas de cartas.
+class Desafio33(Desafio):
+    def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
+        return venceu and jogo.quantidade_troca_por_jogador[usuario] <= 3
+
+
+# Vença uma partida fazendo no máximo 2 trocas de cartas.
+class Desafio34(Desafio):
+    def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
+        return venceu and jogo.quantidade_troca_por_jogador[usuario] <= 2
+
+
+# Vença uma partida fazendo no máximo 1 troca de cartas.
+class Desafio35(Desafio):
+    def completou(self, jogo, usuario, venceu, quemDestruiuQuem):
+        return venceu and jogo.quantidade_troca_por_jogador[usuario] <= 1

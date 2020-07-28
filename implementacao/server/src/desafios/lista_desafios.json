@@ -184,5 +184,23 @@
     "name": "",
     "description": "Vença uma partida com pelo menos 150 tropas no Oriente Médio.",
     "xp": 200
+  },
+  {
+    "id": 33,
+    "name": "",
+    "description": "Vença uma partida fazendo no máximo 3 trocas de cartas.",
+    "xp": 100
+  },
+  {
+    "id": 34,
+    "name": "",
+    "description": "Vença uma partida fazendo no máximo 2 trocas de cartas.",
+    "xp": 150
+  },
+  {
+    "id": 35,
+    "name": "",
+    "description": "Vença uma partida fazendo no máximo 1 troca de cartas.",
+    "xp": 200
   }
 ]
