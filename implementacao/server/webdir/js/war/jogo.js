@@ -371,13 +371,16 @@ function processarMsg_entrou_no_jogo(msgParams) {
         if (usuario !== _usuario) _chatJogo.entrouNoJogo(usuario, (posicaoJogador === 7));
 
         if (_posicaoJogador === -1) {
-            $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
-            $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
-            _posicaoJogador = posicaoJogador;
-            appwar_alterarTituloDaPagina(usuario);
+            // if (usuario === _usuario) {
+            //     $('#painelRegistrarOuEntrar').css('visibility', 'hidden');
+            //     $('#painelRegistrarOuEntrar .form-signin').css('visibility', 'hidden');
+            //     _posicaoJogador = posicaoJogador;
+            //     appwar_alterarTituloDaPagina(usuario);
+            // }
 
             // Olheiro.
             if (posicaoJogador === 7) {
+                _posicaoJogador = posicaoJogador;
                 jNotify(
                     "Este jogo já está em andamento. Você poderá apenas assistí-lo.",
                     {
@@ -452,6 +455,9 @@ function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _infoJogadorDaVezDoTurno = msgParams.vezDoJogador;
     _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
+    if (msgParams.vezDoJogador.usuario === _usuario) {
+        _posicaoJogador = msgParams.vezDoJogador.posicao;
+    }
     $('#pct_numeroDoTurno').html("Turno: " + msgParams.numeroDoTurno);
     $('#pct_valorDaTroca').html("Valor da troca: " + msgParams.valorDaTroca);
 
@@ -574,7 +580,7 @@ function jogo_alteraInfoTurno(msgParams) {
     $('#acoes_turno .info #extra').css('visibility', 'hidden');
 
     var posicaoJogador = Number(msgParams.vezDoJogador.posicao) + 1;
-    var ehOJogadorDaVez = msgParams.vezDoJogador.posicao === _posicaoJogador;
+    var ehOJogadorDaVez = msgParams.vezDoJogador.posicao === _posicaoJogadorDaVez;
 
     _componenteAcaoTurno.alteraTimelineJogadorDaVez(tipoAcao, posicaoJogador);
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, tipoAcao);
