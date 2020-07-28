@@ -227,7 +227,6 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
         const splitDados = dados;
         let divDados = '';
         for (let i = 0; i < splitDados.length; ++i) {
-            console.log(splitDados[i]);
             switch (splitDados[i]) {
                 case 1:
                     divDados += '<div class="first-face dice"><span class="dot"></span></div>';
