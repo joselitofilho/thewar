@@ -144,7 +144,6 @@ jogos.war.Sala = function () {
     };
 
     this.alteraBtnEntrar = function (acao, sala) {
-        $('#btnSairDaSala' + sala).css('display', 'none');
         $('#btnEntrarNaSala' + sala).html('<span>' + acao + '</span>');
     };
 
