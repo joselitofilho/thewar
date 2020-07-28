@@ -454,8 +454,8 @@ function jogo_processaMsg_jogo_interrompido(msgParams) {
 function processarMsg_turno(msgParams) {
     _turno = msgParams;
     _infoJogadorDaVezDoTurno = msgParams.vezDoJogador;
-    _posicaoJogadorDaVez = msgParams.vezDoJogador.posicao;
-    if (msgParams.vezDoJogador.usuario === _usuario) {
+    _posicaoJogadorDaVez = _infoJogadorDaVezDoTurno.posicao;
+    if (_infoJogadorDaVezDoTurno.usuario === _usuario) {
         _posicaoJogador = msgParams.vezDoJogador.posicao;
     }
     $('#pct_numeroDoTurno').html("Turno: " + msgParams.numeroDoTurno);
@@ -580,7 +580,7 @@ function jogo_alteraInfoTurno(msgParams) {
     $('#acoes_turno .info #extra').css('visibility', 'hidden');
 
     var posicaoJogador = Number(msgParams.vezDoJogador.posicao) + 1;
-    var ehOJogadorDaVez = msgParams.vezDoJogador.posicao === _posicaoJogadorDaVez;
+    var ehOJogadorDaVez = msgParams.vezDoJogador.usuario === _usuario;
 
     _componenteAcaoTurno.alteraTimelineJogadorDaVez(tipoAcao, posicaoJogador);
     _componenteAcaoTurno.alteraBotoesDaAcao(ehOJogadorDaVez, tipoAcao);
