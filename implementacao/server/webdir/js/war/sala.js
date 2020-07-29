@@ -144,6 +144,7 @@ jogos.war.Sala = function () {
     };
 
     this.alteraBtnEntrar = function (acao, sala) {
+        $('#btnSairDaSala' + sala).css('display', 'none');
         $('#btnEntrarNaSala' + sala).html('<span>' + acao + '</span>');
     };
 
@@ -200,6 +201,7 @@ function processarMsg_info_sala(msgParams) {
                 _sala.preencheJogador(sala, posicaoJogador, usuario, tipo, jog.dono);
 
                 if (jog.dono && _usuario === usuario && estado === 'sala_criada') {
+                    $('#btnSairDaSala' + sala).css('display', '');
                     $('#btnIniciarPartida' + sala).css('visibility', 'visible');
                 }
             }
@@ -310,6 +312,7 @@ function processarMsg_lobby(msgParams) {
                 if (_usuario === usuario && estado === 'sala_criada') {
                     this.atualizaElementosJogadorNaSala(sala);
                     if (jog.dono) {
+                        $('#btnSairDaSala' + sala).css('display', '');
                         $('#btnIniciarPartida' + sala).css('visibility', 'visible');
                     }
                 }

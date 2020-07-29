@@ -23,6 +23,9 @@ mv premiacao.png webdir/imagens/lobby/banners/
 gdown --id 15Y7Zrp9s4FiQuKgMiN-lxTad7xyEhh0l
 mv premio.png webdir/imagens/lobby/banners/
 
+gdown --id 1ld32cN6WSX61anUjnlGQd5GcESwxHK43
+mv evento_chat.png webdir/imagens/lobby/banners/
+
 echo "Executing migrations..."
 ls -p migrations/database*.py | xargs -n 1 -I file python file war.db
 

@@ -61,11 +61,12 @@ jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
         this.limpa();
 
         let texto = '';
-        texto += '<h4>Seja bem-vindo ao servidor principal!</h4>';
+        texto += '<h5>Seja bem-vindo ao servidor principal!</h5>';
         texto += '<div class="chat_tour" onclick="_tour.open()">';
         texto += '    <div class="chat_soldado"></div>';
         texto += '    <p>Primeira vez por aqui?<br/>Clique aqui para conhecer o jogo.</p>';
         texto += '</div>';
+        texto += '<img src="../../imagens/lobby/banners/evento_chat.png" style="width: 100%; border-radius: 5px;" />';
         texto += 'Connect-se a uma de nossas redes:'.fontcolor("#453122");
         texto += '<div style=" width: 50%; display: flex; justify-content: space-around; text-align: center;">';
         texto += '    <a href="https://chat.whatsapp.com/DjRwmsDjKJUEUh9HLyFky2" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/whatsapp.png" /></a>';
