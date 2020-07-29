@@ -328,7 +328,7 @@ class FabricaDesafios(object):
             32: Desafio32(),
             33: Desafio33(),
             34: Desafio34(),
-            35: Desafio35(),
+            35: Desafio35()
         }
 
         return mapaObjetivos[id]
