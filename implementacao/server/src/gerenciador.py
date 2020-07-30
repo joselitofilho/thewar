@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 import random
 import traceback
@@ -10,14 +11,14 @@ from src.chat.chat import *
 from src.desafios.desafios import *
 from src.doacaodb import *
 from src.grupousuariosdb import *
+from src.ia.iaathena import *
 from src.ia.iafactory import *
+from src.ia.ialucy import *
 from src.jogador import *
 from src.jogo import *
 from src.mensagens import *
 from src.pontuacaodb import *
 from src.sala import *
-from src.ia.iaathena import *
-from src.ia.ialucy import *
 
 
 class GerenciadorSala(object):
@@ -113,11 +114,11 @@ class GerenciadorSala(object):
                     usuario = jogadorDaSala.usuario
                     posicao = jogadorDaSala.posicao
                     if jogadorDaSala.tipo == TipoJogador.cpu:
-                        if len(cpus) == 0:
-                            cpu = IAAthena()
-                        else:
-                            # cpu = cpu_factory.random()(sufixo=sufixos[posicao])
-                            cpu = IALucy(sufixo=sufixos[posicao])
+                        # if len(cpus) == 0:
+                        #     cpu = IAAthena()
+                        # else:
+                        #     cpu = IALucy(sufixo=sufixos[posicao])
+                        cpu = cpu_factory.dummy()(sufixo=sufixos[posicao])
                         usuario = cpu.usuario
                     jogadoresDoJogo[k] = JogadorDoJogo(
                         usuario,
@@ -132,19 +133,9 @@ class GerenciadorSala(object):
                         cpu.start()
             self.jogo = Jogo(self.nome, jogadoresDoJogo, cpus, clientes, self)
 
-            # Distribui os territorios e define quem comeca.
-            jogoFaseIMsg = self.jogo.faseI_Inicia()
-            self.jogo.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, jogoFaseIMsg)
-
-            # Envia a carta objetivo para cada jogador individualmente.
-            cartasObjetivos = self.jogo.faseI_DefinirObjetivos()
-            for i in range(len(jogadoresDoJogo)):
-                posicaoJogador = self.jogo.ordemJogadores[i]
-                self.jogo.enviaMsgParaJogador(TipoMensagem.carta_objetivo, CartaObjetivo(cartasObjetivos[i]),
-                                              jogadoresDoJogo[posicaoJogador])
+            self.jogo.prepara_para_comecar()
 
             self.estado = EstadoDaSala.jogo_em_andamento
-
             infoSalaMsg = InfoSala(self.sala.id,
                                    self.estado, self.sala.jogadores.values(), None)
             self.enviaMsgParaTodos(TipoMensagem.info_sala, infoSalaMsg)
@@ -202,6 +193,7 @@ class GerenciadorSala(object):
 
     def jogoTerminou(self, idJogo):
         idJogo = str(idJogo)
+        logging.info("GERENCIADOR Jogo {} terminou.".format(idJogo))
 
         self.fecha()
 
@@ -213,6 +205,7 @@ class GerenciadorSala(object):
     def fecha(self):
         if self.jogo is not None:
             self.jogo.fecha()
+            del self.jogo
             self.jogo = None
 
     def estaDentro(self, usuario):
@@ -402,12 +395,12 @@ class GerenciadorPrincipal(object):
                 del self.salas[idSala]
                 self.enviaMsgParaTodos(TipoMensagem.fechar_sala,
                                        FecharSala(idSala))
-                print("[DEBUG] Sala ", idSala, " fechada.")
+                logging.info("Sala {} fechada.".format(idSala))
             else:
-                print("[DEBUG] Sala ", idSala, " já foi fechada anteriormente.")
+                logging.info("Sala {}  já foi fechada anteriormente.".format(idSala))
         except:
             traceback.print_exc()
-            print("[ERRO] Tentou fechar sala de id:", idSala)
+            logging.error("Erro ao fechar a sala {}".format(idSala))
 
     def jogoTerminou(self, idJogo):
         removerUsuarios = []

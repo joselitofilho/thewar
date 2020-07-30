@@ -510,20 +510,19 @@ jogos.war.Territorios = function (mapa) {
                 corDeFundo = '#841D0F';
                 break;
             case 1: // Azul
-                // corDeFundo = '#262165';
                 corDeFundo = '#2621A8';
                 break;
             case 2: // Verde
                 corDeFundo = '#436C4B';
                 break;
             case 3:
-                corDeFundo = '#282423';
+                corDeFundo = '#1A191E';
                 break;
             case 4:
                 corDeFundo = '#bdbdbd';
                 break;
             case 5:
-                corDeFundo = '#DFE136';
+                corDeFundo = '#ffd861';
                 break;
         }
 

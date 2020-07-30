@@ -1,8 +1,8 @@
 import random
 
+from .iaathena import IAAthena
 from .iadummy import IADummy
 from .ialucy import IALucy
-from .iaathena import IAAthena
 
 
 class IAFactory:
@@ -12,13 +12,7 @@ class IAFactory:
         'Joana': IALucy,
         'Lucy': IALucy,
         'Mavis': IALucy,
-        'Minerva': IALucy,
-        # 'Atena': IADummy,
-        # 'Cindy': IADummy,
-        # 'Joana': IADummy,
-        # 'Lucy': IADummy,
-        # 'Mavis': IADummy,
-        # 'Minerva': IADummy,
+        'Minerva': IALucy
     }
 
     def build(self, target):
@@ -28,3 +22,6 @@ class IAFactory:
         cpus = list(self.disponiveis.keys())
         random.shuffle(cpus)
         return self.build(cpus[0])
+
+    def dummy(self):
+        return IADummy

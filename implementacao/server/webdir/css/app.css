@@ -13,8 +13,12 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'PT Sans', sans-serif;
-    background-color: var(--color-brown);
     cursor: url('../imagens/mouse/padrao.png') 0 0, pointer;
+
+    background-image: url('../imagens/bg-soldado.png');
+    background-color: var(--color-brown);
+    background-repeat: repeat;
+    background-size: auto;
 }
 
 .unselectable {
@@ -230,6 +234,11 @@ html, body {
     z-index: 9001;
 }
 
+#conteudo_principal {
+    display: flex;
+    justify-content: center;
+}
+
 #geral {
     position: absolute;
     visibility: hidden;
@@ -382,7 +391,7 @@ html, body {
 #menu_configuracoes {
     position: absolute;
     top: 38px;
-    left: 1096px;
+    left: 1416px;
     padding: 8px;
     width: 312px;
     height: 185px;
