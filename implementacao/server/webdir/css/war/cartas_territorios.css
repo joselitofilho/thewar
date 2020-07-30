@@ -1,5 +1,7 @@
 #painel_cartas_territorios {
     visibility: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .pct_content {
@@ -29,7 +31,7 @@
 #pct_numeroDoTurno {
     position: absolute;
     top: 155px;
-    left: 132px;
+    left: calc(50% - 378px);
     font-size: 20px;
     color: white;
     font-weight: bold;
@@ -39,7 +41,7 @@
 #pct_valorDaTroca {
     position: absolute;
     top: 185px;
-    left: 132px;
+    left: calc(50% - 378px);
     font-size: 20px;
     color: white;
     font-weight: bold;

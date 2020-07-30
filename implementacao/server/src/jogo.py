@@ -2,12 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import json
 import logging
 import random
+import time
 
 from src.carta import *
 from src.chat.chat import *
 from src.grupousuariosdb import *
+from src.historicojogo import *
+from src.jsonserializer import *
 from src.mensagens import *
 from src.objetivos import *
 from src.pontuacao import *
@@ -18,8 +22,10 @@ from src.turno import *
 
 class Jogo(object):
     def __init__(self, nome, jogadores, cpus, clientes=None, gerenciador=None):
-        self.TAG = 'jogo_{}_{}'.format(nome, datetime.datetime.now())
         random.seed()
+        self.iniciou_em = int(time.time() * 1000)
+        self.terminou_em = None
+        self.TAG = 'jogo_{}_{}'.format(nome, self.iniciou_em)
 
         self.gerenciador = gerenciador
 
@@ -70,13 +76,29 @@ class Jogo(object):
 
         self.chat = Chat()
 
+        self.pontuacao_jogadores = {}
+
+    def prepara_para_comecar(self):
+        # Distribui os territorios e define quem comeca.
+        jogoFaseIMsg = self.faseI_Inicia()
+        self.enviaMsgParaTodos(TipoMensagem.jogo_fase_I, jogoFaseIMsg)
+
+        # Envia a carta objetivo para cada jogador individualmente.
+        cartasObjetivos = self.faseI_DefinirObjetivos()
+        for i in range(len(self.jogadores)):
+            posicaoJogador = self.ordemJogadores[i]
+            self.enviaMsgParaJogador(TipoMensagem.carta_objetivo, CartaObjetivo(cartasObjetivos[i]),
+                                     self.jogadores[posicaoJogador])
+
+        logging.info("{} jogadores {}".format(self.TAG, json.dumps(self.jogadores, cls=SerializerEncoder)))
+
     def faseI_Inicia(self):
         self.jogadorQueComecou = self.faseI_DefinirQuemComeca()
         territoriosDosJogadores = self.faseI_DistribuirTerritorios()
         logging.info(
-            '{} {} ID jogo: {} - sockets: {} - maquina: {} -  jogadores: {}'.format(
+            '{} {} ID jogo: {} - sockets: {} - maquina: {}'.format(
                 self.TAG, datetime.datetime.now(), self.nome, 0 if self.clientes is None else len(self.clientes),
-                len(self.cpus), len(self.jogadores)))
+                len(self.cpus)))
         return JogoFaseI(self.jogadorQueComecou, territoriosDosJogadores)
 
     def faseI_DefinirQuemComeca(self):
@@ -291,14 +313,14 @@ class Jogo(object):
                     acaoDoTurno = self.criaAcaoDoTurno(self.turno)
                     self.enviaMsgParaTodos(TipoMensagem.turno, acaoDoTurno)
 
-            if self.temUmVencedor() and self.gerenciador != None:
+            if self.temUmVencedor() and self.gerenciador is not None:
                 self.jogoTerminou()
 
         elif self.turno.tipoAcao == TipoAcaoTurno.distribuir_tropas_grupo_territorio and self.turno.quantidadeDeTropas == 0:
             try:
                 self.turno.gruposTerritorio.pop(0)
             except:
-                print("Sala( {} ) Nao tem grupo territorio para remover.".format(self.nome))
+                logging.error("{} Nao tem grupo territorio para remover.".format(self.TAG))
 
             if len(self.turno.gruposTerritorio) == 0:
                 if self.temUmVencedor():
@@ -393,7 +415,7 @@ class Jogo(object):
                 try:
                     self.turno.gruposTerritorio.pop(0)
                 except Exception:
-                    print("Nao tem grupo territorio para remover.")
+                    logging.error("{} Nao tem grupo territorio para remover.".format(self.TAG))
 
                 if len(self.turno.gruposTerritorio) == 0:
                     if len(jogador.cartasTerritorio) > 2:
@@ -1019,7 +1041,8 @@ class Jogo(object):
 
             pontuacao = Pontuacao(self, self.jogadorVencedor.usuario, usuarios, quemDestruiuQuem, self.cpus)
             self.pontuacaoPelaVitoria = pontuacao.contabilizaPontuacaoDoVencedor()
-            pontuacao.contabilizaPontuacaoDosQueNaoVenceram()
+            self.pontuacao_jogadores = pontuacao.contabilizaPontuacaoDosQueNaoVenceram()
+            self.pontuacao_jogadores[self.jogadorVencedor.usuario] = self.pontuacaoPelaVitoria
 
             self.contabilizouPontos = True
 
@@ -1047,6 +1070,8 @@ class Jogo(object):
         return False
 
     def jogoTerminou(self):
+        logging.info("{} Jogo terminou.".format(self.TAG))
+
         desafios = Desafios()
         for k, jogador in self.jogadores.items():
             desafios_em_andamento = desafios.em_andamento(jogador.usuario)
@@ -1135,16 +1160,20 @@ class Jogo(object):
     def enviaMsgParaCliente(self, tipoMensagem, params, cliente):
         try:
             jsonMsg = self.montaMsg(tipoMensagem, params)
+            # TODO: Log do jogo
+            # print('LOG JOGO enviaMsgParaCliente', jsonMsg)
             cliente.sendMessage(jsonMsg)
         except Exception:
-            print("Nao foi possivel enviar a mensagem para o cliente - JSON: ", jsonMsg)
+            logging.error("{} Nao foi possivel enviar a mensagem para o cliente - JSON: {}".format(self.TAG, jsonMsg))
 
     def enviaMsgParaCPU(self, tipoMensagem, params, cpu):
         try:
             jsonMsg = self.montaMsg(tipoMensagem, params)
+            # TODO: Log do jogo
+            # print('LOG JOGO enviaMsgParaCPU', jsonMsg)
             cpu.processa_msg(self, jsonMsg)
         except Exception:
-            print("Nao foi possivel enviar a mensagem para o cliente - JSON: ", jsonMsg)
+            logging.error("{} Nao foi possivel enviar a mensagem para o cliente - JSON: {}".format(self.TAG, jsonMsg))
 
     def enviaMsgParaJogador(self, tipoMensagem, params, jogador):
         posicao = jogador.posicao
@@ -1159,11 +1188,14 @@ class Jogo(object):
             for socket in self.olheiros.values():
                 socket.sendMessage(jsonMsg)
         except Exception:
-            print("Nao foi possivel enviar a mensagem para todos os olheiros - JSON: ", jsonMsg)
+            logging.error(
+                "{} Nao foi possivel enviar a mensagem para todos os olheiros - JSON: {}".format(self.TAG, jsonMsg))
 
     def enviaMsgParaTodos(self, tipoMensagem, params):
         try:
             jsonMsg = self.montaMsg(tipoMensagem, params)
+            # TODO: Log do jogo
+            # print('LOG JOGO enviaMsgParaTodos', jsonMsg)
             for socket in self.clientes.values():
                 socket.sendMessage(jsonMsg)
             for socket in self.olheiros.values():
@@ -1171,10 +1203,30 @@ class Jogo(object):
             for jogadorCpu in self.cpus.values():
                 jogadorCpu.processa_msg(self, jsonMsg)
         except Exception:
-            print("Nao foi possivel enviar a mensagem para todos os clientes - JSON: ", jsonMsg)
+            logging.error(
+                "{} Nao foi possivel enviar a mensagem para todos os clientes - JSON: {}".format(self.TAG, jsonMsg))
 
     def fecha(self):
+        self.terminou_em = int(time.time() * 1000)
+        info_jogo = InfoJogo(self)
+        logging.info("{} {}".format(self.TAG, info_jogo.toJson()))
+        HistoricoJogo().new(info_jogo)
+
         self.enviaMsgParaTodos(TipoMensagem.jogo_interrompido, JogoInterrompido(self.nome))
         self.turno.paraTimeout()
         for jogadorCpu in self.cpus.values():
             jogadorCpu.para()
+
+
+class InfoJogo(JSONSerializer):
+    def __init__(self, jogo):
+        self.tag = jogo.TAG
+        self.nome = jogo.nome
+        self.iniciou_em = jogo.iniciou_em
+        self.terminou_em = jogo.terminou_em
+        self.jogadores = jogo.jogadores
+        self.quem_destruiu_quem = jogo.quemDestruiuQuem(jogo.jogadores)
+        self.vencedor = jogo.jogadorVencedor
+        self.ordem = jogo.ordemJogadores
+        self.pontuacao = jogo.pontuacao_jogadores
+        self.turno = jogo.turno.numero

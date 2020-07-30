@@ -1,10 +1,12 @@
 #painel_vitoria {
     visibility: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 #painel_vitoria .conteudo {
     position: absolute;
-    margin-left: 264px;
+    /*margin-left: 264px;*/
     width: 506px;
     height: 690px;
     background: url('../imagens/jogo/bg-vitoria.png') no-repeat;

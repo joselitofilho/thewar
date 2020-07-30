@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from src.desafios.desafios import *
 from src.doacaodb import *
 from src.pontuacaodb import *
@@ -38,6 +40,11 @@ class Pontuacao(object):
 
         pontos += pontosExtra
 
+        # TODO: Pontuação em Dobro
+        now = datetime.datetime.utcnow()
+        if datetime.datetime(2020, 7, 31, 10, 0, 0) <= now < datetime.datetime(2020, 8, 3, 10, 0, 0):
+            pontos = 2 * pontos
+
         pontuacaoDB = PontuacaoDB(self.baseDeDados)
         pontuacaoDBOAtual = pontuacaoDB.pontuacaoDBODoUsuario(self.usuarioVencedor)
         novaPontuacaoDBO = PontuacaoDBO()
@@ -59,6 +66,8 @@ class Pontuacao(object):
         return pontos
 
     def contabilizaPontuacaoDosQueNaoVenceram(self):
+        res = {}
+
         # TODO: Fazer em uma transacao.
         pontuacaoDB = PontuacaoDB(self.baseDeDados)
         for usuario in self.usuarios:
@@ -70,6 +79,11 @@ class Pontuacao(object):
 
             pontosDesafios = self.contabilizaPontosDesafios(self.jogo, usuario, False)
             pontosExtra += pontosDesafios
+
+            # TODO: Pontuação em Dobro
+            now = datetime.datetime.utcnow()
+            if datetime.datetime(2020, 7, 31, 10, 0, 0) <= now < datetime.datetime(2020, 8, 3, 10, 0, 0):
+                pontosExtra = 2 * pontosExtra
 
             pontuacaoDBOAtual = pontuacaoDB.pontuacaoDBODoUsuario(usuario)
             novaPontuacaoDBO = PontuacaoDBO()
@@ -93,6 +107,10 @@ class Pontuacao(object):
 
             pontuacaoDB.atualizaPontuacaoDBOParaUsuario(usuario, novaPontuacaoDBO)
             pontuacaoDB.atualizaPontuacaoEventoParaUsuario(usuario, False, destruidoPorAlguem, pontosDesafios)
+
+            res[usuario] = pontosExtra
+
+        return res
 
     def usuarioFoiDestruidoPorAlguem(self, usuario):
         for k, v in self.quemDestruiuQuem.items():

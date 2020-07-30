@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from src.jsonserializer import *
 from src.territorio import *
 
 
@@ -82,7 +85,7 @@ class CartasTerritorio(object):
         return todas
 
 
-class CartaTerritorio(object):
+class CartaTerritorio(JSONSerializer):
     def __init__(self, codigoTerritorio, forma, cor):
         self.codigoTerritorio = codigoTerritorio
         self.forma = forma

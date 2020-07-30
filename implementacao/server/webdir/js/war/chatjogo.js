@@ -54,11 +54,11 @@ jogowar.war.ChatJogo = function (chatAreaJogadores, msgsBotaoIrParaBaixo, chatAr
             if (indiceCor === 0) {
                 textoUsuarioDiz = textoUsuarioDiz.fontcolor("#841D0F");
             } else if (indiceCor === 1) {
-                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#2621A8"); // #262165
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#2621A8");
             } else if (indiceCor === 2) {
                 textoUsuarioDiz = textoUsuarioDiz.fontcolor("#436C4B");
             } else if (indiceCor === 3) {
-                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#282423");
+                textoUsuarioDiz = textoUsuarioDiz.fontcolor("#1A191E");
             } else if (indiceCor === 4) {
                 textoUsuarioDiz = textoUsuarioDiz.fontcolor("#F8F7E9");
             } else if (indiceCor === 5) {

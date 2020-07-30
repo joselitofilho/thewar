@@ -1,5 +1,7 @@
 #painel_objetivo {
     visibility: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 #painel_objetivo span {
