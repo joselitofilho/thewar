@@ -234,10 +234,10 @@ html, body {
     z-index: 9001;
 }
 
-#conteudo_principal {
-    display: flex;
-    justify-content: center;
-}
+/*#conteudo_principal {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
 
 #geral {
     position: absolute;
@@ -391,7 +391,7 @@ html, body {
 #menu_configuracoes {
     position: absolute;
     top: 38px;
-    left: 1416px;
+    left: 1096px; /*left: 1416px;*/
     padding: 8px;
     width: 312px;
     height: 185px;
