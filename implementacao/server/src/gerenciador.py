@@ -114,11 +114,11 @@ class GerenciadorSala(object):
                     usuario = jogadorDaSala.usuario
                     posicao = jogadorDaSala.posicao
                     if jogadorDaSala.tipo == TipoJogador.cpu:
-                        # if len(cpus) == 0:
-                        #     cpu = IAAthena()
-                        # else:
-                        #     cpu = IALucy(sufixo=sufixos[posicao])
-                        cpu = cpu_factory.dummy()(sufixo=sufixos[posicao])
+                        if len(cpus) == 0:
+                            cpu = IAAthena()
+                        else:
+                            cpu = IALucy(sufixo=sufixos[posicao])
+                        # cpu = cpu_factory.dummy()(sufixo=sufixos[posicao])
                         usuario = cpu.usuario
                     jogadoresDoJogo[k] = JogadorDoJogo(
                         usuario,
