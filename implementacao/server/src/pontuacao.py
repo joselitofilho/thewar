@@ -61,6 +61,10 @@ class Pontuacao(object):
             novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
 
         pontuacaoDB.atualizaPontuacaoDBOParaUsuario(self.usuarioVencedor, novaPontuacaoDBO)
+        # TODO: Pontuação em Dobro
+        now = datetime.datetime.utcnow()
+        if datetime.datetime(2020, 7, 31, 10, 0, 0) <= now < datetime.datetime(2020, 8, 3, 10, 0, 0):
+            pontosDesafios = 2 * pontosDesafios
         pontuacaoDB.atualizaPontuacaoEventoParaUsuario(self.usuarioVencedor, True, False, pontosDesafios)
 
         return pontos
@@ -106,6 +110,10 @@ class Pontuacao(object):
                     novaPontuacaoDBO.quantidadeDestruido = pontuacaoDBOAtual.quantidadeDestruido
 
             pontuacaoDB.atualizaPontuacaoDBOParaUsuario(usuario, novaPontuacaoDBO)
+            # TODO: Pontuação em Dobro
+            now = datetime.datetime.utcnow()
+            if datetime.datetime(2020, 7, 31, 10, 0, 0) <= now < datetime.datetime(2020, 8, 3, 10, 0, 0):
+                pontosDesafios = 2 * pontosDesafios
             pontuacaoDB.atualizaPontuacaoEventoParaUsuario(usuario, False, destruidoPorAlguem, pontosDesafios)
 
             res[usuario] = pontosExtra
