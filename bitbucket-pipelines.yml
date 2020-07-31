@@ -11,7 +11,7 @@ pipelines:
           deployment: update-images
           trigger: manual
           script:
-            - ./update-images
+            - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_REMOTE_PATH && ./update-images"
       - step:
           name: Restart server
           deployment: restart-services
