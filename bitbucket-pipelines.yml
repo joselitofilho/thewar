@@ -7,6 +7,12 @@ pipelines:
           script:
             - ./deploy-to-production
       - step:
+          name: Update images
+          deployment: update-images
+          trigger: manual
+          script:
+            - ./update-images
+      - step:
           name: Restart server
           deployment: restart-services
           trigger: manual
