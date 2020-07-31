@@ -35,6 +35,11 @@
     "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/bixo_vai_pegar.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio>"
   },
   {
+    "comando": "campeao1",
+    "regex": "!campeao1",
+    "html": "<img class='meme' src='../imagens/trofeus/guerra0001_campeao.png'/>"
+  },
+  {
     "comando": "capitao1",
     "regex": "!capitao1",
     "html": "<img class='meme' src='../imagens/memes/capitao1.jpeg'/>"
@@ -73,6 +78,11 @@
     "comando": "funeral3",
     "regex": "!funeral3",
     "html": "<audio class='meme meme_audio' autoplay='autoplay' controls><source src='../../sons/funeral3.mp3' type='audio/mpeg'>Your browser does not support the audio element.</audio><img class='meme' src='../imagens/memes/funeral3.gif'/>"
+  },
+  {
+    "comando": "guerra1",
+    "regex": "!guerra1",
+    "html": "<img class='meme' src='../imagens/trofeus/guerra0001_resultado.png'/>"
   },
   {
     "comando": "joker1",
