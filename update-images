@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cd $BITBUCKET_CLONE_DIR
-./update_assets.sh

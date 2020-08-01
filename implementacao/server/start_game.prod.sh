@@ -17,6 +17,11 @@ mkdir -p webdir/videos/
 unzip -u videos.zip -d webdir/
 rm videos.zip
 
+gdown --id 14_cIOufhgvm01vlETuJrHB5WynAMFlrq
+mkdir -p webdir/trofeus/
+unzip -u trofeus.zip -d webdir/
+rm trofeus.zip
+
 gdown --id 1fDOrGiP1gqAUehyAOhZgRMwHyeVgiu81
 mv premiacao.png webdir/imagens/lobby/banners/
 
