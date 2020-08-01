@@ -7,6 +7,11 @@ mkdir -p webdir/imagens/memes/
 unzip -u memes.zip -d webdir/imagens/
 rm memes.zip
 
+gdown --id 14_cIOufhgvm01vlETuJrHB5WynAMFlrq
+mkdir -p webdir/imagens/trofeus/
+unzip -u trofeus.zip -d webdir/imagens/
+rm trofeus.zip
+
 gdown --id 1b9W-7M-QltBvurp4cMXgWbvutJe-K7Uq
 mkdir -p webdir/sons/
 unzip -u sons.zip -d webdir/
@@ -16,11 +21,6 @@ gdown --id 1DLO1aRCZFgJZeGQoVnlQZpZLVuPHiZ4F
 mkdir -p webdir/videos/
 unzip -u videos.zip -d webdir/
 rm videos.zip
-
-gdown --id 14_cIOufhgvm01vlETuJrHB5WynAMFlrq
-mkdir -p webdir/trofeus/
-unzip -u trofeus.zip -d webdir/
-rm trofeus.zip
 
 gdown --id 1fDOrGiP1gqAUehyAOhZgRMwHyeVgiu81
 mv premiacao.png webdir/imagens/lobby/banners/
