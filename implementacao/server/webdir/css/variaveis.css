@@ -1,3 +1,17 @@
+/**
+ * https://www.materialui.co/colors - Paleta de cores
+ * http://hex2rgba.devoth.com/?f_hex_value=b24a3b&f_r=&f_g=&f_b=&f_rgb_for_css=&f_rgba_for_css= - HEX 2 RGBA
+ * https://hihayk.github.io/scale/#4/6/40/70/0/-5/20/12/876850/135/104/80/white - Variação da cor escuro <-> claro.
+ *     - Dark colors amount: 4
+ *     - Darkness: 40%
+ *     - Dark colors hue angle: 0
+ *     - Dark colors saturation: 12%
+ *     - Light colors amount: 6
+ *     - Lightness: 70%
+ *     - Light colors hue angle: -5
+ *     - Light colors saturation: 20%
+ */
+
 :root {
     --background-color-light-brown: rgba(207, 194, 180, .4);
     --background-color-overlay: rgba(73, 54, 37, 0.8);
@@ -14,6 +28,7 @@
     --color-player-yellow: #ffd861;
 
     --font-family-default: 'PT Sans', sans-serif;
+    --font-family-gagalin: "gagalin";
     --font-family-wartorn: "wartorn";
 
     --border-radios-default: 4px;

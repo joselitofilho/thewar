@@ -78,15 +78,13 @@
 #tour_footer .war_button {
     height: 38px;
     margin: 2px;
-    padding: 6px 20px;
-    font-family: 'PT Sans', sans-serif;
-    font-weight: 600;
+    padding: 5px 20px;
+    font-family: var(--font-family-gagalin);
     font-size: 18px;
 }
 
 .btn_tour {
-    font-family: var(--font-family-wartorn);
-    font-size: 12px;
+    font-family: var(--font-family-gagalin);
 }
 
 #tour_footer .war_button_active {

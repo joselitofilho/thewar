@@ -3,6 +3,11 @@
     src: url("../fonts/wartorn/WARTORN_.TTF");
 }
 
+@font-face {
+    font-family: "gagalin";
+    src: url("../fonts/gagalin/Gagalin-Regular.otf");
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -439,8 +444,8 @@ html, body {
     display: flex;
     padding: 5px 20px;
     text-decoration: none;
-    font-family: var(--font-family-wartorn);
-    font-size: 12px;
+    font-family: var(--font-family-gagalin);
+    font-size: 18px;
     color: #eee;
     background: var(--color-brown);
     box-shadow: 6px 6px 0 black;
