@@ -187,10 +187,8 @@
         }
 
         .lp_row {
-            padding: 8px;
+            padding: 16px;
             background-color: rgba(255, 255, 255, 0.35);
-            margin-bottom: 4px;
-            border-radius: 5px;
         }
 
         .lp_header_item {
@@ -238,7 +236,7 @@
             transform: skewX(-15deg);
             border: 2px solid var(--color-dark-brown);
             border-left: 0;
-            border-right: 6px solid var(--color-dark-brown);
+            border-right: 4px solid var(--color-dark-brown);
         }
 
 
@@ -281,6 +279,7 @@
         }
 
         .lp_footer {
+            margin-top: 16px;
             display: flex;
         }
 
@@ -289,7 +288,6 @@
             justify-content: space-between;
             align-items: center;
 
-            margin: 0 4px;
             padding: 4px 8px;
             border-radius: 5px;
 
@@ -315,7 +313,6 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            margin: 16px 0px;
         }
 
         .lp_players_item {
@@ -498,11 +495,11 @@
 <div class="container">
     <div class="perfil_container">
         <div class="perfil_container_img">
-            <div class="insignia_x100_size insignias_x100_nv6"></div>
+            <div id="jogador_insignia" class="insignia_x100_size insignias_x100_nv6"></div>
         </div>
         <div class="perfil_container_cnt">
-            <div class="box_crown" title="Doador"></div>
-            <div class="nome">JFLive</div>
+            <div id="jogador_doador" class="box_crown" title="Doador"></div>
+            <div id="jogador_nome" class="nome">JFLive</div>
             <div class="infos">
                 <div class="info_item">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px"
@@ -510,15 +507,15 @@
                          viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
                         <g><path d="M974.5,763.5c0,0-19-21.3-43.3-11.2c0,0-10.1,2.9-24.1,17.5l1.4-2.2l-93.3-94.5l52.8-53.7c0,0,31-32.2-13.2-80.5c-44.2-48.3-75.1-27.2-84.6-19.8c-9.5,7.4-45.4,44.2-45.4,44.2l-68.1-69.8l246.9-221.3c0,0,38-26.4,41.7-59c3.7-32.6,13.6-158.5,13.6-158.5s-1.7-28.9-27.7-28.5c-26,0.4-156.5,13.6-156.5,13.6s-26.4-1.7-59,35.9C683,113.3,500.4,318,500.4,318L276.8,67c0,0-16.5-28.1-76.8-31.4c-60.3-3.3-123.4-9.5-123.4-9.5s-33-0.8-32.2,33C45.2,93,55.9,211.1,55.9,211.1s9.9,34.7,73.5,91.6c63.6,57,212.2,189.1,212.2,189.1l-64.4,71l-41.5-41.5c0,0-32.8-31.6-71.2,0.2c0,0-52.4,34.7-40.9,71.4c0,0,2.1,23.5,35.5,54.9l26,26l-92.1,91.2c0,0-39.6-35.5-67.7,0c-28.1,35.5-12.9,47.1,7,68.5c19.8,21.5,129.2,130.9,129.2,130.9s33.8,22.3,59.4-6.6c31.3-34.2-5-66.5-5-66.5l94.1-92.3c0,0,29.5,30.6,60.4,56.7c33.4,28.2,75.5-16.7,97.5-48.3c22-31.6-12.7-64.4-12.7-64.4l-35-35l79.5-75.2l82.4,72.8l-43,44.2c0,0-31.4,41.3,8.7,79.7c0,0,47.9,53.3,86.3,20.6l56.1-51.2l93.7,92.1c0,0-37.2,33.9-6.2,66.1c31,32.2,59,10.3,70.6-2.1c11.6-12.4,135-137.5,135-137.5S1002.9,788.2,974.5,763.5z M424.8,773.5c14.2,15.5-9.9,32.2-9.9,32.2c-16.7,17.3-28.5,5-28.5,5S344.9,770.1,327,753c-18-17-35.9,1.6-35.9,1.6S205.3,841,178.6,865.7c-26.6,24.8-2.1,48.5-2.1,48.5l0,0L58,797.7c0,0,39.6,25.6,76-11.1c36.3-36.7,92.9-91.6,92.9-91.6s26-18.2-9.1-51.2c-35.1-33-43.8-45.8-43.8-45.8s-15.7-11.6,10.3-33c0,0,11.6-20.6,33,3.3l51,50.6l0,0c0,0,0.1,0.1,0.1,0.1l9.3,9.2l0.1-0.1C309.6,659.3,412.8,760.4,424.8,773.5z M517.7,586.8c-20.4-18-42.7,5.9-42.7,5.9l-86.7,80.2L308.8,594l80.3-87.7c0,0,21.5-18.2-25.2-56.6C317.3,411.3,113.3,228,113.3,228s-14-9.9-16.9-55.3c-2.9-45.4-6.6-102-6.6-102l123,12.4c0,0,21.1-0.8,28.9,9.9c7.8,10.7,238.6,269.6,238.6,269.6s27.7,29.7,61.1-23.5L755.7,98c0,0,9.9-15.3,34.7-15.7c24.8-0.4,123-9.9,123-9.9L901,195.8c0,0,2.9,23.1-41.3,55.3c-44.2,32.2-241.9,217.6-241.9,217.6s-25.6,17.7,0,46.6c25.6,28.9,73.9,78,73.9,78l-76.6,78.7C597.9,657,535.3,602.2,517.7,586.8z M815.1,926.1c0,0,29.3-36.3-9.5-74.7s-92.9-92.5-92.9-92.5s-20.2-26-44.6-0.4c-24.4,25.6-50.8,50-50.8,50s-14.9,17.3-33.8-5s-13.2-25.6,11.6-48.7c24.8-23.1,195.7-194,195.7-194s9.5-12,23.1,0s16.1,16.9,16.1,16.9s11.6,8.7-4.5,24.4s-57.8,58.2-57.8,58.2s-16.1,15.2,15.7,47.2l99.2,96.6c0.1,0.1,11.6,26.1,48.9,3.4L815.1,926.1z"/></g>
                     </svg>
-                    <span>100</span>
+                    <span id="jogador_total_partidas">100</span>
                 </div>
                 <div class="info_item">
                     <div class="material-icons-outlined md-48">military_tech</div>
-                    <span>1º</span>
+                    <span id="jogador_poisicao_rank">1º</span>
                 </div>
                 <div class="info_item">
                     <div class="material-icons-outlined md-48">emoji_events</div>
-                    <span>1000000000</span>
+                    <span id="jogador_total_pontos">1000000000</span>
                 </div>
             </div>
         </div>
@@ -526,264 +523,24 @@
             <div class="titulo_sessao">
                 Histórico de batalhas
             </div>
-            <div id="log_partidas_container">
-                <div class="lp_row">
-                    <div style="display: flex; flex-direction: column;">
-                        <div class="lp_content_item">
-
-                            <div class="lp_players_box">
-                                <div class="lp_header_item lp_header_item_infos lp_venceu">
-                                    <div style="display: flex; justify-content: center; align-items: center; height: 40px; border-bottom: 4px solid var(--color-dark-brown);">
-                                        <span>VENCEU</span>
-                                    </div>
-                                    <span style="text-align: left; display: flex; justify-content: center; align-items: center; padding-left: 16px;">+1000 pontos</span>
-                                    <div>
-                                        <div class="lp_header_item_footer">
-                                            <i class="material-icons-outlined md-24">timer</i>5 m
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="lp_header_item lp_header_item_right lp_header_item_right_venceu">
-                                    <div style="display: flex; align-items: center; justify-content: center; height: 40px; border-bottom: 4px solid var(--color-dark-brown);"></div>
-                                    <div class="lp_header_item_footer"></div>
-                                </div>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-red">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <div class="insignia_x40_size insignias_x40_nv11"></div>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">JFLive</span>
-                                            <div class="lp_player_footer_badges">
-                                                <svg class="trofeu" xmlns="http://www.w3.org/2000/svg" width="20"
-                                                     height="20" viewBox="0 0 24 24" fill="#ffe34c" stroke="#ffe34c">
-                                                    <path d="M19 1c0 9.803-5.094 13.053-5.592 17h-2.805c-.498-3.947-5.603-7.197-5.603-17h14zm-7.305 13.053c-1.886-3.26-2.635-7.432-2.646-11.053h-1.699c.205 4.648 1.99 8.333 4.345 11.053zm1.743 4.947h-2.866c-.202 1.187-.63 2.619-2.571 2.619v1.381h8v-1.381c-1.999 0-2.371-1.432-2.563-2.619zm7.08-1.596c-1.402-.634-2.609-.19-3.354.293.745-.484 1.603-1.464 1.595-3.003-2.591 1.038-2.295 2.496-2.765 3.345-.315.571-1.007.274-1.007.274l-.213.352c.365.193.989.319 1.716.319 1.307 0 2.949-.409 4.028-1.58zm2.444-4.022c-1.382.097-2.118 1.061-2.501 1.763.383-.702.614-1.942-.05-3.158-1.61 1.929-.752 2.958-.762 3.831-.004.427-.49.417-.49.417l.007.404c.314-.041 3.154-.717 3.796-3.257zm1.036-3.87c-1.171.426-1.56 1.473-1.718 2.175.158-.702.041-1.863-.835-2.75-.915 2.068.082 2.745.29 3.503.102.371-.325.606-.325.606l.29.179c.061-.029 2.385-1.332 2.298-3.713zm-.2-3.792c-.903.666-1.017 1.688-.974 2.335-.042-.646-.395-1.639-1.376-2.182-.264 2.018.769 2.349 1.142 2.95.182.294.023.658.023.658l.284-.019s.026-.127.169-.442c.291-.644 1.255-1.334.732-3.3zm-1.901-2.72s-.273.984-.045 1.732c.244.798.873 1.361.873 1.361s.34-.873.099-1.733c-.222-.792-.927-1.36-.927-1.36zm-12.67 15.665l-.213-.352s-.691.297-1.007-.274c-.47-.849-.174-2.307-2.765-3.345-.008 1.539.85 2.52 1.595 3.003-.745-.484-1.952-.927-3.354-.293 1.078 1.171 2.721 1.581 4.028 1.581.727-.001 1.35-.127 1.716-.32zm-4.393-2.027l.007-.404s-.486.01-.49-.417c-.009-.873.848-1.901-.762-3.831-.664 1.216-.433 2.457-.05 3.158-.383-.702-1.12-1.666-2.501-1.763.642 2.541 3.482 3.217 3.796 3.257zm-2.533-3.413l.29-.179s-.427-.236-.325-.606c.208-.758 1.205-1.435.29-3.503-.876.887-.994 2.048-.835 2.75-.158-.702-.546-1.749-1.718-2.175-.088 2.381 2.236 3.684 2.298 3.713zm-1.366-4.204c.143.315.169.442.169.442l.284.019s-.159-.364.023-.658c.373-.601 1.405-.933 1.142-2.95-.983.542-1.335 1.534-1.377 2.181.042-.647-.072-1.67-.974-2.335-.523 1.966.441 2.656.733 3.301zm.241-4.661c-.24.86.099 1.733.099 1.733s.629-.563.873-1.361c.228-.748-.045-1.732-.045-1.732s-.705.568-.927 1.36z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-blue">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <div class="insignia_x40_size insignias_x40_nv8"></div>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Galeno</span>
-                                            <div class="lp_player_footer_badges">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-green">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Atena</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-black">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Lucy45</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-white">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Lucy32</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-yellow">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Lucy22</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                            </div>
-
-                            <div style="width: 135px;height: 180px;transform: scale(0.45);margin: -34px 45px 0 -34px;">
-                                <div class="carta_objetivo carta_objetivo_1"></div>
-                            </div>
-
-                        </div>
-                        <div class="lp_footer">
-                            <div class="lp_footer_item">
-                                <span class="material-icons-outlined md-24">event</span>
-                                <span>01/07/2020 07:30</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lp_row">
-                    <div style="display: flex; flex-direction: column;">
-                        <div class="lp_content_item">
-
-                            <div class="lp_players_box">
-                                <div class="lp_header_item lp_header_item_infos lp_perdeu">
-                                    <div style="display: flex; justify-content: center; align-items: center; height: 40px; border-bottom: 4px solid var(--color-dark-brown);">
-                                        <span>PERDEU</span>
-                                    </div>
-                                    <span style="text-align: left; display: flex; justify-content: center; align-items: center; padding-left: 16px;">+100 pontos</span>
-                                    <div>
-                                        <div class="lp_header_item_footer">
-                                            <i class="material-icons-outlined md-24">timer</i>1 h
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="lp_header_item lp_header_item_right lp_header_item_right_perdeu">
-                                    <div style="display: flex; align-items: center; justify-content: center; height: 40px; border-bottom: 4px solid var(--color-dark-brown);"></div>
-                                    <div class="lp_header_item_footer"></div>
-                                </div>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-red">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Atena</span>
-                                            <div class="lp_player_footer_badges">
-                                                <svg class="trofeu" xmlns="http://www.w3.org/2000/svg" width="20"
-                                                     height="20" viewBox="0 0 24 24" fill="#ffe34c" stroke="#ffe34c">
-                                                    <path d="M19 1c0 9.803-5.094 13.053-5.592 17h-2.805c-.498-3.947-5.603-7.197-5.603-17h14zm-7.305 13.053c-1.886-3.26-2.635-7.432-2.646-11.053h-1.699c.205 4.648 1.99 8.333 4.345 11.053zm1.743 4.947h-2.866c-.202 1.187-.63 2.619-2.571 2.619v1.381h8v-1.381c-1.999 0-2.371-1.432-2.563-2.619zm7.08-1.596c-1.402-.634-2.609-.19-3.354.293.745-.484 1.603-1.464 1.595-3.003-2.591 1.038-2.295 2.496-2.765 3.345-.315.571-1.007.274-1.007.274l-.213.352c.365.193.989.319 1.716.319 1.307 0 2.949-.409 4.028-1.58zm2.444-4.022c-1.382.097-2.118 1.061-2.501 1.763.383-.702.614-1.942-.05-3.158-1.61 1.929-.752 2.958-.762 3.831-.004.427-.49.417-.49.417l.007.404c.314-.041 3.154-.717 3.796-3.257zm1.036-3.87c-1.171.426-1.56 1.473-1.718 2.175.158-.702.041-1.863-.835-2.75-.915 2.068.082 2.745.29 3.503.102.371-.325.606-.325.606l.29.179c.061-.029 2.385-1.332 2.298-3.713zm-.2-3.792c-.903.666-1.017 1.688-.974 2.335-.042-.646-.395-1.639-1.376-2.182-.264 2.018.769 2.349 1.142 2.95.182.294.023.658.023.658l.284-.019s.026-.127.169-.442c.291-.644 1.255-1.334.732-3.3zm-1.901-2.72s-.273.984-.045 1.732c.244.798.873 1.361.873 1.361s.34-.873.099-1.733c-.222-.792-.927-1.36-.927-1.36zm-12.67 15.665l-.213-.352s-.691.297-1.007-.274c-.47-.849-.174-2.307-2.765-3.345-.008 1.539.85 2.52 1.595 3.003-.745-.484-1.952-.927-3.354-.293 1.078 1.171 2.721 1.581 4.028 1.581.727-.001 1.35-.127 1.716-.32zm-4.393-2.027l.007-.404s-.486.01-.49-.417c-.009-.873.848-1.901-.762-3.831-.664 1.216-.433 2.457-.05 3.158-.383-.702-1.12-1.666-2.501-1.763.642 2.541 3.482 3.217 3.796 3.257zm-2.533-3.413l.29-.179s-.427-.236-.325-.606c.208-.758 1.205-1.435.29-3.503-.876.887-.994 2.048-.835 2.75-.158-.702-.546-1.749-1.718-2.175-.088 2.381 2.236 3.684 2.298 3.713zm-1.366-4.204c.143.315.169.442.169.442l.284.019s-.159-.364.023-.658c.373-.601 1.405-.933 1.142-2.95-.983.542-1.335 1.534-1.377 2.181.042-.647-.072-1.67-.974-2.335-.523 1.966.441 2.656.733 3.301zm.241-4.661c-.24.86.099 1.733.099 1.733s.629-.563.873-1.361c.228-.748-.045-1.732-.045-1.732s-.705.568-.927 1.36z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-blue">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Lucy89</span>
-                                            <div class="lp_player_footer_badges">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-green">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Atena</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-black">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <svg class="svg_cpu" viewBox="0 0 24 24">
-                                                <path fill="var(--bg-color)"
-                                                      d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Lucy45</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-white">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <div class="insignia_x40_size insignias_x40_nv11"></div>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">JFLive</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="lp_players_item lp_player_card lp_player_card-yellow">
-                                    <div class="lp_player_card_content">
-                                        <div class="circle">
-                                            <div class="insignia_x40_size insignias_x40_nv9"></div>
-                                        </div>
-                                        <div class="lp_player_card_footer">
-                                            <span class="lp_player_footer_name">Adsu</span>
-                                            <div class="lp_player_footer_badges"></div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                            </div>
-
-                            <div style="width: 135px;height: 180px;transform: scale(0.45);margin: -34px 45px 0 -34px;">
-                                <div class="carta_objetivo carta_objetivo_1"></div>
-                            </div>
-
-                        </div>
-                        <div class="lp_footer">
-                            <div class="lp_footer_item">
-                                <span class="material-icons-outlined md-24">event</span>
-                                <span>01/07/2020 06:00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div id="jogador_log_partidas_container">
+                <!-- Conteúdo gerado -->
             </div>
         </div>
     </div>
 </div>
+
+<script src="js/websocket/websocket.js?ver=2.7" type="text/javascript"></script>
+<script src="js/mensagens.js?ver=2.7" type="text/javascript"></script>
+<script src="js/comunicacao.js?ver=2.7" type="text/javascript"></script>
+<script src="js/war/ranking.js?ver=2.7" type="text/javascript"></script>
+<script src="js/war/perfil.js?ver=2.7" type="text/javascript"></script>
+
+<script>
+    _perfil = new jogos.war.Perfil("#jogador_log_partidas_container");
+    const historicoBatalhas = [{"tag": "jogo_2_1596591244068", "nome": "2", "iniciou_em": 1596591244068, "terminou_em": 1596594158866, "jogadores": {"5": {"usuario": "Leoni", "posicao": 5, "dono": true, "tipo": "human", "objetivo": 11, "territorios": [{"codigo": "Vietna", "quantidadeDeTropas": 1}, {"codigo": "China", "quantidadeDeTropas": 1}, {"codigo": "Islandia", "quantidadeDeTropas": 25}, {"codigo": "Borneo", "quantidadeDeTropas": 9}, {"codigo": "NovaGuine", "quantidadeDeTropas": 1}, {"codigo": "Australia", "quantidadeDeTropas": 3}, {"codigo": "Sumatra", "quantidadeDeTropas": 1}, {"codigo": "Japao", "quantidadeDeTropas": 1}, {"codigo": "Mongolia", "quantidadeDeTropas": 1}, {"codigo": "Aral", "quantidadeDeTropas": 1}, {"codigo": "Omsk", "quantidadeDeTropas": 1}, {"codigo": "India", "quantidadeDeTropas": 1}, {"codigo": "Dudinka", "quantidadeDeTropas": 1}, {"codigo": "OrienteMedio", "quantidadeDeTropas": 19}, {"codigo": "Siberia", "quantidadeDeTropas": 1}, {"codigo": "Tchita", "quantidadeDeTropas": 1}, {"codigo": "Vladivostok", "quantidadeDeTropas": 1}, {"codigo": "Alaska", "quantidadeDeTropas": 3}, {"codigo": "Mackenzie", "quantidadeDeTropas": 1}, {"codigo": "Vancouver", "quantidadeDeTropas": 1}, {"codigo": "Moscou", "quantidadeDeTropas": 11}, {"codigo": "Egito", "quantidadeDeTropas": 12}, {"codigo": "Suecia", "quantidadeDeTropas": 19}, {"codigo": "Groelandia", "quantidadeDeTropas": 3}, {"codigo": "Ottawa", "quantidadeDeTropas": 1}, {"codigo": "California", "quantidadeDeTropas": 1}, {"codigo": "Argelia", "quantidadeDeTropas": 1}, {"codigo": "Labrador", "quantidadeDeTropas": 1}, {"codigo": "NovaYork", "quantidadeDeTropas": 3}, {"codigo": "Mexico", "quantidadeDeTropas": 71}, {"codigo": "Sudao", "quantidadeDeTropas": 66}, {"codigo": "Inglaterra", "quantidadeDeTropas": 1}, {"codigo": "Madagascar", "quantidadeDeTropas": 1}, {"codigo": "AfricaDoSul", "quantidadeDeTropas": 1}, {"codigo": "Congo", "quantidadeDeTropas": 1}, {"codigo": "Colombia", "quantidadeDeTropas": 1}, {"codigo": "Chile", "quantidadeDeTropas": 2}, {"codigo": "Polonia", "quantidadeDeTropas": 1}, {"codigo": "Portugal", "quantidadeDeTropas": 3}], "cartasTerritorio": [{"codigoTerritorio": "NovaGuine", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Argentina", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Sudao", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": [3, 4, 0]}, "4": {"usuario": "Atena", "posicao": 4, "dono": false, "tipo": "cpu", "objetivo": 9, "territorios": [], "cartasTerritorio": [{"codigoTerritorio": "Groelandia", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Madagascar", "forma": "Bola", "cor": "Azul"}], "jogadoresDestruidos": []}, "3": {"usuario": "Lucy36", "posicao": 3, "dono": false, "tipo": "cpu", "objetivo": 8, "territorios": [], "cartasTerritorio": [{"codigoTerritorio": "OrienteMedio", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "China", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Inglaterra", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "AfricaDoSul", "forma": "Triangulo", "cor": "Vermelha"}], "jogadoresDestruidos": []}, "2": {"usuario": "Lucy68", "posicao": 2, "dono": false, "tipo": "cpu", "objetivo": 4, "territorios": [{"codigo": "Alemanha", "quantidadeDeTropas": 1}], "cartasTerritorio": [{"codigoTerritorio": "Portugal", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": []}, "1": {"usuario": "Lucy15", "posicao": 1, "dono": false, "tipo": "cpu", "objetivo": 6, "territorios": [{"codigo": "Argentina", "quantidadeDeTropas": 1}, {"codigo": "Brasil", "quantidadeDeTropas": 5}], "cartasTerritorio": [{"codigoTerritorio": "India", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "OrienteMedio", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Mongolia", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "China", "forma": "Bola", "cor": "Azul"}], "jogadoresDestruidos": []}, "0": {"usuario": "Lucy61", "posicao": 0, "dono": false, "tipo": "cpu", "objetivo": 3, "territorios": [], "cartasTerritorio": [{"codigoTerritorio": "NovaGuine", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Argentina", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Sudao", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": []}}, "quem_destruiu_quem": {"Leoni": ["Lucy36", "Atena", "Lucy61"]}, "vencedor": {"usuario": "Leoni", "posicao": 5, "dono": true, "tipo": "human", "objetivo": 11, "territorios": [{"codigo": "Vietna", "quantidadeDeTropas": 1}, {"codigo": "China", "quantidadeDeTropas": 1}, {"codigo": "Islandia", "quantidadeDeTropas": 25}, {"codigo": "Borneo", "quantidadeDeTropas": 9}, {"codigo": "NovaGuine", "quantidadeDeTropas": 1}, {"codigo": "Australia", "quantidadeDeTropas": 3}, {"codigo": "Sumatra", "quantidadeDeTropas": 1}, {"codigo": "Japao", "quantidadeDeTropas": 1}, {"codigo": "Mongolia", "quantidadeDeTropas": 1}, {"codigo": "Aral", "quantidadeDeTropas": 1}, {"codigo": "Omsk", "quantidadeDeTropas": 1}, {"codigo": "India", "quantidadeDeTropas": 1}, {"codigo": "Dudinka", "quantidadeDeTropas": 1}, {"codigo": "OrienteMedio", "quantidadeDeTropas": 19}, {"codigo": "Siberia", "quantidadeDeTropas": 1}, {"codigo": "Tchita", "quantidadeDeTropas": 1}, {"codigo": "Vladivostok", "quantidadeDeTropas": 1}, {"codigo": "Alaska", "quantidadeDeTropas": 3}, {"codigo": "Mackenzie", "quantidadeDeTropas": 1}, {"codigo": "Vancouver", "quantidadeDeTropas": 1}, {"codigo": "Moscou", "quantidadeDeTropas": 11}, {"codigo": "Egito", "quantidadeDeTropas": 12}, {"codigo": "Suecia", "quantidadeDeTropas": 19}, {"codigo": "Groelandia", "quantidadeDeTropas": 3}, {"codigo": "Ottawa", "quantidadeDeTropas": 1}, {"codigo": "California", "quantidadeDeTropas": 1}, {"codigo": "Argelia", "quantidadeDeTropas": 1}, {"codigo": "Labrador", "quantidadeDeTropas": 1}, {"codigo": "NovaYork", "quantidadeDeTropas": 3}, {"codigo": "Mexico", "quantidadeDeTropas": 71}, {"codigo": "Sudao", "quantidadeDeTropas": 66}, {"codigo": "Inglaterra", "quantidadeDeTropas": 1}, {"codigo": "Madagascar", "quantidadeDeTropas": 1}, {"codigo": "AfricaDoSul", "quantidadeDeTropas": 1}, {"codigo": "Congo", "quantidadeDeTropas": 1}, {"codigo": "Colombia", "quantidadeDeTropas": 1}, {"codigo": "Chile", "quantidadeDeTropas": 2}, {"codigo": "Polonia", "quantidadeDeTropas": 1}, {"codigo": "Portugal", "quantidadeDeTropas": 3}], "cartasTerritorio": [{"codigoTerritorio": "NovaGuine", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Argentina", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Sudao", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": [3, 4, 0]}, "ordem": [2, 5, 3, 0, 1, 4], "pontuacao": {"Atena": 0, "Lucy36": 0, "Lucy68": 0, "Lucy15": 0, "Lucy61": 0, "Leoni": 0}, "turno": 20}];
+    _perfil.preencheHistoricoBatalhas("Leoni", historicoBatalhas);
+</script>
+
 </body>
 </html>
