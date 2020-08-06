@@ -93,7 +93,11 @@
             <p>6 meses</p>
         </div>
     </div>
-    <p style="margin: 0 auto;" class="center"><a style="color: white;" href="mailto:joselitofilhoo@gmail.com" target="_blank">joselitofilhoo@gmail.com</a> - <a style="color: white;" href="https://wa.me/5585999150487" target="_blank">(85) 99915-0487</a></p>
+    <p style="margin: 0 auto;" class="center"><a style="color: white;" href="mailto:joselitofilhoo@gmail.com"
+                                                 target="_blank">joselitofilhoo@gmail.com</a> - <a style="color: white;"
+                                                                                                   href="https://wa.me/5585999150487"
+                                                                                                   target="_blank">(85)
+        99915-0487</a></p>
 </div>
 
 <div id="guerra_mundial">
@@ -187,6 +191,7 @@
 <script src="js/mensagens.js?ver=3.0" type="text/javascript"></script>
 <script src="js/comunicacao.js?ver=3.0" type="text/javascript"></script>
 <script src="js/war/ranking.js?ver=3.0" type="text/javascript"></script>
+<script src="js/war/perfil.js?ver=3.0" type="text/javascript"></script>
 
 <script>
     _libwebsocketRanking = new gpscheck.comunicacao.GPSWebSocket(8080);
@@ -214,8 +219,19 @@
         $('#ranking-players').dynatable({
             dataset: {
                 records: rank
+            },
+            writers: {
+                _rowWriter: myRowWriter
             }
         });
+
+        function myRowWriter(rowIndex, record, columns, cellWriter) {
+            var tr = '';
+            for (var i = 0, len = columns.length; i < len; i++) {
+                tr += cellWriter(columns[i], record);
+            }
+            return "<tr style='cursor: pointer;' onclick='perfil_jogador_onclick(\"" + record.nome + "\",\"human\")'>" + tr + "</tr>";
+        };
 
         const badges = [];
         const limitBadges = 14;
@@ -259,21 +275,30 @@
                     $('#ranking-evento .center .top3 .item.one .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]));
                     $('#ranking-evento .center .top3 .item.one .name').html(rank_evento.nome);
                     $('#ranking-evento .center .top3 .item.one .score').html(rank_evento.pontos);
+                    $('#ranking-evento .center .top3 .item.one').click(function () {
+                        perfil_jogador_onclick(rank_evento.nome, 'human');
+                    })
                 } else if (i === 1) {
                     $('#ranking-evento .center .top3 .item.two').css('visibility', 'visible');
                     $('#ranking-evento .center .top3 .item.two .pic div').removeClass();
                     $('#ranking-evento .center .top3 .item.two .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]));
                     $('#ranking-evento .center .top3 .item.two .name').html(rank_evento.nome);
                     $('#ranking-evento .center .top3 .item.two .score').html(rank_evento.pontos);
+                    $('#ranking-evento .center .top3 .item.two').click(function () {
+                        perfil_jogador_onclick(rank_evento.nome, 'human');
+                    })
                 } else if (i === 2) {
                     $('#ranking-evento .center .top3 .item.three').css('visibility', 'visible');
                     $('#ranking-evento .center .top3 .item.three .pic div').removeClass();
                     $('#ranking-evento .center .top3 .item.three .pic div').addClass('insignia_x100_size insignias_x100_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]));
                     $('#ranking-evento .center .top3 .item.three .name').html(rank_evento.nome);
                     $('#ranking-evento .center .top3 .item.three .score').html(rank_evento.pontos);
+                    $('#ranking-evento .center .top3 .item.three').click(function () {
+                        perfil_jogador_onclick(rank_evento.nome, 'human');
+                    })
                 } else {
                     conteudoRankingGuerra = '';
-                    conteudoRankingGuerra += '<div class="item">';
+                    conteudoRankingGuerra += "<div class='item' onclick='perfil_jogador_onclick(\"" + rank_evento.nome + "\",\"human\")'>";
                     conteudoRankingGuerra += '    <div class="pos">' + (i + 1) + '</div>';
                     conteudoRankingGuerra += '    <div class="pic"><div class="insignia_x40_size insignias_x40_nv' + ranking_levelByXp(level_por_usuario[rank_evento.nome]) + '"></div></div>';
                     conteudoRankingGuerra += '    <div class="name">' + rank_evento.nome + '</div>';

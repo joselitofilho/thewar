@@ -46,7 +46,7 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
 
         const lp_player_cor = ["lp_player_card-red", "lp_player_card-blue", "lp_player_card-green", "lp_player_card-black", "lp_player_card-white", "lp_player_card-yellow"];
 
-        const historicoBatalhasLimiteMax = historicoBatalhas.length;
+        const historicoBatalhasLimiteMax = 10; // historicoBatalhas.length;
         for (var i = 0; i < historicoBatalhasLimiteMax; ++i) {
             const jogadores = historicoBatalhas[i].jogadores || [];
             const ordem = historicoBatalhas[i].ordem || [];
