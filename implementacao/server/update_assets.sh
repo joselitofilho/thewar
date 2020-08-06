@@ -7,6 +7,13 @@ if [ ! -f "memes.zip" ]; then
   rm memes.zip
 fi
 
+if [ ! -f "trofeus.zip" ]; then
+  gdown --id 14_cIOufhgvm01vlETuJrHB5WynAMFlrq
+  mkdir -p webdir/imagens/trofeus/
+  unzip -u trofeus.zip -d webdir/imagens/
+  rm trofeus.zip
+fi
+
 if [ ! -f "sons.zip" ]; then
   gdown --id 1b9W-7M-QltBvurp4cMXgWbvutJe-K7Uq
   mkdir -p webdir/sons/
@@ -19,13 +26,6 @@ if [ ! -f "videos.zip" ]; then
   mkdir -p webdir/videos/
   unzip -u videos.zip -d webdir/
   rm videos.zip
-fi
-
-if [ ! -f "trofeus.zip" ]; then
-  gdown --id 14_cIOufhgvm01vlETuJrHB5WynAMFlrq
-  mkdir -p webdir/trofeus/
-  unzip -u trofeus.zip -d webdir/
-  rm trofeus.zip
 fi
 
 gdown --id 1fDOrGiP1gqAUehyAOhZgRMwHyeVgiu81
