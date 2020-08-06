@@ -33,6 +33,7 @@
     max-width: 351px;
     height: 59px;
     background: url('../imagens/lobby/bg-item-lista-jogadores.png') no-repeat;
+    cursor: pointer;
 }
 
 #lista_usuarios .conteudo .item .grow1 {

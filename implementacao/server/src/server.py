@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import argparse
 import json
 import logging
 import os
@@ -8,7 +9,6 @@ import re
 import signal
 import sys
 import traceback
-import argparse
 
 import banco
 import gerenciador
@@ -21,6 +21,7 @@ from mensagens import *
 from pontuacaodb import *
 from src.desafios.desafios import *
 from src.doacaodb import *
+from src.historicojogo import *
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -140,6 +141,32 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 }
 
                 jsonMsg = Mensagem(TipoMensagem.ranking, ranking).toJson()
+                self.sendMessage(jsonMsg)
+
+            elif mensagem.tipo == TipoMensagem.perfil:
+                usuario = mensagem.params['usuario']
+                if usuario:
+                    badges_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'badges.csv')
+                    pontuacao_db = PontuacaoDB()
+                    doacao_db = DoacaoDB()
+                    ranking = {
+                        'ranking': pontuacao_db.ranking_geral(),
+                        'ranking_evento': pontuacao_db.ranking_evento(),
+                        'badges': Badges().ler_csv(badges_path),
+                        'doacoes': {'meta': doacao_db.meta_doacoes_progresso()}
+                    }
+
+                    historico_jogos = HistoricoJogo().all(usuario)
+
+                    perfil = {
+                        'usuario': usuario,
+                        'ranking': ranking,
+                        'historico_jogos': historico_jogos,
+                        'doadores': doacao_db.nomes_doadores()
+                    }
+                else:
+                    perfil = {}
+                jsonMsg = Mensagem(TipoMensagem.perfil, perfil).toJson()
                 self.sendMessage(jsonMsg)
 
             else:

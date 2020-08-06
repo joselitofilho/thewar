@@ -1,0 +1,442 @@
+.header {
+    background-color: var(--color-brown);
+    color: #eee;
+    text-align: center;
+}
+
+.perfil_container {
+    padding-bottom: 40px;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    background-color: rgba(83, 62, 46, 0.8);
+    border: .1em solid var(--color-dark-brown);
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .6);
+}
+
+.perfil_container_img {
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 4;
+    box-shadow: 0px 5px 50px 0px white,
+    0px 0px 0px 7px rgba(255, 255, 255, .38);
+    background-color: #C1B0A0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil_container_img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.perfil_container_cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -40px;
+    margin-bottom: 16px;
+}
+
+.perfil_container_cnt .nome {
+    font-weight: 600;
+    font-size: 30px;
+    color: white;
+}
+
+.perfil_container_cnt .infos {
+    max-width: 80%;
+    margin: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.perfil_container_cnt .info_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 110px;
+    margin: 1em;
+    padding: 8px;
+    font-size: 18px;
+}
+
+.titulo_sessao {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: 16px;
+    width: 100%;
+    color: white;
+    background-color: var(--color-brown);
+    box-shadow: inset 0 -0.3em 0 var(--color-dark-brown), 0 0.1em 0 var(--color-dark-brown), 0 -0.1em 0 var(--color-dark-brown);
+    font-family: var(--font-family-gagalin);
+}
+
+.perfil_jogador div {
+    margin-right: 4px;
+}
+
+#infos_jogador {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: white;
+}
+
+#infos_jogador .nome {
+    display: flex;
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+#infos_jogador .box_crown {
+    margin-left: 8px;
+}
+
+#infos_jogador .infos {
+    display: flex;
+    flex-direction: row;
+}
+
+#infos_jogador .infos .trofeu {
+    stroke: none;
+    fill: #ffe34c;
+}
+
+#log_partidas .titulo_sessao {
+    margin-top: 4px;
+    font-size: 26px;
+}
+
+#log_partidas_container {
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+}
+
+.lp_row {
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+.lp_header_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lp_header_item span {
+    display: inline-block;
+    color: white;
+    font-size: 20px;
+    font-family: var(--font-family-gagalin);
+}
+
+.lp_header_item_infos {
+    width: 100px;
+    height: 180px;
+    border: 2px solid var(--color-dark-brown);
+    border-right: 0;
+    z-index: 1;
+}
+
+.lp_header_item_footer {
+    height: 36px;
+    background-color: rgba(0, 0, 0, .48);
+    font-size: 20px;
+    /*padding-left: 16px;*/
+    font-family: var(--font-family-gagalin);
+
+    color: white;
+    text-align: left;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.lp_header_item_right {
+    width: 64px;
+    height: 180px;
+    margin-left: -26px;
+    overflow: hidden;
+    text-decoration: none;
+    transform: skewX(-15deg);
+    border: 2px solid var(--color-dark-brown);
+    border-left: 0;
+    border-right: 4px solid var(--color-dark-brown);
+}
+
+
+.lp_header_item_right_venceu {
+    background-color: #388E3C;
+    -o-box-shadow: inset -8px 4px 10px -4px #1B5E20;
+    -webkit-box-shadow: inset -8px 4px 10px -4px #1B5E20;
+    -moz-box-shadow: inset -8px 4px 10px -4px #1B5E20;
+    box-shadow: inset -8px 4px 10px -4px #1B5E20;
+}
+
+.lp_venceu {
+    background-color: #388E3C;
+    -o-box-shadow: inset 8px 4px 10px -4px #1B5E20;
+    -webkit-box-shadow: inset 8px 4px 10px -4px #1B5E20;
+    -moz-box-shadow: inset 8px 4px 10px -4px #1B5E20;
+    box-shadow: inset 8px 4px 10px -4px #1B5E20;
+}
+
+.lp_header_item_right_perdeu {
+    background-color: #d32f2f;
+    -o-box-shadow: inset -8px 4px 10px -4px #b71c1c;
+    -webkit-box-shadow: inset -8px 4px 10px -4px #b71c1c;
+    -moz-box-shadow: inset -8px 4px 10px -4px #b71c1c;
+    box-shadow: inset -8px 4px 10px -4px #b71c1c;
+}
+
+.lp_perdeu {
+    background-color: #d32f2f;
+    -o-box-shadow: inset 8px 4px 10px -4px #b71c1c;
+    -webkit-box-shadow: inset 8px 4px 10px -4px #b71c1c;
+    -moz-box-shadow: inset 8px 4px 10px -4px #b71c1c;
+    box-shadow: inset 8px 4px 10px -4px #b71c1c;
+}
+
+.lp_header_item_right_cancelada {
+    background-color: var(--color-brown);
+    -o-box-shadow: inset -8px 4px 10px -4px var(--color-dark-brown);
+    -webkit-box-shadow: inset -8px 4px 10px -4px var(--color-dark-brown);
+    -moz-box-shadow: inset -8px 4px 10px -4px var(--color-dark-brown);
+    box-shadow: inset -8px 4px 10px -4px var(--color-dark-brown);
+}
+
+.lp_cancelada {
+    background-color: var(--color-brown);
+    -o-box-shadow: inset 8px 4px 10px -4px var(--color-dark-brown);
+    -webkit-box-shadow: inset 8px 4px 10px -4px var(--color-dark-brown);
+    -moz-box-shadow: inset 8px 4px 10px -4px var(--color-dark-brown);
+    box-shadow: inset 8px 4px 10px -4px var(--color-dark-brown);
+}
+
+.lp_content_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lp_footer {
+    margin-top: 16px;
+    display: flex;
+}
+
+.lp_footer_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 4px 8px;
+    border-radius: 5px;
+
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fcfcfc), to(#eee));
+    background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+.lp_footer_item .material-icons-outlined,
+.lp_footer_item img,
+.lp_footer_item svg {
+    color: var(--color-dark-brown);
+    margin-right: 8px;
+    opacity: .75;
+}
+
+.lp_players_box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.lp_players_item {
+    border: 1px solid var(--color-dark-brown);
+    border-left: 0;
+}
+
+.lp_player_card-red {
+    --bg-color: #b24a3b;
+    --bg-color-light: #e3b5a9;
+    --text-color-hover: white;
+    --box-shadow-color: rgba(178, 74, 59, 0.48);
+}
+
+.lp_player_card-blue {
+    --bg-color: #2621a8;
+    --bg-color-light: #a59edf;
+    --text-color-hover: white;
+    --box-shadow-color: rgba(38, 33, 168, 0.48);
+}
+
+.lp_player_card-green {
+    --bg-color: #436c4b;
+    --bg-color-light: #afc3b5;
+    --text-color-hover: white;
+    --box-shadow-color: rgba(67, 108, 75, 0.48);
+}
+
+.lp_player_card-black {
+    --bg-color: #1a191e;
+    --bg-color-light: #a09fa1;
+    --text-color-hover: white;
+    --box-shadow-color: rgba(26, 25, 30, 0.48);
+}
+
+.lp_player_card-white {
+    --bg-color: #bdbdbd;
+    --bg-color-light: #e4e4e4;
+    --text-color-hover: #1A191E;
+    --box-shadow-color: rgba(189, 189, 189, 0.48);
+}
+
+.lp_player_card-yellow {
+    --bg-color: #ffd861;
+    --bg-color-light: #FFF7B8;
+    --text-color-hover: #1A191E;
+    --box-shadow-color: rgba(255, 216, 97, 0.48);
+}
+
+.lp_player_battle_info {
+    --bg-color: #388E3C;
+    --bg-color-light: #e4e4e4;
+    --text-color-hover: #4c5656;
+    --box-shadow-color: rgba(189, 189, 189, 0.48);
+}
+
+.lp_player_card {
+    width: 112px;
+    height: 180px;
+    background: var(--bg-color);
+    overflow: hidden;
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease-out;
+    text-decoration: none;
+
+    transform: skewX(-15deg);
+}
+
+.lp_player_card_content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    transform: skewX(15deg);
+}
+
+.lp_player_card:hover {
+    text-decoration: none;
+    transform: translateY(-5px) scale(1.005) translateZ(0) skewX(-15deg);
+    box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
+    0 24px 46px var(--box-shadow-color);
+}
+
+.lp_player_card_content .circle {
+    border-color: var(--bg-color-light);
+    background: var(--bg-color);
+    margin: 20px 0 0 16px;
+}
+
+.lp_player_card_content .circle:after {
+    background: var(--bg-color-light);
+}
+
+.circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease-out;
+    box-sizing: unset;
+}
+
+.circle:after {
+    content: "";
+    width: 56px;
+    height: 56px;
+    display: block;
+    position: absolute;
+    background: var(--bg-color);
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: opacity 0.3s ease-out;
+}
+
+.circle div,
+.circle img,
+.circle svg {
+    z-index: 10000;
+    transform: translateZ(0);
+}
+
+.svg_cpu {
+    width: 40px;
+    height: 40px;
+}
+
+.lp_player_card_footer {
+    width: 126px;
+}
+
+.lp_player_footer_name {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(255, 255, 255, .3);
+    margin-left: -21px;
+
+    padding: 8px 4px;
+    display: inline-block;
+    color: var(--text-color-hover);
+    font-size: 16px;
+    z-index: 1000;
+    transition: color 0.3s ease-out;
+}
+
+.lp_player_footer_badges {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(0, 0, 0, .3);
+    margin-left: -19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

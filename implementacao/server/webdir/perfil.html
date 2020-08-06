@@ -27,20 +27,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!---->
 
-    <link href="css/variaveis.css?ver=2.7" rel="stylesheet">
-    <link href="css/app.css?ver=2.7" rel="stylesheet">
+    <link href="css/variaveis.css?ver=3.0" rel="stylesheet">
+    <link href="css/app.css?ver=3.0" rel="stylesheet">
 
     <!-- Bagdes -->
-    <link href="css/insignias_x40.css?ver=2.7" rel="stylesheet">
-    <link href="css/insignias_x100.css?ver=2.7" rel="stylesheet">
+    <link href="css/insignias_x40.css?ver=3.0" rel="stylesheet">
+    <link href="css/insignias_x100.css?ver=3.0" rel="stylesheet">
     <!---->
 
     <!-- Doadores -->
-    <link href="css/coroa.css?ver=2.7" rel="stylesheet">
+    <link href="css/coroa.css?ver=3.0" rel="stylesheet">
     <!---->
 
-    <link href="css/sala.css?ver=2.7" rel="stylesheet">
-    <link href="css/war/cartas_objetivos.css?ver=2.7" rel="stylesheet">
+    <link href="css/sala.css?ver=3.0" rel="stylesheet">
+    <link href="css/war/cartas_objetivos.css?ver=3.0" rel="stylesheet">
 
     <style>
         body {
@@ -50,456 +50,34 @@
             background-size: auto;
             font-family: var(--font-family-default);
         }
-
-        .header {
-            background-color: var(--color-brown);
-            color: #eee;
-            text-align: center;
-        }
-
-        .perfil_container {
-            padding-bottom: 40px;
-            margin-top: 100px;
-            margin-bottom: 40px;
-            font-size: 16px;
-            line-height: 1.5;
-            text-align: center;
-            background-color: rgba(83, 62, 46, 0.8);
-            border: .1em solid var(--color-dark-brown);
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .6);
-        }
-
-        .perfil_container_img {
-            width: 150px;
-            height: 150px;
-            margin-left: auto;
-            margin-right: auto;
-            transform: translateY(-50%);
-            border-radius: 50%;
-            overflow: hidden;
-            position: relative;
-            z-index: 4;
-            box-shadow: 0px 5px 50px 0px white,
-            0px 0px 0px 7px rgba(255, 255, 255, .38);
-            background-color: #C1B0A0;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .perfil_container_img img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .perfil_container_cnt {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-top: -40px;
-            margin-bottom: 16px;
-        }
-
-        .perfil_container_cnt .nome {
-            font-weight: 600;
-            font-size: 30px;
-            color: white;
-        }
-
-        .perfil_container_cnt .infos {
-            max-width: 80%;
-            margin: 8px;
-            display: flex;
-            align-items: center;
-        }
-
-        .perfil_container_cnt .info_item {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            width: 110px;
-            margin: 1em;
-            padding: 8px;
-            font-size: 18px;
-        }
-
-        .titulo_sessao {
-            display: flex;
-            flex-direction: row;
-            margin: 0 auto;
-            padding: 16px;
-            width: 100%;
-            color: white;
-            background-color: var(--color-brown);
-            box-shadow: inset 0 -0.3em 0 var(--color-dark-brown), 0 0.1em 0 var(--color-dark-brown), 0 -0.1em 0 var(--color-dark-brown);
-            font-family: var(--font-family-gagalin);
-        }
-
-        .perfil_jogador div {
-            margin-right: 4px;
-        }
-
-        #infos_jogador {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            color: white;
-        }
-
-        #infos_jogador .nome {
-            display: flex;
-            text-align: left;
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        #infos_jogador .box_crown {
-            margin-left: 8px;
-        }
-
-        #infos_jogador .infos {
-            display: flex;
-            flex-direction: row;
-        }
-
-        #infos_jogador .infos .trofeu {
-            stroke: none;
-            fill: #ffe34c;
-        }
-
-        #log_partidas .titulo_sessao {
-            margin-top: 4px;
-            font-size: 26px;
-        }
-
-        #log_partidas_container {
-            display: flex;
-            flex-direction: column;
-            margin: 16px;
-        }
-
-        .lp_row {
-            padding: 16px;
-            background-color: rgba(255, 255, 255, 0.35);
-        }
-
-        .lp_header_item {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .lp_header_item span {
-            display: inline-block;
-            color: white;
-            font-size: 20px;
-            font-family: var(--font-family-gagalin);
-        }
-
-        .lp_header_item_infos {
-            width: 100px;
-            height: 180px;
-            border: 2px solid var(--color-dark-brown);
-            border-right: 0;
-            z-index: 1;
-        }
-
-        .lp_header_item_footer {
-            height: 36px;
-            background-color: rgba(0, 0, 0, .48);
-            font-size: 20px;
-            /*padding-left: 16px;*/
-            font-family: var(--font-family-gagalin);
-
-            color: white;
-            text-align: left;
-
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-        .lp_header_item_right {
-            width: 64px;
-            height: 180px;
-            margin-left: -26px;
-            overflow: hidden;
-            text-decoration: none;
-            transform: skewX(-15deg);
-            border: 2px solid var(--color-dark-brown);
-            border-left: 0;
-            border-right: 4px solid var(--color-dark-brown);
-        }
-
-
-        .lp_header_item_right_venceu {
-            background-color: #388E3C;
-            -o-box-shadow: inset -8px 4px 10px -4px #1B5E20;
-            -webkit-box-shadow: inset -8px 4px 10px -4px #1B5E20;
-            -moz-box-shadow: inset -8px 4px 10px -4px #1B5E20;
-            box-shadow: inset -8px 4px 10px -4px #1B5E20;
-        }
-
-        .lp_venceu {
-            background-color: #388E3C;
-            -o-box-shadow: inset 8px 4px 10px -4px #1B5E20;
-            -webkit-box-shadow: inset 8px 4px 10px -4px #1B5E20;
-            -moz-box-shadow: inset 8px 4px 10px -4px #1B5E20;
-            box-shadow: inset 8px 4px 10px -4px #1B5E20;
-        }
-
-        .lp_header_item_right_perdeu {
-            background-color: #d32f2f;
-            -o-box-shadow: inset -8px 4px 10px -4px #b71c1c;
-            -webkit-box-shadow: inset -8px 4px 10px -4px #b71c1c;
-            -moz-box-shadow: inset -8px 4px 10px -4px #b71c1c;
-            box-shadow: inset -8px 4px 10px -4px #b71c1c;
-        }
-
-        .lp_perdeu {
-            background-color: #d32f2f;
-            -o-box-shadow: inset 8px 4px 10px -4px #b71c1c;
-            -webkit-box-shadow: inset 8px 4px 10px -4px #b71c1c;
-            -moz-box-shadow: inset 8px 4px 10px -4px #b71c1c;
-            box-shadow: inset 8px 4px 10px -4px #b71c1c;
-        }
-
-        .lp_content_item {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
-
-        .lp_footer {
-            margin-top: 16px;
-            display: flex;
-        }
-
-        .lp_footer_item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            padding: 4px 8px;
-            border-radius: 5px;
-
-            background-color: #eee;
-            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fcfcfc), to(#eee));
-            background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
-            background-repeat: no-repeat;
-            border: 1px solid #ccc;
-
-            -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-            box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-        }
-
-        .lp_footer_item .material-icons-outlined,
-        .lp_footer_item img,
-        .lp_footer_item svg {
-            color: var(--color-dark-brown);
-            margin-right: 8px;
-            opacity: .75;
-        }
-
-        .lp_players_box {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .lp_players_item {
-            border: 1px solid var(--color-dark-brown);
-            border-left: 0;
-        }
-
-        .lp_player_card-red {
-            --bg-color: #b24a3b;
-            --bg-color-light: #e3b5a9;
-            --text-color-hover: white;
-            --box-shadow-color: rgba(178, 74, 59, 0.48);
-        }
-
-        .lp_player_card-blue {
-            --bg-color: #2621a8;
-            --bg-color-light: #a59edf;
-            --text-color-hover: white;
-            --box-shadow-color: rgba(38, 33, 168, 0.48);
-        }
-
-        .lp_player_card-green {
-            --bg-color: #436c4b;
-            --bg-color-light: #afc3b5;
-            --text-color-hover: white;
-            --box-shadow-color: rgba(67, 108, 75, 0.48);
-        }
-
-        .lp_player_card-black {
-            --bg-color: #1a191e;
-            --bg-color-light: #a09fa1;
-            --text-color-hover: white;
-            --box-shadow-color: rgba(26, 25, 30, 0.48);
-        }
-
-        .lp_player_card-white {
-            --bg-color: #bdbdbd;
-            --bg-color-light: #e4e4e4;
-            --text-color-hover: #1A191E;
-            --box-shadow-color: rgba(189, 189, 189, 0.48);
-        }
-
-        .lp_player_card-yellow {
-            --bg-color: #ffd861;
-            --bg-color-light: #FFF7B8;
-            --text-color-hover: #1A191E;
-            --box-shadow-color: rgba(255, 216, 97, 0.48);
-        }
-
-        .lp_player_battle_info {
-            --bg-color: #388E3C;
-            --bg-color-light: #e4e4e4;
-            --text-color-hover: #4c5656;
-            --box-shadow-color: rgba(189, 189, 189, 0.48);
-        }
-
-        .lp_player_card {
-            width: 112px;
-            height: 180px;
-            background: var(--bg-color);
-            overflow: hidden;
-            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease-out;
-            text-decoration: none;
-
-            transform: skewX(-15deg);
-        }
-
-        .lp_player_card_content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-
-            transform: skewX(15deg);
-        }
-
-        .lp_player_card:hover {
-            text-decoration: none;
-            transform: translateY(-5px) scale(1.005) translateZ(0) skewX(-15deg);
-            box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
-            0 24px 46px var(--box-shadow-color);
-        }
-
-        .lp_player_card_content .circle {
-            border-color: var(--bg-color-light);
-            background: var(--bg-color);
-            margin: 20px 0 0 16px;
-        }
-
-        .lp_player_card_content .circle:after {
-            background: var(--bg-color-light);
-        }
-
-        .lp_player_card_content:active {
-            transform: scale(1) translateZ(0);
-            box-shadow: 0 15px 24px rgba(0, 0, 0, 0.11),
-            0 15px 24px var(--box-shadow-color);
-        }
-
-        .circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease-out;
-            box-sizing: unset;
-        }
-
-        .circle:after {
-            content: "";
-            width: 56px;
-            height: 56px;
-            display: block;
-            position: absolute;
-            background: var(--bg-color);
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: opacity 0.3s ease-out;
-        }
-
-        .circle div,
-        .circle img,
-        .circle svg {
-            z-index: 10000;
-            transform: translateZ(0);
-        }
-
-        .svg_cpu {
-            width: 40px;
-            height: 40px;
-        }
-
-        .lp_player_card_footer {
-            width: 126px;
-        }
-
-        .lp_player_footer_name {
-            width: 100%;
-            height: 40px;
-            background-color: rgba(255, 255, 255, .3);
-            margin-left: -21px;
-
-            padding: 8px 4px;
-            display: inline-block;
-            color: var(--text-color-hover);
-            font-size: 16px;
-            z-index: 1000;
-            transition: color 0.3s ease-out;
-        }
-
-        .lp_player_footer_badges {
-            width: 100%;
-            height: 40px;
-            background-color: rgba(0, 0, 0, .3);
-            margin-left: -19px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
     </style>
+    <link href="css/perfil.css?ver=3.0" rel="stylesheet">
 </head>
 <body>
-<!--<div class="jumbotron jumbotron-fluid header">-->
-<!--    <div class="container">-->
-<!--        <h1 class="display-4">Como jogar e regras</h1>-->
-<!--        <p class="lead">Confira todas as regras do jogo, como distribuir suas tropas, atacar territórios e muito mais.</p>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="jumbotron jumbotron-fluid header titulo_sessao">
+    <div class="container">
+        <!--        <h1 class="display-4">Como jogar e regras</h1>-->
+        <!--        <p class="lead">Confira todas as regras do jogo, como distribuir suas tropas, atacar territórios e muito mais.</p>-->
+        <div class="input-group">
+            <input id="input_pesquisa" type="text" class="form-control" placeholder="Nome do jogador"
+                   style="color: var(--color-dark-brown); font-family: var(--font-family-default); font-size: 20px;">
+            <div class="input-group-append">
+                <button class="btn" style="background: white; color: var(--color-dark-brown);" type="button"
+                        onclick="perfil_procurar($('input_pesquisa').val());">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="perfil_container">
         <div class="perfil_container_img">
-            <div id="jogador_insignia" class="insignia_x100_size insignias_x100_nv6"></div>
+            <div id="jogador_insignia"></div>
         </div>
         <div class="perfil_container_cnt">
-            <div id="jogador_doador" class="box_crown" title="Doador"></div>
-            <div id="jogador_nome" class="nome">JFLive</div>
+            <div id="jogador_doador" class="box_crown" title="Doador" style="visibility: hidden;"></div>
+            <div id="jogador_nome" class="nome"></div>
             <div class="infos">
                 <div class="info_item">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px"
@@ -507,15 +85,15 @@
                          viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
                         <g><path d="M974.5,763.5c0,0-19-21.3-43.3-11.2c0,0-10.1,2.9-24.1,17.5l1.4-2.2l-93.3-94.5l52.8-53.7c0,0,31-32.2-13.2-80.5c-44.2-48.3-75.1-27.2-84.6-19.8c-9.5,7.4-45.4,44.2-45.4,44.2l-68.1-69.8l246.9-221.3c0,0,38-26.4,41.7-59c3.7-32.6,13.6-158.5,13.6-158.5s-1.7-28.9-27.7-28.5c-26,0.4-156.5,13.6-156.5,13.6s-26.4-1.7-59,35.9C683,113.3,500.4,318,500.4,318L276.8,67c0,0-16.5-28.1-76.8-31.4c-60.3-3.3-123.4-9.5-123.4-9.5s-33-0.8-32.2,33C45.2,93,55.9,211.1,55.9,211.1s9.9,34.7,73.5,91.6c63.6,57,212.2,189.1,212.2,189.1l-64.4,71l-41.5-41.5c0,0-32.8-31.6-71.2,0.2c0,0-52.4,34.7-40.9,71.4c0,0,2.1,23.5,35.5,54.9l26,26l-92.1,91.2c0,0-39.6-35.5-67.7,0c-28.1,35.5-12.9,47.1,7,68.5c19.8,21.5,129.2,130.9,129.2,130.9s33.8,22.3,59.4-6.6c31.3-34.2-5-66.5-5-66.5l94.1-92.3c0,0,29.5,30.6,60.4,56.7c33.4,28.2,75.5-16.7,97.5-48.3c22-31.6-12.7-64.4-12.7-64.4l-35-35l79.5-75.2l82.4,72.8l-43,44.2c0,0-31.4,41.3,8.7,79.7c0,0,47.9,53.3,86.3,20.6l56.1-51.2l93.7,92.1c0,0-37.2,33.9-6.2,66.1c31,32.2,59,10.3,70.6-2.1c11.6-12.4,135-137.5,135-137.5S1002.9,788.2,974.5,763.5z M424.8,773.5c14.2,15.5-9.9,32.2-9.9,32.2c-16.7,17.3-28.5,5-28.5,5S344.9,770.1,327,753c-18-17-35.9,1.6-35.9,1.6S205.3,841,178.6,865.7c-26.6,24.8-2.1,48.5-2.1,48.5l0,0L58,797.7c0,0,39.6,25.6,76-11.1c36.3-36.7,92.9-91.6,92.9-91.6s26-18.2-9.1-51.2c-35.1-33-43.8-45.8-43.8-45.8s-15.7-11.6,10.3-33c0,0,11.6-20.6,33,3.3l51,50.6l0,0c0,0,0.1,0.1,0.1,0.1l9.3,9.2l0.1-0.1C309.6,659.3,412.8,760.4,424.8,773.5z M517.7,586.8c-20.4-18-42.7,5.9-42.7,5.9l-86.7,80.2L308.8,594l80.3-87.7c0,0,21.5-18.2-25.2-56.6C317.3,411.3,113.3,228,113.3,228s-14-9.9-16.9-55.3c-2.9-45.4-6.6-102-6.6-102l123,12.4c0,0,21.1-0.8,28.9,9.9c7.8,10.7,238.6,269.6,238.6,269.6s27.7,29.7,61.1-23.5L755.7,98c0,0,9.9-15.3,34.7-15.7c24.8-0.4,123-9.9,123-9.9L901,195.8c0,0,2.9,23.1-41.3,55.3c-44.2,32.2-241.9,217.6-241.9,217.6s-25.6,17.7,0,46.6c25.6,28.9,73.9,78,73.9,78l-76.6,78.7C597.9,657,535.3,602.2,517.7,586.8z M815.1,926.1c0,0,29.3-36.3-9.5-74.7s-92.9-92.5-92.9-92.5s-20.2-26-44.6-0.4c-24.4,25.6-50.8,50-50.8,50s-14.9,17.3-33.8-5s-13.2-25.6,11.6-48.7c24.8-23.1,195.7-194,195.7-194s9.5-12,23.1,0s16.1,16.9,16.1,16.9s11.6,8.7-4.5,24.4s-57.8,58.2-57.8,58.2s-16.1,15.2,15.7,47.2l99.2,96.6c0.1,0.1,11.6,26.1,48.9,3.4L815.1,926.1z"/></g>
                     </svg>
-                    <span id="jogador_total_partidas">100</span>
+                    <span id="jogador_total_partidas"></span>
                 </div>
                 <div class="info_item">
                     <div class="material-icons-outlined md-48">military_tech</div>
-                    <span id="jogador_poisicao_rank">1º</span>
+                    <span id="jogador_poisicao_rank"></span>
                 </div>
                 <div class="info_item">
                     <div class="material-icons-outlined md-48">emoji_events</div>
-                    <span id="jogador_total_pontos">1000000000</span>
+                    <span id="jogador_total_pontos"></span>
                 </div>
             </div>
         </div>
@@ -530,16 +108,71 @@
     </div>
 </div>
 
-<script src="js/websocket/websocket.js?ver=2.7" type="text/javascript"></script>
-<script src="js/mensagens.js?ver=2.7" type="text/javascript"></script>
-<script src="js/comunicacao.js?ver=2.7" type="text/javascript"></script>
-<script src="js/war/ranking.js?ver=2.7" type="text/javascript"></script>
-<script src="js/war/perfil.js?ver=2.7" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.19/lodash.min.js"
+        integrity="sha512-/A6lxqQJVUIMnx8B/bx/ERfeuJnqoWPJdUxN8aBj+tZYL35O998ry7UUGoN65PSUNlJNrqKZrDENi4i1c3zy4Q=="
+        crossorigin="anonymous"></script>
+<script src="js/websocket/websocket.js?ver=3.0" type="text/javascript"></script>
+<script src="js/mensagens.js?ver=3.0" type="text/javascript"></script>
+<script src="js/comunicacao.js?ver=3.0" type="text/javascript"></script>
+<script src="js/war/ranking.js?ver=3.0" type="text/javascript"></script>
+<script src="js/war/perfil.js?ver=3.0" type="text/javascript"></script>
 
 <script>
+    _libwebsocketPerfil = new gpscheck.comunicacao.GPSWebSocket(8080);
     _perfil = new jogos.war.Perfil("#jogador_log_partidas_container");
-    const historicoBatalhas = [{"tag": "jogo_2_1596591244068", "nome": "2", "iniciou_em": 1596591244068, "terminou_em": 1596594158866, "jogadores": {"5": {"usuario": "Leoni", "posicao": 5, "dono": true, "tipo": "human", "objetivo": 11, "territorios": [{"codigo": "Vietna", "quantidadeDeTropas": 1}, {"codigo": "China", "quantidadeDeTropas": 1}, {"codigo": "Islandia", "quantidadeDeTropas": 25}, {"codigo": "Borneo", "quantidadeDeTropas": 9}, {"codigo": "NovaGuine", "quantidadeDeTropas": 1}, {"codigo": "Australia", "quantidadeDeTropas": 3}, {"codigo": "Sumatra", "quantidadeDeTropas": 1}, {"codigo": "Japao", "quantidadeDeTropas": 1}, {"codigo": "Mongolia", "quantidadeDeTropas": 1}, {"codigo": "Aral", "quantidadeDeTropas": 1}, {"codigo": "Omsk", "quantidadeDeTropas": 1}, {"codigo": "India", "quantidadeDeTropas": 1}, {"codigo": "Dudinka", "quantidadeDeTropas": 1}, {"codigo": "OrienteMedio", "quantidadeDeTropas": 19}, {"codigo": "Siberia", "quantidadeDeTropas": 1}, {"codigo": "Tchita", "quantidadeDeTropas": 1}, {"codigo": "Vladivostok", "quantidadeDeTropas": 1}, {"codigo": "Alaska", "quantidadeDeTropas": 3}, {"codigo": "Mackenzie", "quantidadeDeTropas": 1}, {"codigo": "Vancouver", "quantidadeDeTropas": 1}, {"codigo": "Moscou", "quantidadeDeTropas": 11}, {"codigo": "Egito", "quantidadeDeTropas": 12}, {"codigo": "Suecia", "quantidadeDeTropas": 19}, {"codigo": "Groelandia", "quantidadeDeTropas": 3}, {"codigo": "Ottawa", "quantidadeDeTropas": 1}, {"codigo": "California", "quantidadeDeTropas": 1}, {"codigo": "Argelia", "quantidadeDeTropas": 1}, {"codigo": "Labrador", "quantidadeDeTropas": 1}, {"codigo": "NovaYork", "quantidadeDeTropas": 3}, {"codigo": "Mexico", "quantidadeDeTropas": 71}, {"codigo": "Sudao", "quantidadeDeTropas": 66}, {"codigo": "Inglaterra", "quantidadeDeTropas": 1}, {"codigo": "Madagascar", "quantidadeDeTropas": 1}, {"codigo": "AfricaDoSul", "quantidadeDeTropas": 1}, {"codigo": "Congo", "quantidadeDeTropas": 1}, {"codigo": "Colombia", "quantidadeDeTropas": 1}, {"codigo": "Chile", "quantidadeDeTropas": 2}, {"codigo": "Polonia", "quantidadeDeTropas": 1}, {"codigo": "Portugal", "quantidadeDeTropas": 3}], "cartasTerritorio": [{"codigoTerritorio": "NovaGuine", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Argentina", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Sudao", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": [3, 4, 0]}, "4": {"usuario": "Atena", "posicao": 4, "dono": false, "tipo": "cpu", "objetivo": 9, "territorios": [], "cartasTerritorio": [{"codigoTerritorio": "Groelandia", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Madagascar", "forma": "Bola", "cor": "Azul"}], "jogadoresDestruidos": []}, "3": {"usuario": "Lucy36", "posicao": 3, "dono": false, "tipo": "cpu", "objetivo": 8, "territorios": [], "cartasTerritorio": [{"codigoTerritorio": "OrienteMedio", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "China", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Inglaterra", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "AfricaDoSul", "forma": "Triangulo", "cor": "Vermelha"}], "jogadoresDestruidos": []}, "2": {"usuario": "Lucy68", "posicao": 2, "dono": false, "tipo": "cpu", "objetivo": 4, "territorios": [{"codigo": "Alemanha", "quantidadeDeTropas": 1}], "cartasTerritorio": [{"codigoTerritorio": "Portugal", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": []}, "1": {"usuario": "Lucy15", "posicao": 1, "dono": false, "tipo": "cpu", "objetivo": 6, "territorios": [{"codigo": "Argentina", "quantidadeDeTropas": 1}, {"codigo": "Brasil", "quantidadeDeTropas": 5}], "cartasTerritorio": [{"codigoTerritorio": "India", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "OrienteMedio", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Mongolia", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "China", "forma": "Bola", "cor": "Azul"}], "jogadoresDestruidos": []}, "0": {"usuario": "Lucy61", "posicao": 0, "dono": false, "tipo": "cpu", "objetivo": 3, "territorios": [], "cartasTerritorio": [{"codigoTerritorio": "NovaGuine", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Argentina", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Sudao", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": []}}, "quem_destruiu_quem": {"Leoni": ["Lucy36", "Atena", "Lucy61"]}, "vencedor": {"usuario": "Leoni", "posicao": 5, "dono": true, "tipo": "human", "objetivo": 11, "territorios": [{"codigo": "Vietna", "quantidadeDeTropas": 1}, {"codigo": "China", "quantidadeDeTropas": 1}, {"codigo": "Islandia", "quantidadeDeTropas": 25}, {"codigo": "Borneo", "quantidadeDeTropas": 9}, {"codigo": "NovaGuine", "quantidadeDeTropas": 1}, {"codigo": "Australia", "quantidadeDeTropas": 3}, {"codigo": "Sumatra", "quantidadeDeTropas": 1}, {"codigo": "Japao", "quantidadeDeTropas": 1}, {"codigo": "Mongolia", "quantidadeDeTropas": 1}, {"codigo": "Aral", "quantidadeDeTropas": 1}, {"codigo": "Omsk", "quantidadeDeTropas": 1}, {"codigo": "India", "quantidadeDeTropas": 1}, {"codigo": "Dudinka", "quantidadeDeTropas": 1}, {"codigo": "OrienteMedio", "quantidadeDeTropas": 19}, {"codigo": "Siberia", "quantidadeDeTropas": 1}, {"codigo": "Tchita", "quantidadeDeTropas": 1}, {"codigo": "Vladivostok", "quantidadeDeTropas": 1}, {"codigo": "Alaska", "quantidadeDeTropas": 3}, {"codigo": "Mackenzie", "quantidadeDeTropas": 1}, {"codigo": "Vancouver", "quantidadeDeTropas": 1}, {"codigo": "Moscou", "quantidadeDeTropas": 11}, {"codigo": "Egito", "quantidadeDeTropas": 12}, {"codigo": "Suecia", "quantidadeDeTropas": 19}, {"codigo": "Groelandia", "quantidadeDeTropas": 3}, {"codigo": "Ottawa", "quantidadeDeTropas": 1}, {"codigo": "California", "quantidadeDeTropas": 1}, {"codigo": "Argelia", "quantidadeDeTropas": 1}, {"codigo": "Labrador", "quantidadeDeTropas": 1}, {"codigo": "NovaYork", "quantidadeDeTropas": 3}, {"codigo": "Mexico", "quantidadeDeTropas": 71}, {"codigo": "Sudao", "quantidadeDeTropas": 66}, {"codigo": "Inglaterra", "quantidadeDeTropas": 1}, {"codigo": "Madagascar", "quantidadeDeTropas": 1}, {"codigo": "AfricaDoSul", "quantidadeDeTropas": 1}, {"codigo": "Congo", "quantidadeDeTropas": 1}, {"codigo": "Colombia", "quantidadeDeTropas": 1}, {"codigo": "Chile", "quantidadeDeTropas": 2}, {"codigo": "Polonia", "quantidadeDeTropas": 1}, {"codigo": "Portugal", "quantidadeDeTropas": 3}], "cartasTerritorio": [{"codigoTerritorio": "NovaGuine", "forma": "Bola", "cor": "Azul"}, {"codigoTerritorio": "Argentina", "forma": "Quadrado", "cor": "Amarela"}, {"codigoTerritorio": "Sudao", "forma": "Quadrado", "cor": "Amarela"}], "jogadoresDestruidos": [3, 4, 0]}, "ordem": [2, 5, 3, 0, 1, 4], "pontuacao": {"Atena": 0, "Lucy36": 0, "Lucy68": 0, "Lucy15": 0, "Lucy61": 0, "Leoni": 0}, "turno": 20}];
-    _perfil.preencheHistoricoBatalhas("Leoni", historicoBatalhas);
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    var perfil_enviarMsg = function (usuario) {
+        const perfilMsg = comunicacao_perfil(usuario);
+        _libwebsocketPerfil.enviarObjJson(perfilMsg);
+    };
+
+    var perfil_procurar = function (usuario) {
+        if (!usuario) {
+            usuario = $('#input_pesquisa').val() || getUrlParameter('usuario') || "";
+        }
+        $('#input_pesquisa').val("");
+        $('#input_pesquisa').blur();
+
+        window.location = '/perfil.html?usuario=' + usuario;
+    };
+
+    function posAberturaSocket(msg) {
+        const usuario = $('#input_pesquisa').val() || getUrlParameter('usuario') || "";
+        perfil_enviarMsg(usuario);
+    }
+
+    function posRecebimentoMensagemServidor(msg) {
+        const jsonMensagem = JSON.parse(msg);
+        if (jsonMensagem.tipo === TipoMensagem.perfil) {
+            perfil_processaMsg(jsonMensagem.params);
+        }
+    }
+
+    _libwebsocketPerfil.FOnOpen(posAberturaSocket);
+    _libwebsocketPerfil.FOnMessage(posRecebimentoMensagemServidor);
+    _libwebsocketPerfil.iniciar();
+
+    $(document).on('keypress', function (e) {
+        if (e.which === 13) {
+            const usuario = $('#input_pesquisa').val() || getUrlParameter('usuario') || "";
+            perfil_procurar(usuario);
+        }
+    });
 </script>
 
 </body>

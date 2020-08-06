@@ -133,3 +133,10 @@ function comunicacao_MsgChatGeral(texto) {
 function comunicacao_desafiosEmAndamento() {
     return new Mensagem(TipoMensagem.desafios_em_andamento, {});
 }
+
+function comunicacao_perfil(usuario) {
+    return new Mensagem(TipoMensagem.perfil,
+        {
+            usuario: usuario
+        });
+}

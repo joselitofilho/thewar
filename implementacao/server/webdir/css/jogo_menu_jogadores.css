@@ -30,6 +30,7 @@
     text-align: center;
     background: #fff;
     box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, .3);
+    cursor: pointer;
 }
 
 .menu_jogadores_box_destruido {

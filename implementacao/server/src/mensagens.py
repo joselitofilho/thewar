@@ -31,6 +31,7 @@ class TipoMensagem:
     msg_chat_geral = "MsgChatGeral"
     msg_chat_jogo = "MsgChatJogo"
     nova_senha = "NovaSenha"
+    perfil = "Perfil"
     ranking = "Ranking"
     recuperar_senha = "RecuperarSenha"
     registrar = "Registrar"

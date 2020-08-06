@@ -35,7 +35,8 @@ var TipoMensagem = {
     usuario_conectou: "UsuarioConectou",
     usuario_desconectou: "UsuarioDesconectou",
     jogador_destruido: "JogadorDestruido",
-    jogo_interrompido: "JogoInterrompido"
+    jogo_interrompido: "JogoInterrompido",
+    perfil: "Perfil"
 };
 
 var TipoAcaoTurno = {
