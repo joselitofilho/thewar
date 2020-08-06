@@ -17,4 +17,11 @@ function ranking_levelByXp(xp) {
 function ranking_processaMsg(params) {
     _ranking = params['ranking'];
     _insignias = params['badges'];
+
+    const mapaRankingUsuarios = {};
+    for (let i = 0; i < _ranking.length; ++i) {
+        let r = _ranking[i];
+        mapaRankingUsuarios[r.nome] = r;
+    }
+    return mapaRankingUsuarios;
 }

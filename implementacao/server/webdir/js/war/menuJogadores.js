@@ -21,7 +21,7 @@ jogos.war.MenuJogadores = function () {
             const i = jogadoresDaSala[p].posicao;
             const doador = nomeDoadores.includes(jogadoresDaSala[p].usuario) || false;
             const cpu = jogadoresDaSala[p].tipo === "cpu";
-            conteudo = "<div id='menu_jogador" + i + "' class='menu_jogadores_box'>";
+            conteudo = "<div id='menu_jogador" + i + "' class='menu_jogadores_box' onclick='perfil_jogador_onclick(\"" + jogadoresDaSala[p].usuario + "\", \"" + jogadoresDaSala[p].tipo + "\")'>";
             if (doador) {
                 conteudo += "<div id='menu_jogador" + i + "_coroa' class='box_crown jogo_menu_jogadores_box_crown' title='Doador'></div>";
             }

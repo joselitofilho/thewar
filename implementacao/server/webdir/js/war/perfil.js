@@ -3,8 +3,24 @@ jogos.war = jogos.war || {};
 
 jogos.war.Perfil = function (historicoBatalhasDiv) {
 
-    this.preencheHistoricoBatalhas = function (usuario, historicoBatalhas) {
-        historicoBatalhas = historicoBatalhas || [];
+    this.preencheHistoricoBatalhas = function (usuario, historicoBatalhas, ranking, doadores) {
+        const mapaRankingUsuarios = ranking_processaMsg(ranking);
+
+        historicoBatalhas = _.sortBy(historicoBatalhas, ['terminou_em']).reverse();
+
+        const doador = doadores.includes(usuario) || false;
+        if (doador) {
+            $("#jogador_doador").css('visibility', 'visible');
+        } else {
+            $("#jogador_doador").css('visibility', 'hidden');
+        }
+        $("#jogador_nome").html(usuario);
+        $("#jogador_total_partidas").html(mapaRankingUsuarios[usuario].quantidadeDePartidas);
+        $("#jogador_poisicao_rank").html(mapaRankingUsuarios[usuario].posicaoNoRanking + 'º');
+        $("#jogador_total_pontos").html(mapaRankingUsuarios[usuario].pontos);
+
+        $("#jogador_insignia").removeClass();
+        $("#jogador_insignia").addClass("insignia_x100_size insignias_x100_nv" + ranking_levelByXp(mapaRankingUsuarios[usuario].pontos));
 
         const dateOptions = {
             year: 'numeric',
@@ -41,17 +57,19 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
 
             var newItem = $("<div>").attr("id", 'historico_batalha_item_' + i);
 
-            var span_venceu_ou_perdeu = "<span>VENCEU</span>";
-            if (!venceu) {
-                span_venceu_ou_perdeu = "<span>PERDEU</span>";
-            }
-            var lp_venceu_ou_perdeu = "lp_venceu";
-            if (!venceu) {
-                lp_venceu_ou_perdeu = "lp_perdeu";
-            }
-            var lp_header_item_right_venceu_ou_perdeu = "lp_header_item_right_venceu";
-            if (!venceu) {
-                lp_header_item_right_venceu_ou_perdeu = "lp_header_item_right_perdeu";
+            var span_venceu_ou_perdeu = "<span>CANCELADA</span>";
+            var lp_venceu_ou_perdeu = "lp_cancelada";
+            var lp_header_item_right_venceu_ou_perdeu = "lp_header_item_right_cancelada";
+            if (Object.keys(vencedor).length > 0) {
+                if (venceu) {
+                    span_venceu_ou_perdeu = "<span>VENCEU</span>";
+                    lp_venceu_ou_perdeu = "lp_venceu";
+                    lp_header_item_right_venceu_ou_perdeu = "lp_header_item_right_venceu";
+                } else {
+                    span_venceu_ou_perdeu = "<span>PERDEU</span>";
+                    lp_venceu_ou_perdeu = "lp_perdeu";
+                    lp_header_item_right_venceu_ou_perdeu = "lp_header_item_right_perdeu";
+                }
             }
 
             var pontos = pontuacao[vencedor.usuario] || 0;
@@ -88,7 +106,7 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
                 "        <div class='lp_content_item'>",
                 "            <div class='lp_players_box'>",
                 "                <div class='lp_header_item lp_header_item_infos ", lp_venceu_ou_perdeu, "'>",
-                "                    <div style='display: flex; justify-content: center; align-items: center; height: 40px; border-bottom: 4px solid var(--color-dark-brown);'>",
+                "                    <div style='display: flex; justify-content: start; align-items: center; height: 40px; border-bottom: 4px solid var(--color-dark-brown); padding-left: 16px;'>",
                 span_venceu_ou_perdeu,
                 "                    </div>",
                 "                    <span style='text-align: left; display: flex; justify-content: center; align-items: center; padding-left: 16px;'>", pontos, "</span>",
@@ -104,6 +122,7 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
                 "                </div>"
             ];
 
+            var objetivo;
             for (var j = 0; j < ordem.length; ++j) {
                 const posicao = ordem[j];
                 const jogador = jogadores[posicao];
@@ -113,15 +132,19 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
                     trofeu = trofeu_svg;
                 }
 
+                if (jogador.usuario === usuario) {
+                    // objetivo = "<div class='carta_objetivo carta_objetivo_" + (jogador.objetivo + 1) + "'></div>";
+                }
+
                 const lp_player_card_color = lp_player_cor[posicao];
 
                 var insignia = cpu_svg;
                 if (jogador.tipo === "human") {
-                    insignia = "<div class='insignia_x40_size insignias_x40_nv11'></div>";
+                    insignia = "<div class='insignia_x40_size insignias_x40_nv" + ranking_levelByXp(mapaRankingUsuarios[jogador.usuario].pontos) + "'></div>";
                 }
 
                 conteudo = conteudo.concat([
-                    "<a href='#' class='lp_players_item lp_player_card ", lp_player_card_color, "'>",
+                    "<a href='javascript:perfil_jogador_onclick(\"" + jogador.usuario + "\", \"" + jogador.tipo + "\");' class='lp_players_item lp_player_card ", lp_player_card_color, "'>",
                     "   <div class='lp_player_card_content'>",
                     "       <div class='circle'>", insignia, "</div>",
                     "       <div class='lp_player_card_footer'>",
@@ -132,10 +155,11 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
                     "</a>"
                 ]);
             }
+
             conteudo = conteudo.concat([
                 "            </div>",
-                "            <div style='width: 135px;height: 180px;transform: scale(0.45);margin: -50px 45px 0 0px;'>",
-                "                <div id='partida_", i, "_objetivo' class='carta_objetivo carta_objetivo_1'></div>",
+                "            <div style='width: 135px;height: 180px;transform: scale(0.45);margin: -50px 45px 0 0;'>",
+                objetivo,
                 "            </div>",
                 "        </div>",
                 "        <div class='lp_footer'>",
@@ -153,3 +177,14 @@ jogos.war.Perfil = function (historicoBatalhasDiv) {
     };
 
 };
+
+function perfil_processaMsg(params) {
+    const historicoBatalhas = params.historico_jogos || [];
+    const ranking = params.ranking || [];
+    const doadores = params.doadores || [];
+    _perfil.preencheHistoricoBatalhas(params.usuario, historicoBatalhas, ranking, doadores);
+}
+
+function perfil_jogador_onclick(usuario, tipo) {
+    window.open('/perfil.html?usuario=' + usuario, '_blank');
+}

@@ -21,7 +21,7 @@ jogos.war.ListaUsuarios = function (elementoListaUsuarios) {
             // const doador = this.lista[i].doador || false;
             const doador = nomeDoadores.includes(this.lista[i].nome) || false;
             let conteudo =
-                "<div class='item'>";
+                "<div class='item' onclick='perfil_jogador_onclick(\"" + this.lista[i].nome + "\", \"human\");'>";
             conteudo += "<div class='grow1'><div class='foto insignia_x40_size insignias_x40_nv" + ranking_levelByXp(this.lista[i].pontos) + "'></div></div>";
             conteudo += "<div class='grow6 infos'>";
             conteudo += "    <div class='nome'>" + this.lista[i].nome + "</div>";

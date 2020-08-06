@@ -25,14 +25,16 @@ jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
 
         let texto = this.util.substituiMarcacoes(_listaUsuarios.getMapaLista(), params.usuario, params.texto);
         if (mensagemServidor) {
-            texto = "<i><b>Servidor:</b>&nbsp;" + texto + "</i>";
+            texto = "<i><b>Servidor:</b>&nbsp;" + texto + "</i><br/>";
             texto = texto.fontcolor("#494949");
         } else {
-            texto = "<b>" + params.usuario + "</b> diz:<br/>" + texto;
-            texto = texto.fontcolor("#453122");
+            texto =
+                "<div style='color: var(--color-dark-brown);'>" +
+                "<a style='color: var(--color-dark-brown);' href='javascript:perfil_jogador_onclick(\"" + params.usuario + "\", \"human\");'><b>" + params.usuario + "</b></a> diz:" +
+                "<br/>" + texto + "</div>";
         }
 
-        area.append(texto + '<br/>');
+        area.append(texto);
 
         if (this.rolou_a_barra) {
             if (area.scrollTop() + area.innerHeight() >= area[0].scrollHeight) {
@@ -66,7 +68,7 @@ jogos.war.ChatGeral = function (area, botaoIrParaBaixo) {
         texto += '    <div class="chat_soldado"></div>';
         texto += '    <p>Primeira vez por aqui?<br/>Clique aqui para conhecer o jogo.</p>';
         texto += '</div>';
-        texto += '<img src="../../imagens/lobby/banners/evento_chat.png" style="width: 100%; border-radius: 5px;" />';
+        // texto += '<img src="../../imagens/lobby/banners/evento_chat.png" style="width: 100%; border-radius: 5px;" />';
         texto += 'Connect-se a uma de nossas redes:'.fontcolor("#453122");
         texto += '<div style=" width: 50%; display: flex; justify-content: space-around; text-align: center;">';
         texto += '    <a href="https://chat.whatsapp.com/DjRwmsDjKJUEUh9HLyFky2" target="_blank" rel="noopener noreferrer"><img height="64px" src="../../imagens/social/whatsapp.png" /></a>';
